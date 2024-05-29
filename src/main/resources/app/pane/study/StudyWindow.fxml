@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.web.HTMLEditor?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="620.0" style="-fx-border-color: #cccccc;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox alignment="CENTER" prefHeight="31.0" prefWidth="548.0" style="-fx-background-color: #E6E8E9;">
+         <children>
+            <Label fx:id="lblTitleStudy" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox prefHeight="251.0" prefWidth="618.0">
+         <children>
+            <HTMLEditor fx:id="editorTextMatter" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="251.0" prefWidth="620.0">
+               <HBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </HBox.margin></HTMLEditor>
+         </children></HBox>
+      <HBox alignment="CENTER_RIGHT" prefHeight="210.0" prefWidth="618.0">
+         <children>
+            <VBox prefHeight="210.0" prefWidth="245.0" style="-fx-background-color: #E6E8E9;">
+               <HBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </HBox.margin>
+            </VBox>
+            <VBox prefHeight="240.0" prefWidth="367.0" style="-fx-border-color: #cccccc;">
+               <children>
+                  <ListView fx:id="listViewTopics" prefHeight="300.0" prefWidth="378.0" style="-fx-background-color: #F5F3EE;" />
+               </children>
+               <HBox.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>
