@@ -7,6 +7,7 @@ public class Study {
 	
 	private Long id;
 	private String matter;
+	private String text;
 	private List<Topic> listTopics;
 	
 	public Study(String matter) {
@@ -37,5 +38,12 @@ public class Study {
 	public void setListTopics(List<Topic> listTopics) {
 		this.listTopics = listTopics;
 	}
-	
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
 }
