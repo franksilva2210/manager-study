@@ -9,6 +9,7 @@ import app.pane.MainContainerWindow;
 import app.pane.study.StudyControl;
 import app.pane.study.StudyWindow;
 import app.study.register.Study;
+import app.study.register.StudyRegisterWindow;
 import app.study.register.Topic;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,6 +29,7 @@ import javafx.scene.layout.VBox;
 public class ListStudyControl implements Initializable {
 
 	@FXML private ListView<HBox> listViewStudyGui;
+	@FXML private MenuItem menuListNovo;
 	
 	ObservableList<HBox> observableListStudyGui = FXCollections.observableArrayList();
 	
@@ -34,6 +37,10 @@ public class ListStudyControl implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		
 		listViewStudyGui.setItems(observableListStudyGui);
+		
+		menuListNovo.setOnAction((event) -> {
+			StudyRegisterWindow.buildAndShowScreen(MainContainerWindow.getStage());
+		});
 		
 		Study study1 = new Study("Estudo Java");
 		study1.getListTopics().add(new Topic("Livro H Schildt"));
@@ -75,9 +82,9 @@ public class ListStudyControl implements Initializable {
 		
 		titledPaneStudy.setContent(listViewTitleTopics);
 		
-		Image img = new Image(getClass().getResourceAsStream("selection (1).png"));
+		Image img = new Image(getClass().getResourceAsStream("touchscreen.png"));
         ImageView imgView = new ImageView(img);
-        imgView.setFitWidth(16);
+        imgView.setFitWidth(18);
         imgView.setFitHeight(16);
 		
         Button button = new Button();

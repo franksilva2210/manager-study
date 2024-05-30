@@ -37,16 +37,16 @@
                   </Button>
                   <MenuButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="47.0">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Novo" />
+                        <MenuItem fx:id="menuListNovo" mnemonicParsing="false" text="Novo" />
                         <MenuItem mnemonicParsing="false" text="Remover" />
                      </items>
                      <HBox.margin>
                         <Insets left="3.0" />
                      </HBox.margin>
                      <graphic>
-                        <ImageView fitHeight="15.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@enginer.png" />
+                              <Image url="@menu.png" />
                            </image>
                         </ImageView>
                      </graphic>
