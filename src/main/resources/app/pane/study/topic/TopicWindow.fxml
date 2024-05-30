@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.HTMLEditor?>
 
-<AnchorPane prefHeight="582.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="557.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox layoutX="113.0" layoutY="75.0" prefHeight="550.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -21,39 +22,52 @@
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </VBox.margin>
             </HBox>
-            <VBox prefHeight="510.0" prefWidth="750.0">
+            <VBox prefHeight="523.0" prefWidth="750.0">
                <children>
-                  <HBox prefHeight="299.0" prefWidth="746.0">
-                     <children>
-                        <HTMLEditor fx:id="editorTextTopic" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="320.0" prefWidth="750.0" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox prefHeight="212.0" prefWidth="750.0">
-                     <children>
-                        <VBox prefHeight="196.0" prefWidth="328.0" style="-fx-background-color: #E6E8E9;">
-                           <HBox.margin>
-                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                           </HBox.margin></VBox>
-                        <VBox prefHeight="196.0" prefWidth="421.0" style="-fx-border-color: #cccccc;">
-                           <children>
-                              <ListView fx:id="listViewTopics" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F5F3EE;" />
-                           </children>
-                           <HBox.margin>
-                              <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-                           </HBox.margin>
-                        </VBox>
-                     </children>
-                  </HBox>
+                  <TabPane prefHeight="521.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                      <Tab text="Geral">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <HBox prefHeight="171.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <VBox prefHeight="196.0" prefWidth="328.0" style="-fx-background-color: #E6E8E9;">
+                                             <HBox.margin>
+                                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                          <VBox prefHeight="196.0" prefWidth="421.0" style="-fx-border-color: #cccccc;">
+                                             <children>
+                                                <ListView fx:id="listViewTopics" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F5F3EE;" />
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                                             </HBox.margin>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Antoções">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <HBox prefHeight="171.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <HTMLEditor fx:id="editorTextTopic" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="320.0" prefWidth="750.0" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                  </TabPane>
                </children>
             </VBox>
-            <HBox alignment="CENTER" prefHeight="32.0" prefWidth="750.0" spacing="80.0">
-               <children>
-                  <Button fx:id="bttSave" mnemonicParsing="false" prefHeight="25.0" prefWidth="130.0" text="Salvar" />
-               </children>
-            </HBox>
          </children>
       </VBox>
    </children>
