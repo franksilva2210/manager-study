@@ -8,15 +8,15 @@ public class Topic {
 	private Long id;
 	private String title;
 	private String text;
-	private List<Topic> listSubTopics;
+	private List<Topic> listTopics;
 	
 	public Topic() {
-		this.listSubTopics = new ArrayList<>();
+		this.listTopics = new ArrayList<>();
 	}
 	
 	public Topic(String title) {
 		this.title = title;
-		this.listSubTopics = new ArrayList<>();
+		this.listTopics = new ArrayList<>();
 	}
 	
 	public Long getId() {
@@ -43,12 +43,12 @@ public class Topic {
 		this.text = text;
 	}
 
-	public List<Topic> getListSubTopics() {
-		return listSubTopics;
+	public List<Topic> getListTopics() {
+		return listTopics;
 	}
 
-	public void setListSubTopics(List<Topic> listSubTopics) {
-		this.listSubTopics = listSubTopics;
+	public void setListTopics(List<Topic> listTopics) {
+		this.listTopics = listTopics;
 	}
 	
 }

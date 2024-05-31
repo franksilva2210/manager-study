@@ -19,14 +19,9 @@ import javafx.scene.web.HTMLEditor;
 
 public class StudyControl implements Initializable {
 
-	@FXML
-	private Label lblTitleStudy;
-	
-	@FXML
-    private HTMLEditor editorTextMatter;
-	
-	@FXML
-	private ListView<String> listViewTopics;
+	@FXML private Label lblTitleStudy;
+	@FXML private HTMLEditor editorTextMatter;
+	@FXML private ListView<String> listViewTopics;
 	
 	private static Study studySelected;
 	private ObservableList<String> listTopics = FXCollections.observableArrayList();
@@ -37,15 +32,7 @@ public class StudyControl implements Initializable {
 		
 		listViewTopics.setOnMouseClicked((MouseEvent mouse) -> {
 			if (mouse.getClickCount() == 2) {
-				String titleTopic = listViewTopics.getSelectionModel().getSelectedItem();
-				if (titleTopic != null) {
-					for(Topic topic : studySelected.getListTopics()) {
-						if (topic.getTitle().equals(titleTopic)) {
-							TopicControl.setTopicSelected(topic);
-							TopicWindow.buildAndShowScreen(MainContainerWindow.getStage());
-						}
-					}
-				}
+				selectTopic();
 			}
 		});
 		
@@ -62,6 +49,20 @@ public class StudyControl implements Initializable {
 			
 			listViewTopics.refresh();
 		}	
+	}
+
+	private void selectTopic() {
+		String titleTopic = listViewTopics.getSelectionModel().getSelectedItem();
+		if (titleTopic != null) {
+			for(Topic topic : studySelected.getListTopics()) {
+				if (topic.getTitle().equals(titleTopic)) {
+					TopicControl topicControl = new TopicControl();
+					topicControl.setTopicSelected(topic);
+					TopicWindow topicWindow = new TopicWindow();
+					topicWindow.buildAndShowScreen(topicControl, MainContainerWindow.getStage());
+				}
+			}
+		}
 	}
 
 	public static Study getStudySelected() {

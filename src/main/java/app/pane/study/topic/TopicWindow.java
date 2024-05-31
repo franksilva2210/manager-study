@@ -12,53 +12,53 @@ import jfxtras.styles.jmetro.Style;
 
 public class TopicWindow {
 	
-	private static Stage stage;
-	private static Scene scene;
-	private static AnchorPane root;
+	private Stage stage;
+	private Scene scene;
+	private AnchorPane root;
 
-	public static AnchorPane getRoot() {
+	public AnchorPane getRoot() {
 		return root;
 	}
 
-	public static void setRoot(AnchorPane root) {
-		TopicWindow.root = root;
+	public void setRoot(AnchorPane root) {
+		this.root = root;
 	}
 
-	public static Stage getStage() {
+	public Stage getStage() {
 		return stage;
 	}
 
-	public static void setStage(Stage stage) {
-		TopicWindow.stage = stage;
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 
-	public static Scene getScene() {
+	public Scene getScene() {
 		return scene;
 	}
 
-	public static void setScene(Scene scene) {
-		TopicWindow.scene = scene;
+	public void setScene(Scene scene) {
+		this.scene = scene;
 	}
 	
-	public static void buildAndShowScreen(Stage stageOwner) {
-		buildScreen(stageOwner);
+	public void buildAndShowScreen(TopicControl topicControl, Stage stageOwner) {
+		buildScreen(topicControl, stageOwner);
 		showScreen();
 	}
 	
-	public static void showScreen() {
+	public void showScreen() {
 		stage.showAndWait();
 	}
 	
-	public static void buildScreen(Stage stageOwner) {
-		buildVBox();
+	public void buildScreen(TopicControl topicControl, Stage stageOwner) {
+		buildVBox(topicControl);
 		buildScene();
 		buildStage(stageOwner);
 	}
 
-	private static AnchorPane buildVBox() {
+	private AnchorPane buildVBox(TopicControl topicControl) {
 		FXMLLoader rootFxml = new FXMLLoader();
 		rootFxml.setLocation(TopicWindow.class.getResource("TopicWindow.fxml"));
-		rootFxml.setController(new TopicControl());
+		rootFxml.setController(topicControl);
 		
 		try {
 			root = rootFxml.load();
@@ -70,14 +70,14 @@ public class TopicWindow {
 		return null;
 	}
 	
-	private static void buildScene() {
+	private void buildScene() {
 		scene = new Scene(root);
 		JMetro jMetro = new JMetro();
 		jMetro.setStyle(Style.LIGHT);
 		jMetro.setScene(scene);
 	}
 		
-	private static void buildStage(Stage stageOwner) {
+	private void buildStage(Stage stageOwner) {
 		stage = new Stage();
 		stage.setScene(scene);
 		stage.setResizable(false);

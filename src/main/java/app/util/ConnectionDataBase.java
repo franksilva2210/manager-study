@@ -6,11 +6,11 @@ import java.sql.SQLException;
 
 public class ConnectionDataBase {
 	
-	public static Connection getConnection() throws ClassNotFoundException {
+	public static Connection getConnection() {
 		Connection connection = null;
 		
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/study_guide,root,root");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/study_guide","root","root");
 			System.out.println("Connection Data Base Sucess!");
 		} catch(SQLException exc) {
 			System.out.println("Error Connection Data Base! " + exc.getMessage());

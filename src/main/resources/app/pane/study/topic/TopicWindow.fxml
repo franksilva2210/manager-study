@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.HTMLEditor?>
 
-<AnchorPane prefHeight="557.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="500.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox layoutX="113.0" layoutY="75.0" prefHeight="550.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="33.0" prefWidth="750.0" style="-fx-background-color: #E6E8E9;">
+            <HBox alignment="CENTER" prefHeight="29.0" prefWidth="616.0" style="-fx-background-color: #E6E8E9;">
                <children>
                   <Label fx:id="lblTitleTopic" text="Label" />
                </children>
@@ -22,9 +22,9 @@
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </VBox.margin>
             </HBox>
-            <VBox prefHeight="523.0" prefWidth="750.0">
+            <VBox prefHeight="467.0" prefWidth="620.0">
                <children>
-                  <TabPane prefHeight="521.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE">
+                  <TabPane prefHeight="466.0" prefWidth="620.0" tabClosingPolicy="UNAVAILABLE">
                     <tabs>
                       <Tab text="Geral">
                         <content>
@@ -39,7 +39,7 @@
                                           </VBox>
                                           <VBox prefHeight="196.0" prefWidth="421.0" style="-fx-border-color: #cccccc;">
                                              <children>
-                                                <ListView fx:id="listViewTopics" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #F5F3EE;" />
+                                                <ListView fx:id="listViewTopics" prefHeight="441.0" prefWidth="349.0" style="-fx-background-color: #F5F3EE;" />
                                              </children>
                                              <HBox.margin>
                                                 <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />

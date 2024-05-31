@@ -31,7 +31,8 @@ public class ListStudyControl implements Initializable {
 	@FXML private ListView<HBox> listViewStudyGui;
 	@FXML private MenuItem menuListNovo;
 	
-	ObservableList<HBox> observableListStudyGui = FXCollections.observableArrayList();
+	private ObservableList<HBox> observableListStudyGui = FXCollections.observableArrayList();
+	private ListStudyService listStudyService = new ListStudyService();
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -39,29 +40,10 @@ public class ListStudyControl implements Initializable {
 		listViewStudyGui.setItems(observableListStudyGui);
 		
 		menuListNovo.setOnAction((event) -> {
-			StudyRegisterWindow.buildAndShowScreen(MainContainerWindow.getStage());
+			newRegisterStudy();
 		});
-		
-		Study study1 = new Study("Estudo Java");
-		study1.getListTopics().add(new Topic("Livro H Schildt"));
-		study1.getListTopics().add(new Topic("Java Web"));
-		study1.getListTopics().add(new Topic("Persistência"));
-		study1.getListTopics().add(new Topic("Maven"));
-		study1.getListTopics().add(new Topic("JavaFX"));
-		
-		Study study2 = new Study("Geografia");
-		study2.getListTopics().add(new Topic("Geologia"));
-		study2.getListTopics().add(new Topic("Relevo"));
-		study2.getListTopics().add(new Topic("Urbanização"));
-		
-		List<Study> listStudy = new ArrayList<>();
-		listStudy.add(study1);
-		listStudy.add(study2);
-		
-		for(Study study : listStudy) {
-			observableListStudyGui.add(generateStudyGui(study));
-		}
-		
+
+		consultAllStudy();
 	}
 	
 	private HBox generateStudyGui(Study study) {
@@ -111,12 +93,52 @@ public class ListStudyControl implements Initializable {
 		}
 		return listTitleTopics;
 	}
+
+	private void newRegisterStudy() {
+		StudyRegisterWindow.buildAndShowScreen(MainContainerWindow.getStage());
+		consultAllStudy();
+	}
 	
 	private void selectStudy(Study study) {
 		StudyControl.setStudySelected(study);
 		VBox paneStudy = (VBox) MainContainerWindow.getScene().lookup("#paneStudy");
 		paneStudy.getChildren().clear();
 		paneStudy.getChildren().add(StudyWindow.buildVBox());
+	}
+
+	private void consultAllStudy() {
+		List<Study> studyList = new ArrayList<>();
+
+		try {
+			studyList = listStudyService.consultAllStudy();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		Study study1 = new Study("Estudo Java");
+		study1.getListTopics().add(new Topic("Livro H Schildt"));
+		study1.getListTopics().add(new Topic("Java Web"));
+		study1.getListTopics().add(new Topic("Persistência"));
+		study1.getListTopics().add(new Topic("Maven"));
+
+		Topic topic = new Topic("JavaFX");
+		topic.getListTopics().add(new Topic("JavaFX & Spring Boot"));
+		topic.getListTopics().add(new Topic("JavaFX & Swing"));
+		study1.getListTopics().add(topic);
+
+		Study study2 = new Study("Geografia");
+		study2.getListTopics().add(new Topic("Geologia"));
+		study2.getListTopics().add(new Topic("Relevo"));
+		study2.getListTopics().add(new Topic("Urbanização"));
+
+		studyList.add(study1);
+		studyList.add(study2);
+
+		observableListStudyGui.clear();
+
+		for (Study study : studyList) {
+			observableListStudyGui.add(generateStudyGui(study));
+		}
 	}
 	
 }

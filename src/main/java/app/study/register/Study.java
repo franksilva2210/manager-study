@@ -9,7 +9,13 @@ public class Study {
 	private String matter;
 	private String text;
 	private List<Topic> listTopics;
-	
+
+	public Study() {
+		this.matter = "";
+		this.text = "";
+		this.listTopics = new ArrayList<>();
+	}
+
 	public Study(String matter) {
 		this.matter = matter;
 		this.listTopics = new ArrayList<>();

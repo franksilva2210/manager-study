@@ -50,12 +50,12 @@ public class StudyRegisterWindow {
 	}
 	
 	public static void buildScreen(Stage stageOwner) {
-		buildVBox();
+		buildAnchorPane();
 		buildScene();
 		buildStage(stageOwner);
 	}
 
-	private static AnchorPane buildVBox() {
+	private static AnchorPane buildAnchorPane() {
 		FXMLLoader rootFxml = new FXMLLoader();
 		rootFxml.setLocation(StudyRegisterWindow.class.getResource("StudyRegisterWindow.fxml"));
 		rootFxml.setController(new StudyRegisterControl());

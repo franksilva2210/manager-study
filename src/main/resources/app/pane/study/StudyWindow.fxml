@@ -28,14 +28,14 @@
                      <children>
                         <HBox alignment="CENTER_RIGHT" prefHeight="171.0" prefWidth="618.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <VBox prefHeight="210.0" prefWidth="245.0" style="-fx-background-color: #E6E8E9;">
+                              <VBox prefHeight="210.0" prefWidth="245.0">
                                  <HBox.margin>
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                  </HBox.margin>
                               </VBox>
                               <VBox prefHeight="240.0" prefWidth="367.0" style="-fx-border-color: #cccccc;">
                                  <children>
-                                    <ListView fx:id="listViewTopics" prefHeight="300.0" prefWidth="378.0" style="-fx-background-color: #F5F3EE;" />
+                                    <ListView fx:id="listViewTopics" prefHeight="427.0" prefWidth="363.0" style="-fx-background-color: #F5F3EE;" />
                                  </children>
                                  <HBox.margin>
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
