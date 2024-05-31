@@ -3,6 +3,10 @@ package app.study.register;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import app.message.confirm.MessageConfirmControl;
+import app.message.confirm.MessageConfirmWindow;
+import app.message.info.MessageInfoControl;
+import app.message.info.MessageInfoWindow;
 import app.study.search.StudySearchControl;
 import app.study.search.StudySearchWindow;
 import app.util.ModPersistData;
@@ -51,7 +55,7 @@ public class StudyRegisterControl implements Initializable {
 		});
 
 		menuRemove.setOnAction((ActionEvent event) -> {
-			//desenvolver tela de confirmacao de operacao
+			removeStudy();
 		});
 
 		bttSave.setOnMouseClicked((MouseEvent mouseEvent) -> {
@@ -87,6 +91,24 @@ public class StudyRegisterControl implements Initializable {
 			study = StudySearchControl.getStudySelected();
 			modPersistData = ModPersistData.UPDATE;
 			studyRegisterService.showStudyScreen(componentsFxDto, study);
+		}
+	}
+
+	private void removeStudy() {
+		if (modPersistData.equals(ModPersistData.UPDATE)) {
+			MessageConfirmControl.setConfirm(false);
+			MessageConfirmControl.setMsgUser("Deseja realmente remover esse estudo?");
+			MessageConfirmWindow.buildAndShowScreen(StudyRegisterWindow.getStage());
+			if(MessageConfirmControl.getConfirm()) {
+				modPersistData = ModPersistData.DELETE;
+                try {
+                    studyRegisterService.executePersistence(study, modPersistData);
+					newStudy();
+                } catch (Exception e) {
+					MessageInfoControl.setMsgUser(e.getMessage());
+					MessageInfoWindow.buildAndShowScreen(StudyRegisterWindow.getStage());
+                }
+            }
 		}
 	}
 

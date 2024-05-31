@@ -108,15 +108,12 @@ public class ListStudyControl implements Initializable {
 
 	private void consultAllStudy() {
 		List<Study> studyList = new ArrayList<>();
-
 		try {
 			studyList = listStudyService.consultAllStudy();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		observableListStudyGui.clear();
-
 		for (Study study : studyList) {
 			observableListStudyGui.add(generateStudyGui(study));
 		}
