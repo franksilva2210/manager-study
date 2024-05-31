@@ -115,25 +115,6 @@ public class ListStudyControl implements Initializable {
 			e.printStackTrace();
 		}
 
-		Study study1 = new Study("Estudo Java");
-		study1.getListTopics().add(new Topic("Livro H Schildt"));
-		study1.getListTopics().add(new Topic("Java Web"));
-		study1.getListTopics().add(new Topic("Persistência"));
-		study1.getListTopics().add(new Topic("Maven"));
-
-		Topic topic = new Topic("JavaFX");
-		topic.getListTopics().add(new Topic("JavaFX & Spring Boot"));
-		topic.getListTopics().add(new Topic("JavaFX & Swing"));
-		study1.getListTopics().add(topic);
-
-		Study study2 = new Study("Geografia");
-		study2.getListTopics().add(new Topic("Geologia"));
-		study2.getListTopics().add(new Topic("Relevo"));
-		study2.getListTopics().add(new Topic("Urbanização"));
-
-		studyList.add(study1);
-		studyList.add(study2);
-
 		observableListStudyGui.clear();
 
 		for (Study study : studyList) {
