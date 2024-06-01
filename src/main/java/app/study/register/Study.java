@@ -54,4 +54,13 @@ public class Study {
 	public void setText(String text) {
 		this.text = text;
 	}
+
+	public Topic getTopicByTitle(String titleTopic) {
+		for(Topic topic : listTopics) {
+			if (topic.getTitle().equals(titleTopic)) {
+				return topic;
+			}
+		}
+		return null;
+	}
 }

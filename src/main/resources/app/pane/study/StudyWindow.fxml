@@ -14,14 +14,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.HTMLEditor?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="620.0" style="-fx-border-color: #cccccc;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER" prefHeight="31.0" prefWidth="548.0" style="-fx-background-color: #E6E8E9;">
          <children>
             <Label fx:id="lblTitleStudy" />
          </children>
          <VBox.margin>
-            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+            <Insets />
          </VBox.margin>
       </HBox>
       <TabPane prefHeight="462.0" prefWidth="618.0" tabClosingPolicy="UNAVAILABLE">
@@ -37,7 +37,7 @@
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                  </HBox.margin>
                               </VBox>
-                              <VBox prefHeight="240.0" prefWidth="367.0">
+                              <VBox prefHeight="429.0" prefWidth="317.0">
                                  <children>
                                     <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="366.0">
                                        <children>
@@ -57,7 +57,7 @@
                                                       <Insets top="45.0" />
                                                    </VBox.margin>
                                                    <graphic>
-                                                      <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                                      <ImageView fitHeight="15.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
                                                             <Image url="@plus.png" />
                                                          </image></ImageView>
@@ -68,7 +68,7 @@
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
                                                    <graphic>
-                                                      <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                                      <ImageView fitHeight="15.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
                                                             <Image url="@edit.png" />
                                                          </image></ImageView>
@@ -79,7 +79,7 @@
                                                       <Insets top="10.0" />
                                                    </VBox.margin>
                                                    <graphic>
-                                                      <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                                      <ImageView fitHeight="15.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
                                                             <Image url="@trash.png" />
                                                          </image></ImageView>
@@ -87,11 +87,11 @@
                                                 </Button>
                                              </children>
                                           </VBox>
-                                          <VBox prefHeight="401.0" prefWidth="299.0">
+                                          <VBox prefHeight="389.0" prefWidth="273.0">
                                              <children>
                                                 <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="323.0">
                                                    <children>
-                                                      <TextField prefHeight="25.0" prefWidth="250.0">
+                                                      <TextField prefHeight="25.0" prefWidth="225.0">
                                                          <HBox.margin>
                                                             <Insets />
                                                          </HBox.margin>
@@ -101,7 +101,7 @@
                                                             <Insets left="2.0" />
                                                          </HBox.margin>
                                                          <graphic>
-                                                            <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                                            <ImageView fitHeight="15.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                                                                <image>
                                                                   <Image url="@search.png" />
                                                                </image></ImageView>
@@ -109,7 +109,7 @@
                                                       </Button>
                                                    </children>
                                                 </HBox>
-                                                <ListView fx:id="listViewTopics" prefHeight="361.0" prefWidth="299.0" style="-fx-background-color: #F5F3EE;">
+                                                <ListView fx:id="listViewTopics" prefHeight="361.0" prefWidth="271.0" style="-fx-background-color: #F5F3EE;">
                                                    <VBox.margin>
                                                       <Insets right="2.0" />
                                                    </VBox.margin>
@@ -149,4 +149,7 @@
         </tabs>
       </TabPane>
    </children>
+   <padding>
+      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+   </padding>
 </VBox>

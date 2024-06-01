@@ -1,4 +1,4 @@
-package app.study.register;
+package app.pane.study.topic.register;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,13 @@ public class Topic {
 	public Topic(String title) {
 		this.title = title;
 		this.listTopics = new ArrayList<>();
+	}
+
+	public Topic(Topic topic) {
+		this.id = topic.getId();
+		this.title = topic.getTitle();
+		this.text = topic.getText();
+		this.listTopics = topic.getListTopics();
 	}
 	
 	public Long getId() {
@@ -52,6 +59,17 @@ public class Topic {
 
 	public void setListTopics(List<Topic> listTopics) {
 		this.listTopics = listTopics;
+	}
+
+	public Topic searchTopicByTitle() {
+		return null;
+	}
+
+	public boolean verifyUpdateInTitle(Topic topic) {
+		if (!this.title.equals(topic.getTitle())) {
+			return true;
+		}
+		return false;
 	}
 	
 }
