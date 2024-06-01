@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import app.pane.MainContainerWindow;
-import app.study.register.Topic;
+import app.pane.study.topic.register.Topic;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

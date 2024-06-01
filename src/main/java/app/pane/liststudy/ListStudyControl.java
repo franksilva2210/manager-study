@@ -10,7 +10,7 @@ import app.pane.study.StudyControl;
 import app.pane.study.StudyWindow;
 import app.study.register.Study;
 import app.study.register.StudyRegisterWindow;
-import app.study.register.Topic;
+import app.pane.study.topic.register.Topic;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

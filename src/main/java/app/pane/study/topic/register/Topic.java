@@ -11,6 +11,9 @@ public class Topic {
 	private List<Topic> listTopics;
 	
 	public Topic() {
+		this.id = 0L;
+		this.title = "";
+		this.text = "";
 		this.listTopics = new ArrayList<>();
 	}
 	
