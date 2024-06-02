@@ -17,10 +17,38 @@ public class MainContainerControl implements Initializable {
 	@FXML
 	private VBox paneStudy;
 
+	private static ListStudyWindow listStudyWindow;
+	private static StudyWindow studyWindow;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		paneListStudy.getChildren().add(ListStudyWindow.buildVBox());
-		paneStudy.getChildren().add(StudyWindow.buildVBox());
+		buildPaneListStudy();
+		buildPaneStudy();
 	}
-	
+
+	private void buildPaneListStudy() {
+		listStudyWindow.buildRoot();
+		paneListStudy.getChildren().add(listStudyWindow.getRoot());
+	}
+
+	private void buildPaneStudy() {
+		studyWindow.buildRoot();
+		paneStudy.getChildren().add(studyWindow.getRoot());
+	}
+
+	public static StudyWindow getStudyWindow() {
+		return studyWindow;
+	}
+
+	public static void setStudyWindow(StudyWindow studyWindow) {
+		MainContainerControl.studyWindow = studyWindow;
+	}
+
+	public static ListStudyWindow getListStudyWindow() {
+		return listStudyWindow;
+	}
+
+	public static void setListStudyWindow(ListStudyWindow listStudyWindow) {
+		MainContainerControl.listStudyWindow = listStudyWindow;
+	}
 }
