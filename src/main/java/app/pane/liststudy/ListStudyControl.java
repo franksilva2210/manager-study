@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import app.pane.MainContainerControl;
 import app.pane.MainContainerWindow;
 import app.pane.study.StudyControl;
 import app.pane.study.StudyWindow;
@@ -100,10 +101,14 @@ public class ListStudyControl implements Initializable {
 	}
 	
 	private void selectStudy(Study study) {
-		StudyControl.setStudySelected(study);
+		StudyControl studyControl = new StudyControl();
+		studyControl.setStudy(study);
+		StudyWindow studyWindow = new StudyWindow();
+		studyWindow.setController(studyControl);
+		studyWindow.buildRoot();
 		VBox paneStudy = (VBox) MainContainerWindow.getScene().lookup("#paneStudy");
 		paneStudy.getChildren().clear();
-		paneStudy.getChildren().add(StudyWindow.buildVBox());
+		paneStudy.getChildren().add(studyWindow.getRoot());
 	}
 
 	private void consultAllStudy() {
