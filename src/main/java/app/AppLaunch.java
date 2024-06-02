@@ -1,7 +1,7 @@
 package app;
 
-import app.pane.MainContainerControl;
-import app.pane.MainContainerWindow;
+import app.pane.PaneMainControl;
+import app.pane.PaneMainWindow;
 import app.pane.liststudy.ListStudyControl;
 import app.pane.liststudy.ListStudyWindow;
 import app.pane.study.StudyControl;
@@ -18,10 +18,10 @@ public class AppLaunch {
 		StudyWindow studyWindow = new StudyWindow();
 		studyWindow.setController(studyControl);
 
-		MainContainerControl.setListStudyWindow(listStudyWindow);
-		MainContainerControl.setStudyWindow(studyWindow);
+		PaneMainControl.setListStudyWindow(listStudyWindow);
+		PaneMainControl.setStudyWindow(studyWindow);
 
-		MainContainerWindow.main(args);
+		PaneMainWindow.main(args);
 	}
 
 }

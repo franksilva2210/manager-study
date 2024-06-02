@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import app.message.info.MessageInfoControl;
 import app.message.info.MessageInfoWindow;
-import app.pane.MainContainerWindow;
+import app.pane.PaneMainWindow;
 import app.pane.study.topic.TopicControl;
 import app.pane.study.topic.TopicWindow;
 import app.pane.study.topic.register.TopicRegisterControl;
@@ -91,7 +91,7 @@ public class StudyControl implements Initializable {
 					TopicControl topicControl = new TopicControl();
 					topicControl.setTopicSelected(topic);
 					TopicWindow topicWindow = new TopicWindow();
-					topicWindow.buildAndShowScreen(topicControl, MainContainerWindow.getStage());
+					topicWindow.buildAndShowScreen(topicControl, PaneMainWindow.getStage());
 				}
 			}
 		}
@@ -103,7 +103,7 @@ public class StudyControl implements Initializable {
 			TopicRegisterControl topicRegisterControl = new TopicRegisterControl();
 			topicRegisterControl.setTopicRegisterWindow(topicRegisterWindow);
 			topicRegisterWindow.setController(topicRegisterControl);
-			topicRegisterWindow.buildAndShowScreen(MainContainerWindow.getStage());
+			topicRegisterWindow.buildAndShowScreen(PaneMainWindow.getStage());
 			if (topicRegisterControl.getTopic() != null) {
 				Topic topic = topicRegisterControl.getTopic();
 				study.getListTopics().add(topic);
@@ -113,7 +113,7 @@ public class StudyControl implements Initializable {
 		} else {
 			MessageInfoControl.setMsgUser("Não foi selecionado nenhum Estudo para\nadição de topicos. " +
 					"Selecione primeiramente\num Estudo cadastrado e tente novamente.");
-			MessageInfoWindow.buildAndShowScreen(MainContainerWindow.getStage());
+			MessageInfoWindow.buildAndShowScreen(PaneMainWindow.getStage());
 		}
 	}
 
@@ -128,7 +128,7 @@ public class StudyControl implements Initializable {
 				topicRegisterControl.setTopic(topicSelected);
 				topicRegisterControl.setModPersistData(ModPersistData.UPDATE);
 				topicRegisterWindow.setController(topicRegisterControl);
-				topicRegisterWindow.buildAndShowScreen(MainContainerWindow.getStage());
+				topicRegisterWindow.buildAndShowScreen(PaneMainWindow.getStage());
 				if (topicRegisterControl.getTopic() != null) {
 					Topic topicEdited = topicRegisterControl.getTopic();
 					if (topicSelected.verifyUpdateInTitle(topicEdited)) {
@@ -147,7 +147,7 @@ public class StudyControl implements Initializable {
             studyService.saveStudy(study);
         } catch (Exception e) {
 			MessageInfoControl.setMsgUser(e.getMessage());
-			MessageInfoWindow.buildAndShowScreen(MainContainerWindow.getStage());
+			MessageInfoWindow.buildAndShowScreen(PaneMainWindow.getStage());
         }
     }
 

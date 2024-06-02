@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
 
-public class MainContainerControl implements Initializable {
+public class PaneMainControl implements Initializable {
 	
 	@FXML
     private VBox paneListStudy;
@@ -41,7 +41,7 @@ public class MainContainerControl implements Initializable {
 	}
 
 	public static void setStudyWindow(StudyWindow studyWindow) {
-		MainContainerControl.studyWindow = studyWindow;
+		PaneMainControl.studyWindow = studyWindow;
 	}
 
 	public static ListStudyWindow getListStudyWindow() {
@@ -49,6 +49,6 @@ public class MainContainerControl implements Initializable {
 	}
 
 	public static void setListStudyWindow(ListStudyWindow listStudyWindow) {
-		MainContainerControl.listStudyWindow = listStudyWindow;
+		PaneMainControl.listStudyWindow = listStudyWindow;
 	}
 }

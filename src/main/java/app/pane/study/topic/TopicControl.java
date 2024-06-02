@@ -3,7 +3,7 @@ package app.pane.study.topic;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import app.pane.MainContainerWindow;
+import app.pane.PaneMainWindow;
 import app.pane.study.topic.register.Topic;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,7 +53,7 @@ public class TopicControl implements Initializable {
 					TopicControl topicControl = new TopicControl();
 					topicControl.setTopicSelected(topic);
 					TopicWindow topicWindow = new TopicWindow();
-					topicWindow.buildAndShowScreen(topicControl, MainContainerWindow.getStage());
+					topicWindow.buildAndShowScreen(topicControl, PaneMainWindow.getStage());
 				}
 			}
 		}

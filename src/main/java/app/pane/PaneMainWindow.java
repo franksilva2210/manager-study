@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
-public class MainContainerWindow extends Application {
+public class PaneMainWindow extends Application {
 	
 	private static Stage stage;
 	private static Scene scene;
@@ -21,7 +21,7 @@ public class MainContainerWindow extends Application {
 	}
 
 	public static void setStage(Stage stage) {
-		MainContainerWindow.stage = stage;
+		PaneMainWindow.stage = stage;
 	}
 
 	public static Scene getScene() {
@@ -29,7 +29,7 @@ public class MainContainerWindow extends Application {
 	}
 
 	public static void setScene(Scene scene) {
-		MainContainerWindow.scene = scene;
+		PaneMainWindow.scene = scene;
 	}
 
 	public static AnchorPane getRoot() {
@@ -37,7 +37,7 @@ public class MainContainerWindow extends Application {
 	}
 
 	public static void setRoot(AnchorPane root) {
-		MainContainerWindow.root = root;
+		PaneMainWindow.root = root;
 	}
 	
 	public static void main(String[] args) {
@@ -66,8 +66,8 @@ public class MainContainerWindow extends Application {
 
 	private static void buildRoot() {
 		FXMLLoader rootFxml = new FXMLLoader();
-		rootFxml.setLocation(MainContainerWindow.class.getResource("MainContainerWindow.fxml"));
-		rootFxml.setController(new MainContainerControl());
+		rootFxml.setLocation(PaneMainWindow.class.getResource("PaneMainWindow.fxml"));
+		rootFxml.setController(new PaneMainControl());
 		
 		try {
 			root = rootFxml.load();
