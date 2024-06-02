@@ -26,14 +26,19 @@ import javafx.scene.web.HTMLEditor;
 public class StudyControl implements Initializable {
 
 	@FXML private Label lblTitleStudy;
-	@FXML private HTMLEditor editorTextMatter;
+	@FXML private Button bttSave;
+
+	//Aba Topicos
 	@FXML private ListView<String> listViewTopics;
+	@FXML private Button bttSearchTopic;
 	@FXML private Button bttAddTopic;
 	@FXML private Button bttEditTopic;
 	@FXML private Button bttRemoveTopic;
-	@FXML private Button bttSearchTopic;
+
+	//Aba Anotacoes
+	@FXML private HTMLEditor editorTextMatter;
 	
-	private static Study studySelected;
+	private Study study;
 	private ObservableList<String> listTopics = FXCollections.observableArrayList();
 	private StudyService studyService = new StudyService();
 	
@@ -58,14 +63,20 @@ public class StudyControl implements Initializable {
 				editTopic();
 			}
 		});
+
+		bttSave.setOnMouseClicked((MouseEvent mouse) -> {
+			if (mouse.getClickCount() == 1) {
+				saveStudy();
+			}
+		});
 		
 		showInfoStudy();
 	}
 	
 	private void showInfoStudy() {
-		if (studySelected != null) {
-			lblTitleStudy.setText(studySelected.getMatter());
-			for(Topic topic : studySelected.getListTopics()) {
+		if (study != null) {
+			lblTitleStudy.setText(study.getMatter());
+			for(Topic topic : study.getListTopics()) {
 				listTopics.add(topic.getTitle());
 			}
 			listViewTopics.refresh();
@@ -75,7 +86,7 @@ public class StudyControl implements Initializable {
 	private void openTopic() {
 		String titleTopic = listViewTopics.getSelectionModel().getSelectedItem();
 		if (titleTopic != null) {
-			for(Topic topic : studySelected.getListTopics()) {
+			for(Topic topic : study.getListTopics()) {
 				if (topic.getTitle().equals(titleTopic)) {
 					TopicControl topicControl = new TopicControl();
 					topicControl.setTopicSelected(topic);
@@ -87,7 +98,7 @@ public class StudyControl implements Initializable {
 	}
 
 	private void addTopic() {
-		if (studySelected != null) {
+		if (study != null) {
 			TopicRegisterWindow topicRegisterWindow = new TopicRegisterWindow();
 			TopicRegisterControl topicRegisterControl = new TopicRegisterControl();
 			topicRegisterControl.setTopicRegisterWindow(topicRegisterWindow);
@@ -95,8 +106,8 @@ public class StudyControl implements Initializable {
 			topicRegisterWindow.buildAndShowScreen(MainContainerWindow.getStage());
 			if (topicRegisterControl.getTopic() != null) {
 				Topic topic = topicRegisterControl.getTopic();
-				studySelected.getListTopics().add(topic);
-				studyService.updateListTopics(studySelected, listTopics);
+				study.getListTopics().add(topic);
+				studyService.updateListTopics(study, listTopics);
 				listViewTopics.refresh();
 			}
 		} else {
@@ -109,7 +120,7 @@ public class StudyControl implements Initializable {
 	private void editTopic() {
 		String titleTopic = listViewTopics.getSelectionModel().getSelectedItem();
 		if (titleTopic != null) {
-			Topic topicSelected = studySelected.getTopicByTitle(titleTopic);
+			Topic topicSelected = study.getTopicByTitle(titleTopic);
 			if (topicSelected != null) {
 				TopicRegisterWindow topicRegisterWindow = new TopicRegisterWindow();
 				TopicRegisterControl topicRegisterControl = new TopicRegisterControl();
@@ -121,9 +132,9 @@ public class StudyControl implements Initializable {
 				if (topicRegisterControl.getTopic() != null) {
 					Topic topicEdited = topicRegisterControl.getTopic();
 					if (topicSelected.verifyUpdateInTitle(topicEdited)) {
-						studySelected.getListTopics().remove(topicSelected);
-						studySelected.getListTopics().add(topicEdited);
-						studyService.updateListTopics(studySelected, listTopics);
+						study.getListTopics().remove(topicSelected);
+						study.getListTopics().add(topicEdited);
+						studyService.updateListTopics(study, listTopics);
 						listViewTopics.refresh();
 					}
 				}
@@ -131,11 +142,20 @@ public class StudyControl implements Initializable {
 		}
 	}
 
-	public static Study getStudySelected() {
-		return studySelected;
+	private void saveStudy() {
+        try {
+            studyService.saveStudy(study);
+        } catch (Exception e) {
+			MessageInfoControl.setMsgUser(e.getMessage());
+			MessageInfoWindow.buildAndShowScreen(MainContainerWindow.getStage());
+        }
+    }
+
+	public Study getStudy() {
+		return study;
 	}
 
-	public static void setStudySelected(Study studySelected) {
-		StudyControl.studySelected = studySelected;
+	public void setStudy(Study study) {
+		this.study = study;
 	}
 }

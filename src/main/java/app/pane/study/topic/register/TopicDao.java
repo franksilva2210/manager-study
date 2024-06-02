@@ -1,11 +1,11 @@
 package app.pane.study.topic.register;
 
+import app.study.register.Study;
 import app.util.ConnectionDataBase;
 import app.util.Dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TopicDao implements Dao<Topic> {
@@ -39,7 +39,39 @@ public class TopicDao implements Dao<Topic> {
 
     @Override
     public List<Topic> consultAll() throws Exception {
-        return null;
+        Connection connection = null;
+        Statement stmt = null;
+        ResultSet result = null;
+        List<Topic> topicList = new ArrayList<>();
+
+        String sql = "SELECT * FROM topic ";
+
+        try {
+            connection = ConnectionDataBase.getConnection();
+            stmt = connection.createStatement();
+            result = stmt.executeQuery(sql);
+            while(result.next()){
+                Topic topic = new Topic();
+                topic.setId(result.getLong("topic_id"));
+                topic.setTitle(result.getString("topic_title"));
+                topic.setText(result.getString("topic_text"));
+                topicList.add(topic);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (result != null) {
+                result.close();
+            }
+        }
+        return topicList;
     }
 
     @Override

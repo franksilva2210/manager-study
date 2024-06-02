@@ -18,7 +18,9 @@ public class Topic {
 	}
 	
 	public Topic(String title) {
+		this.id = 0L;
 		this.title = title;
+		this.text = "";
 		this.listTopics = new ArrayList<>();
 	}
 

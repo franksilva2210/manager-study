@@ -2,6 +2,7 @@ package app.pane.study;
 
 import app.pane.study.topic.register.Topic;
 import app.study.register.Study;
+import app.study.register.StudyDao;
 import javafx.collections.ObservableList;
 
 public class StudyService {
@@ -10,6 +11,15 @@ public class StudyService {
         listTopics.clear();
         for(Topic topic : study.getListTopics()) {
             listTopics.add(topic.getTitle());
+        }
+    }
+
+    public void saveStudy(Study study) throws Exception {
+        StudyDao studyDao = new StudyDao();
+        try {
+            studyDao.saveOrUpdateTopics(study);
+        } catch (Exception e) {
+            throw new Exception("Falha ao salvar alteracoes no estudo.");
         }
     }
 }

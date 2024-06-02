@@ -92,6 +92,6 @@ public class TopicRegisterWindow {
         stage.setResizable(false);
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(stageOwner);
-        stage.setTitle("Cadastro de Topico");
+        stage.setTitle("Topico");
     }
 }
