@@ -11,53 +11,30 @@ import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
 public class StudyWindow {
-	private static Stage stage;
-	private static Scene scene;
-	private static VBox root;
 
-	public static VBox getRoot() {
+	private VBox root;
+	private StudyControl controller;
+
+	public VBox getRoot() {
 		return root;
 	}
 
-	public static void setRoot(VBox root) {
-		StudyWindow.root = root;
+	public void setRoot(VBox root) {
+		this.root = root;
 	}
 
-	public static Stage getStage() {
-		return stage;
+	public StudyControl getController() {
+		return controller;
 	}
 
-	public static void setStage(Stage stage) {
-		StudyWindow.stage = stage;
+	public void setController(StudyControl controller) {
+		this.controller = controller;
 	}
 
-	public static Scene getScene() {
-		return scene;
-	}
-
-	public static void setScene(Scene scene) {
-		StudyWindow.scene = scene;
-	}
-
-	public static void buildAndShowScreen(Stage stageOwner) {
-		buildScreen(stageOwner);
-		showScreen();
-	}
-
-	public static void showScreen() {
-		stage.showAndWait();
-	}
-
-	public static void buildScreen(Stage stageOwner) {
-		buildVBox();
-		buildScene();
-		buildStage(stageOwner);
-	}
-
-	public static VBox buildVBox() {
+	public VBox buildRoot() {
 		FXMLLoader rootFxml = new FXMLLoader();
 		rootFxml.setLocation(StudyWindow.class.getResource("StudyWindow.fxml"));
-		rootFxml.setController(new StudyControl());
+		rootFxml.setController(this.controller);
 		
 		try {
 			root = rootFxml.load();
@@ -67,21 +44,5 @@ public class StudyWindow {
 		}
 		
 		return null;
-	}
-
-	private static void buildScene() {
-		scene = new Scene(root);
-		JMetro jMetro = new JMetro();
-		jMetro.setStyle(Style.LIGHT);
-		jMetro.setScene(scene);
-	}
-
-	private static void buildStage(Stage stageOwner) {
-		stage = new Stage();
-		stage.setScene(scene);
-		stage.setResizable(false);
-		stage.initModality(Modality.WINDOW_MODAL);
-		stage.initOwner(stageOwner);
-		stage.setTitle("Estudo");
 	}
 }
