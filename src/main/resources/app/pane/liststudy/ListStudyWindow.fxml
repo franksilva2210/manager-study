@@ -37,7 +37,14 @@
                   </Button>
                   <MenuButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="47.0">
                      <items>
-                        <MenuItem fx:id="menuListNovo" mnemonicParsing="false" text="Novo" />
+                        <MenuItem fx:id="menuListNovo" mnemonicParsing="false" text="Novo">
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@open-book.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></MenuItem>
                         <MenuItem mnemonicParsing="false" text="Remover" />
                      </items>
                      <HBox.margin>

@@ -59,6 +59,9 @@ public class StudyDao implements Dao<Study> {
                       + "topic_id) "
                       + "VALUES(?,?); ";
 
+        String query4 = "DELETE FROM study_topic "
+                      + "WHERE topic_id = ? AND study_id = ?; ";
+
         try {
             connection = ConnectionDataBase.getConnection();
             connection.setAutoCommit(false);
@@ -97,7 +100,7 @@ public class StudyDao implements Dao<Study> {
                         break;
                     }
                 }
-                if(!existId){
+                if (!existId) {
                     pstmt.setLong(1, study.getId());
                     pstmt.setLong(2, topic.getId());
                     pstmt.executeUpdate();

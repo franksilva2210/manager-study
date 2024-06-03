@@ -20,12 +20,12 @@
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="548.0" style="-fx-background-color: #F5F3EE; -fx-border-color: #cccccc;">
          <children>
-            <HBox alignment="CENTER_RIGHT" prefHeight="29.0" prefWidth="308.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="324.0">
                <children>
                   <Label fx:id="lblTitleStudy" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="308.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="290.0">
                <children>
                   <MenuButton mnemonicParsing="false" prefHeight="20.0" prefWidth="48.0">
                     <items>
@@ -56,7 +56,7 @@
             <Insets bottom="1.0" />
          </VBox.margin>
       </HBox>
-      <TabPane prefHeight="437.0" prefWidth="616.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="429.0" prefWidth="616.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Tópicos">
             <content>
@@ -141,7 +141,7 @@
                                                       </Button>
                                                    </children>
                                                 </HBox>
-                                                <ListView fx:id="listViewTopics" prefHeight="332.0" prefWidth="271.0" style="-fx-background-color: #F5F3EE;">
+                                                <ListView fx:id="listViewTopics" prefHeight="325.0" prefWidth="271.0" style="-fx-background-color: #F5F3EE;">
                                                    <VBox.margin>
                                                       <Insets right="2.0" />
                                                    </VBox.margin>
@@ -180,11 +180,11 @@
           </Tab>
         </tabs>
       </TabPane>
-      <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="616.0">
+      <HBox alignment="CENTER" prefHeight="30.0" prefWidth="616.0">
          <children>
             <Button fx:id="bttSave" mnemonicParsing="false" prefHeight="25.0" prefWidth="136.0" text="Salvar">
                <HBox.margin>
-                  <Insets right="5.0" />
+                  <Insets />
                </HBox.margin>
             </Button>
          </children>
