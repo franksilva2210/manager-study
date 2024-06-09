@@ -96,17 +96,24 @@ public class StudyRegisterControl implements Initializable {
 
 	private void removeStudy() {
 		if (modPersistData.equals(ModPersistData.UPDATE)) {
-			MessageConfirmControl.setConfirm(false);
-			MessageConfirmControl.setMsgUser("Deseja realmente remover esse estudo?");
-			MessageConfirmWindow.buildAndShowScreen(StudyRegisterWindow.getStage());
-			if(MessageConfirmControl.getConfirm()) {
+			MessageConfirmWindow messageConfirmWindow = new MessageConfirmWindow();
+			MessageConfirmControl messageConfirmControl = new MessageConfirmControl();
+			messageConfirmControl.setConfirm(false);
+			messageConfirmControl.setMsgUser("Deseja realmente remover esse estudo?");
+			messageConfirmControl.setMessageConfirmWindow(messageConfirmWindow);
+			messageConfirmWindow.setController(messageConfirmControl);
+			messageConfirmWindow.buildAndShowScreen(StudyRegisterWindow.getStage());
+			if(messageConfirmControl.getConfirm()) {
 				modPersistData = ModPersistData.DELETE;
                 try {
                     studyRegisterService.executePersistence(study, modPersistData);
 					newStudy();
                 } catch (Exception e) {
-					MessageInfoControl.setMsgUser(e.getMessage());
-					MessageInfoWindow.buildAndShowScreen(StudyRegisterWindow.getStage());
+					MessageInfoControl messageInfoControl = new MessageInfoControl();
+					messageInfoControl.setMsgUser(e.getMessage());
+					MessageInfoWindow messageInfoWindow = new MessageInfoWindow();
+					messageInfoWindow.setController(messageInfoControl);
+					messageInfoWindow.buildAndShowScreen(StudyRegisterWindow.getStage());
                 }
             }
 		}
