@@ -20,18 +20,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.web.HTMLEditor;
 
 public class StudyControl implements Initializable {
 
 	@FXML private Label lblTitleStudy;
-	@FXML private Button bttSave;
+
+	@FXML private TabPane tabPaneStudy;
 
 	//Aba Topicos
+	@FXML private Tab tabTopics;
 	@FXML private ListView<String> listViewTopics;
 	@FXML private Button bttSearchTopic;
 	@FXML private Button bttAddTopic;
@@ -39,7 +39,10 @@ public class StudyControl implements Initializable {
 	@FXML private Button bttRemoveTopic;
 
 	//Aba Anotacoes
+	@FXML private Tab tabNotes;
 	@FXML private HTMLEditor editorTextMatter;
+
+	@FXML private Button bttSave;
 	
 	private Study study;
 	private ObservableList<String> observableListTopics = FXCollections.observableArrayList();
@@ -83,7 +86,6 @@ public class StudyControl implements Initializable {
 		componentsFxDto.setLblTitleStudy(lblTitleStudy);
 		componentsFxDto.setListViewTopics(listViewTopics);
 		componentsFxDto.setObservableListTopics(observableListTopics);
-
 		studyService.showScreenStudy(study, componentsFxDto);
 	}
 
