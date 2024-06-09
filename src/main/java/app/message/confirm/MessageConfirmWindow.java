@@ -12,53 +12,62 @@ import jfxtras.styles.jmetro.Style;
 
 public class MessageConfirmWindow {
 	
-	private static Stage stage;
-	private static Scene scene;
-	private static Parent root;
+	private Stage stage;
+	private Scene scene;
+	private Parent root;
+	private MessageConfirmControl controller;
 	
-	public static Stage getStage() {
+	public Stage getStage() {
 		return stage;
 	}
 
-	public static void setStage(Stage stage) {
-		MessageConfirmWindow.stage = stage;
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 
-	public static Scene getScene() {
+	public Scene getScene() {
 		return scene;
 	}
 
-	public static void setScene(Scene scene) {
-		MessageConfirmWindow.scene = scene;
+	public void setScene(Scene scene) {
+		this.scene = scene;
 	}
 
-	public static Parent getRoot() {
+	public Parent getRoot() {
 		return root;
 	}
 
-	public static void setRoot(Parent root) {
-		MessageConfirmWindow.root = root;
+	public void setRoot(Parent root) {
+		this.root = root;
 	}
 
-	public static void buildScreen(Stage stageOwner) {
+	public MessageConfirmControl getController() {
+		return controller;
+	}
+
+	public void setController(MessageConfirmControl controller) {
+		this.controller = controller;
+	}
+
+	public void buildScreen(Stage stageOwner) {
 		buildRoot();
 		buildScene();
 		buildStage(stageOwner);
 	}
 	
-	public static void showScreen() {
+	public void showScreen() {
 		stage.showAndWait();
 	}
 	
-	public static void buildAndShowScreen(Stage stageOwner) {
+	public void buildAndShowScreen(Stage stageOwner) {
 		buildScreen(stageOwner);
 		showScreen();
 	}
 
-	private static void buildRoot() {
+	private void buildRoot() {
 		FXMLLoader rootFxml = new FXMLLoader();
 		rootFxml.setLocation(MessageConfirmWindow.class.getResource("MessageConfirmWindow.fxml"));
-		rootFxml.setController(new MessageConfirmControl());
+		rootFxml.setController(this.controller);
 
 		try {
 			root = rootFxml.load();
@@ -67,7 +76,7 @@ public class MessageConfirmWindow {
 		}
 	}
 
-	private static void buildScene() {
+	private void buildScene() {
 		scene = new Scene(root);
 		
 		JMetro jMetro = new JMetro();
@@ -75,7 +84,7 @@ public class MessageConfirmWindow {
 		jMetro.setScene(scene);
 	}
 		
-	private static void buildStage(Stage stageOwner) {
+	private void buildStage(Stage stageOwner) {
 		stage = new Stage();
 		stage.setTitle("Mensagem");
 		stage.setScene(scene);

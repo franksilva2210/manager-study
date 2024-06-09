@@ -15,8 +15,9 @@ public class MessageConfirmControl implements Initializable {
 	@FXML private Button bttOk;
 	@FXML private Text msgText;
 	
-	private static Boolean confirm;
-	private static String msgUser;
+	private Boolean confirm;
+	private String msgUser;
+	private MessageConfirmWindow messageConfirmWindow;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -26,33 +27,40 @@ public class MessageConfirmControl implements Initializable {
 		bttOk.setOnMouseClicked((MouseEvent mouse) -> {
 			if(mouse.getClickCount() == 1) {
 				confirm = true;
-				MessageConfirmWindow.getStage().close();
+				messageConfirmWindow.getStage().close();
 			}
 		});
 		
 		bttCancel.setOnMouseClicked((MouseEvent mouse) -> {
 			if(mouse.getClickCount() == 1) {
 				confirm = false;
-				MessageConfirmWindow.getStage().close();
+				messageConfirmWindow.getStage().close();
 			}
 		});
 		
 	}
 
-	public static Boolean getConfirm() {
+	public Boolean getConfirm() {
 		return confirm;
 	}
 
-	public static void setConfirm(Boolean confirm) {
-		MessageConfirmControl.confirm = confirm;
+	public void setConfirm(Boolean confirm) {
+		this.confirm = confirm;
 	}
 
-	public static String getMsgUser() {
+	public String getMsgUser() {
 		return msgUser;
 	}
 
-	public static void setMsgUser(String msgUser) {
-		MessageConfirmControl.msgUser = msgUser;
+	public void setMsgUser(String msgUser) {
+		this.msgUser = msgUser;
 	}
 
+	public MessageConfirmWindow getMessageConfirmWindow() {
+		return messageConfirmWindow;
+	}
+
+	public void setMessageConfirmWindow(MessageConfirmWindow messageConfirmWindow) {
+		this.messageConfirmWindow = messageConfirmWindow;
+	}
 }
