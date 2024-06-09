@@ -102,6 +102,7 @@ public class ListStudyControl implements Initializable {
 	private void selectStudy(Study study) {
 		StudyControl studyControl = new StudyControl();
 		studyControl.setStudy(study);
+		studyControl.setListStudyControl(ListStudyControl.this);
 		StudyWindow studyWindow = new StudyWindow();
 		studyWindow.setController(studyControl);
 		studyWindow.buildRoot();
@@ -110,7 +111,7 @@ public class ListStudyControl implements Initializable {
 		paneStudy.getChildren().add(studyWindow.getRoot());
 	}
 
-	private void consultAllStudy() {
+	public void consultAllStudy() {
 		List<Study> studyList = new ArrayList<>();
 		try {
 			studyList = listStudyService.consultAllStudy();

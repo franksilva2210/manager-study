@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="500.0" prefWidth="276.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="494.0" prefWidth="276.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="270.0" style="-fx-border-color: #cccccc; -fx-background-color: #E6E8E9;">
+      <VBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="270.0" style="-fx-border-color: #cccccc;">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="45.0" prefWidth="270.0">
                <children>
@@ -65,9 +65,9 @@
             <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
          </VBox.margin>
       </VBox>
-      <AnchorPane prefHeight="446.0" prefWidth="276.0" style="-fx-border-color: #cccccc;">
+      <AnchorPane prefHeight="436.0" prefWidth="272.0" style="-fx-border-color: #cccccc;">
          <children>
-            <ListView fx:id="listViewStudyGui" prefHeight="446.0" prefWidth="276.0" style="-fx-background-color: #E6E8E9;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <ListView fx:id="listViewStudyGui" layoutX="3.333333333333333" layoutY="2.6666666666666665" prefHeight="436.0" prefWidth="272.0" style="-fx-background-color: #F5F3EE;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
          <VBox.margin>
             <Insets bottom="2.0" left="2.0" right="2.0" />

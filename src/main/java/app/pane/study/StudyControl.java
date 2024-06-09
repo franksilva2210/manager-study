@@ -8,6 +8,7 @@ import app.message.confirm.MessageConfirmWindow;
 import app.message.info.MessageInfoControl;
 import app.message.info.MessageInfoWindow;
 import app.pane.PaneMainWindow;
+import app.pane.liststudy.ListStudyControl;
 import app.pane.study.topic.TopicControl;
 import app.pane.study.topic.TopicWindow;
 import app.pane.study.topic.register.TopicRegisterControl;
@@ -49,6 +50,7 @@ public class StudyControl implements Initializable {
 	private ObservableList<String> observableListTopics = FXCollections.observableArrayList();
 	private StudyService studyService = new StudyService();
 	private StudyControlComponentsFxDto componentsFxDto = new StudyControlComponentsFxDto();
+	private ListStudyControl listStudyControl;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -194,6 +196,7 @@ public class StudyControl implements Initializable {
 			study = studyService.consultStudyById(study.getId());
 			studyService.clearScreen(componentsFxDto);
 			studyService.showScreenStudy(study, componentsFxDto);
+			listStudyControl.consultAllStudy();
         } catch (Exception e) {
 			messageInfoControl.setMsgUser(e.getMessage());
 			messageInfoWindow.buildAndShowScreen(PaneMainWindow.getStage());
@@ -206,5 +209,13 @@ public class StudyControl implements Initializable {
 
 	public void setStudy(Study study) {
 		this.study = study;
+	}
+
+	public ListStudyControl getListStudyControl() {
+		return listStudyControl;
+	}
+
+	public void setListStudyControl(ListStudyControl listStudyControl) {
+		this.listStudyControl = listStudyControl;
 	}
 }
