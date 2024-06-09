@@ -18,6 +18,7 @@ import app.study.register.StudyRegisterWindow;
 import app.util.ModPersistData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -27,7 +28,7 @@ import javafx.scene.web.HTMLEditor;
 public class StudyControl implements Initializable {
 
 	@FXML private Label lblTitleStudy;
-
+	@FXML private MenuItem menuViewMap;
 	@FXML private TabPane tabPaneStudy;
 
 	//Aba Topicos
@@ -51,6 +52,10 @@ public class StudyControl implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		menuViewMap.setOnAction((ActionEvent action) -> {
+			viewMap();
+		});
+
 		listViewTopics.setItems(observableListTopics);
 		
 		listViewTopics.setOnMouseClicked((MouseEvent mouse) -> {
@@ -88,6 +93,10 @@ public class StudyControl implements Initializable {
 		componentsFxDto.setObservableListTopics(observableListTopics);
 		componentsFxDto.setEditorTextMatter(editorTextMatter);
 		studyService.showScreenStudy(study, componentsFxDto);
+	}
+
+	private void viewMap() {
+		studyService.showMap();
 	}
 
 	private void openTopic() {

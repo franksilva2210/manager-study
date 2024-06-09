@@ -3,7 +3,12 @@ package app.pane.study;
 import app.pane.study.topic.register.Topic;
 import app.study.register.Study;
 import app.study.register.StudyDao;
+import app.util.Report;
 import javafx.collections.ObservableList;
+import net.sf.jasperreports.engine.JRException;
+
+import java.io.FileNotFoundException;
+import java.net.URISyntaxException;
 
 public class StudyService {
 
@@ -33,6 +38,24 @@ public class StudyService {
 
     public void extractNotes(Study study, StudyControlComponentsFxDto componentsFxDto) {
         study.setNotes(componentsFxDto.getEditorTextMatter().getHtmlText());
+    }
+
+    public void showMap() {
+        Report report = new Report();
+        //report.addParam("total", output.getValue());
+        //report.addParam("listItens", new JRBeanCollectionDataSource(null));
+
+        try {
+            report.readFileReport(getClass().getResource("Map.jrxml").toURI().getPath());
+            report.generateReport();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (JRException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        report.showReport();
     }
 
     public void saveStudy(Study study) throws Exception {
