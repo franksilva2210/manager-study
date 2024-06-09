@@ -4,11 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.web.HTMLEditor;
 
 public class StudyControlComponentsFxDto {
     private Label lblTitleStudy;
     private ListView<String> listViewTopics;
     private ObservableList<String> observableListTopics = FXCollections.observableArrayList();
+    private HTMLEditor editorTextMatter;
 
     public Label getLblTitleStudy() {
         return lblTitleStudy;
@@ -32,5 +34,13 @@ public class StudyControlComponentsFxDto {
 
     public void setObservableListTopics(ObservableList<String> observableListTopics) {
         this.observableListTopics = observableListTopics;
+    }
+
+    public HTMLEditor getEditorTextMatter() {
+        return editorTextMatter;
+    }
+
+    public void setEditorTextMatter(HTMLEditor editorTextMatter) {
+        this.editorTextMatter = editorTextMatter;
     }
 }

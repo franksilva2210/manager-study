@@ -14,6 +14,7 @@ public class StudyService {
                 componentsFxDto.getObservableListTopics().add(topic.getTitle());
             }
             componentsFxDto.getListViewTopics().refresh();
+            componentsFxDto.getEditorTextMatter().setHtmlText(study.getNotes());
         }
     }
 
@@ -30,10 +31,14 @@ public class StudyService {
         }
     }
 
+    public void extractNotes(Study study, StudyControlComponentsFxDto componentsFxDto) {
+        study.setNotes(componentsFxDto.getEditorTextMatter().getHtmlText());
+    }
+
     public void saveStudy(Study study) throws Exception {
         StudyDao studyDao = new StudyDao();
         try {
-            studyDao.saveOrUpdateTopics(study);
+            studyDao.updateFullInStudy(study);
         } catch (Exception e) {
             throw new Exception("Falha ao salvar alteracoes no estudo.");
         }

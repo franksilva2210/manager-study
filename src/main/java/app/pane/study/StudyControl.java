@@ -79,13 +79,14 @@ public class StudyControl implements Initializable {
 
 		bttSave.setOnMouseClicked((MouseEvent mouse) -> {
 			if (mouse.getClickCount() == 1) {
-				saveStudy();
+				save();
 			}
 		});
 
 		componentsFxDto.setLblTitleStudy(lblTitleStudy);
 		componentsFxDto.setListViewTopics(listViewTopics);
 		componentsFxDto.setObservableListTopics(observableListTopics);
+		componentsFxDto.setEditorTextMatter(editorTextMatter);
 		studyService.showScreenStudy(study, componentsFxDto);
 	}
 
@@ -171,12 +172,13 @@ public class StudyControl implements Initializable {
 		}
 	}
 
-	private void saveStudy() {
+	private void save() {
 		MessageInfoWindow messageInfoWindow = new MessageInfoWindow();
 		MessageInfoControl messageInfoControl = new MessageInfoControl();
 		messageInfoControl.setWindow(messageInfoWindow);
 		messageInfoWindow.setController(messageInfoControl);
         try {
+			studyService.extractNotes(study, componentsFxDto);
             studyService.saveStudy(study);
 			messageInfoControl.setMsgUser("Estudo atualizado com sucesso.");
 			messageInfoWindow.buildAndShowScreen(PaneMainWindow.getStage());

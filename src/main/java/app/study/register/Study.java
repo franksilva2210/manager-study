@@ -9,17 +9,20 @@ public class Study {
 	
 	private Long id;
 	private String matter;
-	private String text;
+	private String notes;
 	private List<Topic> listTopics;
 
 	public Study() {
+		this.id = 0L;
 		this.matter = "";
-		this.text = "";
+		this.notes = "";
 		this.listTopics = new ArrayList<>();
 	}
 
 	public Study(String matter) {
+		this.id = 0L;
 		this.matter = matter;
+		this.notes = "";
 		this.listTopics = new ArrayList<>();
 	}
 	
@@ -47,12 +50,12 @@ public class Study {
 		this.listTopics = listTopics;
 	}
 
-	public String getText() {
-		return text;
+	public String getNotes() {
+		return notes;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
 	public Topic getTopicByTitle(String titleTopic) {
