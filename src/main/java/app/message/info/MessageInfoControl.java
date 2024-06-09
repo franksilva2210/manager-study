@@ -14,7 +14,8 @@ public class MessageInfoControl implements Initializable {
 	@FXML private Button bttOk;
 	@FXML private Text txtMsgInfo;
 	
-	private static String msgUser;
+	private String msgUser;
+	private MessageInfoWindow window;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -23,19 +24,24 @@ public class MessageInfoControl implements Initializable {
 		
 		bttOk.setOnMouseClicked((MouseEvent mouse) -> {
 			if (mouse.getClickCount() == 1) {
-				MessageInfoWindow.getStage().close();
+				window.getStage().close();
 			}
 		});
 	}
 
-	public static String getMsgUser() {
+	public String getMsgUser() {
 		return msgUser;
 	}
 
-	public static void setMsgUser(String msgUser) {
-		MessageInfoControl.msgUser = msgUser;
+	public void setMsgUser(String msgUser) {
+		this.msgUser = msgUser;
 	}
-	
-	
 
+	public MessageInfoWindow getWindow() {
+		return window;
+	}
+
+	public void setWindow(MessageInfoWindow window) {
+		this.window = window;
+	}
 }
