@@ -63,4 +63,13 @@ public class Study {
 		}
 		return null;
 	}
+
+	public Boolean existThisTopicInList(Long idTopic) {
+		for(Topic topic : this.listTopics){
+			if(topic.getId().equals(idTopic)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

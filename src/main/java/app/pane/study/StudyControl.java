@@ -3,6 +3,8 @@ package app.pane.study;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import app.message.confirm.MessageConfirmControl;
+import app.message.confirm.MessageConfirmWindow;
 import app.message.info.MessageInfoControl;
 import app.message.info.MessageInfoWindow;
 import app.pane.PaneMainWindow;
@@ -12,6 +14,7 @@ import app.pane.study.topic.register.TopicRegisterControl;
 import app.pane.study.topic.register.TopicRegisterWindow;
 import app.study.register.Study;
 import app.pane.study.topic.register.Topic;
+import app.study.register.StudyRegisterWindow;
 import app.util.ModPersistData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,12 +42,13 @@ public class StudyControl implements Initializable {
 	@FXML private HTMLEditor editorTextMatter;
 	
 	private Study study;
-	private ObservableList<String> listTopics = FXCollections.observableArrayList();
+	private ObservableList<String> observableListTopics = FXCollections.observableArrayList();
 	private StudyService studyService = new StudyService();
+	private StudyControlComponentsFxDto componentsFxDto = new StudyControlComponentsFxDto();
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		listViewTopics.setItems(listTopics);
+		listViewTopics.setItems(observableListTopics);
 		
 		listViewTopics.setOnMouseClicked((MouseEvent mouse) -> {
 			if (mouse.getClickCount() == 2) {
@@ -64,23 +68,23 @@ public class StudyControl implements Initializable {
 			}
 		});
 
+		bttRemoveTopic.setOnMouseClicked((MouseEvent mouse) -> {
+			if (mouse.getClickCount() == 1) {
+				removeTopic();
+			}
+		});
+
 		bttSave.setOnMouseClicked((MouseEvent mouse) -> {
 			if (mouse.getClickCount() == 1) {
 				saveStudy();
 			}
 		});
-		
-		showInfoStudy();
-	}
-	
-	private void showInfoStudy() {
-		if (study != null) {
-			lblTitleStudy.setText(study.getMatter());
-			for(Topic topic : study.getListTopics()) {
-				listTopics.add(topic.getTitle());
-			}
-			listViewTopics.refresh();
-		}	
+
+		componentsFxDto.setLblTitleStudy(lblTitleStudy);
+		componentsFxDto.setListViewTopics(listViewTopics);
+		componentsFxDto.setObservableListTopics(observableListTopics);
+
+		studyService.showScreenStudy(study, componentsFxDto);
 	}
 
 	private void openTopic() {
@@ -107,13 +111,17 @@ public class StudyControl implements Initializable {
 			if (topicRegisterControl.getTopic() != null) {
 				Topic topic = topicRegisterControl.getTopic();
 				study.getListTopics().add(topic);
-				studyService.updateListTopics(study, listTopics);
+				studyService.updateObservableListTopics(study, observableListTopics);
 				listViewTopics.refresh();
 			}
 		} else {
-			MessageInfoControl.setMsgUser("Não foi selecionado nenhum Estudo para\nadição de topicos. " +
+			MessageInfoWindow messageInfoWindow = new MessageInfoWindow();
+			MessageInfoControl messageInfoControl = new MessageInfoControl();
+			messageInfoControl.setMsgUser("Não foi selecionado nenhum Estudo para\nadição de topicos. " +
 					"Selecione primeiramente\num Estudo cadastrado e tente novamente.");
-			MessageInfoWindow.buildAndShowScreen(PaneMainWindow.getStage());
+			messageInfoControl.setWindow(messageInfoWindow);
+			messageInfoWindow.setController(messageInfoControl);
+			messageInfoWindow.buildAndShowScreen(PaneMainWindow.getStage());
 		}
 	}
 
@@ -134,7 +142,7 @@ public class StudyControl implements Initializable {
 					if (topicSelected.verifyUpdateInTitle(topicEdited)) {
 						study.getListTopics().remove(topicSelected);
 						study.getListTopics().add(topicEdited);
-						studyService.updateListTopics(study, listTopics);
+						studyService.updateObservableListTopics(study, observableListTopics);
 						listViewTopics.refresh();
 					}
 				}
@@ -142,12 +150,40 @@ public class StudyControl implements Initializable {
 		}
 	}
 
+	private void removeTopic() {
+		String titleTopic = listViewTopics.getSelectionModel().getSelectedItem();
+		if (titleTopic != null) {
+			Topic topicSelected = study.getTopicByTitle(titleTopic);
+			MessageConfirmWindow messageConfirmWindow = new MessageConfirmWindow();
+			MessageConfirmControl messageConfirmControl = new MessageConfirmControl();
+			messageConfirmControl.setConfirm(false);
+			messageConfirmControl.setMsgUser("Deseja realmente remover esse topico?");
+			messageConfirmControl.setMessageConfirmWindow(messageConfirmWindow);
+			messageConfirmWindow.setController(messageConfirmControl);
+			messageConfirmWindow.buildAndShowScreen(StudyRegisterWindow.getStage());
+			if(messageConfirmControl.getConfirm()) {
+				study.getListTopics().remove(topicSelected);
+				studyService.updateObservableListTopics(study, observableListTopics);
+				listViewTopics.refresh();
+			}
+		}
+	}
+
 	private void saveStudy() {
+		MessageInfoWindow messageInfoWindow = new MessageInfoWindow();
+		MessageInfoControl messageInfoControl = new MessageInfoControl();
+		messageInfoControl.setWindow(messageInfoWindow);
+		messageInfoWindow.setController(messageInfoControl);
         try {
             studyService.saveStudy(study);
+			messageInfoControl.setMsgUser("Estudo atualizado com sucesso.");
+			messageInfoWindow.buildAndShowScreen(PaneMainWindow.getStage());
+			study = studyService.consultStudyById(study.getId());
+			studyService.clearScreen(componentsFxDto);
+			studyService.showScreenStudy(study, componentsFxDto);
         } catch (Exception e) {
-			MessageInfoControl.setMsgUser(e.getMessage());
-			MessageInfoWindow.buildAndShowScreen(PaneMainWindow.getStage());
+			messageInfoControl.setMsgUser(e.getMessage());
+			messageInfoWindow.buildAndShowScreen(PaneMainWindow.getStage());
         }
     }
 

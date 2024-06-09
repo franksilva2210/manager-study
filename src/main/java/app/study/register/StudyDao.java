@@ -90,19 +90,22 @@ public class StudyDao implements Dao<Study> {
                 }
             }
 
+            Study studyCurrent = consult(study.getId());
+
             pstmt = connection.prepareStatement(query3);
-            List<Topic> listTopicCurrent = consultListTopic(study.getId());
             for (Topic topic : study.getListTopics()) {
-                boolean existId = false;
-                for (Topic topicCurrent : listTopicCurrent) {
-                    if (topic.getId().equals(topicCurrent.getId())) {
-                        existId = true;
-                        break;
-                    }
-                }
-                if (!existId) {
+                if (!studyCurrent.existThisTopicInList(topic.getId())) {
                     pstmt.setLong(1, study.getId());
                     pstmt.setLong(2, topic.getId());
+                    pstmt.executeUpdate();
+                }
+            }
+
+            pstmt = connection.prepareStatement(query4);
+            for (Topic topicCurrent : studyCurrent.getListTopics()) {
+                if(!study.existThisTopicInList(topicCurrent.getId())) {
+                    pstmt.setLong(1, topicCurrent.getId());
+                    pstmt.setLong(2, study.getId());
                     pstmt.executeUpdate();
                 }
             }
@@ -123,6 +126,40 @@ public class StudyDao implements Dao<Study> {
                 result.close();
             }
         }
+    }
+
+    public Study consult(Long idStudy) throws Exception {
+        Connection connection = null;
+        PreparedStatement pstmt = null;
+        ResultSet result = null;
+        Study study = null;
+
+        String sql = "SELECT * FROM study "
+                   + "WHERE study_id = ?; ";
+
+        try {
+            connection = ConnectionDataBase.getConnection();
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setLong(1, idStudy);
+            result = pstmt.executeQuery();
+            if (result.next()) {
+                study = new Study();
+                study.setId(result.getLong("study_id"));
+                study.setMatter(result.getString("study_matter"));
+                study.setListTopics(consultListTopic(result.getLong("study_id")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (connection != null)
+                connection.close();
+            if (pstmt != null)
+                pstmt.close();
+            if (result != null)
+                result.close();
+        }
+        return study;
     }
 
     @Override

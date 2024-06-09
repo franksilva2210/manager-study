@@ -7,7 +7,23 @@ import javafx.collections.ObservableList;
 
 public class StudyService {
 
-    public void updateListTopics(Study study, ObservableList<String> listTopics) {
+    public void showScreenStudy(Study study, StudyControlComponentsFxDto componentsFxDto) {
+        if (study != null) {
+            componentsFxDto.getLblTitleStudy().setText(study.getMatter());
+            for(Topic topic : study.getListTopics()) {
+                componentsFxDto.getObservableListTopics().add(topic.getTitle());
+            }
+            componentsFxDto.getListViewTopics().refresh();
+        }
+    }
+
+    public void clearScreen(StudyControlComponentsFxDto componentsFxDto) {
+        componentsFxDto.getLblTitleStudy().setText("");
+        componentsFxDto.getObservableListTopics().clear();
+        componentsFxDto.getListViewTopics().refresh();
+    }
+
+    public void updateObservableListTopics(Study study, ObservableList<String> listTopics) {
         listTopics.clear();
         for(Topic topic : study.getListTopics()) {
             listTopics.add(topic.getTitle());
@@ -21,5 +37,16 @@ public class StudyService {
         } catch (Exception e) {
             throw new Exception("Falha ao salvar alteracoes no estudo.");
         }
+    }
+
+    public Study consultStudyById(Long idStudy) throws Exception {
+        StudyDao studyDao = new StudyDao();
+        Study study = null;
+        try {
+            study = studyDao.consult(idStudy);
+        } catch (Exception e) {
+            throw new Exception("Falha na consulta do Estudo.");
+        }
+        return study;
     }
 }

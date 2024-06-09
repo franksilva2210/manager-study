@@ -80,7 +80,7 @@
                                           </Label>
                                        </children>
                                     </HBox>
-                                    <HBox prefHeight="367.0" prefWidth="317.0" style="-fx-border-color: #cccccc;">
+                                    <HBox prefHeight="359.0" prefWidth="317.0" style="-fx-border-color: #cccccc;">
                                        <children>
                                           <VBox alignment="TOP_CENTER" prefHeight="357.0" prefWidth="39.0">
                                              <children>
@@ -141,7 +141,7 @@
                                                       </Button>
                                                    </children>
                                                 </HBox>
-                                                <ListView fx:id="listViewTopics" prefHeight="325.0" prefWidth="271.0" style="-fx-background-color: #F5F3EE;">
+                                                <ListView fx:id="listViewTopics" prefHeight="316.0" prefWidth="271.0" style="-fx-background-color: #F5F3EE;">
                                                    <VBox.margin>
                                                       <Insets right="2.0" />
                                                    </VBox.margin>
@@ -156,6 +156,9 @@
                                  </HBox.margin>
                               </VBox>
                            </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
                         </HBox>
                      </children>
                   </AnchorPane>
@@ -163,11 +166,11 @@
           </Tab>
           <Tab text="Anotações">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="395.0" prefWidth="616.0">
                      <children>
-                        <HBox prefHeight="433.0" prefWidth="618.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox prefHeight="399.0" prefWidth="616.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <HTMLEditor fx:id="editorTextMatter" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="251.0" prefWidth="620.0">
+                              <HTMLEditor fx:id="editorTextMatter" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="366.0" prefWidth="612.0">
                                  <HBox.margin>
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                  </HBox.margin>
@@ -180,7 +183,7 @@
           </Tab>
         </tabs>
       </TabPane>
-      <HBox alignment="CENTER" prefHeight="30.0" prefWidth="616.0">
+      <HBox alignment="CENTER" prefHeight="36.0" prefWidth="616.0">
          <children>
             <Button fx:id="bttSave" mnemonicParsing="false" prefHeight="25.0" prefWidth="136.0" text="Salvar">
                <HBox.margin>
