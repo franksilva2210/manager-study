@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -12,63 +18,195 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox layoutX="113.0" layoutY="75.0" prefHeight="550.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="620.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="29.0" prefWidth="616.0" style="-fx-background-color: #E6E8E9;">
+            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="548.0" style="-fx-background-color: #F5F3EE; -fx-border-color: #cccccc;">
                <children>
-                  <Label fx:id="lblTitleTopic" text="Label" />
+                  <HBox alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="324.0">
+                     <children>
+                        <Label fx:id="lblTitleTopic" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="290.0">
+                     <children>
+                        <MenuButton mnemonicParsing="false" prefHeight="20.0" prefWidth="48.0">
+                           <items>
+                              <MenuItem fx:id="menuViewMap" mnemonicParsing="false" text="Ver Mapa">
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../product.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuItem>
+                           </items>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <graphic>
+                              <ImageView fitHeight="15.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../enginer.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuButton>
+                     </children>
+                  </HBox>
                </children>
                <VBox.margin>
-                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                  <Insets bottom="1.0" />
                </VBox.margin>
             </HBox>
-            <VBox prefHeight="467.0" prefWidth="620.0">
-               <children>
-                  <TabPane prefHeight="466.0" prefWidth="620.0" tabClosingPolicy="UNAVAILABLE">
-                    <tabs>
-                      <Tab text="Geral">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <TabPane fx:id="tabPaneStudy" prefHeight="429.0" prefWidth="616.0" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab fx:id="tabTopics" text="Tópicos">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="406.0" prefWidth="616.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <HBox prefHeight="171.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <VBox prefHeight="429.0" prefWidth="290.0">
+                                       <HBox.margin>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </HBox.margin>
+                                    </VBox>
+                                    <VBox prefHeight="385.0" prefWidth="317.0">
                                        <children>
-                                          <VBox prefHeight="196.0" prefWidth="328.0" style="-fx-background-color: #E6E8E9;">
-                                             <HBox.margin>
-                                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                             </HBox.margin>
-                                          </VBox>
-                                          <VBox prefHeight="196.0" prefWidth="421.0" style="-fx-border-color: #cccccc;">
+                                          <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="366.0">
                                              <children>
-                                                <ListView fx:id="listViewTopics" prefHeight="441.0" prefWidth="349.0" style="-fx-background-color: #F5F3EE;" />
+                                                <Label text="Lista de Tópicos:">
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                </Label>
                                              </children>
-                                             <HBox.margin>
-                                                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-                                             </HBox.margin>
-                                          </VBox>
+                                          </HBox>
+                                          <HBox prefHeight="359.0" prefWidth="317.0" style="-fx-border-color: #cccccc;">
+                                             <children>
+                                                <VBox alignment="TOP_CENTER" prefHeight="357.0" prefWidth="39.0">
+                                                   <children>
+                                                      <Button fx:id="bttAddTopic" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0">
+                                                         <VBox.margin>
+                                                            <Insets top="45.0" />
+                                                         </VBox.margin>
+                                                         <graphic>
+                                                            <ImageView fitHeight="15.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../plus.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Button fx:id="bttEditTopic" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefWidth="30.0">
+                                                         <VBox.margin>
+                                                            <Insets top="10.0" />
+                                                         </VBox.margin>
+                                                         <graphic>
+                                                            <ImageView fitHeight="15.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../edit.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                      <Button fx:id="bttRemoveTopic" layoutX="10.0" layoutY="35.0" mnemonicParsing="false" prefWidth="30.0">
+                                                         <VBox.margin>
+                                                            <Insets top="10.0" />
+                                                         </VBox.margin>
+                                                         <graphic>
+                                                            <ImageView fitHeight="15.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                                               <image>
+                                                                  <Image url="@../trash.png" />
+                                                               </image>
+                                                            </ImageView>
+                                                         </graphic>
+                                                      </Button>
+                                                   </children>
+                                                </VBox>
+                                                <VBox prefHeight="354.0" prefWidth="273.0">
+                                                   <children>
+                                                      <HBox alignment="CENTER_LEFT" prefHeight="39.0" prefWidth="323.0">
+                                                         <children>
+                                                            <TextField prefHeight="25.0" prefWidth="225.0">
+                                                               <HBox.margin>
+                                                                  <Insets />
+                                                               </HBox.margin>
+                                                            </TextField>
+                                                            <Button fx:id="bttSearchTopic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="43.0">
+                                                               <HBox.margin>
+                                                                  <Insets left="2.0" />
+                                                               </HBox.margin>
+                                                               <graphic>
+                                                                  <ImageView fitHeight="15.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                                                                     <image>
+                                                                        <Image url="@../search.png" />
+                                                                     </image>
+                                                                  </ImageView>
+                                                               </graphic>
+                                                            </Button>
+                                                         </children>
+                                                      </HBox>
+                                                      <ListView fx:id="listViewTopics" prefHeight="316.0" prefWidth="271.0" style="-fx-background-color: #F5F3EE;">
+                                                         <VBox.margin>
+                                                            <Insets right="2.0" />
+                                                         </VBox.margin>
+                                                      </ListView>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
                                        </children>
-                                    </HBox>
+                                       <HBox.margin>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </HBox.margin>
+                                    </VBox>
                                  </children>
-                              </AnchorPane>
-                        </content>
-                      </Tab>
-                      <Tab text="Antoções">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="tabNotes" text="Anotações">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="395.0" prefWidth="616.0">
+                           <children>
+                              <HBox prefHeight="399.0" prefWidth="616.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <HBox prefHeight="171.0" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <children>
-                                          <HTMLEditor fx:id="editorTextTopic" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="320.0" prefWidth="750.0" />
-                                       </children>
-                                    </HBox>
+                                    <HTMLEditor fx:id="editorTextMatter" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="366.0" prefWidth="612.0">
+                                       <HBox.margin>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </HBox.margin>
+                                    </HTMLEditor>
                                  </children>
-                              </AnchorPane>
-                        </content>
-                      </Tab>
-                    </tabs>
-                  </TabPane>
+                              </HBox>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+            <HBox alignment="CENTER" prefHeight="36.0" prefWidth="616.0" spacing="50.0">
+               <children>
+                  <Button fx:id="bttSave" mnemonicParsing="false" prefHeight="25.0" prefWidth="136.0" text="Salvar">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="bttCancel" mnemonicParsing="false" prefWidth="136.0" text="Cancelar" />
                </children>
-            </VBox>
+               <VBox.margin>
+                  <Insets bottom="2.0" />
+               </VBox.margin>
+            </HBox>
          </children>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
       </VBox>
    </children>
 </AnchorPane>
