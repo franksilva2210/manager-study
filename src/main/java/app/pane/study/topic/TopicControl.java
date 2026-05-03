@@ -9,18 +9,32 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.web.HTMLEditor;
 
 public class TopicControl implements Initializable {
 
 	@FXML private Label lblTitleTopic;
-	@FXML private HTMLEditor editorTextTopic;
-    @FXML private ListView<String> listViewTopics;
-    
-    private Topic topicSelected;
+	@FXML private MenuItem menuViewMap;
+	@FXML private TabPane tabPaneStudy;
+
+	//Aba Topicos
+	@FXML private Tab tabTopics;
+	@FXML private ListView<String> listViewTopics;
+	@FXML private Button bttSearchTopic;
+	@FXML private Button bttAddTopic;
+	@FXML private Button bttEditTopic;
+	@FXML private Button bttRemoveTopic;
+
+	//Aba Anotacoes
+	@FXML private Tab tabNotes;
+	@FXML private HTMLEditor editorTextMatter;
+
+	@FXML private Button bttSave;
+	@FXML private Button bttCancel;
+
+	private Topic topicSelected;
 	private ObservableList<String> listTopics = FXCollections.observableArrayList();
 	
 	@Override
