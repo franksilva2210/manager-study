@@ -14,7 +14,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.VBox;
 
-public class MainControl implements Initializable {
+public class MainController implements Initializable {
 
 	@FXML
 	private VBox paneMenuTop;
@@ -48,8 +48,8 @@ public class MainControl implements Initializable {
 		listStudy.clear();
 		listStudy.addAll(service.consultStudyAll());
 
-		TreeItem<String> root = new TreeItem<>("Estudos");
-		root.setExpanded(true);
+		TreeItem<String> treeItemRoot = new TreeItem<>("Estudos");
+		treeItemRoot.setExpanded(true);
 
 		for (Study study : listStudy) {
 			TreeItem<String> treeItemStudy = new TreeItem<>(study.getMatter());
@@ -59,10 +59,10 @@ public class MainControl implements Initializable {
 				treeItemStudy.getChildren().add(treeItemTopic);
 			}
 
-			root.getChildren().add(treeItemStudy);
+			treeItemRoot.getChildren().add(treeItemStudy);
 		}
 
-		treeStudies.setRoot(root);
+		treeStudies.setRoot(treeItemRoot);
 		treeStudies.setShowRoot(false);
 	}
 
