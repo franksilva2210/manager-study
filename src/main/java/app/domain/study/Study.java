@@ -1,30 +1,28 @@
 package app.domain.study;
 
+import app.domain.text.Text;
 import app.domain.topic.Topic;
+import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "study")
 public class Study {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "study_id")
 	private Long id;
+
+	@Column(name = "study_matter")
 	private String matter;
-	private List<String> listText;
+
+	@OneToMany(mappedBy = "study", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Text> listText;
+
+	@OneToMany(mappedBy = "study", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Topic> listTopics;
-
-	public Study() {
-		this.id = 0L;
-		this.matter = "";
-		this.listText = new ArrayList<>();
-		this.listTopics = new ArrayList<>();
-	}
-
-	public Study(String matter) {
-		this.id = 0L;
-		this.matter = matter;
-		this.listText = new ArrayList<>();
-		this.listTopics = new ArrayList<>();
-	}
 	
 	public Long getId() {
 		return id;
@@ -42,11 +40,11 @@ public class Study {
 		this.matter = matter;
 	}
 
-	public List<String> getListText() {
+	public List<Text> getListText() {
 		return listText;
 	}
 
-	public void setListText(List<String> listText) {
+	public void setListText(List<Text> listText) {
 		this.listText = listText;
 	}
 
@@ -58,21 +56,4 @@ public class Study {
 		this.listTopics = listTopics;
 	}
 
-	public Topic getTopicByTitle(String titleTopic) {
-		for(Topic topic : listTopics) {
-			if (topic.getTitle().equals(titleTopic)) {
-				return topic;
-			}
-		}
-		return null;
-	}
-
-	public Boolean existThisTopicInList(Long idTopic) {
-		for(Topic topic : this.listTopics){
-			if(topic.getId().equals(idTopic)) {
-				return true;
-			}
-		}
-		return false;
-	}
 }

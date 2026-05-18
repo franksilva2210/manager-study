@@ -1,35 +1,36 @@
 package app.domain.topic;
 
-import java.util.ArrayList;
+import app.domain.study.Study;
+import app.domain.text.Text;
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
+@Table(name = "topic")
 public class Topic {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "topic_id")
     private Long id;
+
+    @Column(name = "topic_title")
     private String title;
-    private String text;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "study_id", foreignKey = @ForeignKey(name = "fk_topic_study"))
+    private Study study;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "topic_parent_id", foreignKey = @ForeignKey(name = "fk_topic_parent"))
+    private Topic topicParent;
+
+    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Text> listText;
+
+    @OneToMany(mappedBy = "topicParent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Topic> listTopics;
-
-    public Topic() {
-        this.id = 0L;
-        this.title = "";
-        this.text = "";
-        this.listTopics = new ArrayList<>();
-    }
-
-    public Topic(String title) {
-        this.id = 0L;
-        this.title = title;
-        this.text = "";
-        this.listTopics = new ArrayList<>();
-    }
-
-    public Topic(Topic topic) {
-        this.id = topic.getId();
-        this.title = topic.getTitle();
-        this.text = topic.getText();
-        this.listTopics = topic.getListTopics();
-    }
 
     public Long getId() {
         return id;
@@ -47,12 +48,12 @@ public class Topic {
         this.title = title;
     }
 
-    public String getText() {
-        return text;
+    public List<Text> getListText() {
+        return listText;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setListText(List<Text> listText) {
+        this.listText = listText;
     }
 
     public List<Topic> getListTopics() {
@@ -63,15 +64,19 @@ public class Topic {
         this.listTopics = listTopics;
     }
 
-    public Topic searchTopicByTitle() {
-        return null;
+    public Study getStudy() {
+        return study;
     }
 
-    public boolean verifyUpdateInTitle(Topic topic) {
-        if (!this.title.equals(topic.getTitle())) {
-            return true;
-        }
-        return false;
+    public void setStudy(Study study) {
+        this.study = study;
     }
 
+    public Topic getTopicParent() {
+        return topicParent;
+    }
+
+    public void setTopicParent(Topic topicParent) {
+        this.topicParent = topicParent;
+    }
 }
