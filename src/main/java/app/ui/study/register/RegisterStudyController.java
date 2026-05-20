@@ -49,13 +49,13 @@ public class RegisterStudyController implements Initializable {
 			stage.close();
 		});
 
-		loadComponentsFxDto();
+		loadComponentsUI();
 	}
 
 	private void saveStudy() {
         try {
 			componentsUIHelper.validateFields(componentsUI);
-			registerStudyService.extractFields(componentsUI, study);
+			componentsUIHelper.extractFields(componentsUI, study);
 			study = registerStudyService.saveStudy(study);
 			stage.close();
         } catch (Exception e) {
@@ -63,7 +63,7 @@ public class RegisterStudyController implements Initializable {
         }
     }
 
-	private void loadComponentsFxDto() {
+	private void loadComponentsUI() {
 		componentsUI.setTxtMatter(txtMatter);
 		componentsUI.setMsgUser(msgUser);
 	}
