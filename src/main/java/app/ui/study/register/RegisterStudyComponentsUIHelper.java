@@ -1,5 +1,6 @@
 package app.ui.study.register;
 
+import app.domain.study.Study;
 import app.util.ValidateControlFx;
 
 public class RegisterStudyComponentsUIHelper {
@@ -12,6 +13,20 @@ public class RegisterStudyComponentsUIHelper {
         if (validate.getError()) {
             throw new Exception("Campo Assunto invalido.");
         }
+    }
+
+    public void extractFields(RegisterStudyComponentsUI componentsUI, Study study) {
+        study.setMatter(componentsUI.getTxtMatter().getText());
+    }
+
+    public void clearScreen(RegisterStudyComponentsUI componentsUI) {
+        componentsUI.getTxtMatter().clear();
+        componentsUI.getMsgUser().setText("");
+    }
+
+    public void showStudyScreen(RegisterStudyComponentsUI componentsUI, Study study) {
+        componentsUI.getTxtMatter().setText(study.getMatter());
+        componentsUI.getMsgUser().setText("");
     }
 
 }
