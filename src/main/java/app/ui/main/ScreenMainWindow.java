@@ -14,17 +14,18 @@ public class ScreenMainWindow {
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
+	private ScreenMainController controller;
 
 	public ScreenMainWindow(Stage primaryStage) {
 		stage = primaryStage;
 		stage.setResizable(false);
 
-		ScreenMainController screenMainController = new ScreenMainController();
-		screenMainController.setStage(stage);
+		controller = new ScreenMainController();
+		controller.setStage(stage);
 
 		FXMLLoader rootFxml = new FXMLLoader();
 		rootFxml.setLocation(ScreenMainWindow.class.getResource("ScreenMainWindow.fxml"));
-		rootFxml.setController(screenMainController);
+		rootFxml.setController(controller);
 
 		try {
 			root = rootFxml.load();
@@ -43,4 +44,9 @@ public class ScreenMainWindow {
 	public void show() {
 		stage.show();
 	}
+
+	public ScreenMainController getController() {
+		return controller;
+	}
+
 }
