@@ -1,6 +1,6 @@
 package app;
 
-import app.ui.main.MainWindow;
+import app.ui.main.ScreenMainWindow;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -8,8 +8,8 @@ public class AppBootstrap extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        MainWindow mainWindow = new MainWindow(primaryStage);
-        mainWindow.show();
+        ScreenMainWindow screenMainWindow = new ScreenMainWindow(primaryStage);
+        screenMainWindow.show();
     }
 
     public static void main(String[] args) {
