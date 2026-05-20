@@ -2,9 +2,9 @@ package app.ui.study.register;
 
 import app.util.ValidateControlFx;
 
-public class StudyRegisterComponentsUIHelper {
+public class RegisterStudyComponentsUIHelper {
 
-    public void validateFields(StudyRegisterComponentsUI componentsUI) throws Exception {
+    public void validateFields(RegisterStudyComponentsUI componentsUI) throws Exception {
         ValidateControlFx validate = new ValidateControlFx();
         validate.setControl(componentsUI.getTxtMatter());
         validate.setError(false);

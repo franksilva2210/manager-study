@@ -10,14 +10,14 @@ import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
-public class StudyRegisterWindow {
+public class RegisterStudyWindow {
 	
 	private Stage stage;
 	private Scene scene;
 	private AnchorPane root;
-	private StudyRegisterController controller;
+	private RegisterStudyController controller;
 
-	public StudyRegisterWindow(Stage stageOwner) {
+	public RegisterStudyWindow(Stage stageOwner) {
 		stage = new Stage();
 		stage.setTitle("Novo Estudo");
 		stage.setResizable(false);
@@ -27,11 +27,11 @@ public class StudyRegisterWindow {
 			stage.initOwner(stageOwner);
 		}
 
-		controller = new StudyRegisterController();
+		controller = new RegisterStudyController();
 		controller.setStage(stage);
 
 		FXMLLoader rootFxml = new FXMLLoader();
-		rootFxml.setLocation(StudyRegisterWindow.class.getResource("StudyRegisterWindow.fxml"));
+		rootFxml.setLocation(RegisterStudyWindow.class.getResource("StudyRegisterWindow.fxml"));
 		rootFxml.setController(controller);
 
 		try {
@@ -72,7 +72,7 @@ public class StudyRegisterWindow {
 		this.root = root;
 	}
 
-	public StudyRegisterController getController() {
+	public RegisterStudyController getController() {
 		return controller;
 	}
 
