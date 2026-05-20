@@ -50,4 +50,10 @@ public class ScreenMainService {
         }
     }
 
+    public void consultListTopic(Study study) {
+        List<Topic> listTopic = topicRepository.findByStudy(study.getId());
+        study.getListTopics().clear();
+        study.getListTopics().addAll(listTopic);
+    }
+
 }

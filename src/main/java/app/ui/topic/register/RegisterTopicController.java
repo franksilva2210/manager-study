@@ -1,5 +1,6 @@
 package app.ui.topic.register;
 
+import app.domain.study.Study;
 import app.domain.topic.Topic;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -54,5 +55,13 @@ public class RegisterTopicController implements Initializable {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public void setStudy(Study study) {
+        topic.setStudy(study);
+    }
+
+    public Topic getTopic() {
+        return topic;
     }
 }

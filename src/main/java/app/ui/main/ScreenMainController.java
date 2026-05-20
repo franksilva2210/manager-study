@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import app.domain.study.Study;
 import app.domain.topic.Topic;
 import app.ui.study.register.RegisterStudyWindow;
+import app.ui.topic.register.RegisterTopicController;
 import app.ui.topic.register.RegisterTopicWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -191,8 +192,17 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void newTopic() {
-		RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage);
+		RegisterTopicController registerTopicController = new RegisterTopicController();
+		registerTopicController.setStudy(studySelected);
+
+		RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage, registerTopicController);
 		registerTopicWindow.showScreen();
+
+		if (registerTopicController.getTopic().getId() != null &&
+			registerTopicController.getTopic().getId() > 0) {
+			screenMainService.consultListTopic(studySelected);
+			showData();
+		}
 	}
 
 	public void setStage(Stage stage) {

@@ -17,7 +17,7 @@ public class RegisterTopicWindow {
     private AnchorPane root;
     private RegisterTopicController controller;
 
-    public RegisterTopicWindow(Stage stageOwner) {
+    public RegisterTopicWindow(Stage stageOwner, RegisterTopicController controller) {
         stage = new Stage();
         stage.setTitle("Novo Tópico");
         stage.setResizable(false);
@@ -27,7 +27,7 @@ public class RegisterTopicWindow {
             stage.initOwner(stageOwner);
         }
 
-        controller = new RegisterTopicController();
+        this.controller = controller;
         controller.setStage(stage);
 
         FXMLLoader rootFxml = new FXMLLoader();
