@@ -50,7 +50,7 @@ public class StudyRegisterController implements Initializable {
         try {
 			componentsUIHelper.validateFields(componentsUI);
 			studyRegisterService.extractFields(componentsUI, study);
-			studyRegisterService.saveStudy(study);
+			study = studyRegisterService.saveStudy(study);
 			stage.close();
         } catch (Exception e) {
 			msgUser.setText(e.getMessage());
@@ -64,5 +64,13 @@ public class StudyRegisterController implements Initializable {
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
+	}
+
+	public Study getStudy() {
+		return study;
+	}
+
+	public void setStudy(Study study) {
+		this.study = study;
 	}
 }

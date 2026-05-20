@@ -104,7 +104,10 @@ public class ScreenMainController implements Initializable {
 	private void newStudy() {
 		StudyRegisterWindow studyRegisterWindow = new StudyRegisterWindow(stage);
 		studyRegisterWindow.showScreen();
-		loadStudies();
+		if (studyRegisterWindow.getController().getStudy().getId() != null &&
+			studyRegisterWindow.getController().getStudy().getId() > 0) {
+			loadStudies();
+		}
 	}
 
 	private void getStudySelected() {

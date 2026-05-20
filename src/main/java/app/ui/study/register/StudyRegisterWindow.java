@@ -15,6 +15,7 @@ public class StudyRegisterWindow {
 	private Stage stage;
 	private Scene scene;
 	private AnchorPane root;
+	private StudyRegisterController controller;
 
 	public StudyRegisterWindow(Stage stageOwner) {
 		stage = new Stage();
@@ -26,7 +27,7 @@ public class StudyRegisterWindow {
 			stage.initOwner(stageOwner);
 		}
 
-		StudyRegisterController controller = new StudyRegisterController();
+		controller = new StudyRegisterController();
 		controller.setStage(stage);
 
 		FXMLLoader rootFxml = new FXMLLoader();
@@ -70,7 +71,11 @@ public class StudyRegisterWindow {
 	public void setRoot(AnchorPane root) {
 		this.root = root;
 	}
-	
+
+	public StudyRegisterController getController() {
+		return controller;
+	}
+
 	public void showScreen() {
 		stage.showAndWait();
 	}

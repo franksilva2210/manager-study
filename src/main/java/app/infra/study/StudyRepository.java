@@ -8,7 +8,7 @@ import java.util.List;
 
 public class StudyRepository {
 
-    public void save(Study study) {
+    public Study save(Study study) {
         EntityManager em = HibernateUtil.getEntityManager();
 
         try {
@@ -16,6 +16,7 @@ public class StudyRepository {
             em.getTransaction().begin();
             em.persist(study);
             em.getTransaction().commit();
+            return study;
 
         } catch (Exception e) {
 
