@@ -8,18 +8,15 @@ import java.util.List;
 
 public class TopicRepository {
 
-    public void save(Topic topic) {
-
-        EntityManager em =
-                HibernateUtil.getEntityManager();
+    public Topic save(Topic topic) {
+        EntityManager em = HibernateUtil.getEntityManager();
 
         try {
 
             em.getTransaction().begin();
-
             em.persist(topic);
-
             em.getTransaction().commit();
+            return topic;
 
         } catch (Exception e) {
 
@@ -30,7 +27,6 @@ public class TopicRepository {
             throw e;
 
         } finally {
-
             em.close();
         }
     }
