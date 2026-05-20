@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 
 public class MainService {
 
-    StudyRepository studyRepository = new StudyRepository();
-    TopicRepository topicRepository = new TopicRepository();
-    TextRepository textRepository = new TextRepository();
+    private StudyRepository studyRepository = new StudyRepository();
+    private TopicRepository topicRepository = new TopicRepository();
+    private TextRepository textRepository = new TextRepository();
 
     public List<Study> consultStudyAll() {
         try {
