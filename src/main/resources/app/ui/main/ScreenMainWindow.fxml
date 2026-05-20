@@ -31,7 +31,7 @@
                            <items>
                               <Menu mnemonicParsing="false" text="Novo">
                                  <items>
-                                    <MenuItem fx:id="menuStudy" mnemonicParsing="false" text="Estudo">
+                                    <MenuItem fx:id="menuNewStudy" mnemonicParsing="false" text="Estudo">
                                        <graphic>
                                           <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                                              <image>

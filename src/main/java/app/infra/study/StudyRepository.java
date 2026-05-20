@@ -9,16 +9,12 @@ import java.util.List;
 public class StudyRepository {
 
     public void save(Study study) {
-
-        EntityManager em =
-                HibernateUtil.getEntityManager();
+        EntityManager em = HibernateUtil.getEntityManager();
 
         try {
 
             em.getTransaction().begin();
-
             em.persist(study);
-
             em.getTransaction().commit();
 
         } catch (Exception e) {
@@ -30,7 +26,6 @@ public class StudyRepository {
             throw e;
 
         } finally {
-
             em.close();
         }
     }

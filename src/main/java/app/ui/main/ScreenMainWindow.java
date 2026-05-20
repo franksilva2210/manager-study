@@ -16,9 +16,15 @@ public class ScreenMainWindow {
 	private Parent root;
 
 	public ScreenMainWindow(Stage primaryStage) {
+		stage = primaryStage;
+		stage.setResizable(false);
+
+		ScreenMainController screenMainController = new ScreenMainController();
+		screenMainController.setStage(stage);
+
 		FXMLLoader rootFxml = new FXMLLoader();
 		rootFxml.setLocation(ScreenMainWindow.class.getResource("ScreenMainWindow.fxml"));
-		rootFxml.setController(new ScreenMainController());
+		rootFxml.setController(screenMainController);
 
 		try {
 			root = rootFxml.load();
@@ -31,9 +37,7 @@ public class ScreenMainWindow {
 		jMetro.setStyle(Style.LIGHT);
 		jMetro.setScene(scene);
 
-		stage = primaryStage;
 		stage.setScene(scene);
-		stage.setResizable(false);
 	}
 
 	public void show() {

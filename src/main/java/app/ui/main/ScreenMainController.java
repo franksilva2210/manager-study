@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import app.domain.study.Study;
 import app.domain.topic.Topic;
+import app.ui.study.register.StudyRegisterWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,8 +15,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.HTMLEditor;
+import javafx.stage.Stage;
 
 public class ScreenMainController implements Initializable {
+
+	//Menu superior
+
+	@FXML
+	private MenuItem menuNewStudy;
+
+	@FXML
+	private MenuItem menuClose;
 
 	//Menu Lateral
 
@@ -57,6 +67,7 @@ public class ScreenMainController implements Initializable {
 	@FXML
 	private Tab tabAdd;
 
+	private Stage stage;
 	private ObservableList<Topic> listTopics = FXCollections.observableArrayList();
 	private ScreenMainService screenMainService = new ScreenMainService();
 	private List<Study> listStudy = new ArrayList<>();
@@ -66,6 +77,10 @@ public class ScreenMainController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		listViewTopics.setItems(listTopics);
+
+		menuNewStudy.setOnAction(event -> {
+			newStudy();
+		});
 
 		txtSearch.setOnAction(event -> {
 			searchStudy();
@@ -86,6 +101,12 @@ public class ScreenMainController implements Initializable {
 		loadStudies();
 	}
 
+	private void newStudy() {
+		StudyRegisterWindow studyRegisterWindow = new StudyRegisterWindow(stage);
+		studyRegisterWindow.showScreen();
+		loadStudies();
+	}
+
 	private void getStudySelected() {
 		TreeItem<Object> objectSelected = treeStudies.getSelectionModel().getSelectedItem();
 		studySelected = (Study) objectSelected.getValue();
@@ -93,6 +114,7 @@ public class ScreenMainController implements Initializable {
 	}
 
 	public void loadStudies() {
+		listStudy.clear();
 		listStudy.addAll(screenMainService.consultStudyAll());
 
 		TreeItem<Object> treeItemRoot = new TreeItem<>("Estudos");
@@ -160,4 +182,7 @@ public class ScreenMainController implements Initializable {
 		tabPaneStudy.getSelectionModel().select(tab);
 	}
 
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
 }

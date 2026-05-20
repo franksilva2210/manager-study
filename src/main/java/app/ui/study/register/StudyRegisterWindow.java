@@ -12,77 +12,66 @@ import jfxtras.styles.jmetro.Style;
 
 public class StudyRegisterWindow {
 	
-	private static Stage stage;
-	private static Scene scene;
-	private static AnchorPane root;
+	private Stage stage;
+	private Scene scene;
+	private AnchorPane root;
 
-	public static AnchorPane getRoot() {
-		return root;
-	}
+	public StudyRegisterWindow(Stage stageOwner) {
+		stage = new Stage();
+		stage.setTitle("Novo Estudo");
+		stage.setResizable(false);
 
-	public static void setRoot(AnchorPane root) {
-		StudyRegisterWindow.root = root;
-	}
+		if (stageOwner != null) {
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(stageOwner);
+		}
 
-	public static Stage getStage() {
-		return stage;
-	}
+		StudyRegisterController controller = new StudyRegisterController();
+		controller.setStage(stage);
 
-	public static void setStage(Stage stage) {
-		StudyRegisterWindow.stage = stage;
-	}
-
-	public static Scene getScene() {
-		return scene;
-	}
-
-	public static void setScene(Scene scene) {
-		StudyRegisterWindow.scene = scene;
-	}
-	
-	public static void buildAndShowScreen(Stage stageOwner) {
-		buildScreen(stageOwner);
-		showScreen();
-	}
-	
-	public static void showScreen() {
-		stage.showAndWait();
-	}
-	
-	public static void buildScreen(Stage stageOwner) {
-		buildAnchorPane();
-		buildScene();
-		buildStage(stageOwner);
-	}
-
-	private static AnchorPane buildAnchorPane() {
 		FXMLLoader rootFxml = new FXMLLoader();
 		rootFxml.setLocation(StudyRegisterWindow.class.getResource("StudyRegisterWindow.fxml"));
-		rootFxml.setController(new StudyRegisterControl());
-		
+		rootFxml.setController(controller);
+
 		try {
 			root = rootFxml.load();
-			return root;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		return null;
-	}
-	
-	private static void buildScene() {
+
 		scene = new Scene(root);
 		JMetro jMetro = new JMetro();
 		jMetro.setStyle(Style.LIGHT);
 		jMetro.setScene(scene);
-	}
-		
-	private static void buildStage(Stage stageOwner) {
-		stage = new Stage();
+
 		stage.setScene(scene);
-		stage.setResizable(false);
-		stage.initModality(Modality.WINDOW_MODAL);
-		stage.initOwner(stageOwner);
-		stage.setTitle("Cadastro de Estudo");
+	}
+
+	public Stage getStage() {
+		return stage;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+
+	public Scene getScene() {
+		return scene;
+	}
+
+	public void setScene(Scene scene) {
+		this.scene = scene;
+	}
+
+	public AnchorPane getRoot() {
+		return root;
+	}
+
+	public void setRoot(AnchorPane root) {
+		this.root = root;
+	}
+	
+	public void showScreen() {
+		stage.showAndWait();
 	}
 }
