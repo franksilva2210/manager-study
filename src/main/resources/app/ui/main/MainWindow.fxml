@@ -72,12 +72,12 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="276.0">
                            <children>
-                              <TextField fx:id="txtSearchStudy" prefHeight="25.0" prefWidth="221.0">
+                              <TextField fx:id="txtSearch" prefHeight="25.0" prefWidth="221.0">
                                  <HBox.margin>
                                     <Insets left="3.0" />
                                  </HBox.margin>
                               </TextField>
-                              <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="45.0">
+                              <Button fx:id="bttSearch" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="45.0">
                                  <HBox.margin>
                                     <Insets left="2.0" />
                                  </HBox.margin>
@@ -91,7 +91,7 @@
                               </Button>
                            </children>
                         </HBox>
-                        <TreeView fx:id="treeStudies" prefHeight="495.0" prefWidth="274.0" style="-fx-background-color: none;">
+                        <TreeView fx:id="treeStudies" prefHeight="495.0" prefWidth="274.0" style="-fx-background-color: #F4F4F4;">
                            <VBox.margin>
                               <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                            </VBox.margin>
@@ -99,11 +99,11 @@
                      </children></VBox>
                   <VBox fx:id="paneStudy" prefHeight="500.0" prefWidth="620.0">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="30.0" prefWidth="548.0" style="-fx-border-color: #cccccc; -fx-background-color: #F5F3EE;">
+                        <HBox alignment="CENTER" prefHeight="30.0" prefWidth="548.0" style="-fx-border-color: #cccccc;">
                            <children>
-                              <Label fx:id="lblTitleStudy">
+                              <Label fx:id="lblTitleStudyOrTopic">
                                  <font>
-                                    <Font name="System Bold" size="13.0" />
+                                    <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
                            </children>
@@ -113,7 +113,7 @@
                         </HBox>
                         <TabPane fx:id="tabPaneStudy" prefHeight="498.0" prefWidth="616.0" tabClosingPolicy="UNAVAILABLE">
                            <tabs>
-                              <Tab fx:id="tabTopics" text="Principal">
+                              <Tab fx:id="tabMain" text="Principal">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="413.0" prefWidth="616.0">
                                        <children>
@@ -162,7 +162,7 @@
                                                                <children>
                                                                   <Button fx:id="bttAddTopic" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0">
                                                                      <VBox.margin>
-                                                                        <Insets top="45.0" />
+                                                                        <Insets top="41.0" />
                                                                      </VBox.margin>
                                                                      <graphic>
                                                                         <ImageView fitHeight="15.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
@@ -221,7 +221,7 @@
                                                                         </Button>
                                                                      </children>
                                                                   </HBox>
-                                                                  <ListView fx:id="listViewTopics" prefHeight="378.0" prefWidth="271.0" style="-fx-background-color: #F5F3EE;">
+                                                                  <ListView fx:id="listViewTopics" prefHeight="378.0" prefWidth="271.0" style="-fx-background-color: #F4F4F4;">
                                                                      <VBox.margin>
                                                                         <Insets right="2.0" />
                                                                      </VBox.margin>
@@ -244,13 +244,13 @@
                                     </AnchorPane>
                                  </content>
                               </Tab>
-                              <Tab fx:id="tabNotes" text="Texto 1">
+                              <Tab fx:id="tabText1" text="Texto 1">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="395.0" prefWidth="616.0">
                                        <children>
                                           <HBox prefHeight="399.0" prefWidth="616.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <children>
-                                                <HTMLEditor fx:id="editorTextMatter" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="366.0" prefWidth="612.0">
+                                                <HTMLEditor htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="366.0" prefWidth="612.0">
                                                    <HBox.margin>
                                                       <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                                    </HBox.margin>
@@ -261,7 +261,7 @@
                                     </AnchorPane>
                                  </content>
                               </Tab>
-                              <Tab text="+">
+                              <Tab fx:id="tabAdd" text="+">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                                 </content>

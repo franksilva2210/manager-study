@@ -17,7 +17,7 @@ public class MainWindow {
 
 	public MainWindow(Stage primaryStage) {
 		FXMLLoader rootFxml = new FXMLLoader();
-		rootFxml.setLocation(MainWindow.class.getResource("PaneMainWindow.fxml"));
+		rootFxml.setLocation(MainWindow.class.getResource("MainWindow.fxml"));
 		rootFxml.setController(new MainController());
 
 		try {
