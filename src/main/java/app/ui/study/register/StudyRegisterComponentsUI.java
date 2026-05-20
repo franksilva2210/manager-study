@@ -3,7 +3,7 @@ package app.ui.study.register;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
-public class StudyRegisterComponentsFxDto {
+public class StudyRegisterComponentsUI {
 
     private TextField txtMatter;
     private Text msgUser;
