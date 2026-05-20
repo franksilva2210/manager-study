@@ -7,7 +7,8 @@ import java.util.ResourceBundle;
 
 import app.domain.study.Study;
 import app.domain.topic.Topic;
-import app.ui.study.register.StudyRegisterWindow;
+import app.ui.study.register.RegisterStudyWindow;
+import app.ui.topic.register.RegisterTopicWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -98,14 +99,18 @@ public class ScreenMainController implements Initializable {
 			}
 		});
 
+		bttAddTopic.setOnAction(event -> {
+			newTopic();
+		});
+
 		loadStudies();
 	}
 
 	private void newStudy() {
-		StudyRegisterWindow studyRegisterWindow = new StudyRegisterWindow(stage);
-		studyRegisterWindow.showScreen();
-		if (studyRegisterWindow.getController().getStudy().getId() != null &&
-			studyRegisterWindow.getController().getStudy().getId() > 0) {
+		RegisterStudyWindow registerStudyWindow = new RegisterStudyWindow(stage);
+		registerStudyWindow.showScreen();
+		if (registerStudyWindow.getController().getStudy().getId() != null &&
+			registerStudyWindow.getController().getStudy().getId() > 0) {
 			loadStudies();
 		}
 	}
@@ -183,6 +188,11 @@ public class ScreenMainController implements Initializable {
 
 		tabPaneStudy.getTabs().add(indexAddTab, tab);
 		tabPaneStudy.getSelectionModel().select(tab);
+	}
+
+	private void newTopic() {
+		RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage);
+		registerTopicWindow.showScreen();
 	}
 
 	public void setStage(Stage stage) {
