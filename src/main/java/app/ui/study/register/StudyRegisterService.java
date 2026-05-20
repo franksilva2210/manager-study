@@ -11,8 +11,8 @@ public class StudyRegisterService {
         study.setMatter(componentsUI.getTxtMatter().getText());
     }
 
-    public void saveStudy(Study study) throws Exception {
-        studyRepository.save(study);
+    public Study saveStudy(Study study) throws Exception {
+        return studyRepository.save(study);
     }
 
     public void clearScreen(StudyRegisterComponentsUI componentsFxDto) {
