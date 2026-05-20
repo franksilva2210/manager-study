@@ -15,13 +15,16 @@ import javafx.stage.Stage;
 public class StudyRegisterController implements Initializable {
 
 	@FXML
-	private Button bttSave;
-
-	@FXML
 	private TextField txtMatter;
 
 	@FXML
 	private Text msgUser;
+
+	@FXML
+	private Button bttSave;
+
+	@FXML
+	private Button bttCancel;
 
 	private Stage stage;
 	private Study study = new Study();
@@ -40,6 +43,10 @@ public class StudyRegisterController implements Initializable {
 			if (mouseEvent.getClickCount() == 1) {
 				saveStudy();
 			}
+		});
+
+		bttCancel.setOnAction(event -> {
+			stage.close();
 		});
 
 		loadComponentsFxDto();

@@ -7,35 +7,49 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="272.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="154.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox layoutX="71.0" layoutY="52.0" prefHeight="438.0" prefWidth="499.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox prefHeight="59.0" prefWidth="499.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="390.0">
                <children>
-                  <VBox prefHeight="59.0" prefWidth="394.0">
-                     <children>
-                        <Label text="Assunto:" />
-                        <TextField fx:id="txtMatter" promptText="Assunto/Matéria/Tema Geral" />
-                     </children>
+                  <Label text="Estudo:">
                      <HBox.margin>
-                        <Insets left="5.0" right="5.0" />
+                        <Insets left="5.0" />
                      </HBox.margin>
-                  </VBox>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="10.0" prefWidth="380.0">
+               <children>
+                  <TextField fx:id="txtMatter" prefHeight="25.0" prefWidth="381.0" promptText="Assunto/Matéria/Tema Geral" />
                </children>
                <VBox.margin>
-                  <Insets top="15.0" />
+                  <Insets left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="158.0" prefWidth="390.0">
+            <HBox alignment="CENTER" prefHeight="48.0" prefWidth="390.0">
                <children>
                   <Text fx:id="msgUser" strokeType="OUTSIDE" strokeWidth="0.0" />
-               </children></HBox>
-            <HBox alignment="CENTER" prefHeight="39.0" prefWidth="499.0">
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="39.0" prefWidth="499.0">
                <children>
-                  <Button fx:id="bttSave" mnemonicParsing="false" prefHeight="25.0" prefWidth="181.0" text="Salvar" />
+                  <Button fx:id="bttSave" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="OK">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin></Button>
+                  <Button fx:id="bttCancel" mnemonicParsing="false" prefWidth="100.0" text="Cancelar">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
          </children>
