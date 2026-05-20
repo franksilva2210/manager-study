@@ -15,9 +15,9 @@ public class StudyRegisterService {
         return studyRepository.save(study);
     }
 
-    public void clearScreen(StudyRegisterComponentsUI componentsFxDto) {
-        componentsFxDto.getTxtMatter().clear();
-        componentsFxDto.getMsgUser().setText("");
+    public void clearScreen(StudyRegisterComponentsUI componentsUI) {
+        componentsUI.getTxtMatter().clear();
+        componentsUI.getMsgUser().setText("");
     }
 
     public void showStudyScreen(StudyRegisterComponentsUI componentsUI, Study study) {
