@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class StudyRegisterController implements Initializable {
+public class RegisterStudyController implements Initializable {
 
 	@FXML
 	private TextField txtMatter;
@@ -28,9 +28,9 @@ public class StudyRegisterController implements Initializable {
 
 	private Stage stage;
 	private Study study = new Study();
-	private StudyRegisterComponentsUI componentsUI = new StudyRegisterComponentsUI();
-	private StudyRegisterComponentsUIHelper componentsUIHelper = new StudyRegisterComponentsUIHelper();
-	private StudyRegisterService studyRegisterService = new StudyRegisterService();
+	private RegisterStudyComponentsUI componentsUI = new RegisterStudyComponentsUI();
+	private RegisterStudyComponentsUIHelper componentsUIHelper = new RegisterStudyComponentsUIHelper();
+	private RegisterStudyService registerStudyService = new RegisterStudyService();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -55,8 +55,8 @@ public class StudyRegisterController implements Initializable {
 	private void saveStudy() {
         try {
 			componentsUIHelper.validateFields(componentsUI);
-			studyRegisterService.extractFields(componentsUI, study);
-			study = studyRegisterService.saveStudy(study);
+			registerStudyService.extractFields(componentsUI, study);
+			study = registerStudyService.saveStudy(study);
 			stage.close();
         } catch (Exception e) {
 			msgUser.setText(e.getMessage());
