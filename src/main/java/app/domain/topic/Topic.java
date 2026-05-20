@@ -79,4 +79,9 @@ public class Topic {
     public void setTopicParent(Topic topicParent) {
         this.topicParent = topicParent;
     }
+
+    @Override
+    public String toString() {
+        return title;
+    }
 }
