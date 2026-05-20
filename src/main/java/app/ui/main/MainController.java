@@ -7,55 +7,102 @@ import java.util.ResourceBundle;
 
 import app.domain.study.Study;
 import app.domain.topic.Topic;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.web.HTMLEditor;
 
 public class MainController implements Initializable {
 
-	@FXML
-	private VBox paneMenuTop;
+	//Menu Lateral
 
 	@FXML
-	private VBox paneListStudy;
+	private TextField txtSearch;
 
 	@FXML
-	private VBox paneStudy;
+	private Button bttSearch;
 
 	@FXML
-	private TextField txtSearchStudy;
+	private TreeView<Object> treeStudies;
 
 	@FXML
-	private TreeView<String> treeStudies;
+	private TabPane tabPaneStudy;
 
-	private final MainService service = new MainService();
+	//Tela central principal
 
+	@FXML
+	private Tab tabMain;
+
+	@FXML
+	private Label lblTitleStudyOrTopic;
+
+	@FXML
+	private Button bttSearchTopic;
+
+	@FXML
+	private Button bttAddTopic;
+
+	@FXML
+	private Button bttEditTopic;
+
+	@FXML
+	private Button bttRemoveTopic;
+
+	@FXML
+	private ListView<Topic> listViewTopics;
+
+	@FXML
+	private Tab tabAdd;
+
+	private ObservableList<Topic> listTopics = FXCollections.observableArrayList();
+	private MainService mainService = new MainService();
 	private List<Study> listStudy = new ArrayList<>();
+	private Study studySelected = null;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		txtSearchStudy.setOnAction(event -> {
+
+		listViewTopics.setItems(listTopics);
+
+		txtSearch.setOnAction(event -> {
 			searchStudy();
+		});
+
+		treeStudies.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				getStudySelected();
+			}
+		});
+
+		tabAdd.setOnSelectionChanged(event -> {
+			if (tabAdd.isSelected()) {
+				createNewTab();
+			}
 		});
 
 		loadStudies();
 	}
 
-	public void loadStudies() {
-		listStudy.clear();
-		listStudy.addAll(service.consultStudyAll());
+	private void getStudySelected() {
+		TreeItem<Object> objectSelected = treeStudies.getSelectionModel().getSelectedItem();
+		studySelected = (Study) objectSelected.getValue();
+		showData();
+	}
 
-		TreeItem<String> treeItemRoot = new TreeItem<>("Estudos");
+	public void loadStudies() {
+		listStudy.addAll(mainService.consultStudyAll());
+
+		TreeItem<Object> treeItemRoot = new TreeItem<>("Estudos");
 		treeItemRoot.setExpanded(true);
 
 		for (Study study : listStudy) {
-			TreeItem<String> treeItemStudy = new TreeItem<>(study.getMatter());
+			TreeItem<Object> treeItemStudy = new TreeItem<>(study);
 
 			for (Topic topic : study.getListTopics()) {
-				TreeItem<String> treeItemTopic = new TreeItem<>(topic.getTitle());
+				TreeItem<Object> treeItemTopic = new TreeItem<>(topic);
 				treeItemStudy.getChildren().add(treeItemTopic);
 			}
 
@@ -83,6 +130,34 @@ public class MainController implements Initializable {
 //		}
 
 //		loadStudies(filtered);
+	}
+
+	private void showData() {
+		if (studySelected != null) {
+			lblTitleStudyOrTopic.setText(studySelected.getMatter());
+
+			listTopics.clear();
+			listTopics.addAll(studySelected.getListTopics());
+			listViewTopics.refresh();
+		}
+	}
+
+	private void createNewTab() {
+		HTMLEditor htmlEditor = new HTMLEditor();
+
+		AnchorPane anchorPane = new AnchorPane();
+		anchorPane.getChildren().add(htmlEditor);
+
+		String title = "Texto " + tabPaneStudy.getTabs().indexOf(tabAdd);
+
+		Tab tab = new Tab(title);
+		tab.setClosable(true);
+		tab.setContent(anchorPane);
+
+		int indexAddTab = tabPaneStudy.getTabs().indexOf(tabAdd);
+
+		tabPaneStudy.getTabs().add(indexAddTab, tab);
+		tabPaneStudy.getSelectionModel().select(tab);
 	}
 
 }
