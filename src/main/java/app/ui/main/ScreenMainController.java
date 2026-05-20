@@ -15,7 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.HTMLEditor;
 
-public class MainController implements Initializable {
+public class ScreenMainController implements Initializable {
 
 	//Menu Lateral
 
@@ -58,7 +58,7 @@ public class MainController implements Initializable {
 	private Tab tabAdd;
 
 	private ObservableList<Topic> listTopics = FXCollections.observableArrayList();
-	private MainService mainService = new MainService();
+	private ScreenMainService screenMainService = new ScreenMainService();
 	private List<Study> listStudy = new ArrayList<>();
 	private Study studySelected = null;
 
@@ -93,7 +93,7 @@ public class MainController implements Initializable {
 	}
 
 	public void loadStudies() {
-		listStudy.addAll(mainService.consultStudyAll());
+		listStudy.addAll(screenMainService.consultStudyAll());
 
 		TreeItem<Object> treeItemRoot = new TreeItem<>("Estudos");
 		treeItemRoot.setExpanded(true);

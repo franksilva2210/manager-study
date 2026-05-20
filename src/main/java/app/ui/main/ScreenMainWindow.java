@@ -9,16 +9,16 @@ import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
-public class MainWindow {
+public class ScreenMainWindow {
 	
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
 
-	public MainWindow(Stage primaryStage) {
+	public ScreenMainWindow(Stage primaryStage) {
 		FXMLLoader rootFxml = new FXMLLoader();
-		rootFxml.setLocation(MainWindow.class.getResource("MainWindow.fxml"));
-		rootFxml.setController(new MainController());
+		rootFxml.setLocation(ScreenMainWindow.class.getResource("ScreenMainWindow.fxml"));
+		rootFxml.setController(new ScreenMainController());
 
 		try {
 			root = rootFxml.load();
