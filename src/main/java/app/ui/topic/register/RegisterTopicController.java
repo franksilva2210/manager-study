@@ -61,6 +61,10 @@ public class RegisterTopicController implements Initializable {
         topic.setStudy(study);
     }
 
+    public void setTopicParent(Topic topicParent) {
+        topic.setTopicParent(topicParent);
+    }
+
     public Topic getTopic() {
         return topic;
     }
