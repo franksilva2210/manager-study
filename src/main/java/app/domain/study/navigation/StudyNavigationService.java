@@ -1,11 +1,11 @@
-package app.ui.main;
+package app.domain.study.navigation;
 
 import app.domain.topic.Topic;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class ScreenNavigationService {
+public class StudyNavigationService {
 
     private Deque<Object> history = new ArrayDeque<>();
 
