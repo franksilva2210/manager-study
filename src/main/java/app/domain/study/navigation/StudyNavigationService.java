@@ -36,7 +36,7 @@ public class StudyNavigationService {
     }
 
     public boolean canGoBack(Object current) {
-        if (!(current instanceof Topic topic)) {
+        if (current == null || !(current instanceof Topic topic)) {
             return false;
         }
         return topic.getTopicParent() != null || topic.getStudy() != null;
