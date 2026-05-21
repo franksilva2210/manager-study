@@ -16,6 +16,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.HTMLEditor?>
 
@@ -128,7 +129,7 @@
                                     <Insets right="5.0" />
                                  </HBox.margin>
                               </Button>
-                              <TextField fx:id="txtTitleStudyOrTopic" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="528.0">
+                              <TextField fx:id="txtHierarchyPath" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="528.0" style="-fx-background-color: none;" styleClass="label-title" stylesheets="@label-title.css">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
@@ -137,17 +138,34 @@
                         </HBox>
                         <TabPane fx:id="tabPaneStudy" prefHeight="484.0" prefWidth="616.0" tabClosingPolicy="UNAVAILABLE">
                            <tabs>
-                              <Tab fx:id="tabMain" text="Principal">
+                              <Tab fx:id="tabMain">
                                  <content>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="413.0" prefWidth="616.0">
                                        <children>
-                                          <HBox alignment="CENTER_RIGHT" prefHeight="406.0" prefWidth="616.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <HBox alignment="CENTER_RIGHT" prefHeight="452.0" prefWidth="616.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <children>
-                                                <VBox prefHeight="429.0" prefWidth="290.0">
+                                                <VBox prefHeight="409.0" prefWidth="291.0">
                                                    <HBox.margin>
                                                       <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                                                    </HBox.margin>
                                                    <children>
+                                                      <VBox>
+                                                         <children>
+                                                            <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <Label fx:id="lblTitleMain" styleClass="label-title-main" stylesheets="@label-title-main.css">
+                                                                     <font>
+                                                                        <Font size="13.0" />
+                                                                     </font>
+                                                                  </Label>
+                                                               </children>
+                                                            </HBox>
+                                                            <Line endX="183.2928924560547" startX="-100.0" stroke="#979393" />
+                                                         </children>
+                                                         <VBox.margin>
+                                                            <Insets bottom="3.0" left="3.0" right="3.0" top="5.0" />
+                                                         </VBox.margin>
+                                                      </VBox>
                                                       <HBox>
                                                          <children>
                                                             <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" text="Ver Mapa">
@@ -161,22 +179,19 @@
                                                             </Button>
                                                          </children>
                                                          <VBox.margin>
-                                                            <Insets bottom="3.0" left="3.0" right="3.0" top="10.0" />
+                                                            <Insets bottom="3.0" left="3.0" right="3.0" top="5.0" />
                                                          </VBox.margin>
                                                       </HBox>
                                                    </children>
                                                 </VBox>
-                                                <VBox prefHeight="385.0" prefWidth="317.0" style="-fx-border-color: #cccccc;">
+                                                <VBox prefHeight="434.0" prefWidth="317.0" style="-fx-border-color: #cccccc;">
                                                    <children>
                                                       <HBox alignment="CENTER_LEFT" prefHeight="44.0" prefWidth="315.0">
                                                          <children>
-                                                            <Label text="Tópicos:">
+                                                            <Label styleClass="label-title" stylesheets="@label-title.css" text="Tópicos:">
                                                                <HBox.margin>
                                                                   <Insets left="5.0" />
                                                                </HBox.margin>
-                                                               <font>
-                                                                  <Font name="System Bold" size="12.0" />
-                                                               </font>
                                                             </Label>
                                                          </children>
                                                       </HBox>
@@ -245,7 +260,7 @@
                                                                         </Button>
                                                                      </children>
                                                                   </HBox>
-                                                                  <ListView fx:id="listViewTopics" prefHeight="378.0" prefWidth="271.0" style="-fx-background-color: #F4F4F4;">
+                                                                  <ListView fx:id="listViewTopics" prefHeight="371.0" prefWidth="271.0" style="-fx-background-color: #F4F4F4;">
                                                                      <VBox.margin>
                                                                         <Insets right="2.0" />
                                                                      </VBox.margin>
@@ -267,6 +282,13 @@
                                        </children>
                                     </AnchorPane>
                                  </content>
+                                 <graphic>
+                                    <ImageView fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@list.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
                               </Tab>
                               <Tab fx:id="tabText1" text="Texto 1">
                                  <content>
@@ -285,10 +307,17 @@
                                     </AnchorPane>
                                  </content>
                               </Tab>
-                              <Tab fx:id="tabAdd" text="+">
+                              <Tab fx:id="tabAdd">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                                 </content>
+                                 <graphic>
+                                    <ImageView fitHeight="11.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@plus.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
                               </Tab>
                            </tabs>
                            <VBox.margin>

@@ -1,9 +1,7 @@
 package app.ui.main;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import app.domain.study.Study;
 import app.domain.topic.Topic;
@@ -52,10 +50,13 @@ public class ScreenMainController implements Initializable {
 	private Button bttNavigationRight;
 
 	@FXML
-	private TextField txtTitleStudyOrTopic;
+	private TextField txtHierarchyPath;
 
 	@FXML
 	private Tab tabMain;
+
+	@FXML
+	private Label lblTitleMain;
 
 	@FXML
 	private Button bttSearchTopic;
@@ -78,8 +79,10 @@ public class ScreenMainController implements Initializable {
 	private Stage stage;
 	private ObservableList<Topic> listTopics = FXCollections.observableArrayList();
 	private ScreenMainService screenMainService = new ScreenMainService();
+	private ScreenMainHelper screenMainHelper = new ScreenMainHelper();
 	private List<Study> listStudy = new ArrayList<>();
 	private Object objectCurrentSelected;
+	private Deque<Object> stackNavigation = new ArrayDeque<>();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -100,6 +103,14 @@ public class ScreenMainController implements Initializable {
 			}
 		});
 
+		bttNavigationLeft.setOnAction(event -> {
+			navigateBack();
+		});
+
+		bttNavigationRight.setOnAction(event -> {
+			navigateForward();
+		});
+
 		tabAdd.setOnSelectionChanged(event -> {
 			if (tabAdd.isSelected()) {
 				createNewTab();
@@ -117,6 +128,8 @@ public class ScreenMainController implements Initializable {
 		});
 
 		loadStudies();
+
+		updateNavigationButtons();
 	}
 
 	private void newStudy() {
@@ -130,8 +143,9 @@ public class ScreenMainController implements Initializable {
 
 	private void getStudySelected() {
 		TreeItem<Object> objectSelected = treeStudies.getSelectionModel().getSelectedItem();
-		this.objectCurrentSelected = objectSelected.getValue();
-		showData();
+		if (objectSelected != null) {
+			navigateTo(objectSelected.getValue(), true);
+		}
 	}
 
 	public void loadStudies() {
@@ -176,17 +190,78 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void showData() {
-		listTopics.clear();
+		txtHierarchyPath.setText(screenMainHelper.getHierarchyPath(objectCurrentSelected));
 
+		listTopics.clear();
 		if (objectCurrentSelected instanceof Study study) {
-			txtTitleStudyOrTopic.setText(study.getMatter());
+			lblTitleMain.setText(study.getMatter());
 			listTopics.addAll(study.getListTopics());
 		} else if (objectCurrentSelected instanceof Topic topic) {
-			txtTitleStudyOrTopic.setText(topic.getTitle());
+			lblTitleMain.setText(topic.getTitle());
 			listTopics.addAll(topic.getListTopics());
 		}
 
 		listViewTopics.refresh();
+	}
+
+	private void navigateTo(Object objectSelected, boolean clearForward) {
+		if (objectSelected == null) {
+			return;
+		}
+
+		if (clearForward) {
+			stackNavigation.clear();
+		}
+
+		objectCurrentSelected = objectSelected;
+
+		if (objectCurrentSelected instanceof Study study) {
+			screenMainService.consultListTopicByStudy(study);
+		} else if (objectCurrentSelected instanceof Topic topic) {
+			screenMainService.consultListTopicByTopicParent(topic);
+		}
+
+		showData();
+		updateNavigationButtons();
+	}
+
+	private void navigateBack() {
+		if (objectCurrentSelected == null) {
+			return;
+		}
+
+		Object previous = null;
+
+		if (objectCurrentSelected instanceof Topic topic) {
+			if (topic.getTopicParent() != null) {
+				previous = topic.getTopicParent();
+			} else if (topic.getStudy() != null) {
+				previous = topic.getStudy();
+			}
+		}
+
+		if (previous != null) {
+			stackNavigation.push(objectCurrentSelected);
+			navigateTo(previous, false);
+		}
+	}
+
+	private void navigateForward() {
+		if (stackNavigation.isEmpty()) {
+			return;
+		}
+
+		Object next = stackNavigation.pop();
+		navigateTo(next, false);
+	}
+
+	private void updateNavigationButtons() {
+		boolean canGoBack = false;
+		if (objectCurrentSelected instanceof Topic topic) {
+			canGoBack = topic.getTopicParent() != null || topic.getStudy() != null;
+		}
+		bttNavigationLeft.setDisable(!canGoBack);
+		bttNavigationRight.setDisable(stackNavigation.isEmpty());
 	}
 
 	private void createNewTab() {
@@ -216,10 +291,7 @@ public class ScreenMainController implements Initializable {
 			} else if (objectCurrentSelected instanceof Topic topic) {
 				topicSelected.setTopicParent(topic);
 			}
-
-			objectCurrentSelected = topicSelected;
-			screenMainService.consultListTopicByTopicParent(topicSelected);
-			showData();
+			navigateTo(topicSelected, true);
 		}
 	}
 
