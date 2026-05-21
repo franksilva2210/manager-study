@@ -82,7 +82,7 @@ public class ScreenMainController implements Initializable {
 	private ScreenMainHelper screenMainHelper = new ScreenMainHelper();
 	private List<Study> listStudy = new ArrayList<>();
 	private Object objectCurrentSelected;
-	private Deque<Object> stackNavigation = new ArrayDeque<>();
+	private ScreenNavigationService navigationService = new ScreenNavigationService();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -94,12 +94,12 @@ public class ScreenMainController implements Initializable {
 		});
 
 		txtSearch.setOnAction(event -> {
-			searchStudy();
+//			searchStudy();
 		});
 
 		treeStudies.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {
-				getStudySelected();
+				selectItemMenuLeft();
 			}
 		});
 
@@ -119,7 +119,7 @@ public class ScreenMainController implements Initializable {
 
 		listViewTopics.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {
-				getTopicSelected();
+				selectItemListView();
 			}
 		});
 
@@ -138,13 +138,6 @@ public class ScreenMainController implements Initializable {
 		if (registerStudyWindow.getController().getStudy().getId() != null &&
 			registerStudyWindow.getController().getStudy().getId() > 0) {
 			loadStudies();
-		}
-	}
-
-	private void getStudySelected() {
-		TreeItem<Object> objectSelected = treeStudies.getSelectionModel().getSelectedItem();
-		if (objectSelected != null) {
-			navigateTo(objectSelected.getValue(), true);
 		}
 	}
 
@@ -170,98 +163,65 @@ public class ScreenMainController implements Initializable {
 		treeStudies.setShowRoot(false);
 	}
 
-	private void searchStudy() {
-//		String search = txtSearchStudy.getText().toLowerCase().trim();
-//
-//		if (search.isEmpty()) {
-//			loadStudies();
-//			return;
-//		}
-//
-//		List<Study> filtered = new ArrayList<>();
-//		for (Study study : listStudy) {
-//			if (study.getMatter().toLowerCase().contains(search)) {
-//
-//				filtered.add(study);
-//			}
-//		}
-
-//		loadStudies(filtered);
+	private void selectItemMenuLeft() {
+		TreeItem<Object> itemSelected = treeStudies.getSelectionModel().getSelectedItem();
+		if (itemSelected != null) {
+			handleSelectionItem(itemSelected.getValue());
+		}
 	}
 
-	private void showData() {
+	private void selectItemListView() {
+		Topic topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
+		if (topicSelected != null) {
+			handleSelectionItem(topicSelected);
+		}
+	}
+
+	private void handleSelectionItem(Object objectSelected) {
+		if (objectSelected instanceof Topic topicSelected) {
+			if (objectCurrentSelected instanceof Study study) {
+				topicSelected.setStudy(study);
+			} else if (objectCurrentSelected instanceof Topic topicParent) {
+				topicSelected.setTopicParent(topicParent);
+			}
+		}
+		objectCurrentSelected = objectSelected;
+		navigationService.getHistory().clear();
+		loadData();
+	}
+
+	private void navigateBack() {
+		objectCurrentSelected = navigationService.back(objectCurrentSelected);
+		loadData();
+	}
+
+	private void navigateForward() {
+		objectCurrentSelected = navigationService.forward(objectCurrentSelected);
+		loadData();
+	}
+
+	private void loadData() {
 		txtHierarchyPath.setText(screenMainHelper.getHierarchyPath(objectCurrentSelected));
 
 		listTopics.clear();
 		if (objectCurrentSelected instanceof Study study) {
 			lblTitleMain.setText(study.getMatter());
+			screenMainService.consultListTopicByStudy(study);
 			listTopics.addAll(study.getListTopics());
 		} else if (objectCurrentSelected instanceof Topic topic) {
 			lblTitleMain.setText(topic.getTitle());
+			screenMainService.consultListTopicByTopicParent(topic);
 			listTopics.addAll(topic.getListTopics());
 		}
 
 		listViewTopics.refresh();
-	}
 
-	private void navigateTo(Object objectSelected, boolean clearForward) {
-		if (objectSelected == null) {
-			return;
-		}
-
-		if (clearForward) {
-			stackNavigation.clear();
-		}
-
-		objectCurrentSelected = objectSelected;
-
-		if (objectCurrentSelected instanceof Study study) {
-			screenMainService.consultListTopicByStudy(study);
-		} else if (objectCurrentSelected instanceof Topic topic) {
-			screenMainService.consultListTopicByTopicParent(topic);
-		}
-
-		showData();
 		updateNavigationButtons();
 	}
 
-	private void navigateBack() {
-		if (objectCurrentSelected == null) {
-			return;
-		}
-
-		Object previous = null;
-
-		if (objectCurrentSelected instanceof Topic topic) {
-			if (topic.getTopicParent() != null) {
-				previous = topic.getTopicParent();
-			} else if (topic.getStudy() != null) {
-				previous = topic.getStudy();
-			}
-		}
-
-		if (previous != null) {
-			stackNavigation.push(objectCurrentSelected);
-			navigateTo(previous, false);
-		}
-	}
-
-	private void navigateForward() {
-		if (stackNavigation.isEmpty()) {
-			return;
-		}
-
-		Object next = stackNavigation.pop();
-		navigateTo(next, false);
-	}
-
 	private void updateNavigationButtons() {
-		boolean canGoBack = false;
-		if (objectCurrentSelected instanceof Topic topic) {
-			canGoBack = topic.getTopicParent() != null || topic.getStudy() != null;
-		}
-		bttNavigationLeft.setDisable(!canGoBack);
-		bttNavigationRight.setDisable(stackNavigation.isEmpty());
+		bttNavigationLeft.setDisable(!navigationService.canGoBack(objectCurrentSelected));
+		bttNavigationRight.setDisable(!navigationService.canGoForward());
 	}
 
 	private void createNewTab() {
@@ -282,19 +242,6 @@ public class ScreenMainController implements Initializable {
 		tabPaneStudy.getSelectionModel().select(tab);
 	}
 
-	private void getTopicSelected() {
-		Topic topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
-
-		if (topicSelected != null) {
-			if (objectCurrentSelected instanceof Study study) {
-				topicSelected.setStudy(study);
-			} else if (objectCurrentSelected instanceof Topic topic) {
-				topicSelected.setTopicParent(topic);
-			}
-			navigateTo(topicSelected, true);
-		}
-	}
-
 	private void newTopic() {
 		RegisterTopicController registerTopicController = new RegisterTopicController();
 
@@ -309,14 +256,7 @@ public class ScreenMainController implements Initializable {
 
 		if (registerTopicController.getTopic().getId() != null &&
 			registerTopicController.getTopic().getId() > 0) {
-
-			if (objectCurrentSelected instanceof Study study) {
-				screenMainService.consultListTopicByStudy(study);
-			} else if (objectCurrentSelected instanceof Topic topic) {
-				screenMainService.consultListTopicByTopicParent(topic);
-			}
-
-			showData();
+			loadData();
 		}
 	}
 
