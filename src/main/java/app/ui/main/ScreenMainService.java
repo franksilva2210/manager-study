@@ -24,6 +24,11 @@ public class ScreenMainService {
             List<Topic> listTopic = topicRepository.findAllRootTopics();
             List<Text> listText = textRepository.findAllStudyTexts();
 
+            for (Topic topic : listTopic) {
+                List<Topic> listSubTopics = topicRepository.findByTopicParent(topic.getId());
+                topic.setListTopics(listSubTopics);
+            }
+
             Map<Long, List<Topic>> mapTopicsByStudy = listTopic.stream()
                     .collect(Collectors.groupingBy(
                             t -> t.getStudy().getId()
@@ -50,10 +55,14 @@ public class ScreenMainService {
         }
     }
 
-    public void consultListTopic(Study study) {
+    public void consultListTopicByStudy(Study study) {
         List<Topic> listTopic = topicRepository.findByStudy(study.getId());
-        study.getListTopics().clear();
-        study.getListTopics().addAll(listTopic);
+        study.setListTopics(listTopic);
+    }
+
+    public void consultListTopicByTopicParent(Topic topic) {
+        List<Topic> listTopic = topicRepository.findByTopicParent(topic.getId());
+        topic.setListTopics(listTopic);
     }
 
 }

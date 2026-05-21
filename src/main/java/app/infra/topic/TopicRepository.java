@@ -141,7 +141,6 @@ public class TopicRepository {
     }
 
     public List<Topic> findAllRootTopics() {
-
         EntityManager em = HibernateUtil.getEntityManager();
 
         try {
@@ -157,6 +156,26 @@ public class TopicRepository {
 
         } finally {
 
+            em.close();
+        }
+    }
+
+    public List<Topic> findByTopicParent(Long parentTopicId) {
+        EntityManager em = HibernateUtil.getEntityManager();
+
+        try {
+            return em.createQuery(
+                            """
+                            SELECT t
+                            FROM Topic t
+                            WHERE t.topicParent.id = :parentTopicId
+                            """,
+                            Topic.class
+                    )
+                    .setParameter("parentTopicId", parentTopicId)
+                    .getResultList();
+
+        } finally {
             em.close();
         }
     }
