@@ -76,7 +76,7 @@ public class ScreenMainUIHelper {
         listViewTopics.refresh();
     }
 
-    public Tab createNewTab(TabPane tabPaneStudy, Tab tabAdd) {
+    public void createNewTab(TabPane tabPaneStudy, Tab tabAdd) {
         HTMLEditor htmlEditor = new HTMLEditor();
 
         AnchorPane anchorPane = new AnchorPane();
@@ -88,7 +88,9 @@ public class ScreenMainUIHelper {
         tab.setClosable(true);
         tab.setContent(anchorPane);
 
-        return tab;
+        int indexAddTab = tabPaneStudy.getTabs().indexOf(tabAdd);
+        tabPaneStudy.getTabs().add(indexAddTab, tab);
+        tabPaneStudy.getSelectionModel().select(tab);
     }
 
 }
