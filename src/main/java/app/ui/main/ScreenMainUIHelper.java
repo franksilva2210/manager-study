@@ -3,10 +3,9 @@ package app.ui.main;
 import app.domain.study.Study;
 import app.domain.topic.Topic;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.web.HTMLEditor;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,6 +74,21 @@ public class ScreenMainUIHelper {
         }
 
         listViewTopics.refresh();
+    }
+
+    public Tab createNewTab(TabPane tabPaneStudy, Tab tabAdd) {
+        HTMLEditor htmlEditor = new HTMLEditor();
+
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.getChildren().add(htmlEditor);
+
+        String title = "Texto " + tabPaneStudy.getTabs().indexOf(tabAdd);
+
+        Tab tab = new Tab(title);
+        tab.setClosable(true);
+        tab.setContent(anchorPane);
+
+        return tab;
     }
 
 }

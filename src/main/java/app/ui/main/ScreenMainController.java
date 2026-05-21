@@ -219,21 +219,10 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void createNewTab() {
-		HTMLEditor htmlEditor = new HTMLEditor();
-
-		AnchorPane anchorPane = new AnchorPane();
-		anchorPane.getChildren().add(htmlEditor);
-
-		String title = "Texto " + tabPaneStudy.getTabs().indexOf(tabAdd);
-
-		Tab tab = new Tab(title);
-		tab.setClosable(true);
-		tab.setContent(anchorPane);
-
 		int indexAddTab = tabPaneStudy.getTabs().indexOf(tabAdd);
-
-		tabPaneStudy.getTabs().add(indexAddTab, tab);
-		tabPaneStudy.getSelectionModel().select(tab);
+		Tab newTab = uiHelper.createNewTab(tabPaneStudy, tabAdd);
+		tabPaneStudy.getTabs().add(indexAddTab, newTab);
+		tabPaneStudy.getSelectionModel().select(newTab);
 	}
 
 	private void newTopic() {
