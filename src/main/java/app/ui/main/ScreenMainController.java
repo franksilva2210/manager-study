@@ -78,9 +78,9 @@ public class ScreenMainController implements Initializable {
 	private Tab tabAdd;
 
 	private Stage stage;
-	private ObservableList<Topic> listTopics = FXCollections.observableArrayList();
+	private ObservableList<Topic> observableListTopics = FXCollections.observableArrayList();
 	private ScreenMainService screenMainService = new ScreenMainService();
-	private ScreenMainHelper screenMainHelper = new ScreenMainHelper();
+	private ScreenMainUIHelper uiHelper = new ScreenMainUIHelper();
 	private List<Study> listStudy = new ArrayList<>();
 	private Object objectCurrentSelected;
 	private StudyNavigationService navigationService = new StudyNavigationService();
@@ -88,7 +88,7 @@ public class ScreenMainController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		listViewTopics.setItems(listTopics);
+		listViewTopics.setItems(observableListTopics);
 
 		menuNewStudy.setOnAction(event -> {
 			newStudy();
@@ -130,7 +130,9 @@ public class ScreenMainController implements Initializable {
 
 		loadStudies();
 
-		updateNavigationButtons();
+		boolean canGoBack = navigationService.canGoBack(objectCurrentSelected);
+		boolean canGoForward = navigationService.canGoForward();
+		uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
 	}
 
 	private void newStudy() {
@@ -179,15 +181,20 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void handleSelectionItem(Object objectSelected) {
-		if (objectSelected instanceof Topic topicSelected) {
+		if (objectSelected instanceof Topic topic) {
 			if (objectCurrentSelected instanceof Study study) {
-				topicSelected.setStudy(study);
+				topic.setStudy(study);
+				screenMainService.consultListTopicByStudy(study);
 			} else if (objectCurrentSelected instanceof Topic topicParent) {
-				topicSelected.setTopicParent(topicParent);
+				topic.setTopicParent(topicParent);
+				screenMainService.consultListTopicByTopicParent(topic);
 			}
 		}
+
 		objectCurrentSelected = objectSelected;
+
 		navigationService.getHistory().clear();
+
 		loadData();
 	}
 
@@ -202,27 +209,13 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void loadData() {
-		txtHierarchyPath.setText(screenMainHelper.getHierarchyPath(objectCurrentSelected));
+		boolean canGoBack = navigationService.canGoBack(objectCurrentSelected);
+		boolean canGoForward = navigationService.canGoForward();
 
-		listTopics.clear();
-		if (objectCurrentSelected instanceof Study study) {
-			lblTitleMain.setText(study.getMatter());
-			screenMainService.consultListTopicByStudy(study);
-			listTopics.addAll(study.getListTopics());
-		} else if (objectCurrentSelected instanceof Topic topic) {
-			lblTitleMain.setText(topic.getTitle());
-			screenMainService.consultListTopicByTopicParent(topic);
-			listTopics.addAll(topic.getListTopics());
-		}
-
-		listViewTopics.refresh();
-
-		updateNavigationButtons();
-	}
-
-	private void updateNavigationButtons() {
-		bttNavigationLeft.setDisable(!navigationService.canGoBack(objectCurrentSelected));
-		bttNavigationRight.setDisable(!navigationService.canGoForward());
+		uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
+		uiHelper.updateTxtHierarchyPath(txtHierarchyPath, objectCurrentSelected);
+		uiHelper.updateTitleItemMain(lblTitleMain, objectCurrentSelected);
+		uiHelper.updateListViewTopics(observableListTopics, listViewTopics, objectCurrentSelected);
 	}
 
 	private void createNewTab() {
