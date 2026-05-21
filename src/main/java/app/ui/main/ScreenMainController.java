@@ -79,7 +79,7 @@ public class ScreenMainController implements Initializable {
 	private ObservableList<Topic> listTopics = FXCollections.observableArrayList();
 	private ScreenMainService screenMainService = new ScreenMainService();
 	private List<Study> listStudy = new ArrayList<>();
-	private Object objectSelected;
+	private Object objectCurrentSelected;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -130,7 +130,7 @@ public class ScreenMainController implements Initializable {
 
 	private void getStudySelected() {
 		TreeItem<Object> objectSelected = treeStudies.getSelectionModel().getSelectedItem();
-		this.objectSelected = objectSelected.getValue();
+		this.objectCurrentSelected = objectSelected.getValue();
 		showData();
 	}
 
@@ -178,10 +178,10 @@ public class ScreenMainController implements Initializable {
 	private void showData() {
 		listTopics.clear();
 
-		if (objectSelected instanceof Study study) {
+		if (objectCurrentSelected instanceof Study study) {
 			txtTitleStudyOrTopic.setText(study.getMatter());
 			listTopics.addAll(study.getListTopics());
-		} else if (objectSelected instanceof Topic topic) {
+		} else if (objectCurrentSelected instanceof Topic topic) {
 			txtTitleStudyOrTopic.setText(topic.getTitle());
 			listTopics.addAll(topic.getListTopics());
 		}
@@ -208,10 +208,17 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void getTopicSelected() {
-		Topic topic = listViewTopics.getSelectionModel().getSelectedItem();
-		if (topic != null) {
-			objectSelected = topic;
-			screenMainService.consultListTopicByTopicParent(topic);
+		Topic topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
+
+		if (topicSelected != null) {
+			if (objectCurrentSelected instanceof Study study) {
+				topicSelected.setStudy(study);
+			} else if (objectCurrentSelected instanceof Topic topic) {
+				topicSelected.setTopicParent(topic);
+			}
+
+			objectCurrentSelected = topicSelected;
+			screenMainService.consultListTopicByTopicParent(topicSelected);
 			showData();
 		}
 	}
@@ -219,9 +226,9 @@ public class ScreenMainController implements Initializable {
 	private void newTopic() {
 		RegisterTopicController registerTopicController = new RegisterTopicController();
 
-		if (objectSelected instanceof Study study) {
+		if (objectCurrentSelected instanceof Study study) {
 			registerTopicController.setStudy(study);
-		} else if (objectSelected instanceof Topic topic) {
+		} else if (objectCurrentSelected instanceof Topic topic) {
 			registerTopicController.setTopicParent(topic);
 		}
 
@@ -231,9 +238,9 @@ public class ScreenMainController implements Initializable {
 		if (registerTopicController.getTopic().getId() != null &&
 			registerTopicController.getTopic().getId() > 0) {
 
-			if (objectSelected instanceof Study study) {
+			if (objectCurrentSelected instanceof Study study) {
 				screenMainService.consultListTopicByStudy(study);
-			} else if (objectSelected instanceof Topic topic) {
+			} else if (objectCurrentSelected instanceof Topic topic) {
 				screenMainService.consultListTopicByTopicParent(topic);
 			}
 
