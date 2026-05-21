@@ -46,10 +46,16 @@ public class ScreenMainController implements Initializable {
 	//Tela central principal
 
 	@FXML
-	private Tab tabMain;
+	private Button bttNavigationLeft;
 
 	@FXML
-	private Label lblTitleStudyOrTopic;
+	private Button bttNavigationRight;
+
+	@FXML
+	private TextField txtTitleStudyOrTopic;
+
+	@FXML
+	private Tab tabMain;
 
 	@FXML
 	private Button bttSearchTopic;
@@ -165,7 +171,7 @@ public class ScreenMainController implements Initializable {
 
 	private void showData() {
 		if (studySelected != null) {
-			lblTitleStudyOrTopic.setText(studySelected.getMatter());
+			txtTitleStudyOrTopic.setText(studySelected.getMatter());
 
 			listTopics.clear();
 			listTopics.addAll(studySelected.getListTopics());
