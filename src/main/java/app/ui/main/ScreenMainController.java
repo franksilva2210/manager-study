@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.*;
 
 import app.domain.study.Study;
+import app.domain.study.navigation.StudyNavigationService;
 import app.domain.topic.Topic;
 import app.ui.study.register.RegisterStudyWindow;
 import app.ui.topic.register.RegisterTopicController;
@@ -82,7 +83,7 @@ public class ScreenMainController implements Initializable {
 	private ScreenMainHelper screenMainHelper = new ScreenMainHelper();
 	private List<Study> listStudy = new ArrayList<>();
 	private Object objectCurrentSelected;
-	private ScreenNavigationService navigationService = new ScreenNavigationService();
+	private StudyNavigationService navigationService = new StudyNavigationService();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
