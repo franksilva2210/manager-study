@@ -70,23 +70,23 @@ public class TopicMapper {
             return null;
         }
 
-        Topic topic = new Topic();
-        topic.setId(dto.getId());
-        topic.setTitle(dto.getTitle());
+        Topic entity = new Topic();
+        entity.setId(dto.getId());
+        entity.setTitle(dto.getTitle());
 
         if (dto.getStudyId() != null) {
             Study study = new Study();
             study.setId(dto.getStudyId());
-            topic.setStudy(study);
+            entity.setStudy(study);
         }
 
         if (dto.getTopicParentId() != null) {
             Topic topicParent = new Topic();
             topicParent.setId(dto.getTopicParentId());
-            topic.setTopicParent(topicParent);
+            entity.setTopicParent(topicParent);
         }
 
-        return topic;
+        return entity;
     }
 
 }

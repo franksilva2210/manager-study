@@ -1,6 +1,6 @@
 package app.ui.topic.register;
 
-import app.domain.topic.Topic;
+import app.application.topic.dto.TopicDTO;
 import app.util.ValidateControlFx;
 
 public class RegisterTopicComponentsUIHelper {
@@ -15,8 +15,8 @@ public class RegisterTopicComponentsUIHelper {
         }
     }
 
-    public void extractFields(Topic topic, RegisterTopicComponentsUI componentsUI) {
-        topic.setTitle(componentsUI.getTxtTitle().getText());
+    public void extractFields(TopicDTO topicDto, RegisterTopicComponentsUI componentsUI) {
+        topicDto.setTitle(componentsUI.getTxtTitle().getText());
     }
 
 }
