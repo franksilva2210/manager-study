@@ -3,6 +3,7 @@ package app.ui.main;
 import java.net.URL;
 import java.util.*;
 
+import app.application.dto.StudyDTO;
 import app.domain.study.Study;
 import app.domain.study.navigation.StudyNavigationService;
 import app.domain.topic.Topic;
@@ -79,7 +80,6 @@ public class ScreenMainController implements Initializable {
 	private ObservableList<Topic> observableListTopics = FXCollections.observableArrayList();
 	private ScreenMainService screenMainService = new ScreenMainService();
 	private ScreenMainUIHelper uiHelper = new ScreenMainUIHelper();
-	private List<Study> listStudy = new ArrayList<>();
 	private Object objectCurrentSelected;
 	private StudyNavigationService navigationService = new StudyNavigationService();
 
@@ -143,70 +143,50 @@ public class ScreenMainController implements Initializable {
 	}
 
 	public void loadStudies() {
-		listStudy.clear();
-		listStudy.addAll(screenMainService.consultStudyAll());
-
-		TreeItem<Object> treeItemRoot = new TreeItem<>("Estudos");
-		treeItemRoot.setExpanded(true);
-
-		for (Study study : listStudy) {
-			TreeItem<Object> treeItemStudy = new TreeItem<>(study);
-
-			for (Topic topic : study.getListTopics()) {
-				TreeItem<Object> treeItemTopic = new TreeItem<>(topic);
-				treeItemStudy.getChildren().add(treeItemTopic);
-			}
-
-			treeItemRoot.getChildren().add(treeItemStudy);
-		}
-
-		treeStudies.setRoot(treeItemRoot);
-		treeStudies.setShowRoot(false);
+		List<StudyDTO> listStudyDTO = screenMainService.consultAllStudyDto();
+		uiHelper.configTreeItem(treeStudies, listStudyDTO);
 	}
 
 	private void selectItemMenuLeft() {
 		TreeItem<Object> itemSelected = treeStudies.getSelectionModel().getSelectedItem();
 		if (itemSelected != null) {
-			handleSelectionItem(itemSelected.getValue());
+			objectCurrentSelected = itemSelected.getValue();
+			loadTopics();
+			navigationService.getHistory().clear();
+			showData();
 		}
 	}
 
 	private void selectItemListView() {
 		Topic topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
 		if (topicSelected != null) {
-			handleSelectionItem(topicSelected);
+			objectCurrentSelected = topicSelected;
+			loadTopics();
+			navigationService.getHistory().clear();
+			showData();
 		}
 	}
 
-	private void handleSelectionItem(Object objectSelected) {
-		if (objectSelected instanceof Topic topic) {
-			if (objectCurrentSelected instanceof Study study) {
-				topic.setStudy(study);
-				screenMainService.consultListTopicByStudy(study);
-			} else if (objectCurrentSelected instanceof Topic topicParent) {
-				topic.setTopicParent(topicParent);
-				screenMainService.consultListTopicByTopicParent(topic);
-			}
+	private void loadTopics() {
+		if (objectCurrentSelected instanceof Study study) {
+			List<Topic> topics = screenMainService.findByStudy(study);
+			study.setListTopics(topics);
+		} else if (objectCurrentSelected instanceof Topic topic) {
+			objectCurrentSelected = screenMainService.loadTopic(topic);
 		}
-
-		objectCurrentSelected = objectSelected;
-
-		navigationService.getHistory().clear();
-
-		loadData();
 	}
 
 	private void navigateBack() {
 		objectCurrentSelected = navigationService.back(objectCurrentSelected);
-		loadData();
+		showData();
 	}
 
 	private void navigateForward() {
 		objectCurrentSelected = navigationService.forward(objectCurrentSelected);
-		loadData();
+		showData();
 	}
 
-	private void loadData() {
+	private void showData() {
 		boolean canGoBack = navigationService.canGoBack(objectCurrentSelected);
 		boolean canGoForward = navigationService.canGoForward();
 
@@ -234,7 +214,7 @@ public class ScreenMainController implements Initializable {
 
 		if (registerTopicController.getTopic().getId() != null &&
 			registerTopicController.getTopic().getId() > 0) {
-			loadData();
+			showData();
 		}
 	}
 

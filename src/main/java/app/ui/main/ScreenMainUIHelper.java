@@ -1,5 +1,7 @@
 package app.ui.main;
 
+import app.application.dto.StudyDTO;
+import app.application.dto.TopicDTO;
 import app.domain.study.Study;
 import app.domain.topic.Topic;
 import javafx.collections.ObservableList;
@@ -91,6 +93,25 @@ public class ScreenMainUIHelper {
         int indexAddTab = tabPaneStudy.getTabs().indexOf(tabAdd);
         tabPaneStudy.getTabs().add(indexAddTab, tab);
         tabPaneStudy.getSelectionModel().select(tab);
+    }
+
+    public void configTreeItem(TreeView<Object> treeStudies, List<StudyDTO> listStudyDTO) {
+        TreeItem<Object> treeItemRoot = new TreeItem<>("Estudos");
+        treeItemRoot.setExpanded(true);
+
+        for (StudyDTO studyDto : listStudyDTO) {
+            TreeItem<Object> treeItemStudy = new TreeItem<>(studyDto);
+
+            for (TopicDTO topicDto : studyDto.getListTopics()) {
+                TreeItem<Object> treeItemTopic = new TreeItem<>(topicDto);
+                treeItemStudy.getChildren().add(treeItemTopic);
+            }
+
+            treeItemRoot.getChildren().add(treeItemStudy);
+        }
+
+        treeStudies.setRoot(treeItemRoot);
+        treeStudies.setShowRoot(false);
     }
 
 }

@@ -80,8 +80,4 @@ public class Topic {
         this.topicParent = topicParent;
     }
 
-    @Override
-    public String toString() {
-        return title;
-    }
 }

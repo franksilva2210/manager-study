@@ -1,5 +1,6 @@
 package app.infra.study;
 
+import app.application.dto.StudyDTO;
 import app.domain.study.Study;
 import app.infra.HibernateUtil;
 import jakarta.persistence.EntityManager;
@@ -114,6 +115,27 @@ public class StudyRepository {
                     """,
                     Study.class
             ).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<StudyDTO> findAllDto() {
+        EntityManager em = HibernateUtil.getEntityManager();
+
+        try {
+            return em.createQuery(
+                    """
+                    SELECT new app.application.dto.StudyDTO(
+                        s.id,
+                        s.matter
+                    )
+                    FROM Study s
+                    ORDER BY s.matter
+                    """,
+                    StudyDTO.class
+            ).getResultList();
+
         } finally {
             em.close();
         }
