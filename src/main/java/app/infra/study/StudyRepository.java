@@ -1,6 +1,6 @@
 package app.infra.study;
 
-import app.application.dto.StudyDTO;
+import app.application.study.dto.StudyDTO;
 import app.domain.study.Study;
 import app.infra.HibernateUtil;
 import jakarta.persistence.EntityManager;
@@ -105,6 +105,28 @@ public class StudyRepository {
         }
     }
 
+    public Study findByIdWithTopics(Long id) {
+        EntityManager em = HibernateUtil.getEntityManager();
+
+        try {
+
+            return em.createQuery(
+                            """
+                            SELECT DISTINCT s
+                            FROM Study s
+                            LEFT JOIN FETCH s.listTopics t
+                            WHERE s.id = :id
+                            """,
+                            Study.class
+                    )
+                    .setParameter("id", id)
+                    .getSingleResult();
+
+        } finally {
+            em.close();
+        }
+    }
+
     public List<Study> findAll() {
         EntityManager em = HibernateUtil.getEntityManager();
         try {
@@ -126,7 +148,7 @@ public class StudyRepository {
         try {
             return em.createQuery(
                     """
-                    SELECT new app.application.dto.StudyDTO(
+                    SELECT new app.application.study.dto.StudyDTO(
                         s.id,
                         s.matter
                     )
