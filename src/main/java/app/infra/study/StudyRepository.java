@@ -1,7 +1,7 @@
 package app.infra.study;
 
 import app.domain.study.Study;
-import app.util.HibernateUtil;
+import app.infra.HibernateUtil;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;

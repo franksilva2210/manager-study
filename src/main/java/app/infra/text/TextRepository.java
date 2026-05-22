@@ -1,7 +1,7 @@
 package app.infra.text;
 
 import app.domain.text.Text;
-import app.util.HibernateUtil;
+import app.infra.HibernateUtil;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;

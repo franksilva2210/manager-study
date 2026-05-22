@@ -1,4 +1,4 @@
-package app.util;
+package app.infra;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
