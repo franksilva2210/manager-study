@@ -1,6 +1,6 @@
 package app.infra.topic;
 
-import app.application.dto.TopicDTO;
+import app.application.topic.dto.TopicDTO;
 import app.domain.topic.Topic;
 import app.infra.HibernateUtil;
 import jakarta.persistence.EntityManager;
@@ -199,7 +199,7 @@ public class TopicRepository {
         try {
             return em.createQuery(
                     """
-                    SELECT new app.application.dto.TopicDTO(
+                    SELECT new app.application.topic.dto.TopicDTO(
                         t.id,
                         t.title,
                         t.study.id,
@@ -211,6 +211,28 @@ public class TopicRepository {
                     """,
                     TopicDTO.class
             ).getResultList();
+
+        } finally {
+            em.close();
+        }
+    }
+
+    public Topic findByIdWithTopics(Long id) {
+        EntityManager em = HibernateUtil.getEntityManager();
+
+        try {
+            return em.createQuery(
+                            """
+                            SELECT DISTINCT t
+                            FROM Topic t
+                            LEFT JOIN FETCH t.topicParent
+                            LEFT JOIN FETCH t.listTopics
+                            WHERE t.id = :id
+                            """,
+                            Topic.class
+                    )
+                    .setParameter("id", id)
+                    .getSingleResult();
 
         } finally {
             em.close();

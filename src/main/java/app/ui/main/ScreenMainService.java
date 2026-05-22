@@ -1,7 +1,9 @@
 package app.ui.main;
 
-import app.application.dto.StudyDTO;
-import app.application.dto.TopicDTO;
+import app.application.study.dto.StudyDTO;
+import app.application.study.dto.StudyMapper;
+import app.application.topic.dto.TopicDTO;
+import app.application.topic.dto.TopicMapper;
 import app.domain.study.Study;
 import app.domain.topic.Topic;
 import app.infra.study.StudyRepository;
@@ -32,7 +34,7 @@ public class ScreenMainService {
                             ));
 
             for (StudyDTO study : listStudyDto) {
-                study.setListTopics(
+                study.setListTopicsDto(
                         mapTopicsByStudy.getOrDefault(
                                 study.getId(),
                                 new ArrayList<>())
@@ -49,15 +51,14 @@ public class ScreenMainService {
         }
     }
 
-    public List<Topic> findByStudy(Study study) {
-        return topicRepository.findByStudy(study.getId());
+    public StudyDTO loadStudy(Long id) {
+        Study study = studyRepository.findByIdWithTopics(id);
+        return StudyMapper.toDTO(study);
     }
 
-    public Topic loadTopic(Topic topic) {
-        topic = topicRepository.findById(topic.getId());
-        List<Topic> listTopics = topicRepository.findByTopicParent(topic.getId());
-        topic.setListTopics(listTopics);
-        return topic;
+    public TopicDTO loadTopic(Long id) {
+        Topic topic = topicRepository.findByIdWithTopics(id);
+        return TopicMapper.toDTO(topic);
     }
 
 }

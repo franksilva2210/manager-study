@@ -1,4 +1,6 @@
-package app.application.dto;
+package app.application.study.dto;
+
+import app.application.topic.dto.TopicDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +9,7 @@ public class StudyDTO {
 
     private Long id;
     private String matter;
-    private List<TopicDTO> listTopics = new ArrayList<>();
+    private List<TopicDTO> listTopicsDto = new ArrayList<>();
 
     public StudyDTO(Long id, String matter) {
         this.id = id;
@@ -30,12 +32,12 @@ public class StudyDTO {
         this.matter = matter;
     }
 
-    public List<TopicDTO> getListTopics() {
-        return listTopics;
+    public List<TopicDTO> getListTopicsDto() {
+        return listTopicsDto;
     }
 
-    public void setListTopics(List<TopicDTO> listTopics) {
-        this.listTopics = listTopics;
+    public void setListTopicsDto(List<TopicDTO> listTopicsDto) {
+        this.listTopicsDto = listTopicsDto;
     }
 
     @Override

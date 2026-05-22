@@ -3,7 +3,8 @@ package app.ui.main;
 import java.net.URL;
 import java.util.*;
 
-import app.application.dto.StudyDTO;
+import app.application.study.dto.StudyDTO;
+import app.application.topic.dto.TopicDTO;
 import app.domain.study.Study;
 import app.domain.study.navigation.StudyNavigationService;
 import app.domain.topic.Topic;
@@ -71,13 +72,13 @@ public class ScreenMainController implements Initializable {
 	private Button bttRemoveTopic;
 
 	@FXML
-	private ListView<Topic> listViewTopics;
+	private ListView<TopicDTO> listViewTopics;
 
 	@FXML
 	private Tab tabAdd;
 
 	private Stage stage;
-	private ObservableList<Topic> observableListTopics = FXCollections.observableArrayList();
+	private ObservableList<TopicDTO> observableListTopics = FXCollections.observableArrayList();
 	private ScreenMainService screenMainService = new ScreenMainService();
 	private ScreenMainUIHelper uiHelper = new ScreenMainUIHelper();
 	private Object objectCurrentSelected;
@@ -150,30 +151,38 @@ public class ScreenMainController implements Initializable {
 	private void selectItemMenuLeft() {
 		TreeItem<Object> itemSelected = treeStudies.getSelectionModel().getSelectedItem();
 		if (itemSelected != null) {
-			objectCurrentSelected = itemSelected.getValue();
-			loadTopics();
-			navigationService.getHistory().clear();
+			selectItem(itemSelected.getValue());
 			showData();
+			navigationService.getHistory().clear();
 		}
 	}
 
 	private void selectItemListView() {
-		Topic topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
+		TopicDTO topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
 		if (topicSelected != null) {
-			objectCurrentSelected = topicSelected;
-			loadTopics();
-			navigationService.getHistory().clear();
+			selectItem(topicSelected);
 			showData();
+			navigationService.getHistory().clear();
 		}
 	}
 
-	private void loadTopics() {
-		if (objectCurrentSelected instanceof Study study) {
-			List<Topic> topics = screenMainService.findByStudy(study);
-			study.setListTopics(topics);
-		} else if (objectCurrentSelected instanceof Topic topic) {
-			objectCurrentSelected = screenMainService.loadTopic(topic);
+	private void selectItem(Object itemSelected) {
+		objectCurrentSelected = itemSelected;
+		if (objectCurrentSelected instanceof StudyDTO studyDto) {
+			objectCurrentSelected = screenMainService.loadStudy(studyDto.getId());
+		} else if (objectCurrentSelected instanceof TopicDTO topicDto) {
+			objectCurrentSelected = screenMainService.loadTopic(topicDto.getId());
 		}
+	}
+
+	private void showData() {
+		boolean canGoBack = navigationService.canGoBack(objectCurrentSelected);
+		boolean canGoForward = navigationService.canGoForward();
+
+		uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
+//		uiHelper.updateTxtHierarchyPath(txtHierarchyPath, objectCurrentSelected);
+		uiHelper.updateTitleItemMain(lblTitleMain, objectCurrentSelected);
+		uiHelper.updateListViewTopics(observableListTopics, listViewTopics, objectCurrentSelected);
 	}
 
 	private void navigateBack() {
@@ -184,16 +193,6 @@ public class ScreenMainController implements Initializable {
 	private void navigateForward() {
 		objectCurrentSelected = navigationService.forward(objectCurrentSelected);
 		showData();
-	}
-
-	private void showData() {
-		boolean canGoBack = navigationService.canGoBack(objectCurrentSelected);
-		boolean canGoForward = navigationService.canGoForward();
-
-		uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
-		uiHelper.updateTxtHierarchyPath(txtHierarchyPath, objectCurrentSelected);
-		uiHelper.updateTitleItemMain(lblTitleMain, objectCurrentSelected);
-		uiHelper.updateListViewTopics(observableListTopics, listViewTopics, objectCurrentSelected);
 	}
 
 	private void createNewTab() {

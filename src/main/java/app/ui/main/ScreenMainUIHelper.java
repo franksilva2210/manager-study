@@ -1,7 +1,7 @@
 package app.ui.main;
 
-import app.application.dto.StudyDTO;
-import app.application.dto.TopicDTO;
+import app.application.study.dto.StudyDTO;
+import app.application.topic.dto.TopicDTO;
 import app.domain.study.Study;
 import app.domain.topic.Topic;
 import javafx.collections.ObservableList;
@@ -55,24 +55,24 @@ public class ScreenMainUIHelper {
     }
 
     public void updateTitleItemMain(Label lblTitleMain, Object objectCurrentSelected) {
-        if (objectCurrentSelected instanceof Study study) {
-            lblTitleMain.setText(study.getMatter());
-        } else if (objectCurrentSelected instanceof Topic topic) {
-            lblTitleMain.setText(topic.getTitle());
+        if (objectCurrentSelected instanceof StudyDTO studyDto) {
+            lblTitleMain.setText(studyDto.getMatter());
+        } else if (objectCurrentSelected instanceof TopicDTO topicDto) {
+            lblTitleMain.setText(topicDto.getTitle());
         }
     }
 
     public void updateListViewTopics(
-            ObservableList<Topic> observableListTopics,
-            ListView<Topic> listViewTopics,
+            ObservableList<TopicDTO> observableListTopics,
+            ListView<TopicDTO> listViewTopics,
             Object objectCurrentSelected
     ) {
         observableListTopics.clear();
 
-        if (objectCurrentSelected instanceof Study study) {
-            observableListTopics.addAll(study.getListTopics());
-        } else if (objectCurrentSelected instanceof Topic topic) {
-            observableListTopics.addAll(topic.getListTopics());
+        if (objectCurrentSelected instanceof StudyDTO studyDto) {
+            observableListTopics.addAll(studyDto.getListTopicsDto());
+        } else if (objectCurrentSelected instanceof TopicDTO topicDto) {
+            observableListTopics.addAll(topicDto.getListTopicsDto());
         }
 
         listViewTopics.refresh();
@@ -102,7 +102,7 @@ public class ScreenMainUIHelper {
         for (StudyDTO studyDto : listStudyDTO) {
             TreeItem<Object> treeItemStudy = new TreeItem<>(studyDto);
 
-            for (TopicDTO topicDto : studyDto.getListTopics()) {
+            for (TopicDTO topicDto : studyDto.getListTopicsDto()) {
                 TreeItem<Object> treeItemTopic = new TreeItem<>(topicDto);
                 treeItemStudy.getChildren().add(treeItemTopic);
             }

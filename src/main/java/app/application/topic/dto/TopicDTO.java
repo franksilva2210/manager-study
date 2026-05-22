@@ -1,4 +1,4 @@
-package app.application.dto;
+package app.application.topic.dto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,19 +8,24 @@ public class TopicDTO {
     private Long id;
     private String title;
     private Long studyId;
-    private Long parentTopicId;
-    private List<TopicDTO> listTopics = new ArrayList<>();
+    private String studyMatter;
+    private Long topicParentId;
+    private List<TopicDTO> listTopicsDto = new ArrayList<>();
+
+    public TopicDTO() {
+
+    }
 
     public TopicDTO(
             Long id,
             String title,
             Long studyId,
-            Long parentTopicId) {
+            Long topicParentId) {
 
         this.id = id;
         this.title = title;
         this.studyId = studyId;
-        this.parentTopicId = parentTopicId;
+        this.topicParentId = topicParentId;
     }
 
     public Long getId() {
@@ -47,20 +52,28 @@ public class TopicDTO {
         this.studyId = studyId;
     }
 
-    public Long getParentTopicId() {
-        return parentTopicId;
+    public String getStudyMatter() {
+        return studyMatter;
     }
 
-    public void setParentTopicId(Long parentTopicId) {
-        this.parentTopicId = parentTopicId;
+    public void setStudyMatter(String studyMatter) {
+        this.studyMatter = studyMatter;
     }
 
-    public List<TopicDTO> getListTopics() {
-        return listTopics;
+    public Long getTopicParentId() {
+        return topicParentId;
     }
 
-    public void setListTopics(List<TopicDTO> listTopics) {
-        this.listTopics = listTopics;
+    public void setTopicParentId(Long topicParentId) {
+        this.topicParentId = topicParentId;
+    }
+
+    public List<TopicDTO> getListTopicsDto() {
+        return listTopicsDto;
+    }
+
+    public void setListTopicsDto(List<TopicDTO> listTopicsDto) {
+        this.listTopicsDto = listTopicsDto;
     }
 
     @Override
