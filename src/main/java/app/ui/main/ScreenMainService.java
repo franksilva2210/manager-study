@@ -1,7 +1,8 @@
 package app.ui.main;
 
+import app.application.dto.StudyDTO;
+import app.application.dto.TopicDTO;
 import app.domain.study.Study;
-import app.domain.text.Text;
 import app.domain.topic.Topic;
 import app.infra.study.StudyRepository;
 import app.infra.text.TextRepository;
@@ -18,51 +19,45 @@ public class ScreenMainService {
     private TopicRepository topicRepository = new TopicRepository();
     private TextRepository textRepository = new TextRepository();
 
-    public List<Study> consultStudyAll() {
+    public List<StudyDTO> consultAllStudyDto() {
+
         try {
-            List<Study> listStudy = studyRepository.findAll();
-            List<Topic> listTopic = topicRepository.findAllRootTopics();
-            List<Text> listText = textRepository.findAllStudyTexts();
+            List<StudyDTO> listStudyDto = studyRepository.findAllDto();
+            List<TopicDTO> listTopicDto = topicRepository.findAllRootTopicsDto();
 
-            for (Topic topic : listTopic) {
-                List<Topic> listSubTopics = topicRepository.findByTopicParent(topic.getId());
-                topic.setListTopics(listSubTopics);
-            }
+            Map<Long, List<TopicDTO>> mapTopicsByStudy =
+                    listTopicDto.stream()
+                            .collect(Collectors.groupingBy(
+                                    TopicDTO::getStudyId
+                            ));
 
-            Map<Long, List<Topic>> mapTopicsByStudy = listTopic.stream()
-                    .collect(Collectors.groupingBy(
-                            t -> t.getStudy().getId()
-                    ));
-
-            Map<Long, List<Text>> mapTextsByStudy = listText.stream()
-                    .collect(Collectors.groupingBy(
-                            t -> t.getStudy().getId()
-                    ));
-
-            for (Study study : listStudy) {
+            for (StudyDTO study : listStudyDto) {
                 study.setListTopics(
-                        mapTopicsByStudy.getOrDefault(study.getId(), new ArrayList<>())
-                );
-
-                study.setListText(
-                        mapTextsByStudy.getOrDefault(study.getId(), new ArrayList<>())
+                        mapTopicsByStudy.getOrDefault(
+                                study.getId(),
+                                new ArrayList<>())
                 );
             }
 
-            return listStudy;
+            return listStudyDto;
+
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao buscar estudos. ", e);
+            throw new RuntimeException(
+                    "Erro ao buscar estudos.",
+                    e
+            );
         }
     }
 
-    public void consultListTopicByStudy(Study study) {
-        List<Topic> listTopic = topicRepository.findByStudy(study.getId());
-        study.setListTopics(listTopic);
+    public List<Topic> findByStudy(Study study) {
+        return topicRepository.findByStudy(study.getId());
     }
 
-    public void consultListTopicByTopicParent(Topic topic) {
-        List<Topic> listTopic = topicRepository.findByTopicParent(topic.getId());
-        topic.setListTopics(listTopic);
+    public Topic loadTopic(Topic topic) {
+        topic = topicRepository.findById(topic.getId());
+        List<Topic> listTopics = topicRepository.findByTopicParent(topic.getId());
+        topic.setListTopics(listTopics);
+        return topic;
     }
 
 }

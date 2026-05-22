@@ -56,8 +56,4 @@ public class Study {
 		this.listTopics = listTopics;
 	}
 
-	@Override
-	public String toString() {
-		return matter;
-	}
 }

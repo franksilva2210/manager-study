@@ -1,7 +1,8 @@
 package app.infra.topic;
 
+import app.application.dto.TopicDTO;
 import app.domain.topic.Topic;
-import app.util.HibernateUtil;
+import app.infra.HibernateUtil;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
@@ -96,7 +97,19 @@ public class TopicRepository {
         EntityManager em = HibernateUtil.getEntityManager();
 
         try {
-            return em.find(Topic.class, id);
+            return em.createQuery(
+                            """
+                            SELECT t
+                            FROM Topic t
+                            LEFT JOIN FETCH t.study
+                            LEFT JOIN FETCH t.topicParent
+                            WHERE t.id = :id
+                            """,
+                            Topic.class
+                    )
+                    .setParameter("id", id)
+                    .getSingleResult();
+
         } finally {
             em.close();
         }
@@ -174,6 +187,30 @@ public class TopicRepository {
                     )
                     .setParameter("parentTopicId", parentTopicId)
                     .getResultList();
+
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<TopicDTO> findAllRootTopicsDto() {
+        EntityManager em = HibernateUtil.getEntityManager();
+
+        try {
+            return em.createQuery(
+                    """
+                    SELECT new app.application.dto.TopicDTO(
+                        t.id,
+                        t.title,
+                        t.study.id,
+                        t.topicParent.id
+                    )
+                    FROM Topic t
+                    WHERE t.topicParent IS NULL
+                    ORDER BY t.title
+                    """,
+                    TopicDTO.class
+            ).getResultList();
 
         } finally {
             em.close();
