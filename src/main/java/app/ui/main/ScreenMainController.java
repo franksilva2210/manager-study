@@ -5,9 +5,7 @@ import java.util.*;
 
 import app.application.study.dto.StudyDTO;
 import app.application.topic.dto.TopicDTO;
-import app.domain.study.Study;
 import app.domain.study.navigation.StudyNavigationService;
-import app.domain.topic.Topic;
 import app.ui.study.register.RegisterStudyWindow;
 import app.ui.topic.register.RegisterTopicController;
 import app.ui.topic.register.RegisterTopicWindow;
@@ -151,7 +149,8 @@ public class ScreenMainController implements Initializable {
 	private void selectItemMenuLeft() {
 		TreeItem<Object> itemSelected = treeStudies.getSelectionModel().getSelectedItem();
 		if (itemSelected != null) {
-			selectItem(itemSelected.getValue());
+			objectCurrentSelected = itemSelected.getValue();
+			loadItem();
 			showData();
 			navigationService.getHistory().clear();
 		}
@@ -160,14 +159,14 @@ public class ScreenMainController implements Initializable {
 	private void selectItemListView() {
 		TopicDTO topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
 		if (topicSelected != null) {
-			selectItem(topicSelected);
+			objectCurrentSelected = topicSelected;
+			loadItem();
 			showData();
 			navigationService.getHistory().clear();
 		}
 	}
 
-	private void selectItem(Object itemSelected) {
-		objectCurrentSelected = itemSelected;
+	private void loadItem() {
 		if (objectCurrentSelected instanceof StudyDTO studyDto) {
 			objectCurrentSelected = screenMainService.loadStudy(studyDto.getId());
 		} else if (objectCurrentSelected instanceof TopicDTO topicDto) {
@@ -202,17 +201,18 @@ public class ScreenMainController implements Initializable {
 	private void newTopic() {
 		RegisterTopicController registerTopicController = new RegisterTopicController();
 
-		if (objectCurrentSelected instanceof Study study) {
-			registerTopicController.setStudy(study);
-		} else if (objectCurrentSelected instanceof Topic topic) {
-			registerTopicController.setTopicParent(topic);
+		if (objectCurrentSelected instanceof StudyDTO studyDto) {
+			registerTopicController.setStudy(studyDto);
+		} else if (objectCurrentSelected instanceof TopicDTO topicDto) {
+			registerTopicController.setTopicParent(topicDto);
 		}
 
 		RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage, registerTopicController);
 		registerTopicWindow.showScreen();
 
-		if (registerTopicController.getTopic().getId() != null &&
-			registerTopicController.getTopic().getId() > 0) {
+		if (registerTopicController.getTopicDto().getId() != null &&
+			registerTopicController.getTopicDto().getId() > 0) {
+			loadItem();
 			showData();
 		}
 	}

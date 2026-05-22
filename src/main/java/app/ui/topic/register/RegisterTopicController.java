@@ -1,5 +1,8 @@
 package app.ui.topic.register;
 
+import app.application.study.dto.StudyDTO;
+import app.application.topic.dto.TopicDTO;
+import app.application.topic.dto.TopicMapper;
 import app.domain.study.Study;
 import app.domain.topic.Topic;
 import javafx.fxml.FXML;
@@ -23,7 +26,7 @@ public class RegisterTopicController implements Initializable {
     private TextField txtTitle;
 
     private Stage stage;
-    private Topic topic = new Topic();
+    private TopicDTO topicDto = new TopicDTO();
     private RegisterTopicComponentsUI componentsUI = new RegisterTopicComponentsUI();
     private RegisterTopicComponentsUIHelper componentsUIHelper = new RegisterTopicComponentsUIHelper();
     private RegisterTopicService registerTopicService = new RegisterTopicService();
@@ -41,8 +44,8 @@ public class RegisterTopicController implements Initializable {
     private void saveTopic() {
         try {
             componentsUIHelper.validateFields(componentsUI);
-            componentsUIHelper.extractFields(topic, componentsUI);
-            topic = registerTopicService.save(topic);
+            componentsUIHelper.extractFields(topicDto, componentsUI);
+            topicDto = registerTopicService.save(topicDto);
             stage.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -57,15 +60,15 @@ public class RegisterTopicController implements Initializable {
         this.stage = stage;
     }
 
-    public void setStudy(Study study) {
-        topic.setStudy(study);
+    public void setStudy(StudyDTO studyDto) {
+        topicDto.setStudyId(studyDto.getId());
     }
 
-    public void setTopicParent(Topic topicParent) {
-        topic.setTopicParent(topicParent);
+    public void setTopicParent(TopicDTO topicParentDto) {
+        topicDto.setTopicParentId(topicParentDto.getId());
     }
 
-    public Topic getTopic() {
-        return topic;
+    public TopicDTO getTopicDto() {
+        return topicDto;
     }
 }
