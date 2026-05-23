@@ -28,14 +28,12 @@ public class RegisterStudyController implements Initializable {
 
 	private Stage stage;
 	private StudyDTO studyDto;
-	private RegisterStudyUI ui = new RegisterStudyUI();
+	private RegisterStudyComponentsUI componentsUI = new RegisterStudyComponentsUI();
 	private RegisterStudyUIHelper uiHelper = new RegisterStudyUIHelper();
 	private RegisterStudyService registerStudyService = new RegisterStudyService();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
-		loadUI();
 
 		txtMatter.setOnAction(event -> {
 			saveStudy();
@@ -51,20 +49,20 @@ public class RegisterStudyController implements Initializable {
 			stage.close();
 		});
 
+		loadComponentsUI();
 		showData();
-
 	}
 
 	private void showData() {
-		if (studyDto != null) {
-			uiHelper.showStudyScreen(ui, studyDto);
+		if (studyDto != null && studyDto.getId() != null && studyDto.getId() > 0) {
+			uiHelper.showStudyScreen(componentsUI, studyDto);
 		}
 	}
 
 	private void saveStudy() {
         try {
-			uiHelper.validateFields(ui);
-			uiHelper.extractFields(ui, studyDto);
+			uiHelper.validateFields(componentsUI);
+			uiHelper.extractFields(componentsUI, studyDto);
 			studyDto = registerStudyService.saveStudy(studyDto);
 			stage.close();
         } catch (Exception e) {
@@ -72,9 +70,9 @@ public class RegisterStudyController implements Initializable {
         }
     }
 
-	private void loadUI() {
-		ui.setTxtMatter(txtMatter);
-		ui.setMsgUser(msgUser);
+	private void loadComponentsUI() {
+		componentsUI.setTxtMatter(txtMatter);
+		componentsUI.setMsgUser(msgUser);
 	}
 
 	public void setStage(Stage stage) {
