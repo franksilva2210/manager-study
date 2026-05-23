@@ -105,4 +105,57 @@ public class StudyNavigationService {
         forwardHistory.clear();
     }
 
+    public void refreshItem(Object objectUpdated) {
+        refreshDeque(navigationStack, objectUpdated);
+        refreshDeque(forwardHistory, objectUpdated);
+    }
+
+    private void refreshDeque(
+            Deque<Object> deque,
+            Object objectUpdated
+    ) {
+
+        List<Object> updatedItems = new ArrayList<>();
+
+        for (Object item : deque) {
+
+            if (isSameItem(item, objectUpdated)) {
+
+                updatedItems.add(objectUpdated);
+
+            } else {
+
+                updatedItems.add(item);
+            }
+        }
+
+        deque.clear();
+
+        for (Object item : updatedItems) {
+            deque.addLast(item);
+        }
+    }
+
+    private boolean isSameItem(
+            Object currentItem,
+            Object updatedItem
+    ) {
+
+        if (currentItem instanceof StudyDTO currentStudy &&
+                updatedItem instanceof StudyDTO updatedStudy) {
+
+            return currentStudy.getId()
+                    .equals(updatedStudy.getId());
+        }
+
+        if (currentItem instanceof TopicDTO currentTopic &&
+                updatedItem instanceof TopicDTO updatedTopic) {
+
+            return currentTopic.getId()
+                    .equals(updatedTopic.getId());
+        }
+
+        return false;
+    }
+
 }
