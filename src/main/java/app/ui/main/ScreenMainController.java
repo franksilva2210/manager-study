@@ -186,7 +186,11 @@ public class ScreenMainController implements Initializable {
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("Confirmação");
 		alert.setHeaderText("Remover estudo");
-		alert.setContentText("Deseja remover o estudo e todos os tópicos?");
+		alert.setContentText(
+				"Deseja realmente remover o estudo selecionado?\n" +
+				"Todos os tópicos de: " + studyDeletionDto.getMatter().toUpperCase() + ", também " +
+				"serão removidos!"
+		);
 
 		Optional<ButtonType> result = alert.showAndWait();
 
@@ -254,7 +258,22 @@ public class ScreenMainController implements Initializable {
 			return;
 		}
 
-		
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Confirmação");
+		alert.setHeaderText("Remover Tópico");
+		alert.setContentText(
+				"Deseja realmente remover o tópico selecionado?\n" +
+				"Todos os tópicos de: " + topicSelectedDto.getTitle().toUpperCase() + ", também " +
+				"serão removidos!"
+		);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.isPresent() && result.get() == ButtonType.OK) {
+			screenMainService.removeTopic(topicSelectedDto);
+			//atualizar navigation, também remover topico da navegação
+			refreshObjectCurrentSelected();
+			showData();
+		}
 	}
 
 	public void loadStudies() {
