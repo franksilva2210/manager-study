@@ -18,7 +18,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.web.HTMLEditor?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -292,19 +291,7 @@
                               </Tab>
                               <Tab fx:id="tabText1" text="Texto 1">
                                  <content>
-                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="395.0" prefWidth="616.0">
-                                       <children>
-                                          <HBox prefHeight="399.0" prefWidth="616.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                             <children>
-                                                <HTMLEditor htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="366.0" prefWidth="612.0">
-                                                   <HBox.margin>
-                                                      <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                                   </HBox.margin>
-                                                </HTMLEditor>
-                                             </children>
-                                          </HBox>
-                                       </children>
-                                    </AnchorPane>
+                                    <AnchorPane fx:id="paneText" minHeight="0.0" minWidth="0.0" prefHeight="429.0" prefWidth="616.0" />
                                  </content>
                               </Tab>
                               <Tab fx:id="tabAdd">
