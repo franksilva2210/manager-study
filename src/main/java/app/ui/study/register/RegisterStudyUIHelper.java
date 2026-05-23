@@ -5,9 +5,9 @@ import app.util.ValidateControlFx;
 
 public class RegisterStudyUIHelper {
 
-    public void validateFields(RegisterStudyUI ui) throws Exception {
+    public void validateFields(RegisterStudyComponentsUI componentsUI) throws Exception {
         ValidateControlFx validate = new ValidateControlFx();
-        validate.setControl(ui.getTxtMatter());
+        validate.setControl(componentsUI.getTxtMatter());
         validate.setError(false);
         validate.validateControl();
         if (validate.getError()) {
@@ -15,18 +15,18 @@ public class RegisterStudyUIHelper {
         }
     }
 
-    public void extractFields(RegisterStudyUI ui, StudyDTO studyDto) {
-        studyDto.setMatter(ui.getTxtMatter().getText());
+    public void extractFields(RegisterStudyComponentsUI componentsUI, StudyDTO studyDto) {
+        studyDto.setMatter(componentsUI.getTxtMatter().getText());
     }
 
-    public void clearScreen(RegisterStudyUI ui) {
-        ui.getTxtMatter().clear();
-        ui.getMsgUser().setText("");
+    public void clearScreen(RegisterStudyComponentsUI componentsUI) {
+        componentsUI.getTxtMatter().clear();
+        componentsUI.getMsgUser().setText("");
     }
 
-    public void showStudyScreen(RegisterStudyUI ui, StudyDTO studyDto) {
-        ui.getTxtMatter().setText(studyDto.getMatter());
-        ui.getMsgUser().setText("");
+    public void showStudyScreen(RegisterStudyComponentsUI componentsUI, StudyDTO studyDto) {
+        componentsUI.getTxtMatter().setText(studyDto.getMatter());
+        componentsUI.getMsgUser().setText("");
     }
 
 }

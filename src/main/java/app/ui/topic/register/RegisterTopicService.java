@@ -10,12 +10,14 @@ public class RegisterTopicService {
     private TopicRepository topicRepository = new TopicRepository();
 
     public TopicDTO save(TopicDTO topicDto) {
-        Topic topic =
-                TopicMapper.toEntity(topicDto);
 
-        topic = topicRepository.save(topic);
+        if (topicDto.getId() != null && topicDto.getId() > 0) {
+            return TopicMapper.toSimpleDTO(topicRepository.update(topicDto));
+        } else {
+            Topic topic = TopicMapper.toEntity(topicDto);
+            return TopicMapper.toSimpleDTO(topicRepository.save(topic));
+        }
 
-        return TopicMapper.toSimpleDTO(topic);
     }
 
 }

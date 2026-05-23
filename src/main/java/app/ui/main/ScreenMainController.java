@@ -130,6 +130,14 @@ public class ScreenMainController implements Initializable {
 			newTopic();
 		});
 
+		bttEditTopic.setOnAction(event -> {
+			editTopic();
+		});
+
+		bttRemoveTopic.setOnAction(event -> {
+			removeTopic();
+		});
+
 		loadStudies();
 
 		boolean canGoBack = navigationService.canGoBack();
@@ -191,6 +199,64 @@ public class ScreenMainController implements Initializable {
 		}
 	}
 
+	private void newTopic() {
+		if (objectCurrentSelected == null) {
+			return;
+		}
+
+		RegisterTopicController registerTopicController = new RegisterTopicController();
+		registerTopicController.setTopicDto(new TopicDTO());
+
+		if (objectCurrentSelected instanceof StudyDTO studyDto) {
+			registerTopicController.setStudy(studyDto);
+		} else if (objectCurrentSelected instanceof TopicDTO topicDto) {
+			registerTopicController.setTopicParent(topicDto);
+		}
+
+		RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage, registerTopicController);
+		registerTopicWindow.showScreen();
+
+		if (registerTopicController.getTopicDto().getId() != null &&
+				registerTopicController.getTopicDto().getId() > 0) {
+			refreshObjectCurrentSelected();
+			showData();
+		}
+	}
+
+	public void editTopic() {
+		TopicDTO topicSelectedDto =
+				listViewTopics.getSelectionModel().getSelectedItem();
+
+		if (objectCurrentSelected == null || topicSelectedDto == null) {
+			return;
+		}
+
+		RegisterTopicController registerTopicController = new RegisterTopicController();
+		registerTopicController.setTopicDto(topicSelectedDto);
+
+		RegisterTopicWindow registerTopicWindow =
+				new RegisterTopicWindow(stage, registerTopicController);
+
+		registerTopicWindow.showScreen();
+
+		TopicDTO topicUpdatedDto = registerTopicController.getTopicDto();
+
+		navigationService.refreshItem(topicUpdatedDto);
+		refreshObjectCurrentSelected();
+		showData();
+	}
+
+	private void removeTopic() {
+		TopicDTO topicSelectedDto =
+				listViewTopics.getSelectionModel().getSelectedItem();
+
+		if (objectCurrentSelected == null || topicSelectedDto == null) {
+			return;
+		}
+
+		
+	}
+
 	public void loadStudies() {
 		List<StudyDTO> listStudyDTO = screenMainService.consultAllStudyDto();
 		uiHelper.generateTreeItem(treeStudies, listStudyDTO);
@@ -201,7 +267,7 @@ public class ScreenMainController implements Initializable {
 		TreeItem<Object> itemSelected = treeStudies.getSelectionModel().getSelectedItem();
 		if (itemSelected != null) {
 			objectCurrentSelected = itemSelected.getValue();
-			loadItem();
+			refreshObjectCurrentSelected();
 			navigationService.navigateTo(objectCurrentSelected);
 			showData();
 		}
@@ -211,7 +277,7 @@ public class ScreenMainController implements Initializable {
 		TopicDTO topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
 		if (topicSelected != null) {
 			objectCurrentSelected = topicSelected;
-			loadItem();
+			refreshObjectCurrentSelected();
 			navigationService.navigateTo(objectCurrentSelected);
 			showData();
 		}
@@ -219,17 +285,17 @@ public class ScreenMainController implements Initializable {
 
 	private void navigateBack() {
 		objectCurrentSelected = navigationService.back();
-		loadItem();
+		refreshObjectCurrentSelected();
 		showData();
 	}
 
 	private void navigateForward() {
 		objectCurrentSelected = navigationService.forward();
-		loadItem();
+		refreshObjectCurrentSelected();
 		showData();
 	}
 
-	private void loadItem() {
+	private void refreshObjectCurrentSelected() {
 		if (objectCurrentSelected instanceof StudyDTO studyDto) {
 			objectCurrentSelected = screenMainService.loadStudy(studyDto.getId());
 		} else if (objectCurrentSelected instanceof TopicDTO topicDto) {
@@ -250,37 +316,6 @@ public class ScreenMainController implements Initializable {
 
 	private void createNewTab() {
 		uiHelper.createNewTab(tabPaneStudy, tabAdd);
-	}
-
-	private void newTopic() {
-		if (objectCurrentSelected == null) {
-			return;
-		}
-
-		RegisterTopicController registerTopicController = new RegisterTopicController();
-
-		if (objectCurrentSelected instanceof StudyDTO studyDto) {
-			registerTopicController.setStudy(studyDto);
-		} else if (objectCurrentSelected instanceof TopicDTO topicDto) {
-			registerTopicController.setTopicParent(topicDto);
-		}
-
-		RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage, registerTopicController);
-		registerTopicWindow.showScreen();
-
-		if (registerTopicController.getTopicDto().getId() != null &&
-			registerTopicController.getTopicDto().getId() > 0) {
-			loadItem();
-			showData();
-		}
-	}
-
-	public void editTopic(Object object) {
-
-	}
-
-	private void removeTopic(Object object) {
-
 	}
 
 	public void setStage(Stage stage) {
