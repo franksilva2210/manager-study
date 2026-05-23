@@ -63,16 +63,13 @@ public class StudyRepository {
     }
 
     public void delete(Long id) {
-
-        EntityManager em =
-                HibernateUtil.getEntityManager();
+        EntityManager em = HibernateUtil.getEntityManager();
 
         try {
 
             em.getTransaction().begin();
 
-            Study study =
-                    em.find(Study.class, id);
+            Study study = em.find(Study.class, id);
 
             if (study != null) {
                 em.remove(study);
@@ -89,7 +86,6 @@ public class StudyRepository {
             throw e;
 
         } finally {
-
             em.close();
         }
     }

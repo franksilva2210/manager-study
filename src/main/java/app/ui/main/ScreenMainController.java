@@ -1,6 +1,5 @@
 package app.ui.main;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -14,9 +13,7 @@ import app.ui.topic.register.RegisterTopicWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -171,13 +168,12 @@ public class ScreenMainController implements Initializable {
 		StudyDTO studyDtoUpdated = controller.getStudyDto();
 
 		navigationService.refreshItem(studyDtoUpdated);
-
 		loadStudies();
 		showData();
 	}
 
-	private void removeStudy(Object objectSelected) {
-		StudyDTO studyDto = (StudyDTO) objectSelected;
+	private void removeStudy(Object objectDeletion) {
+		StudyDTO studyDeletionDto = (StudyDTO) objectDeletion;
 
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("Confirmação");
@@ -187,9 +183,11 @@ public class ScreenMainController implements Initializable {
 		Optional<ButtonType> result = alert.showAndWait();
 
 		if (result.isPresent() && result.get() == ButtonType.OK) {
-			screenMainService.removeStudy(studyDto);
+			screenMainService.removeStudy(studyDeletionDto);
+			navigationService.removeStudy(studyDeletionDto);
 			objectCurrentSelected = null;
 			loadStudies();
+			showData();
 		}
 	}
 

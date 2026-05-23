@@ -36,7 +36,7 @@ public class ScreenMainService {
     }
 
     public void removeStudy(StudyDTO studyDto) {
-
+        studyRepository.delete(studyDto.getId());
     }
 
 }
