@@ -6,11 +6,9 @@ import java.util.*;
 
 public class StudyNavigationService {
 
-    private final Deque<Object> navigationStack =
-            new ArrayDeque<>();
+    private final Deque<Object> navigationStack = new ArrayDeque<>();
 
-    private final Deque<Object> forwardHistory =
-            new ArrayDeque<>();
+    private final Deque<Object> forwardHistory = new ArrayDeque<>();
 
     public void navigateTo(Object destination) {
         if (destination == null) {
@@ -156,6 +154,45 @@ public class StudyNavigationService {
         }
 
         return false;
+    }
+
+    public void removeStudy(StudyDTO studyRemoved) {
+        removeFromDeque(navigationStack, studyRemoved);
+        removeFromDeque(forwardHistory, studyRemoved);
+    }
+
+    private void removeFromDeque(
+            Deque<Object> deque,
+            StudyDTO studyRemoved
+    ) {
+
+        List<Object> remainingItems = new ArrayList<>();
+
+        for (Object item : deque) {
+
+            boolean mustRemove = false;
+
+            if (item instanceof StudyDTO studyDto) {
+
+                mustRemove = studyDto.getId().equals(studyRemoved.getId());
+
+            } else if (item instanceof TopicDTO topicDto) {
+
+                if (topicDto.getStudyId() != null) {
+                    mustRemove = topicDto.getStudyId().equals(studyRemoved.getId());
+                }
+            }
+
+            if (!mustRemove) {
+                remainingItems.add(item);
+            }
+        }
+
+        deque.clear();
+
+        for (Object item : remainingItems) {
+            deque.addLast(item);
+        }
     }
 
 }
