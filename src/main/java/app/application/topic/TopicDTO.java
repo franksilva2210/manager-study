@@ -1,4 +1,4 @@
-package app.application.topic.dto;
+package app.application.topic;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package app.infra.study;
 
-import app.application.study.dto.StudyDTO;
+import app.application.study.StudyDTO;
 import app.domain.study.Study;
 import app.infra.HibernateUtil;
 import jakarta.persistence.EntityManager;
@@ -148,7 +148,7 @@ public class StudyRepository {
         try {
             return em.createQuery(
                     """
-                    SELECT new app.application.study.dto.StudyDTO(
+                    SELECT new app.application.study.StudyDTO(
                         s.id,
                         s.matter
                     )
