@@ -202,6 +202,10 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void newTopic() {
+		if (objectCurrentSelected == null) {
+			return;
+		}
+
 		RegisterTopicController registerTopicController = new RegisterTopicController();
 
 		if (objectCurrentSelected instanceof StudyDTO studyDto) {
