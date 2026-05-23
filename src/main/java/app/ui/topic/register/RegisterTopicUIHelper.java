@@ -3,7 +3,7 @@ package app.ui.topic.register;
 import app.application.topic.TopicDTO;
 import app.util.ValidateControlFx;
 
-public class RegisterTopicComponentsUIHelper {
+public class RegisterTopicUIHelper {
 
     public void validateFields(RegisterTopicComponentsUI componentsUI) throws Exception {
         ValidateControlFx validate = new ValidateControlFx();
@@ -19,4 +19,7 @@ public class RegisterTopicComponentsUIHelper {
         topicDto.setTitle(componentsUI.getTxtTitle().getText());
     }
 
+    public void showData(RegisterTopicComponentsUI componentsUI, TopicDTO topicDto) {
+        componentsUI.getTxtTitle().setText(topicDto.getTitle());
+    }
 }

@@ -32,20 +32,22 @@ public class TopicRepository {
         }
     }
 
-    public Topic update(Topic topic) {
-
-        EntityManager em =
-                HibernateUtil.getEntityManager();
+    public Topic update(TopicDTO dto) {
+        EntityManager em = HibernateUtil.getEntityManager();
 
         try {
 
             em.getTransaction().begin();
 
-            Topic merged = em.merge(topic);
+            Topic topic = em.find(Topic.class, dto.getId());
+
+            if (topic != null) {
+                topic.setTitle(dto.getTitle());
+            }
 
             em.getTransaction().commit();
 
-            return merged;
+            return topic;
 
         } catch (Exception e) {
 
@@ -56,7 +58,6 @@ public class TopicRepository {
             throw e;
 
         } finally {
-
             em.close();
         }
     }
