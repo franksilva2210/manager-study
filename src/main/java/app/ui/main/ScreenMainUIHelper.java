@@ -25,33 +25,8 @@ public class ScreenMainUIHelper {
         bttNavigationRight.setDisable(!canGoForward);
     }
 
-    public void updateTxtHierarchyPath(TextField txtHierarchyPath, Object objectCurrentSelected) {
-        txtHierarchyPath.setText(getHierarchyPath(objectCurrentSelected));
-    }
-
-    public String getHierarchyPath(Object current) {
-        List<String> paths = new ArrayList<>();
-
-        if (current instanceof Study study) {
-            paths.add(study.getMatter());
-        } else if (current instanceof Topic topic) {
-            Topic currentTopic = topic;
-
-            while (currentTopic != null) {
-                paths.add(currentTopic.getTitle());
-
-                if (currentTopic.getStudy() != null) {
-                    paths.add(currentTopic.getStudy().getMatter());
-                    break;
-                }
-
-                currentTopic = currentTopic.getTopicParent();
-            }
-        }
-
-        Collections.reverse(paths);
-
-        return String.join(" > ", paths);
+    public void updateTxtHierarchyPath(TextField txtHierarchyPath, String hierarchyPath) {
+        txtHierarchyPath.setText(hierarchyPath);
     }
 
     public void updateTitleItemMain(Label lblTitleMain, Object objectCurrentSelected) {

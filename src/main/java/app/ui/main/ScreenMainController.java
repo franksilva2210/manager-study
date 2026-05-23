@@ -5,7 +5,7 @@ import java.util.*;
 
 import app.application.study.dto.StudyDTO;
 import app.application.topic.dto.TopicDTO;
-import app.domain.study.navigation.StudyNavigationService;
+import app.application.study.dto.StudyNavigationService;
 import app.ui.study.register.RegisterStudyWindow;
 import app.ui.topic.register.RegisterTopicController;
 import app.ui.topic.register.RegisterTopicWindow;
@@ -127,7 +127,7 @@ public class ScreenMainController implements Initializable {
 
 		loadStudies();
 
-		boolean canGoBack = navigationService.canGoBack(objectCurrentSelected);
+		boolean canGoBack = navigationService.canGoBack();
 		boolean canGoForward = navigationService.canGoForward();
 		uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
 	}
@@ -151,8 +151,8 @@ public class ScreenMainController implements Initializable {
 		if (itemSelected != null) {
 			objectCurrentSelected = itemSelected.getValue();
 			loadItem();
+			navigationService.navigateTo(objectCurrentSelected);
 			showData();
-			navigationService.getHistory().clear();
 		}
 	}
 
@@ -161,9 +161,21 @@ public class ScreenMainController implements Initializable {
 		if (topicSelected != null) {
 			objectCurrentSelected = topicSelected;
 			loadItem();
+			navigationService.navigateTo(objectCurrentSelected);
 			showData();
-			navigationService.getHistory().clear();
 		}
+	}
+
+	private void navigateBack() {
+		objectCurrentSelected = navigationService.back();
+		loadItem();
+		showData();
+	}
+
+	private void navigateForward() {
+		objectCurrentSelected = navigationService.forward();
+		loadItem();
+		showData();
 	}
 
 	private void loadItem() {
@@ -175,23 +187,14 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void showData() {
-		boolean canGoBack = navigationService.canGoBack(objectCurrentSelected);
+		boolean canGoBack = navigationService.canGoBack();
 		boolean canGoForward = navigationService.canGoForward();
+		String hierarchyPath = navigationService.getHierarchyPath();
 
 		uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
-//		uiHelper.updateTxtHierarchyPath(txtHierarchyPath, objectCurrentSelected);
+		uiHelper.updateTxtHierarchyPath(txtHierarchyPath, hierarchyPath);
 		uiHelper.updateTitleItemMain(lblTitleMain, objectCurrentSelected);
 		uiHelper.updateListViewTopics(observableListTopics, listViewTopics, objectCurrentSelected);
-	}
-
-	private void navigateBack() {
-		objectCurrentSelected = navigationService.back(objectCurrentSelected);
-		showData();
-	}
-
-	private void navigateForward() {
-		objectCurrentSelected = navigationService.forward(objectCurrentSelected);
-		showData();
 	}
 
 	private void createNewTab() {
