@@ -1,9 +1,9 @@
 package app.ui.main;
 
-import app.application.study.dto.StudyDTO;
-import app.application.study.dto.StudyMapper;
-import app.application.topic.dto.TopicDTO;
-import app.application.topic.dto.TopicMapper;
+import app.application.study.StudyDTO;
+import app.application.study.StudyMapper;
+import app.application.topic.TopicDTO;
+import app.application.topic.TopicMapper;
 import app.domain.study.Study;
 import app.domain.topic.Topic;
 import app.infra.study.StudyRepository;

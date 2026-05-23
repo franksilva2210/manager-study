@@ -3,9 +3,9 @@ package app.ui.main;
 import java.net.URL;
 import java.util.*;
 
-import app.application.study.dto.StudyDTO;
-import app.application.topic.dto.TopicDTO;
-import app.application.study.dto.StudyNavigationService;
+import app.application.study.StudyDTO;
+import app.application.topic.TopicDTO;
+import app.application.study.StudyNavigationService;
 import app.ui.study.register.RegisterStudyWindow;
 import app.ui.topic.register.RegisterTopicController;
 import app.ui.topic.register.RegisterTopicWindow;

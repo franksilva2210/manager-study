@@ -1,4 +1,4 @@
-package app.application.topic.dto;
+package app.application.topic;
 
 import app.domain.study.Study;
 import app.domain.topic.Topic;

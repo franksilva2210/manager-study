@@ -1,7 +1,7 @@
-package app.application.study.dto;
+package app.application.study;
 
-import app.application.topic.dto.TopicDTO;
-import app.application.topic.dto.TopicMapper;
+import app.application.topic.TopicDTO;
+import app.application.topic.TopicMapper;
 import app.domain.study.Study;
 import app.domain.topic.Topic;
 

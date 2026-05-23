@@ -1,10 +1,7 @@
 package app.ui.topic.register;
 
-import app.application.study.dto.StudyDTO;
-import app.application.topic.dto.TopicDTO;
-import app.application.topic.dto.TopicMapper;
-import app.domain.study.Study;
-import app.domain.topic.Topic;
+import app.application.study.StudyDTO;
+import app.application.topic.TopicDTO;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

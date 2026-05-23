@@ -1,6 +1,6 @@
-package app.application.study.dto;
+package app.application.study;
 
-import app.application.topic.dto.TopicDTO;
+import app.application.topic.TopicDTO;
 
 import java.util.ArrayList;
 import java.util.List;

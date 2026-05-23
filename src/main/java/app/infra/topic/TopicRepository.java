@@ -1,6 +1,6 @@
 package app.infra.topic;
 
-import app.application.topic.dto.TopicDTO;
+import app.application.topic.TopicDTO;
 import app.domain.topic.Topic;
 import app.infra.HibernateUtil;
 import jakarta.persistence.EntityManager;
@@ -199,7 +199,7 @@ public class TopicRepository {
         try {
             return em.createQuery(
                     """
-                    SELECT new app.application.topic.dto.TopicDTO(
+                    SELECT new app.application.topic.TopicDTO(
                         t.id,
                         t.title,
                         t.study.id,
