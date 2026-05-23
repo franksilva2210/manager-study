@@ -11,6 +11,10 @@ public class StudyDTO {
     private String matter;
     private List<TopicDTO> listTopicsDto = new ArrayList<>();
 
+    public StudyDTO() {
+
+    }
+
     public StudyDTO(Long id, String matter) {
         this.id = id;
         this.matter = matter;

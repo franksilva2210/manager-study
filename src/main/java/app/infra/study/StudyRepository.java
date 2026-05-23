@@ -32,20 +32,22 @@ public class StudyRepository {
         }
     }
 
-    public Study update(Study study) {
-
-        EntityManager em =
-                HibernateUtil.getEntityManager();
+    public Study update(StudyDTO dto) {
+        EntityManager em = HibernateUtil.getEntityManager();
 
         try {
 
             em.getTransaction().begin();
 
-            Study merged = em.merge(study);
+            Study study = em.find(Study.class, dto.getId());
+
+            if (study != null) {
+                study.setMatter(dto.getMatter());
+            }
 
             em.getTransaction().commit();
 
-            return merged;
+            return study;
 
         } catch (Exception e) {
 
@@ -56,7 +58,6 @@ public class StudyRepository {
             throw e;
 
         } finally {
-
             em.close();
         }
     }

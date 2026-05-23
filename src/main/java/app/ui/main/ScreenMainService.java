@@ -35,4 +35,8 @@ public class ScreenMainService {
         return TopicMapper.toDTO(topic);
     }
 
+    public void removeStudy(StudyDTO studyDto) {
+
+    }
+
 }

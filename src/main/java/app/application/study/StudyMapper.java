@@ -10,6 +10,19 @@ import java.util.List;
 
 public class StudyMapper {
 
+    public static StudyDTO toSimpleDTO(Study entity) {
+        if (entity == null) {
+            return null;
+        }
+
+        StudyDTO dto = new StudyDTO(
+                entity.getId(),
+                entity.getMatter()
+        );
+
+        return dto;
+    }
+
     public static StudyDTO toDTO(Study entity) {
         if (entity == null) {
             return null;

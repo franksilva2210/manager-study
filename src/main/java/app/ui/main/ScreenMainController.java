@@ -1,19 +1,24 @@
 package app.ui.main;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
 import app.application.study.StudyNavigationService;
+import app.ui.study.register.RegisterStudyController;
 import app.ui.study.register.RegisterStudyWindow;
 import app.ui.topic.register.RegisterTopicController;
 import app.ui.topic.register.RegisterTopicWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class ScreenMainController implements Initializable {
@@ -73,6 +78,9 @@ public class ScreenMainController implements Initializable {
 	private ListView<TopicDTO> listViewTopics;
 
 	@FXML
+	private AnchorPane paneText;
+
+	@FXML
 	private Tab tabAdd;
 
 	private Stage stage;
@@ -130,20 +138,65 @@ public class ScreenMainController implements Initializable {
 		boolean canGoBack = navigationService.canGoBack();
 		boolean canGoForward = navigationService.canGoForward();
 		uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
+
+		loadTabText();
 	}
 
 	private void newStudy() {
-		RegisterStudyWindow registerStudyWindow = new RegisterStudyWindow(stage);
+		RegisterStudyController controller =
+				new RegisterStudyController();
+
+		controller.setStudyDto(new StudyDTO());
+
+		RegisterStudyWindow registerStudyWindow =
+				new RegisterStudyWindow(stage, controller);
+
 		registerStudyWindow.showScreen();
-		if (registerStudyWindow.getController().getStudy().getId() != null &&
-			registerStudyWindow.getController().getStudy().getId() > 0) {
+
+		if (controller.getStudyDto().getId() != null &&
+			controller.getStudyDto().getId() > 0) {
+			loadStudies();
+		}
+	}
+
+	public void editStudy(Object objectSelected) {
+		StudyDTO studyDto = (StudyDTO) objectSelected;
+
+		RegisterStudyController controller = new RegisterStudyController();
+		controller.setStudyDto(studyDto);
+
+		RegisterStudyWindow window = new RegisterStudyWindow(stage, controller);
+		window.showScreen();
+
+		StudyDTO studyDtoUpdated = controller.getStudyDto();
+
+		navigationService.refreshItem(studyDtoUpdated);
+
+		loadStudies();
+		showData();
+	}
+
+	private void removeStudy(Object objectSelected) {
+		StudyDTO studyDto = (StudyDTO) objectSelected;
+
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Confirmação");
+		alert.setHeaderText("Remover estudo");
+		alert.setContentText("Deseja remover o estudo e todos os tópicos?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+
+		if (result.isPresent() && result.get() == ButtonType.OK) {
+			screenMainService.removeStudy(studyDto);
+			objectCurrentSelected = null;
 			loadStudies();
 		}
 	}
 
 	public void loadStudies() {
 		List<StudyDTO> listStudyDTO = screenMainService.consultAllStudyDto();
-		uiHelper.configTreeItem(treeStudies, listStudyDTO);
+		uiHelper.generateTreeItem(treeStudies, listStudyDTO);
+		uiHelper.configureContextMenu(treeStudies, this::editStudy, this::removeStudy);
 	}
 
 	private void selectItemMenuLeft() {
@@ -224,7 +277,21 @@ public class ScreenMainController implements Initializable {
 		}
 	}
 
+	public void editTopic(Object object) {
+
+	}
+
+	private void removeTopic(Object object) {
+
+	}
+
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
+
+	private void loadTabText() {
+		PreviewTextWindow previewTextWindow = new PreviewTextWindow();
+		paneText.getChildren().setAll(previewTextWindow.getRoot());
+	}
+
 }

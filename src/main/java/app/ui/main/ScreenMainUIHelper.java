@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.HTMLEditor;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ScreenMainUIHelper {
 
@@ -66,7 +67,7 @@ public class ScreenMainUIHelper {
         tabPaneStudy.getSelectionModel().select(tab);
     }
 
-    public void configTreeItem(TreeView<Object> treeStudies, List<StudyDTO> listStudyDTO) {
+    public void generateTreeItem(TreeView<Object> treeStudies, List<StudyDTO> listStudyDTO) {
         TreeItem<Object> treeItemRoot = new TreeItem<>("Estudos");
         treeItemRoot.setExpanded(true);
 
@@ -77,6 +78,61 @@ public class ScreenMainUIHelper {
 
         treeStudies.setRoot(treeItemRoot);
         treeStudies.setShowRoot(false);
+    }
+
+    public void configureContextMenu(
+            TreeView<Object> treeStudies,
+            Consumer<Object> editStudy,
+            Consumer<Object> removeStudy) {
+
+        ContextMenu contextMenu = new ContextMenu();
+
+        MenuItem menuEditStudy = new MenuItem("Editar Estudo");
+        MenuItem menuRemoveStudy = new MenuItem("Remover Estudo");
+
+        contextMenu.getItems().addAll(menuEditStudy, menuRemoveStudy);
+
+        treeStudies.setCellFactory(tv -> {
+
+            TreeCell<Object> cell = new TreeCell<>() {
+
+                @Override
+                protected void updateItem(Object item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (empty || item == null) {
+                        setText(null);
+                    } else if (item instanceof StudyDTO study) {
+                        setText(study.getMatter());
+                    } else if (item instanceof TopicDTO topic) {
+                        setText(topic.getTitle());
+                    }
+                }
+            };
+
+            cell.setOnContextMenuRequested(event -> {
+
+                if (cell.isEmpty()) {
+                    return;
+                }
+
+                Object objectSelected = cell.getItem();
+
+                treeStudies.getSelectionModel().select(cell.getTreeItem());
+
+                menuEditStudy.setOnAction(e -> {
+					editStudy.accept(objectSelected);
+                });
+
+                menuRemoveStudy.setOnAction(e -> {
+					removeStudy.accept(objectSelected);
+                });
+
+                cell.setContextMenu(contextMenu);
+            });
+
+            return cell;
+        });
     }
 
 }

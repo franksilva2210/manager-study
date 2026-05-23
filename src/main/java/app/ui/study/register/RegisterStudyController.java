@@ -3,7 +3,7 @@ package app.ui.study.register;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import app.domain.study.Study;
+import app.application.study.StudyDTO;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -27,13 +27,15 @@ public class RegisterStudyController implements Initializable {
 	private Button bttCancel;
 
 	private Stage stage;
-	private Study study = new Study();
-	private RegisterStudyComponentsUI componentsUI = new RegisterStudyComponentsUI();
-	private RegisterStudyComponentsUIHelper componentsUIHelper = new RegisterStudyComponentsUIHelper();
+	private StudyDTO studyDto;
+	private RegisterStudyUI ui = new RegisterStudyUI();
+	private RegisterStudyUIHelper uiHelper = new RegisterStudyUIHelper();
 	private RegisterStudyService registerStudyService = new RegisterStudyService();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
+		loadUI();
 
 		txtMatter.setOnAction(event -> {
 			saveStudy();
@@ -49,34 +51,41 @@ public class RegisterStudyController implements Initializable {
 			stage.close();
 		});
 
-		loadComponentsUI();
+		showData();
+
+	}
+
+	private void showData() {
+		if (studyDto != null) {
+			uiHelper.showStudyScreen(ui, studyDto);
+		}
 	}
 
 	private void saveStudy() {
         try {
-			componentsUIHelper.validateFields(componentsUI);
-			componentsUIHelper.extractFields(componentsUI, study);
-			study = registerStudyService.saveStudy(study);
+			uiHelper.validateFields(ui);
+			uiHelper.extractFields(ui, studyDto);
+			studyDto = registerStudyService.saveStudy(studyDto);
 			stage.close();
         } catch (Exception e) {
 			msgUser.setText(e.getMessage());
         }
     }
 
-	private void loadComponentsUI() {
-		componentsUI.setTxtMatter(txtMatter);
-		componentsUI.setMsgUser(msgUser);
+	private void loadUI() {
+		ui.setTxtMatter(txtMatter);
+		ui.setMsgUser(msgUser);
 	}
 
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
 
-	public Study getStudy() {
-		return study;
+	public StudyDTO getStudyDto() {
+		return studyDto;
 	}
 
-	public void setStudy(Study study) {
-		this.study = study;
+	public void setStudyDto(StudyDTO studyDto) {
+		this.studyDto = studyDto;
 	}
 }
