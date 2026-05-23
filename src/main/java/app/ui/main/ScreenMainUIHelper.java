@@ -72,12 +72,6 @@ public class ScreenMainUIHelper {
 
         for (StudyDTO studyDto : listStudyDTO) {
             TreeItem<Object> treeItemStudy = new TreeItem<>(studyDto);
-
-            for (TopicDTO topicDto : studyDto.getListTopicsDto()) {
-                TreeItem<Object> treeItemTopic = new TreeItem<>(topicDto);
-                treeItemStudy.getChildren().add(treeItemTopic);
-            }
-
             treeItemRoot.getChildren().add(treeItemStudy);
         }
 
