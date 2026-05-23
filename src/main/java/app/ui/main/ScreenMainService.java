@@ -39,4 +39,8 @@ public class ScreenMainService {
         studyRepository.delete(studyDto.getId());
     }
 
+    public void removeTopic(TopicDTO topicDto) {
+        topicRepository.delete(topicDto.getId());
+    }
+
 }
