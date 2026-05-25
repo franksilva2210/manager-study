@@ -1,8 +1,6 @@
 package app.ui.main;
 
-import app.application.study.StudyDTO;
 import app.application.text.TextDTO;
-import app.application.topic.TopicDTO;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -48,12 +46,6 @@ public class EditorTextController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        createCodeArea();
-
-        createWebView();
-
-        editText();
-
         bttEdit.setOnAction(event -> {
             editText();
         });
@@ -73,6 +65,20 @@ public class EditorTextController implements Initializable {
         bttCancel.setOnAction(event -> {
             cancel();
         });
+
+        createCodeArea();
+
+        createWebView();
+
+        editText();
+
+        settingText();
+    }
+
+    private void settingText() {
+        if (textDto.getId() != null && textDto.getContent() != null && !textDto.getContent().isEmpty()) {
+            codeArea.replaceText(textDto.getContent());
+        }
     }
 
     private void createCodeArea() {
@@ -137,13 +143,20 @@ public class EditorTextController implements Initializable {
         String markdown = codeArea.getText();
         textDto.setContent(markdown);
         textDto = editorTextService.save(textDto);
+
+        loadManagerTextWindow();
     }
 
     private void cancel() {
+        loadManagerTextWindow();
+    }
+
+    private void loadManagerTextWindow() {
         ManagerTextController managerTextController =
                 new ManagerTextController();
 
         managerTextController.setPaneText(paneText);
+        managerTextController.setTextDto(textDto);
 
         ManagerTextWindow managerTextWindow =
                 new ManagerTextWindow(managerTextController);

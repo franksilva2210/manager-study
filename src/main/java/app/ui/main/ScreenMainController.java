@@ -114,7 +114,7 @@ public class ScreenMainController implements Initializable {
 
 		tabAdd.setOnSelectionChanged(event -> {
 			if (tabAdd.isSelected()) {
-				createNewTabText(new TextDTO());
+				tabPaneStudy.getSelectionModel().select(createNewTabText(new TextDTO()));
 			}
 		});
 
@@ -326,10 +326,24 @@ public class ScreenMainController implements Initializable {
 		uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
 		uiHelper.updateTxtHierarchyPath(txtHierarchyPath, hierarchyPath);
 		uiHelper.updateTitleItemMain(lblTitleMain, objectCurrentSelected);
+		uiHelper.updateTabs(tabPaneStudy, tabMain, tabAdd, objectCurrentSelected, this::createNewTabText);
 		uiHelper.updateListViewTopics(observableListTopics, listViewTopics, objectCurrentSelected);
 	}
 
-	private void createNewTabText(TextDTO textDto) {
+	private Tab createNewTabText(TextDTO textDto) {
+		if (objectCurrentSelected == null) {
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setTitle("Informação");
+			alert.setHeaderText("Adicionar Novo Texto");
+			alert.setContentText(
+					"Selecione primeiro um estudo para criar\n" +
+					"um novo texto."
+			);
+
+			alert.showAndWait();
+			return null;
+		}
+
 		ManagerTextController managerTextController =
 				new ManagerTextController();
 
@@ -354,7 +368,8 @@ public class ScreenMainController implements Initializable {
 		Tab newTab = uiHelper.createNewTab(indexTabs, root);
 
 		tabPaneStudy.getTabs().add(indexTabs, newTab);
-		tabPaneStudy.getSelectionModel().select(newTab);
+
+		return newTab;
 	}
 
 	public void setStage(Stage stage) {

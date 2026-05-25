@@ -1,8 +1,11 @@
 package app.application.study;
 
+import app.application.text.TextDTO;
+import app.application.text.TextMapper;
 import app.application.topic.TopicDTO;
 import app.application.topic.TopicMapper;
 import app.domain.study.Study;
+import app.domain.text.Text;
 import app.domain.topic.Topic;
 
 import java.util.ArrayList;
@@ -42,6 +45,16 @@ public class StudyMapper {
             }
 
             dto.setListTopicsDto(listTopicsDto);
+        }
+
+        if (entity.getListText() != null && !entity.getListText().isEmpty()) {
+            List<TextDTO> listTextDto = new ArrayList<>();
+
+            for (Text text : entity.getListText()) {
+                listTextDto.add(TextMapper.toDTO(text));
+            }
+
+            dto.setListTextsDto(listTextDto);
         }
 
         return dto;

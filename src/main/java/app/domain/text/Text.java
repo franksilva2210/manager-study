@@ -13,7 +13,7 @@ public class Text {
     @Column(name = "text_id")
     private Long id;
 
-    @Column(name = "text_content")
+    @Column(name = "text_content", columnDefinition = "TEXT")
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
