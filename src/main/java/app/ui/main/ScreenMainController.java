@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.*;
 
 import app.application.study.StudyDTO;
+import app.application.text.TextDTO;
 import app.application.topic.TopicDTO;
 import app.application.study.StudyNavigationService;
 import app.ui.study.register.RegisterStudyController;
@@ -113,7 +114,7 @@ public class ScreenMainController implements Initializable {
 
 		tabAdd.setOnSelectionChanged(event -> {
 			if (tabAdd.isSelected()) {
-				tabPaneStudy.getSelectionModel().select(createNewTabText());
+				createNewTabText(new TextDTO());
 			}
 		});
 
@@ -140,8 +141,6 @@ public class ScreenMainController implements Initializable {
 		boolean canGoBack = navigationService.canGoBack();
 		boolean canGoForward = navigationService.canGoForward();
 		uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
-
-		createNewTabText();
 	}
 
 	private void newStudy() {
@@ -330,12 +329,14 @@ public class ScreenMainController implements Initializable {
 		uiHelper.updateListViewTopics(observableListTopics, listViewTopics, objectCurrentSelected);
 	}
 
-	private Tab createNewTabText() {
+	private void createNewTabText(TextDTO textDto) {
 		ManagerTextController managerTextController =
 				new ManagerTextController();
 
 		AnchorPane root = new AnchorPane();
 		managerTextController.setPaneText(root);
+
+		managerTextController.setTextDto(textDto);
 
 		if (objectCurrentSelected instanceof StudyDTO studyDto) {
 			managerTextController.setStudyDto(studyDto);
@@ -353,8 +354,7 @@ public class ScreenMainController implements Initializable {
 		Tab newTab = uiHelper.createNewTab(indexTabs, root);
 
 		tabPaneStudy.getTabs().add(indexTabs, newTab);
-
-		return newTab;
+		tabPaneStudy.getSelectionModel().select(newTab);
 	}
 
 	public void setStage(Stage stage) {

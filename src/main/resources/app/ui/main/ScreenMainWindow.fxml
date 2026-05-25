@@ -284,17 +284,12 @@
                                  <graphic>
                                     <ImageView fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@list.png" />
+                                          <Image url="@home.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
                               </Tab>
-                              <Tab fx:id="tabText1" text="Texto 1">
-                                 <content>
-                                    <AnchorPane fx:id="paneText" />
-                                 </content>
-                              </Tab>
-                              <Tab fx:id="tabAdd">
+                              <Tab fx:id="tabAdd" text="Novo Texto">
                                 <content>
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                                 </content>
