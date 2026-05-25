@@ -9,13 +9,13 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
-public class MessageConfirmControl implements Initializable {
+public class MessageConfirmController implements Initializable {
 	
 	@FXML private Button bttCancel;
 	@FXML private Button bttOk;
 	@FXML private Text msgText;
 	
-	private Boolean confirm;
+	private boolean confirm;
 	private String msgUser;
 	private MessageConfirmWindow messageConfirmWindow;
 	
@@ -40,11 +40,11 @@ public class MessageConfirmControl implements Initializable {
 		
 	}
 
-	public Boolean getConfirm() {
+	public boolean getConfirm() {
 		return confirm;
 	}
 
-	public void setConfirm(Boolean confirm) {
+	public void setConfirm(boolean confirm) {
 		this.confirm = confirm;
 	}
 

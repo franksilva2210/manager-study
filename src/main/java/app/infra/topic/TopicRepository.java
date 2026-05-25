@@ -63,17 +63,13 @@ public class TopicRepository {
     }
 
     public void delete(Long id) {
-
-        EntityManager em =
-                HibernateUtil.getEntityManager();
+        EntityManager em = HibernateUtil.getEntityManager();
 
         try {
 
             em.getTransaction().begin();
 
-            Topic topic =
-                    em.find(Topic.class, id);
-
+            Topic topic = em.find(Topic.class, id);
             if (topic != null) {
                 em.remove(topic);
             }
@@ -89,7 +85,6 @@ public class TopicRepository {
             throw e;
 
         } finally {
-
             em.close();
         }
     }

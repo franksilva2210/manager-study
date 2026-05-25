@@ -15,7 +15,7 @@ public class MessageConfirmWindow {
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
-	private MessageConfirmControl controller;
+	private MessageConfirmController controller;
 	
 	public Stage getStage() {
 		return stage;
@@ -41,11 +41,11 @@ public class MessageConfirmWindow {
 		this.root = root;
 	}
 
-	public MessageConfirmControl getController() {
+	public MessageConfirmController getController() {
 		return controller;
 	}
 
-	public void setController(MessageConfirmControl controller) {
+	public void setController(MessageConfirmController controller) {
 		this.controller = controller;
 	}
 

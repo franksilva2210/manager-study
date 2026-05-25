@@ -8,6 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
@@ -42,6 +43,10 @@ public class EditorTextController implements Initializable {
 
     private TextDTO textDto;
     private EditorTextService editorTextService = new EditorTextService();
+
+    private Runnable refreshObjectCurrentSelected;
+    private Runnable showData;
+    private Stage stage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -157,6 +162,9 @@ public class EditorTextController implements Initializable {
 
         managerTextController.setPaneText(paneText);
         managerTextController.setTextDto(textDto);
+        managerTextController.setRefreshObjectCurrentSelected(refreshObjectCurrentSelected);
+        managerTextController.setShowData(showData);
+        managerTextController.setStage(stage);
 
         ManagerTextWindow managerTextWindow =
                 new ManagerTextWindow(managerTextController);
@@ -174,5 +182,17 @@ public class EditorTextController implements Initializable {
 
     public void setTextDto(TextDTO textDto) {
         this.textDto = textDto;
+    }
+
+    public void setRefreshObjectCurrentSelected(Runnable refreshObjectCurrentSelected) {
+        this.refreshObjectCurrentSelected = refreshObjectCurrentSelected;
+    }
+
+    public void setShowData(Runnable showData) {
+        this.showData = showData;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

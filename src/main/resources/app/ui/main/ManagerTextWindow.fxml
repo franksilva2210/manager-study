@@ -26,6 +26,15 @@
                               </ImageView>
                            </graphic>
                         </Button>
+                        <Button fx:id="bttRemove" mnemonicParsing="false" prefWidth="120.0" text="Remover">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@trash.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                     </items>
                   </ToolBar>
                </children>
