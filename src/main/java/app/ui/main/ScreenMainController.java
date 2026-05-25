@@ -366,7 +366,7 @@ public class ScreenMainController implements Initializable {
 
 		int indexTabs = tabPaneStudy.getTabs().indexOf(tabAdd);
 
-		Tab newTab = uiHelper.createNewTab(indexTabs, root);
+		Tab newTab = uiHelper.createNewTab(indexTabs, root, managerTextController::editNameTab, textDto);
 
 		tabPaneStudy.getTabs().add(indexTabs, newTab);
 

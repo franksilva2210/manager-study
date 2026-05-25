@@ -6,39 +6,41 @@ import app.domain.topic.Topic;
 
 public class TextMapper {
 
-    public static TextDTO toDTO(Text text) {
+    public static TextDTO toDTO(Text entity) {
         TextDTO dto = new TextDTO();
-        dto.setId(text.getId());
-        dto.setContent(text.getContent());
+        dto.setId(entity.getId());
+        dto.setTitle(entity.getTitle());
+        dto.setContent(entity.getContent());
 
-        if (text.getStudy() != null) {
-            dto.setStudyId(text.getStudy().getId());
+        if (entity.getStudy() != null) {
+            dto.setStudyId(entity.getStudy().getId());
         }
 
-        if (text.getTopic() != null) {
-            dto.setTopicId(text.getTopic().getId());
+        if (entity.getTopic() != null) {
+            dto.setTopicId(entity.getTopic().getId());
         }
 
         return dto;
     }
 
     public static Text toEntity(TextDTO dto) {
-        Text text = new Text();
-        text.setId(dto.getId());
-        text.setContent(dto.getContent());
+        Text entity = new Text();
+        entity.setId(dto.getId());
+        entity.setTitle(dto.getTitle());
+        entity.setContent(dto.getContent());
 
         if (dto.getStudyId() != null) {
             Study study = new Study();
             study.setId(dto.getStudyId());
-            text.setStudy(study);
+            entity.setStudy(study);
         }
 
         if (dto.getTopicId() != null) {
             Topic topic = new Topic();
             topic.setId(dto.getTopicId());
-            text.setTopic(topic);
+            entity.setTopic(topic);
         }
 
-        return text;
+        return entity;
     }
 }

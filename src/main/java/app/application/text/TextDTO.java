@@ -3,19 +3,18 @@ package app.application.text;
 public class TextDTO {
 
     private Long id;
-
+    private String title;
     private String content;
-
     private Long studyId;
-
     private Long topicId;
 
     public TextDTO() {
 
     }
 
-    public TextDTO(Long id, String content, Long studyId, Long topicId) {
+    public TextDTO(Long id, String title, String content, Long studyId, Long topicId) {
         this.id = id;
+        this.title = title;
         this.content = content;
         this.studyId = studyId;
         this.topicId = topicId;
@@ -27,6 +26,14 @@ public class TextDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {

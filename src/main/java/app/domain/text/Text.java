@@ -13,6 +13,9 @@ public class Text {
     @Column(name = "text_id")
     private Long id;
 
+    @Column(name = "text_title")
+    private String title;
+
     @Column(name = "text_content", columnDefinition = "TEXT")
     private String content;
 
@@ -30,6 +33,14 @@ public class Text {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {
