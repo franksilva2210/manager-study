@@ -50,12 +50,33 @@ public class ScreenMainUIHelper {
         listViewTopics.refresh();
     }
 
-    public Tab createNewTab(int indexTabs, AnchorPane root) {
-        String title = "Texto " + indexTabs;
+    public Tab createNewTab(
+            int indexTabs,
+            AnchorPane root,
+            Consumer<Label> editNameTab,
+            TextDTO textDto) {
 
-        Tab tab = new Tab(title);
+        String title = "";
+
+        if (textDto.getTitle() != null && !textDto.getTitle().isEmpty()) {
+            title = textDto.getTitle();
+        } else {
+            title = "Texto " + indexTabs;
+        }
+
+        Label label = new Label(title);
+
+        Tab tab = new Tab();
         tab.setClosable(true);
         tab.setContent(root);
+        tab.setGraphic(label);
+        tab.setText("");
+
+        label.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                editNameTab.accept(label);
+            }
+        });
 
         return tab;
     }

@@ -72,6 +72,7 @@ public class TextRepository {
             Text text = em.find(Text.class, dto.getId());
 
             if (text != null) {
+                text.setTitle(dto.getTitle());
                 text.setContent(dto.getContent());
             }
 

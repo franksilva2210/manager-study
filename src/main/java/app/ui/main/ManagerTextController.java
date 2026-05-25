@@ -6,12 +6,14 @@ import app.application.topic.TopicDTO;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ManagerTextController implements Initializable {
@@ -31,6 +33,7 @@ public class ManagerTextController implements Initializable {
     private AnchorPane paneText;
 
     private TextDTO textDto;
+    private EditorTextService editorTextService = new EditorTextService();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -73,6 +76,24 @@ public class ManagerTextController implements Initializable {
         """.formatted(htmlContent);
 
         webView.getEngine().loadContent(html);
+    }
+
+    public void editNameTab(Label label) {
+        TextInputDialog dialog = new TextInputDialog(label.getText());
+
+        dialog.setTitle("Renomear Aba");
+        dialog.setHeaderText("");
+        dialog.setContentText("Titulo: ");
+
+        Optional<String> result = dialog.showAndWait();
+
+        result.ifPresent(newName -> {
+            if (!newName.isBlank()) {
+                textDto.setTitle(newName);
+                textDto = editorTextService.save(textDto);
+                label.setText(textDto.getTitle());
+            }
+        });
     }
 
     public void setPaneText(AnchorPane paneText) {
