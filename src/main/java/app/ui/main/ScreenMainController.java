@@ -341,7 +341,8 @@ public class ScreenMainController implements Initializable {
 			);
 
 			alert.showAndWait();
-			return null;
+
+			return tabPaneStudy.getTabs().get(0);
 		}
 
 		ManagerTextController managerTextController =
