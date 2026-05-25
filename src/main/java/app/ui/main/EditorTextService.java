@@ -10,8 +10,12 @@ public class EditorTextService {
     private TextRepository textRepository = new TextRepository();
 
     public TextDTO save(TextDTO textDto) {
-        Text text = TextMapper.toEntity(textDto);
-        return TextMapper.toDTO(textRepository.save(text));
+        if (textDto.getId() != null && textDto.getId() > 0) {
+            return TextMapper.toDTO(textRepository.update(textDto));
+        } else {
+            Text text = TextMapper.toEntity(textDto);
+            return TextMapper.toDTO(textRepository.save(text));
+        }
     }
 
 }

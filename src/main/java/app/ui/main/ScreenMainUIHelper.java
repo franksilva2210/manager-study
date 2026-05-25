@@ -1,6 +1,7 @@
 package app.ui.main;
 
 import app.application.study.StudyDTO;
+import app.application.text.TextDTO;
 import app.application.topic.TopicDTO;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
@@ -125,6 +126,26 @@ public class ScreenMainUIHelper {
 
             return cell;
         });
+    }
+
+    public void updateTabs(
+            TabPane tabPaneStudy,
+            Tab tabFixed,
+            Tab tabFixed2,
+            Object objectCurrentSelected,
+            Consumer<TextDTO> createNewTabText) {
+
+        tabPaneStudy.getTabs().removeIf(tab -> tab != tabFixed && tab != tabFixed2);
+
+        if (objectCurrentSelected instanceof StudyDTO studyDto) {
+            for (TextDTO textDto : studyDto.getListTextsDto()) {
+                createNewTabText.accept(textDto);
+            }
+        } else if(objectCurrentSelected instanceof TopicDTO topicDto) {
+            for (TextDTO textDto : topicDto.getListTextDto()) {
+                createNewTabText.accept(textDto);
+            }
+        }
     }
 
 }

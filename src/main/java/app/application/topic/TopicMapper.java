@@ -1,7 +1,13 @@
 package app.application.topic;
 
+import app.application.text.TextDTO;
+import app.application.text.TextMapper;
 import app.domain.study.Study;
+import app.domain.text.Text;
 import app.domain.topic.Topic;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TopicMapper {
 
@@ -60,6 +66,16 @@ public class TopicMapper {
 
                 dto.getListTopicsDto().add(subTopicDto);
             }
+        }
+
+        if (entity.getListText() != null && !entity.getListText().isEmpty()) {
+            List<TextDTO> listTextDto = new ArrayList<>();
+
+            for (Text text : entity.getListText()) {
+                listTextDto.add(TextMapper.toDTO(text));
+            }
+
+            dto.setListTextDto(listTextDto);
         }
 
         return dto;

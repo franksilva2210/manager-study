@@ -1,5 +1,6 @@
 package app.infra.text;
 
+import app.application.text.TextDTO;
 import app.domain.text.Text;
 import app.infra.HibernateUtil;
 import jakarta.persistence.EntityManager;
@@ -61,6 +62,36 @@ public class TextRepository {
         }
     }
 
+    public Text update(TextDTO dto) {
+        EntityManager em = HibernateUtil.getEntityManager();
+
+        try {
+
+            em.getTransaction().begin();
+
+            Text text = em.find(Text.class, dto.getId());
+
+            if (text != null) {
+                text.setContent(dto.getContent());
+            }
+
+            em.getTransaction().commit();
+
+            return text;
+
+        } catch (Exception e) {
+
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+
+            throw e;
+
+        } finally {
+            em.close();
+        }
+    }
+
     public void delete(Long id) {
 
         EntityManager em =
@@ -104,6 +135,44 @@ public class TextRepository {
 
         } finally {
 
+            em.close();
+        }
+    }
+
+    public List<Text> findByStudy(Long id) {
+        EntityManager em = HibernateUtil.getEntityManager();
+
+        try {
+            return em.createQuery(
+                            """
+                            SELECT text
+                            FROM Text text
+                            WHERE text.study.id = :id
+                            """,
+                            Text.class
+                    )
+                    .setParameter("id", id)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Text> findByTopic(Long id) {
+        EntityManager em = HibernateUtil.getEntityManager();
+
+        try {
+            return em.createQuery(
+                            """
+                            SELECT text
+                            FROM Text text
+                            WHERE text.topic.id = :id
+                            """,
+                            Text.class
+                    )
+                    .setParameter("id", id)
+                    .getResultList();
+        } finally {
             em.close();
         }
     }

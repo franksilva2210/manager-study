@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
 
@@ -38,6 +39,7 @@ public class ManagerTextController implements Initializable {
             editText();
         });
 
+        previewText();
     }
 
     public void editText() {
@@ -53,16 +55,22 @@ public class ManagerTextController implements Initializable {
         paneText.getChildren().setAll(editorTextWindow.getRoot());
     }
 
-    public void setHtml(String html) {
-        html = html.replaceAll(
-                "contenteditable\\s*=\\s*\"true\"",
-                ""
-        );
+    private void previewText() {
+        if (textDto.getContent() == null || textDto.getContent().isEmpty()) {
+            return;
+        }
 
-        html = html.replaceAll(
-                "<script[^>]*>.*?</script>",
-                ""
-        );
+        String markdown = textDto.getContent();
+
+        String htmlContent = MarkdownConverter.toHtml(markdown);
+
+        String html = """
+        <html>
+            <body>
+                %s
+            </body>
+        </html>
+        """.formatted(htmlContent);
 
         webView.getEngine().loadContent(html);
     }
