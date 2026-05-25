@@ -1,5 +1,8 @@
 package app.ui.main;
 
+import app.application.study.StudyDTO;
+import app.application.text.TextDTO;
+import app.application.topic.TopicDTO;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -26,6 +29,8 @@ public class ManagerTextController implements Initializable {
 
     private AnchorPane paneText;
 
+    private TextDTO textDto;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -40,6 +45,7 @@ public class ManagerTextController implements Initializable {
                 new EditorTextController();
 
         editorTextController.setPaneText(paneText);
+        editorTextController.setTextDto(textDto);
 
         EditorTextWindow editorTextWindow =
                 new EditorTextWindow(editorTextController);
@@ -63,5 +69,21 @@ public class ManagerTextController implements Initializable {
 
     public void setPaneText(AnchorPane paneText) {
         this.paneText = paneText;
+    }
+
+    public TextDTO getTextDto() {
+        return textDto;
+    }
+
+    public void setTextDto(TextDTO textDto) {
+        this.textDto = textDto;
+    }
+
+    public void setTopicDto(TopicDTO topicDto) {
+        textDto.setTopicId(topicDto.getId());
+    }
+
+    public void setStudyDto(StudyDTO studyDto) {
+        textDto.setStudyId(studyDto.getId());
     }
 }

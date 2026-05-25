@@ -8,18 +8,16 @@ import java.util.List;
 
 public class TextRepository {
 
-    public void save(Text text) {
-
-        EntityManager em =
-                HibernateUtil.getEntityManager();
+    public Text save(Text text) {
+        EntityManager em = HibernateUtil.getEntityManager();
 
         try {
 
             em.getTransaction().begin();
-
             em.persist(text);
-
             em.getTransaction().commit();
+
+            return text;
 
         } catch (Exception e) {
 
@@ -30,7 +28,6 @@ public class TextRepository {
             throw e;
 
         } finally {
-
             em.close();
         }
     }
