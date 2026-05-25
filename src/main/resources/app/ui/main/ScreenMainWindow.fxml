@@ -291,7 +291,7 @@
                               </Tab>
                               <Tab fx:id="tabText1" text="Texto 1">
                                  <content>
-                                    <AnchorPane fx:id="paneText" minHeight="0.0" minWidth="0.0" prefHeight="429.0" prefWidth="616.0" />
+                                    <AnchorPane fx:id="paneText" />
                                  </content>
                               </Tab>
                               <Tab fx:id="tabAdd">
