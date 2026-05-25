@@ -342,8 +342,15 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void loadTabText() {
-		PreviewTextWindow previewTextWindow = new PreviewTextWindow();
-		paneText.getChildren().setAll(previewTextWindow.getRoot());
+		ManagerTextController managerTextController =
+				new ManagerTextController();
+
+		managerTextController.setPaneText(paneText);
+
+		ManagerTextWindow managerTextWindow =
+				new ManagerTextWindow(managerTextController);
+
+		paneText.getChildren().setAll(managerTextWindow.getRoot());
 	}
 
 }

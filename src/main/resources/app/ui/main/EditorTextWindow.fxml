@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="445.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="35.0" prefWidth="616.0">
+         <children>
+            <ToolBar prefHeight="16.0" prefWidth="616.0" style="-fx-background-color: none;">
+               <items>
+                  <Button fx:id="bttPreview" mnemonicParsing="false" prefHeight="25.0" prefWidth="145.0" text="Visualizar prévia">
+                     <graphic>
+                        <ImageView fitHeight="17.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@text-size.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="bttEdit" mnemonicParsing="false" prefWidth="145.0" text="Continuar editando">
+                     <graphic>
+                        <ImageView fitHeight="17.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@text-box.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="bttBlocCod" mnemonicParsing="false" prefHeight="25.0" text="Código">
+                     <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@code.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </items>
+            </ToolBar>
+         </children>
+      </HBox>
+      <VBox fx:id="vboxMain" prefHeight="366.0" prefWidth="606.0">
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </VBox>
+      <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <Button fx:id="bttSave" mnemonicParsing="false" prefWidth="120.0" text="Salvar" />
+            <Button fx:id="bttCancel" mnemonicParsing="false" prefWidth="120.0" text="Cancelar">
+               <HBox.margin>
+                  <Insets right="5.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</VBox>
