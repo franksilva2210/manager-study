@@ -5,7 +5,6 @@ import app.application.topic.TopicDTO;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.web.HTMLEditor;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -50,21 +49,14 @@ public class ScreenMainUIHelper {
         listViewTopics.refresh();
     }
 
-    public void createNewTab(TabPane tabPaneStudy, Tab tabAdd) {
-        HTMLEditor htmlEditor = new HTMLEditor();
-
-        AnchorPane anchorPane = new AnchorPane();
-        anchorPane.getChildren().add(htmlEditor);
-
-        String title = "Texto " + tabPaneStudy.getTabs().indexOf(tabAdd);
+    public Tab createNewTab(int indexTabs, AnchorPane root) {
+        String title = "Texto " + indexTabs;
 
         Tab tab = new Tab(title);
         tab.setClosable(true);
-        tab.setContent(anchorPane);
+        tab.setContent(root);
 
-        int indexAddTab = tabPaneStudy.getTabs().indexOf(tabAdd);
-        tabPaneStudy.getTabs().add(indexAddTab, tab);
-        tabPaneStudy.getSelectionModel().select(tab);
+        return tab;
     }
 
     public void generateTreeItem(TreeView<Object> treeStudies, List<StudyDTO> listStudyDTO) {

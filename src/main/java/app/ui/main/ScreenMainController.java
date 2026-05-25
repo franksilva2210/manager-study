@@ -75,9 +75,6 @@ public class ScreenMainController implements Initializable {
 	private ListView<TopicDTO> listViewTopics;
 
 	@FXML
-	private AnchorPane paneText;
-
-	@FXML
 	private Tab tabAdd;
 
 	private Stage stage;
@@ -116,7 +113,7 @@ public class ScreenMainController implements Initializable {
 
 		tabAdd.setOnSelectionChanged(event -> {
 			if (tabAdd.isSelected()) {
-				createNewTab();
+				tabPaneStudy.getSelectionModel().select(createNewTabText());
 			}
 		});
 
@@ -144,7 +141,7 @@ public class ScreenMainController implements Initializable {
 		boolean canGoForward = navigationService.canGoForward();
 		uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
 
-		loadTabText();
+		createNewTabText();
 	}
 
 	private void newStudy() {
@@ -333,24 +330,35 @@ public class ScreenMainController implements Initializable {
 		uiHelper.updateListViewTopics(observableListTopics, listViewTopics, objectCurrentSelected);
 	}
 
-	private void createNewTab() {
-		uiHelper.createNewTab(tabPaneStudy, tabAdd);
-	}
-
-	public void setStage(Stage stage) {
-		this.stage = stage;
-	}
-
-	private void loadTabText() {
+	private Tab createNewTabText() {
 		ManagerTextController managerTextController =
 				new ManagerTextController();
 
-		managerTextController.setPaneText(paneText);
+		AnchorPane root = new AnchorPane();
+		managerTextController.setPaneText(root);
+
+		if (objectCurrentSelected instanceof StudyDTO studyDto) {
+			managerTextController.setStudyDto(studyDto);
+		} else if (objectCurrentSelected instanceof TopicDTO topicDto) {
+			managerTextController.setTopicDto(topicDto);
+		}
 
 		ManagerTextWindow managerTextWindow =
 				new ManagerTextWindow(managerTextController);
 
-		paneText.getChildren().setAll(managerTextWindow.getRoot());
+		root.getChildren().setAll(managerTextWindow.getRoot());
+
+		int indexTabs = tabPaneStudy.getTabs().indexOf(tabAdd);
+
+		Tab newTab = uiHelper.createNewTab(indexTabs, root);
+
+		tabPaneStudy.getTabs().add(indexTabs, newTab);
+
+		return newTab;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 
 }
