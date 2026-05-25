@@ -94,16 +94,13 @@ public class TextRepository {
     }
 
     public void delete(Long id) {
-
-        EntityManager em =
-                HibernateUtil.getEntityManager();
+        EntityManager em = HibernateUtil.getEntityManager();
 
         try {
 
             em.getTransaction().begin();
 
-            Text text =
-                    em.find(Text.class, id);
+            Text text = em.find(Text.class, id);
 
             if (text != null) {
                 em.remove(text);
@@ -120,7 +117,6 @@ public class TextRepository {
             throw e;
 
         } finally {
-
             em.close();
         }
     }
@@ -149,6 +145,7 @@ public class TextRepository {
                             SELECT text
                             FROM Text text
                             WHERE text.study.id = :id
+                            ORDER BY text.id
                             """,
                             Text.class
                     )
@@ -168,6 +165,7 @@ public class TextRepository {
                             SELECT text
                             FROM Text text
                             WHERE text.topic.id = :id
+                            ORDER BY text.id
                             """,
                             Text.class
                     )

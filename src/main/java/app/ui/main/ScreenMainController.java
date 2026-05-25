@@ -318,7 +318,7 @@ public class ScreenMainController implements Initializable {
 		}
 	}
 
-	private void showData() {
+	public void showData() {
 		boolean canGoBack = navigationService.canGoBack();
 		boolean canGoForward = navigationService.canGoForward();
 		String hierarchyPath = navigationService.getHierarchyPath();
@@ -349,9 +349,12 @@ public class ScreenMainController implements Initializable {
 				new ManagerTextController();
 
 		AnchorPane root = new AnchorPane();
-		managerTextController.setPaneText(root);
 
+		managerTextController.setPaneText(root);
 		managerTextController.setTextDto(textDto);
+		managerTextController.setRefreshObjectCurrentSelected(this::refreshObjectCurrentSelected);
+		managerTextController.setShowData(this::showData);
+		managerTextController.setStage(stage);
 
 		if (objectCurrentSelected instanceof StudyDTO studyDto) {
 			managerTextController.setStudyDto(studyDto);
@@ -377,4 +380,7 @@ public class ScreenMainController implements Initializable {
 		this.stage = stage;
 	}
 
+	public Stage getStage() {
+		return stage;
+	}
 }
