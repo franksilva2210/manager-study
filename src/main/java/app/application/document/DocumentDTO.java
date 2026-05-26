@@ -9,7 +9,7 @@ public class DocumentDTO {
     private Long topicId;
 
     public DocumentDTO() {
-
+        content = new String();
     }
 
     public DocumentDTO(Long id, String title, String content, Long studyId, Long topicId) {

@@ -87,10 +87,10 @@
       </VBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0" spacing="20.0">
          <children>
-            <Button fx:id="bttSave" mnemonicParsing="false" prefWidth="120.0" text="Salvar" />
-            <Button fx:id="bttCancel" mnemonicParsing="false" prefWidth="120.0" text="Cancelar">
+            <Button fx:id="bttSave" disable="true" mnemonicParsing="false" prefWidth="120.0" text="Salvar" />
+            <Button fx:id="bttCancel" disable="true" mnemonicParsing="false" prefWidth="120.0" text="Cancelar">
                <HBox.margin>
-                  <Insets right="5.0" />
+                  <Insets right="10.0" />
                </HBox.margin>
             </Button>
          </children>
