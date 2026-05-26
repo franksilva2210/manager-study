@@ -6,10 +6,18 @@ import jakarta.persistence.Persistence;
 
 public class HibernateUtil {
 
-    private static final EntityManagerFactory emf =
-            Persistence.createEntityManagerFactory(
-                    "study-persistence-unit"
+    private static EntityManagerFactory emf;
+
+    public static void initialize() {
+
+        if (emf == null) {
+            emf = Persistence.createEntityManagerFactory(
+                    "knowledge-manager-persistence-unit"
             );
+
+            System.out.println("Hibernate initialized.");
+        }
+    }
 
     public static EntityManager getEntityManager() {
         return emf.createEntityManager();
