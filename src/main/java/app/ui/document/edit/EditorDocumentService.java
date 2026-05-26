@@ -18,4 +18,8 @@ public class EditorDocumentService {
         }
     }
 
+    public void remove(Long id) {
+        documentRepository.delete(id);
+    }
+
 }

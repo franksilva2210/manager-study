@@ -12,37 +12,57 @@
    <children>
       <HBox prefHeight="35.0" prefWidth="616.0">
          <children>
-            <ToolBar prefHeight="16.0" prefWidth="616.0" style="-fx-background-color: none;">
-               <items>
-                  <Button fx:id="bttPreview" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Visualizar">
-                     <graphic>
-                        <ImageView fitHeight="17.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@text-size.png" />
-                           </image></ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="bttEdit" mnemonicParsing="false" prefWidth="100.0" text="Editar">
-                     <graphic>
-                        <ImageView fitHeight="17.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@text-box.png" />
-                           </image></ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="bttBlocCod" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Código">
-                     <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@code.png" />
-                           </image></ImageView>
-                     </graphic>
-                  </Button>
-               </items>
-            </ToolBar>
+            <VBox>
+               <children>
+                  <ToolBar prefHeight="16.0" prefWidth="616.0">
+                     <items>
+                        <Button fx:id="bttPreview" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Visualizar">
+                           <graphic>
+                              <ImageView fitHeight="17.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@text-size.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="bttEdit" mnemonicParsing="false" prefWidth="100.0" text="Editar">
+                           <graphic>
+                              <ImageView fitHeight="17.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@text-box.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="bttRemove" mnemonicParsing="false" prefWidth="100.0" text="Remover">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@trash.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </items>
+                  </ToolBar>
+                  <ToolBar prefHeight="40.0" prefWidth="200.0">
+                    <items>
+                        <Button fx:id="bttBlocCod" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Código">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@code.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                    </items>
+                  </ToolBar>
+               </children>
+            </VBox>
          </children>
       </HBox>
-      <VBox fx:id="vboxMain" prefHeight="366.0" prefWidth="606.0">
+      <VBox fx:id="vboxMain" prefHeight="326.0" prefWidth="606.0">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>

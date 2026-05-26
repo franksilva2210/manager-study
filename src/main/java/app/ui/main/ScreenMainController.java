@@ -7,8 +7,8 @@ import app.application.study.StudyDTO;
 import app.application.document.DocumentDTO;
 import app.application.topic.TopicDTO;
 import app.application.study.StudyNavigationService;
-import app.ui.document.edit.ManagerTextController;
-import app.ui.document.edit.ManagerTextWindow;
+import app.ui.document.edit.EditorDocumentController;
+import app.ui.document.edit.EditorDocumentWindow;
 import app.ui.study.register.RegisterStudyController;
 import app.ui.study.register.RegisterStudyWindow;
 import app.ui.topic.register.RegisterTopicController;
@@ -18,7 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ScreenMainController implements Initializable {
@@ -116,7 +116,7 @@ public class ScreenMainController implements Initializable {
 
 		tabAdd.setOnSelectionChanged(event -> {
 			if (tabAdd.isSelected()) {
-				tabPaneStudy.getSelectionModel().select(createNewTabText(new DocumentDTO()));
+				addNewTabDocument(new DocumentDTO());
 			}
 		});
 
@@ -328,50 +328,56 @@ public class ScreenMainController implements Initializable {
 		uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
 		uiHelper.updateTxtHierarchyPath(txtHierarchyPath, hierarchyPath);
 		uiHelper.updateTitleItemMain(lblTitleMain, objectCurrentSelected);
-		uiHelper.updateTabs(tabPaneStudy, tabMain, tabAdd, objectCurrentSelected, this::createNewTabText);
+		uiHelper.updateTabs(tabPaneStudy, tabMain, tabAdd, objectCurrentSelected, this::createNewTabDocument);
 		uiHelper.updateListViewTopics(observableListTopics, listViewTopics, objectCurrentSelected);
 	}
 
-	private Tab createNewTabText(DocumentDTO documentDto) {
+	private void addNewTabDocument(DocumentDTO documentDto) {
 		if (objectCurrentSelected == null) {
 			Alert alert = new Alert(Alert.AlertType.INFORMATION);
 			alert.setTitle("Informação");
 			alert.setHeaderText("Adicionar Novo Texto");
 			alert.setContentText(
 					"Selecione primeiro um estudo para criar\n" +
-					"um novo texto."
+							"um novo texto."
 			);
-
 			alert.showAndWait();
 
-			return tabPaneStudy.getTabs().get(0);
+			Tab tabMain = tabPaneStudy.getTabs().get(0);
+			tabPaneStudy.getSelectionModel().select(tabMain);
+
+		} else {
+			Tab newTab = createNewTabDocument(documentDto);
+			tabPaneStudy.getSelectionModel().select(newTab);
 		}
+	}
 
-		ManagerTextController managerTextController =
-				new ManagerTextController();
+	private Tab createNewTabDocument(DocumentDTO documentDto) {
+		EditorDocumentController editorDocumentController =
+				new EditorDocumentController();
 
-		AnchorPane root = new AnchorPane();
+		Label lblTitle = new Label();
 
-		managerTextController.setPaneText(root);
-		managerTextController.setTextDto(documentDto);
-		managerTextController.setRefreshObjectCurrentSelected(this::refreshObjectCurrentSelected);
-		managerTextController.setShowData(this::showData);
-		managerTextController.setStage(stage);
+		editorDocumentController.setLblTitle(lblTitle);
+		editorDocumentController.setDocumentDto(documentDto);
+		editorDocumentController.setRefreshObjectCurrentSelected(this::refreshObjectCurrentSelected);
+		editorDocumentController.setShowData(this::showData);
+		editorDocumentController.setStage(stage);
 
 		if (objectCurrentSelected instanceof StudyDTO studyDto) {
-			managerTextController.setStudyDto(studyDto);
+			editorDocumentController.setStudyDto(studyDto);
 		} else if (objectCurrentSelected instanceof TopicDTO topicDto) {
-			managerTextController.setTopicDto(topicDto);
+			editorDocumentController.setTopicDto(topicDto);
 		}
 
-		ManagerTextWindow managerTextWindow =
-				new ManagerTextWindow(managerTextController);
+		EditorDocumentWindow editorDocumentWindow =
+				new EditorDocumentWindow(editorDocumentController);
 
-		root.getChildren().setAll(managerTextWindow.getRoot());
+		VBox root = editorDocumentWindow.getRoot();
 
 		int indexTabs = tabPaneStudy.getTabs().indexOf(tabAdd);
 
-		Tab newTab = uiHelper.createNewTab(indexTabs, root, managerTextController::editNameTab, documentDto);
+		Tab newTab = uiHelper.createNewTab(indexTabs, root, lblTitle, documentDto);
 
 		tabPaneStudy.getTabs().add(indexTabs, newTab);
 
