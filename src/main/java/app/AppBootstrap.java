@@ -1,5 +1,8 @@
 package app;
 
+import app.infra.DatabaseBootstrap;
+import app.infra.FlywayConfig;
+import app.infra.HibernateUtil;
 import app.ui.main.ScreenMainWindow;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -8,6 +11,13 @@ public class AppBootstrap extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
+        DatabaseBootstrap.initializeDatabase();
+
+        FlywayConfig.migrate();
+
+        HibernateUtil.initialize();
+
         ScreenMainWindow screenMainWindow = new ScreenMainWindow(primaryStage);
         screenMainWindow.show();
     }

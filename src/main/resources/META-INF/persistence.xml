@@ -3,7 +3,7 @@
 <persistence version="3.0"
              xmlns="https://jakarta.ee/xml/ns/persistence">
 
-    <persistence-unit name="study-persistence-unit">
+    <persistence-unit name="knowledge-manager-persistence-unit">
 
         <properties>
 
@@ -13,7 +13,7 @@
                       value="org.postgresql.Driver"/>
 
             <property name="jakarta.persistence.jdbc.url"
-                      value="jdbc:postgresql://localhost:5432/guide_study"/>
+                      value="jdbc:postgresql://localhost:5432/knowledge_manager"/>
 
             <property name="jakarta.persistence.jdbc.user"
                       value="postgres"/>
@@ -33,7 +33,7 @@
                       value="true"/>
 
             <property name="hibernate.hbm2ddl.auto"
-                      value="update"/>
+                      value="validate"/>
 
         </properties>
 
