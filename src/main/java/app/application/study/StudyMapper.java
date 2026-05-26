@@ -1,11 +1,11 @@
 package app.application.study;
 
-import app.application.text.TextDTO;
-import app.application.text.TextMapper;
+import app.application.document.DocumentDTO;
+import app.application.document.DocumentMapper;
 import app.application.topic.TopicDTO;
 import app.application.topic.TopicMapper;
 import app.domain.study.Study;
-import app.domain.text.Text;
+import app.domain.document.Document;
 import app.domain.topic.Topic;
 
 import java.util.ArrayList;
@@ -48,13 +48,13 @@ public class StudyMapper {
         }
 
         if (entity.getListText() != null && !entity.getListText().isEmpty()) {
-            List<TextDTO> listTextDto = new ArrayList<>();
+            List<DocumentDTO> listDocumentsDto = new ArrayList<>();
 
-            for (Text text : entity.getListText()) {
-                listTextDto.add(TextMapper.toDTO(text));
+            for (Document document : entity.getListText()) {
+                listDocumentsDto.add(DocumentMapper.toDTO(document));
             }
 
-            dto.setListTextsDto(listTextDto);
+            dto.setListTextsDto(listDocumentsDto);
         }
 
         return dto;

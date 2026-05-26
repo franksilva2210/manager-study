@@ -1,4 +1,4 @@
-package app.ui.main;
+package app.ui.document.edit;
 
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;

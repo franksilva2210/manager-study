@@ -1,7 +1,7 @@
 package app.ui.main;
 
 import app.application.study.StudyDTO;
-import app.application.text.TextDTO;
+import app.application.document.DocumentDTO;
 import app.application.topic.TopicDTO;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
@@ -54,12 +54,12 @@ public class ScreenMainUIHelper {
             int indexTabs,
             AnchorPane root,
             Consumer<Label> editNameTab,
-            TextDTO textDto) {
+            DocumentDTO documentDto) {
 
         String title = "";
 
-        if (textDto.getTitle() != null && !textDto.getTitle().isEmpty()) {
-            title = textDto.getTitle();
+        if (documentDto.getTitle() != null && !documentDto.getTitle().isEmpty()) {
+            title = documentDto.getTitle();
         } else {
             title = "Texto " + indexTabs;
         }
@@ -154,17 +154,17 @@ public class ScreenMainUIHelper {
             Tab tabFixed,
             Tab tabFixed2,
             Object objectCurrentSelected,
-            Consumer<TextDTO> createNewTabText) {
+            Consumer<DocumentDTO> createNewTabText) {
 
         tabPaneStudy.getTabs().removeIf(tab -> tab != tabFixed && tab != tabFixed2);
 
         if (objectCurrentSelected instanceof StudyDTO studyDto) {
-            for (TextDTO textDto : studyDto.getListTextsDto()) {
-                createNewTabText.accept(textDto);
+            for (DocumentDTO documentDto : studyDto.getListTextsDto()) {
+                createNewTabText.accept(documentDto);
             }
         } else if(objectCurrentSelected instanceof TopicDTO topicDto) {
-            for (TextDTO textDto : topicDto.getListTextDto()) {
-                createNewTabText.accept(textDto);
+            for (DocumentDTO documentDto : topicDto.getListTextDto()) {
+                createNewTabText.accept(documentDto);
             }
         }
     }

@@ -1,7 +1,7 @@
 package app.domain.topic;
 
 import app.domain.study.Study;
-import app.domain.text.Text;
+import app.domain.document.Document;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class Topic {
     private Topic topicParent;
 
     @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Text> listText;
+    private List<Document> listDocuments;
 
     @OneToMany(mappedBy = "topicParent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Topic> listTopics;
@@ -48,12 +48,12 @@ public class Topic {
         this.title = title;
     }
 
-    public List<Text> getListText() {
-        return listText;
+    public List<Document> getListText() {
+        return listDocuments;
     }
 
-    public void setListText(List<Text> listText) {
-        this.listText = listText;
+    public void setListText(List<Document> listDocuments) {
+        this.listDocuments = listDocuments;
     }
 
     public List<Topic> getListTopics() {

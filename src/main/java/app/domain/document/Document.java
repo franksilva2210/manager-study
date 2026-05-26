@@ -1,30 +1,30 @@
-package app.domain.text;
+package app.domain.document;
 
 import app.domain.study.Study;
 import app.domain.topic.Topic;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "text")
-public class Text {
+@Table(name = "document")
+public class Document {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "text_id")
+    @Column(name = "document_id")
     private Long id;
 
-    @Column(name = "text_title")
+    @Column(name = "document_title")
     private String title;
 
-    @Column(name = "text_content", columnDefinition = "TEXT")
+    @Column(name = "document_content")
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "study_id", foreignKey = @ForeignKey(name = "fk_text_study"))
+    @JoinColumn(name = "study_id", foreignKey = @ForeignKey(name = "fk_document_study"))
     private Study study;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "topic_id", foreignKey = @ForeignKey(name = "fk_text_topic"))
+    @JoinColumn(name = "topic_id", foreignKey = @ForeignKey(name = "fk_document_topic"))
     private Topic topic;
 
     public Long getId() {
