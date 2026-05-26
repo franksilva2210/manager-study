@@ -1,7 +1,7 @@
 package app.ui.study.register;
 
 import app.application.study.StudyDTO;
-import app.util.ValidateControlFx;
+import app.ui.util.ValidateControlFx;
 
 public class RegisterStudyUIHelper {
 
