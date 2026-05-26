@@ -55,6 +55,7 @@ public class EditorDocumentController implements Initializable {
     private Stage stage;
     private DocumentDTO documentDto;
     private EditorDocumentService editorDocumentService = new EditorDocumentService();
+    private EditorDocumentUIHelper uiHelper = new EditorDocumentUIHelper();
     private Runnable refreshObjectCurrentSelected;
     private Runnable showData;
 
@@ -68,11 +69,11 @@ public class EditorDocumentController implements Initializable {
         });
 
         bttEdit.setOnAction(event -> {
-            editText();
+            editDocument();
         });
 
         bttPreview.setOnAction(event -> {
-            previewText();
+            previewDocument(codeArea.getText());
         });
 
         bttBlocCod.setOnAction(event -> {
@@ -95,11 +96,7 @@ public class EditorDocumentController implements Initializable {
 
         createWebView();
 
-        if (documentDto.getId() != null && documentDto.getContent() != null && !documentDto.getContent().isEmpty()) {
-            previewText();
-        } else {
-            editText();
-        }
+        showInitial();
     }
 
     private void createCodeArea() {
@@ -109,6 +106,15 @@ public class EditorDocumentController implements Initializable {
 
     private void createWebView() {
         webView = new WebView();
+    }
+
+    private void showInitial() {
+        if (documentDto.getId() != null && documentDto.getContent() != null) {
+            previewDocument(documentDto.getContent());
+            codeArea.replaceText(documentDto.getContent());
+        } else {
+            editDocument();
+        }
     }
 
     public void editTitle() {
@@ -128,17 +134,7 @@ public class EditorDocumentController implements Initializable {
         });
     }
 
-    private void editText() {
-        VBox.setVgrow(scrollPaneCodeArea, Priority.ALWAYS);
-        vboxMain.getChildren().setAll(scrollPaneCodeArea);
-
-        bttEdit.setDisable(true);
-        bttPreview.setDisable(false);
-    }
-
-    private void previewText() {
-        String markdown = codeArea.getText();
-
+    private void previewDocument(String markdown) {
         String htmlContent = MarkdownConverter.toHtml(markdown);
 
         String html = """
@@ -156,6 +152,37 @@ public class EditorDocumentController implements Initializable {
 
         bttPreview.setDisable(true);
         bttEdit.setDisable(false);
+    }
+
+    private void editDocument() {
+        VBox.setVgrow(scrollPaneCodeArea, Priority.ALWAYS);
+        vboxMain.getChildren().setAll(scrollPaneCodeArea);
+
+        bttEdit.setDisable(true);
+        bttPreview.setDisable(false);
+    }
+
+    private void removeDocument() {
+        MessageConfirmController messageConfirmController = new MessageConfirmController();
+        messageConfirmController.setMsgUser(
+                "Deseja realmente remover este texto?"
+        );
+
+        MessageConfirmWindow messageConfirmWindow = new MessageConfirmWindow();
+        messageConfirmWindow.setController(messageConfirmController);
+
+        messageConfirmController.setMessageConfirmWindow(messageConfirmWindow);
+
+        messageConfirmWindow.buildScreen(stage);
+        messageConfirmWindow.showScreen();
+
+        if (messageConfirmController.getConfirm()) {
+            if (documentDto.getId() != null && documentDto.getId() > 0) {
+                editorDocumentService.remove(documentDto.getId());
+                refreshObjectCurrentSelected.run();
+                showData.run();
+            }
+        }
     }
 
     private void onCodeBlock() {
@@ -176,33 +203,9 @@ public class EditorDocumentController implements Initializable {
     }
 
     private void save() {
-        String markdown = codeArea.getText();
-        documentDto.setTitle(lblTitle.getText());
-        documentDto.setContent(markdown);
+        uiHelper.extractValues(lblTitle, codeArea, documentDto);
         documentDto = editorDocumentService.save(documentDto);
-    }
-
-    private void removeDocument() {
-        MessageConfirmController messageConfirmController = new MessageConfirmController();
-        messageConfirmController.setMsgUser(
-                "Deseja realmente remover este texto?"
-        );
-
-        MessageConfirmWindow messageConfirmWindow = new MessageConfirmWindow();
-        messageConfirmWindow.setController(messageConfirmController);
-
-        messageConfirmController.setMessageConfirmWindow(messageConfirmWindow);
-
-        messageConfirmWindow.buildScreen(stage);
-        messageConfirmWindow.showScreen();
-
-        if (messageConfirmController.getConfirm()) {
-            if (documentDto.getId() != null && documentDto.getId() > 0) {
-                editorDocumentService.remove(documentDto.getId());
-            }
-            refreshObjectCurrentSelected.run();
-            showData.run();
-        }
+        previewDocument(documentDto.getContent());
     }
 
     private void cancel() {
