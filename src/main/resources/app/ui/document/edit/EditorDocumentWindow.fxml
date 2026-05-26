@@ -14,31 +14,28 @@
          <children>
             <ToolBar prefHeight="16.0" prefWidth="616.0" style="-fx-background-color: none;">
                <items>
-                  <Button fx:id="bttPreview" mnemonicParsing="false" prefHeight="25.0" prefWidth="145.0" text="Visualizar prévia">
+                  <Button fx:id="bttPreview" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Visualizar">
                      <graphic>
                         <ImageView fitHeight="17.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@text-size.png" />
-                           </image>
-                        </ImageView>
+                           </image></ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="bttEdit" mnemonicParsing="false" prefWidth="145.0" text="Continuar editando">
+                  <Button fx:id="bttEdit" mnemonicParsing="false" prefWidth="100.0" text="Editar">
                      <graphic>
                         <ImageView fitHeight="17.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@text-box.png" />
-                           </image>
-                        </ImageView>
+                           </image></ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="bttBlocCod" mnemonicParsing="false" prefHeight="25.0" text="Código">
+                  <Button fx:id="bttBlocCod" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Código">
                      <graphic>
                         <ImageView fitHeight="22.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@code.png" />
-                           </image>
-                        </ImageView>
+                           </image></ImageView>
                      </graphic>
                   </Button>
                </items>

@@ -1,6 +1,6 @@
-package app.application.text;
+package app.application.document;
 
-public class TextDTO {
+public class DocumentDTO {
 
     private Long id;
     private String title;
@@ -8,11 +8,11 @@ public class TextDTO {
     private Long studyId;
     private Long topicId;
 
-    public TextDTO() {
+    public DocumentDTO() {
 
     }
 
-    public TextDTO(Long id, String title, String content, Long studyId, Long topicId) {
+    public DocumentDTO(Long id, String title, String content, Long studyId, Long topicId) {
         this.id = id;
         this.title = title;
         this.content = content;

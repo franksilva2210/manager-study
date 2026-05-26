@@ -1,18 +1,18 @@
-package app.ui.main;
+package app.ui.document.edit;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
-public class EditorTextWindow {
+public class ManagerTextWindow {
 
     private VBox root;
 
-    public EditorTextWindow(EditorTextController controller) {
+    public ManagerTextWindow(ManagerTextController controller) {
         try {
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("EditorTextWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ManagerTextWindow.fxml"));
             loader.setController(controller);
 
             root = loader.load();

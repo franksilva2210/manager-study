@@ -1,7 +1,7 @@
-package app.ui.main;
+package app.ui.document.edit;
 
 import app.application.study.StudyDTO;
-import app.application.text.TextDTO;
+import app.application.document.DocumentDTO;
 import app.application.topic.TopicDTO;
 import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
@@ -38,7 +38,7 @@ public class ManagerTextController implements Initializable {
 
     private AnchorPane paneText;
 
-    private TextDTO textDto;
+    private DocumentDTO documentDto;
     private ManagerTextService managerTextService = new ManagerTextService();
     private Runnable refreshObjectCurrentSelected;
     private Runnable showData;
@@ -59,19 +59,19 @@ public class ManagerTextController implements Initializable {
     }
 
     public void editText() {
-        EditorTextController editorTextController =
-                new EditorTextController();
+        EditorDocumentController editorDocumentController =
+                new EditorDocumentController();
 
-        editorTextController.setPaneText(paneText);
-        editorTextController.setTextDto(textDto);
-        editorTextController.setRefreshObjectCurrentSelected(refreshObjectCurrentSelected);
-        editorTextController.setShowData(showData);
-        editorTextController.setStage(stage);
+        editorDocumentController.setPaneText(paneText);
+        editorDocumentController.setTextDto(documentDto);
+        editorDocumentController.setRefreshObjectCurrentSelected(refreshObjectCurrentSelected);
+        editorDocumentController.setShowData(showData);
+        editorDocumentController.setStage(stage);
 
-        EditorTextWindow editorTextWindow =
-                new EditorTextWindow(editorTextController);
+        EditorDocumentWindow editorDocumentWindow =
+                new EditorDocumentWindow(editorDocumentController);
 
-        paneText.getChildren().setAll(editorTextWindow.getRoot());
+        paneText.getChildren().setAll(editorDocumentWindow.getRoot());
     }
 
     private void removeText() {
@@ -89,8 +89,8 @@ public class ManagerTextController implements Initializable {
         messageConfirmWindow.showScreen();
 
         if (messageConfirmController.getConfirm()) {
-            if (textDto.getId() != null && textDto.getId() > 0) {
-                managerTextService.remove(textDto.getId());
+            if (documentDto.getId() != null && documentDto.getId() > 0) {
+                managerTextService.remove(documentDto.getId());
             }
             refreshObjectCurrentSelected.run();
             showData.run();
@@ -98,11 +98,11 @@ public class ManagerTextController implements Initializable {
     }
 
     private void previewText() {
-        if (textDto.getContent() == null || textDto.getContent().isEmpty()) {
+        if (documentDto.getContent() == null || documentDto.getContent().isEmpty()) {
             return;
         }
 
-        String markdown = textDto.getContent();
+        String markdown = documentDto.getContent();
 
         String htmlContent = MarkdownConverter.toHtml(markdown);
 
@@ -128,9 +128,9 @@ public class ManagerTextController implements Initializable {
 
         result.ifPresent(newName -> {
             if (!newName.isBlank()) {
-                textDto.setTitle(newName);
-                textDto = managerTextService.save(textDto);
-                label.setText(textDto.getTitle());
+                documentDto.setTitle(newName);
+                documentDto = managerTextService.save(documentDto);
+                label.setText(documentDto.getTitle());
             }
         });
     }
@@ -139,20 +139,20 @@ public class ManagerTextController implements Initializable {
         this.paneText = paneText;
     }
 
-    public TextDTO getTextDto() {
-        return textDto;
+    public DocumentDTO getTextDto() {
+        return documentDto;
     }
 
-    public void setTextDto(TextDTO textDto) {
-        this.textDto = textDto;
+    public void setTextDto(DocumentDTO documentDto) {
+        this.documentDto = documentDto;
     }
 
     public void setTopicDto(TopicDTO topicDto) {
-        textDto.setTopicId(topicDto.getId());
+        documentDto.setTopicId(topicDto.getId());
     }
 
     public void setStudyDto(StudyDTO studyDto) {
-        textDto.setStudyId(studyDto.getId());
+        documentDto.setStudyId(studyDto.getId());
     }
 
     public void setRefreshObjectCurrentSelected(Runnable refreshObjectCurrentSelected) {

@@ -1,13 +1,13 @@
-package app.application.text;
+package app.application.document;
 
 import app.domain.study.Study;
-import app.domain.text.Text;
+import app.domain.document.Document;
 import app.domain.topic.Topic;
 
-public class TextMapper {
+public class DocumentMapper {
 
-    public static TextDTO toDTO(Text entity) {
-        TextDTO dto = new TextDTO();
+    public static DocumentDTO toDTO(Document entity) {
+        DocumentDTO dto = new DocumentDTO();
         dto.setId(entity.getId());
         dto.setTitle(entity.getTitle());
         dto.setContent(entity.getContent());
@@ -23,8 +23,8 @@ public class TextMapper {
         return dto;
     }
 
-    public static Text toEntity(TextDTO dto) {
-        Text entity = new Text();
+    public static Document toEntity(DocumentDTO dto) {
+        Document entity = new Document();
         entity.setId(dto.getId());
         entity.setTitle(dto.getTitle());
         entity.setContent(dto.getContent());

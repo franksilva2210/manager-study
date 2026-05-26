@@ -4,9 +4,11 @@ import java.net.URL;
 import java.util.*;
 
 import app.application.study.StudyDTO;
-import app.application.text.TextDTO;
+import app.application.document.DocumentDTO;
 import app.application.topic.TopicDTO;
 import app.application.study.StudyNavigationService;
+import app.ui.document.edit.ManagerTextController;
+import app.ui.document.edit.ManagerTextWindow;
 import app.ui.study.register.RegisterStudyController;
 import app.ui.study.register.RegisterStudyWindow;
 import app.ui.topic.register.RegisterTopicController;
@@ -114,7 +116,7 @@ public class ScreenMainController implements Initializable {
 
 		tabAdd.setOnSelectionChanged(event -> {
 			if (tabAdd.isSelected()) {
-				tabPaneStudy.getSelectionModel().select(createNewTabText(new TextDTO()));
+				tabPaneStudy.getSelectionModel().select(createNewTabText(new DocumentDTO()));
 			}
 		});
 
@@ -330,7 +332,7 @@ public class ScreenMainController implements Initializable {
 		uiHelper.updateListViewTopics(observableListTopics, listViewTopics, objectCurrentSelected);
 	}
 
-	private Tab createNewTabText(TextDTO textDto) {
+	private Tab createNewTabText(DocumentDTO documentDto) {
 		if (objectCurrentSelected == null) {
 			Alert alert = new Alert(Alert.AlertType.INFORMATION);
 			alert.setTitle("Informação");
@@ -351,7 +353,7 @@ public class ScreenMainController implements Initializable {
 		AnchorPane root = new AnchorPane();
 
 		managerTextController.setPaneText(root);
-		managerTextController.setTextDto(textDto);
+		managerTextController.setTextDto(documentDto);
 		managerTextController.setRefreshObjectCurrentSelected(this::refreshObjectCurrentSelected);
 		managerTextController.setShowData(this::showData);
 		managerTextController.setStage(stage);
@@ -369,7 +371,7 @@ public class ScreenMainController implements Initializable {
 
 		int indexTabs = tabPaneStudy.getTabs().indexOf(tabAdd);
 
-		Tab newTab = uiHelper.createNewTab(indexTabs, root, managerTextController::editNameTab, textDto);
+		Tab newTab = uiHelper.createNewTab(indexTabs, root, managerTextController::editNameTab, documentDto);
 
 		tabPaneStudy.getTabs().add(indexTabs, newTab);
 

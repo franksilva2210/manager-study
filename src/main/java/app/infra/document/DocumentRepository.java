@@ -1,24 +1,24 @@
-package app.infra.text;
+package app.infra.document;
 
-import app.application.text.TextDTO;
-import app.domain.text.Text;
+import app.application.document.DocumentDTO;
+import app.domain.document.Document;
 import app.infra.HibernateUtil;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
-public class TextRepository {
+public class DocumentRepository {
 
-    public Text save(Text text) {
+    public Document save(Document document) {
         EntityManager em = HibernateUtil.getEntityManager();
 
         try {
 
             em.getTransaction().begin();
-            em.persist(text);
+            em.persist(document);
             em.getTransaction().commit();
 
-            return text;
+            return document;
 
         } catch (Exception e) {
 
@@ -33,7 +33,7 @@ public class TextRepository {
         }
     }
 
-    public Text update(Text text) {
+    public Document update(Document document) {
 
         EntityManager em =
                 HibernateUtil.getEntityManager();
@@ -42,7 +42,7 @@ public class TextRepository {
 
             em.getTransaction().begin();
 
-            Text merged = em.merge(text);
+            Document merged = em.merge(document);
 
             em.getTransaction().commit();
 
@@ -62,23 +62,23 @@ public class TextRepository {
         }
     }
 
-    public Text update(TextDTO dto) {
+    public Document update(DocumentDTO dto) {
         EntityManager em = HibernateUtil.getEntityManager();
 
         try {
 
             em.getTransaction().begin();
 
-            Text text = em.find(Text.class, dto.getId());
+            Document document = em.find(Document.class, dto.getId());
 
-            if (text != null) {
-                text.setTitle(dto.getTitle());
-                text.setContent(dto.getContent());
+            if (document != null) {
+                document.setTitle(dto.getTitle());
+                document.setContent(dto.getContent());
             }
 
             em.getTransaction().commit();
 
-            return text;
+            return document;
 
         } catch (Exception e) {
 
@@ -100,10 +100,10 @@ public class TextRepository {
 
             em.getTransaction().begin();
 
-            Text text = em.find(Text.class, id);
+            Document document = em.find(Document.class, id);
 
-            if (text != null) {
-                em.remove(text);
+            if (document != null) {
+                em.remove(document);
             }
 
             em.getTransaction().commit();
@@ -121,14 +121,14 @@ public class TextRepository {
         }
     }
 
-    public Text findById(Long id) {
+    public Document findById(Long id) {
 
         EntityManager em =
                 HibernateUtil.getEntityManager();
 
         try {
 
-            return em.find(Text.class, id);
+            return em.find(Document.class, id);
 
         } finally {
 
@@ -136,18 +136,18 @@ public class TextRepository {
         }
     }
 
-    public List<Text> findByStudy(Long id) {
+    public List<Document> findByStudy(Long id) {
         EntityManager em = HibernateUtil.getEntityManager();
 
         try {
             return em.createQuery(
                             """
-                            SELECT text
-                            FROM Text text
-                            WHERE text.study.id = :id
-                            ORDER BY text.id
+                            SELECT doc
+                            FROM Document doc
+                            WHERE doc.study.id = :id
+                            ORDER BY doc.id
                             """,
-                            Text.class
+                            Document.class
                     )
                     .setParameter("id", id)
                     .getResultList();
@@ -156,18 +156,18 @@ public class TextRepository {
         }
     }
 
-    public List<Text> findByTopic(Long id) {
+    public List<Document> findByTopic(Long id) {
         EntityManager em = HibernateUtil.getEntityManager();
 
         try {
             return em.createQuery(
                             """
-                            SELECT text
-                            FROM Text text
-                            WHERE text.topic.id = :id
-                            ORDER BY text.id
+                            SELECT doc
+                            FROM Document doc
+                            WHERE doc.topic.id = :id
+                            ORDER BY doc.id
                             """,
-                            Text.class
+                            Document.class
                     )
                     .setParameter("id", id)
                     .getResultList();
@@ -176,7 +176,7 @@ public class TextRepository {
         }
     }
 
-    public List<Text> findAll() {
+    public List<Document> findAll() {
 
         EntityManager em =
                 HibernateUtil.getEntityManager();
@@ -184,8 +184,8 @@ public class TextRepository {
         try {
 
             return em.createQuery(
-                    "FROM Text",
-                    Text.class
+                    "FROM Document",
+                    Document.class
             ).getResultList();
 
         } finally {
@@ -194,18 +194,18 @@ public class TextRepository {
         }
     }
 
-    public List<Text> findAllStudyTexts() {
+    public List<Document> findAllStudyTexts() {
         EntityManager em = HibernateUtil.getEntityManager();
 
         try {
             return em.createQuery(
                     """
-                    SELECT tx
-                    FROM Text tx
-                    WHERE tx.study IS NOT NULL
-                    AND tx.topic IS NULL
+                    SELECT doc
+                    FROM Document doc
+                    WHERE doc.study IS NOT NULL
+                    AND doc.topic IS NULL
                     """,
-                    Text.class
+                    Document.class
             ).getResultList();
 
         } finally {

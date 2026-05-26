@@ -1,6 +1,6 @@
-package app.ui.main;
+package app.ui.document.edit;
 
-import app.application.text.TextDTO;
+import app.application.document.DocumentDTO;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -15,7 +15,7 @@ import org.fxmisc.richtext.CodeArea;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EditorTextController implements Initializable {
+public class EditorDocumentController implements Initializable {
 
     @FXML
     private Button bttPreview;
@@ -41,8 +41,8 @@ public class EditorTextController implements Initializable {
 
     private WebView webView;
 
-    private TextDTO textDto;
-    private EditorTextService editorTextService = new EditorTextService();
+    private DocumentDTO documentDto;
+    private EditorDocumentService editorDocumentService = new EditorDocumentService();
 
     private Runnable refreshObjectCurrentSelected;
     private Runnable showData;
@@ -81,8 +81,8 @@ public class EditorTextController implements Initializable {
     }
 
     private void settingText() {
-        if (textDto.getId() != null && textDto.getContent() != null && !textDto.getContent().isEmpty()) {
-            codeArea.replaceText(textDto.getContent());
+        if (documentDto.getId() != null && documentDto.getContent() != null && !documentDto.getContent().isEmpty()) {
+            codeArea.replaceText(documentDto.getContent());
         }
     }
 
@@ -146,8 +146,8 @@ public class EditorTextController implements Initializable {
 
     private void save() {
         String markdown = codeArea.getText();
-        textDto.setContent(markdown);
-        textDto = editorTextService.save(textDto);
+        documentDto.setContent(markdown);
+        documentDto = editorDocumentService.save(documentDto);
 
         loadManagerTextWindow();
     }
@@ -161,7 +161,7 @@ public class EditorTextController implements Initializable {
                 new ManagerTextController();
 
         managerTextController.setPaneText(paneText);
-        managerTextController.setTextDto(textDto);
+        managerTextController.setTextDto(documentDto);
         managerTextController.setRefreshObjectCurrentSelected(refreshObjectCurrentSelected);
         managerTextController.setShowData(showData);
         managerTextController.setStage(stage);
@@ -176,12 +176,12 @@ public class EditorTextController implements Initializable {
         this.paneText = paneText;
     }
 
-    public TextDTO getTextDto() {
-        return textDto;
+    public DocumentDTO getTextDto() {
+        return documentDto;
     }
 
-    public void setTextDto(TextDTO textDto) {
-        this.textDto = textDto;
+    public void setTextDto(DocumentDTO documentDto) {
+        this.documentDto = documentDto;
     }
 
     public void setRefreshObjectCurrentSelected(Runnable refreshObjectCurrentSelected) {

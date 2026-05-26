@@ -1,6 +1,6 @@
 package app.application.topic;
 
-import app.application.text.TextDTO;
+import app.application.document.DocumentDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ public class TopicDTO {
     private String studyMatter;
     private Long topicParentId;
     private List<TopicDTO> listTopicsDto = new ArrayList<>();
-    private List<TextDTO> listTextDto = new ArrayList<>();
+    private List<DocumentDTO> listDocumentsDto = new ArrayList<>();
 
     public TopicDTO() {
 
@@ -79,12 +79,12 @@ public class TopicDTO {
         this.listTopicsDto = listTopicsDto;
     }
 
-    public List<TextDTO> getListTextDto() {
-        return listTextDto;
+    public List<DocumentDTO> getListTextDto() {
+        return listDocumentsDto;
     }
 
-    public void setListTextDto(List<TextDTO> listTextDto) {
-        this.listTextDto = listTextDto;
+    public void setListTextDto(List<DocumentDTO> listDocumentsDto) {
+        this.listDocumentsDto = listDocumentsDto;
     }
 
     @Override
