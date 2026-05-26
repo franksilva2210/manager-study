@@ -6,6 +6,7 @@ import app.application.topic.TopicDTO;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -52,8 +53,8 @@ public class ScreenMainUIHelper {
 
     public Tab createNewTab(
             int indexTabs,
-            AnchorPane root,
-            Consumer<Label> editNameTab,
+            VBox root,
+            Label lblTitle,
             DocumentDTO documentDto) {
 
         String title = "";
@@ -64,19 +65,13 @@ public class ScreenMainUIHelper {
             title = "Texto " + indexTabs;
         }
 
-        Label label = new Label(title);
+        lblTitle.setText(title);
 
         Tab tab = new Tab();
         tab.setClosable(true);
         tab.setContent(root);
-        tab.setGraphic(label);
+        tab.setGraphic(lblTitle);
         tab.setText("");
-
-        label.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                editNameTab.accept(label);
-            }
-        });
 
         return tab;
     }
