@@ -1,4 +1,4 @@
-package app.util;
+package app.ui.util;
 
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;

@@ -1,7 +1,7 @@
 package app.ui.topic.register;
 
 import app.application.topic.TopicDTO;
-import app.util.ValidateControlFx;
+import app.ui.util.ValidateControlFx;
 
 public class RegisterTopicUIHelper {
 
