@@ -111,7 +111,6 @@ public class EditorDocumentController implements Initializable {
     private void showInitial() {
         if (documentDto.getId() != null && documentDto.getContent() != null) {
             previewDocument(documentDto.getContent());
-            codeArea.replaceText(documentDto.getContent());
         } else {
             editDocument();
         }
@@ -152,14 +151,22 @@ public class EditorDocumentController implements Initializable {
 
         bttPreview.setDisable(true);
         bttEdit.setDisable(false);
+
+        bttSave.setDisable(true);
+        bttCancel.setDisable(true);
     }
 
     private void editDocument() {
+        codeArea.replaceText(documentDto.getContent());
+
         VBox.setVgrow(scrollPaneCodeArea, Priority.ALWAYS);
         vboxMain.getChildren().setAll(scrollPaneCodeArea);
 
-        bttEdit.setDisable(true);
         bttPreview.setDisable(false);
+        bttEdit.setDisable(true);
+
+        bttSave.setDisable(false);
+        bttCancel.setDisable(false);
     }
 
     private void removeDocument() {
@@ -209,7 +216,7 @@ public class EditorDocumentController implements Initializable {
     }
 
     private void cancel() {
-
+        previewDocument(documentDto.getContent());
     }
 
     public void setLblTitle(Label lblTitle) {
