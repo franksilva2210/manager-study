@@ -23,7 +23,7 @@ public class EditorDocumentController implements Initializable {
 
     private TabPane tabPaneStudy;
 
-    private Tab tabCurrent;
+    private Tab tab;
 
     private Label lblTitle;
 
@@ -73,7 +73,7 @@ public class EditorDocumentController implements Initializable {
         });
 
         bttPreview.setOnAction(event -> {
-            previewDocument(codeArea.getText());
+            previewDocument();
         });
 
         bttBlocCod.setOnAction(event -> {
@@ -109,8 +109,9 @@ public class EditorDocumentController implements Initializable {
     }
 
     private void showInitial() {
-        if (documentDto.getId() != null && documentDto.getContent() != null) {
-            previewDocument(documentDto.getContent());
+        if (documentDto.getId() != null) {
+            codeArea.replaceText(documentDto.getContent());
+            previewDocument();
         } else {
             editDocument();
         }
@@ -127,13 +128,17 @@ public class EditorDocumentController implements Initializable {
 
         result.ifPresent(newName -> {
             if (!newName.isBlank()) {
-                documentDto.setTitle(newName);
-                lblTitle.setText(documentDto.getTitle());
+                lblTitle.setText(newName);
+
+                bttSave.setDisable(false);
+                bttCancel.setDisable(false);
             }
         });
     }
 
-    private void previewDocument(String markdown) {
+    private void previewDocument() {
+        String markdown = codeArea.getText();
+
         String htmlContent = MarkdownConverter.toHtml(markdown);
 
         String html = """
@@ -157,8 +162,6 @@ public class EditorDocumentController implements Initializable {
     }
 
     private void editDocument() {
-        codeArea.replaceText(documentDto.getContent());
-
         VBox.setVgrow(scrollPaneCodeArea, Priority.ALWAYS);
         vboxMain.getChildren().setAll(scrollPaneCodeArea);
 
@@ -187,7 +190,7 @@ public class EditorDocumentController implements Initializable {
             if (documentDto.getId() != null && documentDto.getId() > 0) {
                 editorDocumentService.remove(documentDto.getId());
             }
-            tabPaneStudy.getTabs().remove(tabCurrent);
+            tabPaneStudy.getTabs().remove(tab);
         }
     }
 
@@ -211,11 +214,12 @@ public class EditorDocumentController implements Initializable {
     private void save() {
         uiHelper.extractValues(lblTitle, codeArea, documentDto);
         documentDto = editorDocumentService.save(documentDto);
-        previewDocument(documentDto.getContent());
+        previewDocument();
     }
 
     private void cancel() {
-        previewDocument(documentDto.getContent());
+        lblTitle.setText(documentDto.getTitle());
+        previewDocument();
     }
 
     public void setDocumentDto(DocumentDTO documentDto) {
@@ -238,8 +242,8 @@ public class EditorDocumentController implements Initializable {
         this.tabPaneStudy = tabPaneStudy;
     }
 
-    public void setTabCurrent(Tab tabCurrent) {
-        this.tabCurrent = tabCurrent;
+    public void setTab(Tab tab) {
+        this.tab = tab;
     }
 
     public void setStage(Stage stage) {

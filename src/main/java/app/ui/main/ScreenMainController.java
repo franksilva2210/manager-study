@@ -353,8 +353,7 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private Tab createNewTabDocument(DocumentDTO documentDto) {
-		EditorDocumentController editorDocumentController =
-				new EditorDocumentController();
+		EditorDocumentController editorDocumentController = new EditorDocumentController();
 
 		Label lblTitle = new Label();
 
@@ -368,16 +367,14 @@ public class ScreenMainController implements Initializable {
 			editorDocumentController.setTopicDto(topicDto);
 		}
 
-		EditorDocumentWindow editorDocumentWindow =
-				new EditorDocumentWindow(editorDocumentController);
-
+		EditorDocumentWindow editorDocumentWindow = new EditorDocumentWindow(editorDocumentController);
 
 		int indexTabs = tabPaneStudy.getTabs().indexOf(tabAdd);
 		VBox root = editorDocumentWindow.getRoot();
 
 		Tab newTab = uiHelper.createNewTab(indexTabs, root, lblTitle, documentDto);
 
-		editorDocumentController.setTabCurrent(newTab);
+		editorDocumentController.setTab(newTab);
 		editorDocumentController.setTabPaneStudy(tabPaneStudy);
 
 		tabPaneStudy.getTabs().add(indexTabs, newTab);
