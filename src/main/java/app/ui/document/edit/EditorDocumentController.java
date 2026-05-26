@@ -7,9 +7,7 @@ import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
@@ -22,6 +20,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EditorDocumentController implements Initializable {
+
+    private TabPane tabPaneStudy;
+
+    private Tab tabCurrent;
 
     private Label lblTitle;
 
@@ -56,8 +58,6 @@ public class EditorDocumentController implements Initializable {
     private DocumentDTO documentDto;
     private EditorDocumentService editorDocumentService = new EditorDocumentService();
     private EditorDocumentUIHelper uiHelper = new EditorDocumentUIHelper();
-    private Runnable refreshObjectCurrentSelected;
-    private Runnable showData;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -186,9 +186,8 @@ public class EditorDocumentController implements Initializable {
         if (messageConfirmController.getConfirm()) {
             if (documentDto.getId() != null && documentDto.getId() > 0) {
                 editorDocumentService.remove(documentDto.getId());
-                refreshObjectCurrentSelected.run();
-                showData.run();
             }
+            tabPaneStudy.getTabs().remove(tabCurrent);
         }
     }
 
@@ -219,10 +218,6 @@ public class EditorDocumentController implements Initializable {
         previewDocument(documentDto.getContent());
     }
 
-    public void setLblTitle(Label lblTitle) {
-        this.lblTitle = lblTitle;
-    }
-
     public void setDocumentDto(DocumentDTO documentDto) {
         this.documentDto = documentDto;
     }
@@ -235,12 +230,16 @@ public class EditorDocumentController implements Initializable {
         documentDto.setStudyId(studyDto.getId());
     }
 
-    public void setRefreshObjectCurrentSelected(Runnable refreshObjectCurrentSelected) {
-        this.refreshObjectCurrentSelected = refreshObjectCurrentSelected;
+    public void setLblTitle(Label lblTitle) {
+        this.lblTitle = lblTitle;
     }
 
-    public void setShowData(Runnable showData) {
-        this.showData = showData;
+    public void setTabPaneStudy(TabPane tabPaneStudy) {
+        this.tabPaneStudy = tabPaneStudy;
+    }
+
+    public void setTabCurrent(Tab tabCurrent) {
+        this.tabCurrent = tabCurrent;
     }
 
     public void setStage(Stage stage) {

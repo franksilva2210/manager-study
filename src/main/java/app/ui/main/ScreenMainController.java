@@ -360,8 +360,6 @@ public class ScreenMainController implements Initializable {
 
 		editorDocumentController.setLblTitle(lblTitle);
 		editorDocumentController.setDocumentDto(documentDto);
-		editorDocumentController.setRefreshObjectCurrentSelected(this::refreshObjectCurrentSelected);
-		editorDocumentController.setShowData(this::showData);
 		editorDocumentController.setStage(stage);
 
 		if (objectCurrentSelected instanceof StudyDTO studyDto) {
@@ -373,11 +371,14 @@ public class ScreenMainController implements Initializable {
 		EditorDocumentWindow editorDocumentWindow =
 				new EditorDocumentWindow(editorDocumentController);
 
-		VBox root = editorDocumentWindow.getRoot();
 
 		int indexTabs = tabPaneStudy.getTabs().indexOf(tabAdd);
+		VBox root = editorDocumentWindow.getRoot();
 
 		Tab newTab = uiHelper.createNewTab(indexTabs, root, lblTitle, documentDto);
+
+		editorDocumentController.setTabCurrent(newTab);
+		editorDocumentController.setTabPaneStudy(tabPaneStudy);
 
 		tabPaneStudy.getTabs().add(indexTabs, newTab);
 
