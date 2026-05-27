@@ -13,9 +13,7 @@ public class AppBootstrap extends Application {
     public void start(Stage primaryStage) {
 
         SQLiteDataBaseConfig.initialize();
-
         FlywayConfig.migrate();
-
         HibernateUtil.initialize();
 
         ScreenMainWindow screenMainWindow = new ScreenMainWindow(primaryStage);

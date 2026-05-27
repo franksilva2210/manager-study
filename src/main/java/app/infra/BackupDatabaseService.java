@@ -1,10 +1,9 @@
-package app.ui.backup;
-
-import app.infra.SQLiteDataBaseConfig;
+package app.infra;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -19,11 +18,10 @@ public class BackupDatabaseService {
     public Path createBackup(Path backupDirectory) {
 
         try {
-
             createDirectoryIfNotExists(backupDirectory);
 
             Path backupFile = backupDirectory.resolve(
-                    generateBackupFileName()
+                    generateNameFile()
             );
 
             executeVacuumInto(backupFile);
@@ -31,7 +29,6 @@ public class BackupDatabaseService {
             return backupFile;
 
         } catch (Exception e) {
-
             throw new RuntimeException(
                     "Erro ao criar backup.",
                     e
@@ -39,15 +36,26 @@ public class BackupDatabaseService {
         }
     }
 
+    public void restoreBackup(Path backupFile) {
+        try {
+            shutdownHibernate();
+            deleteDatabaseFiles();
+            restoreDatabaseFile(backupFile);
+            initializeHibernate();
+        } catch (Exception e) {
+            throw new RuntimeException(
+                    "Erro ao restaurar backup.", e
+            );
+        }
+    }
+
     private void executeVacuumInto(Path backupFile) throws Exception {
 
-        try (Connection connection =
-                     DriverManager.getConnection(SQLiteDataBaseConfig.JDBC_URL)) {
+        try (Connection connection = DriverManager.getConnection(SQLiteDataBaseConfig.JDBC_URL)) {
 
             String sql = "VACUUM INTO ?";
 
-            try (PreparedStatement stmt =
-                         connection.prepareStatement(sql)) {
+            try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 
                 stmt.setString(
                         1,
@@ -67,11 +75,40 @@ public class BackupDatabaseService {
         }
     }
 
-    private String generateBackupFileName() {
-
+    private String generateNameFile() {
         return "backup-"
                 + LocalDateTime.now().format(FORMATTER)
                 + ".db";
+    }
+
+    private void restoreDatabaseFile(Path backupFile) throws IOException {
+        Files.copy(
+                backupFile,
+                SQLiteDataBaseConfig.DATABASE_PATH,
+                StandardCopyOption.REPLACE_EXISTING
+        );
+    }
+
+    private void deleteDatabaseFiles() throws IOException {
+        Files.deleteIfExists(
+                SQLiteDataBaseConfig.DATABASE_PATH
+        );
+
+        Files.deleteIfExists(
+                SQLiteDataBaseConfig.WAL_PATH
+        );
+
+        Files.deleteIfExists(
+                SQLiteDataBaseConfig.SHM_PATH
+        );
+    }
+
+    private void shutdownHibernate() {
+        HibernateUtil.shutdown();
+    }
+
+    private void initializeHibernate() {
+        HibernateUtil.initialize();
     }
 
 }

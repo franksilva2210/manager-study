@@ -1,26 +1,23 @@
 package app.ui.backup;
 
+import app.infra.BackupDatabaseService;
+
+import java.io.File;
 import java.nio.file.Path;
 
 public class ScreenBackupService {
 
-    public void generateBackup() {
+    private BackupDatabaseService service = new BackupDatabaseService();
 
-        Thread thread = new Thread(() -> {
-            try {
-                BackupDatabaseService service = new BackupDatabaseService();
-
-                Path backup = service.createBackup(
+    public Path createBackup() {
+        return
+                service.createBackup(
                         Path.of("backup")
                 );
+    }
 
-            } catch (Exception e) {
-                throw new RuntimeException("Erro ao criar backup: ", e);
-            }
-        });
+    public void restoreBackup(File file) {
 
-        thread.setDaemon(true);
-        thread.start();
     }
 
 }

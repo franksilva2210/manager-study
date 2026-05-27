@@ -105,6 +105,10 @@ public class ScreenMainController implements Initializable {
 			openScreenBackup();
 		});
 
+		menuClose.setOnAction(event -> {
+			System.exit(0);
+		});
+
 		txtSearch.setOnAction(event -> {
 //			searchStudy();
 		});
