@@ -1,6 +1,6 @@
 package app;
 
-import app.infra.DatabaseBootstrap;
+import app.infra.SQLiteDataBaseConfig;
 import app.infra.FlywayConfig;
 import app.infra.HibernateUtil;
 import app.ui.main.ScreenMainWindow;
@@ -12,7 +12,7 @@ public class AppBootstrap extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        DatabaseBootstrap.initializeDatabase();
+        SQLiteDataBaseConfig.initialize();
 
         FlywayConfig.migrate();
 

@@ -2,13 +2,13 @@ package app.infra;
 
 import java.sql.*;
 
-public class DatabaseBootstrap {
+public class PostgreSQLDatabaseConfig {
 
     private static final String HOST =
             "jdbc:postgresql://localhost:5432/";
 
     private static final String DATABASE =
-            "knowledge_manager";
+            "study_manager";
 
     private static final String USER =
             "postgres";
@@ -60,7 +60,6 @@ public class DatabaseBootstrap {
         try (Statement statement = connection.createStatement()) {
             statement.execute(sql);
         }
-
     }
 
 }

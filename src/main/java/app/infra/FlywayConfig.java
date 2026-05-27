@@ -6,22 +6,15 @@ import org.flywaydb.core.api.output.MigrateResult;
 
 public class FlywayConfig {
 
-    private static final String URL =
-            "jdbc:postgresql://localhost:5432/knowledge_manager";
-
-    private static final String USER =
-            "postgres";
-
-    private static final String PASSWORD =
-            "root";
+    private static final String URL = SQLiteDataBaseConfig.JDBC_URL;
 
     public static void migrate() {
 
         Flyway flyway = Flyway.configure()
                 .dataSource(
                         URL,
-                        USER,
-                        PASSWORD
+                        null,
+                        null
                 )
                 .load();
 
