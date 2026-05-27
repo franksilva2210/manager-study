@@ -42,7 +42,8 @@
                                     </MenuItem>
                                  </items>
                               </Menu>
-                              <MenuItem fx:id="menuClose" mnemonicParsing="false" text="Fechar" />
+                              <MenuItem fx:id="menuBackup" mnemonicParsing="false" text="Backup" />
+                              <MenuItem fx:id="menuClose" mnemonicParsing="false" text="Sair" />
                            </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Visualizar">

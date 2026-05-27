@@ -7,6 +7,8 @@ import app.application.study.StudyDTO;
 import app.application.document.DocumentDTO;
 import app.application.topic.TopicDTO;
 import app.application.study.StudyNavigationService;
+import app.ui.backup.ScreenBackupController;
+import app.ui.backup.ScreenBackupWindow;
 import app.ui.document.edit.EditorDocumentController;
 import app.ui.document.edit.EditorDocumentWindow;
 import app.ui.study.register.RegisterStudyController;
@@ -27,6 +29,9 @@ public class ScreenMainController implements Initializable {
 
 	@FXML
 	private MenuItem menuNewStudy;
+
+	@FXML
+	private MenuItem menuBackup;
 
 	@FXML
 	private MenuItem menuClose;
@@ -96,6 +101,10 @@ public class ScreenMainController implements Initializable {
 			newStudy();
 		});
 
+		menuBackup.setOnAction(event -> {
+			openScreenBackup();
+		});
+
 		txtSearch.setOnAction(event -> {
 //			searchStudy();
 		});
@@ -143,6 +152,12 @@ public class ScreenMainController implements Initializable {
 		boolean canGoBack = navigationService.canGoBack();
 		boolean canGoForward = navigationService.canGoForward();
 		uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
+	}
+
+	private void openScreenBackup() {
+		ScreenBackupController controller = new ScreenBackupController();
+		ScreenBackupWindow window = new ScreenBackupWindow(stage, controller);
+		window.showScreen();
 	}
 
 	private void newStudy() {
