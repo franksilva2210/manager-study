@@ -32,3 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 /bin/
+
+### SQLite ###
+*.db
+*.db-wal
+*.db-shm
