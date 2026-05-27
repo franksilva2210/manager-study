@@ -99,24 +99,6 @@ public class EditorDocumentController implements Initializable {
         showInitial();
     }
 
-    private void createCodeArea() {
-        codeArea = new CodeArea();
-        scrollPaneCodeArea = new VirtualizedScrollPane<>(codeArea);
-    }
-
-    private void createWebView() {
-        webView = new WebView();
-    }
-
-    private void showInitial() {
-        if (documentDto.getId() != null) {
-            codeArea.replaceText(documentDto.getContent());
-            previewDocument();
-        } else {
-            editDocument();
-        }
-    }
-
     public void editTitle() {
         TextInputDialog dialog = new TextInputDialog(lblTitle.getText());
 
@@ -220,6 +202,26 @@ public class EditorDocumentController implements Initializable {
     private void cancel() {
         lblTitle.setText(documentDto.getTitle());
         previewDocument();
+    }
+
+    private void showInitial() {
+        if (documentDto.getId() != null) {
+            codeArea.replaceText(
+                    documentDto.getContent() != null ? documentDto.getContent() : ""
+            );
+            previewDocument();
+        } else {
+            editDocument();
+        }
+    }
+
+    private void createCodeArea() {
+        codeArea = new CodeArea();
+        scrollPaneCodeArea = new VirtualizedScrollPane<>(codeArea);
+    }
+
+    private void createWebView() {
+        webView = new WebView();
     }
 
     public void setDocumentDto(DocumentDTO documentDto) {
