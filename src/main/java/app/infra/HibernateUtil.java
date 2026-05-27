@@ -34,4 +34,17 @@ public class HibernateUtil {
         return emf.createEntityManager();
     }
 
+    public static void shutdown() {
+        if (emf != null && emf.isOpen()) {
+
+            emf.close();
+
+            emf = null;
+
+            System.out.println(
+                    "Hibernate shutdown."
+            );
+        }
+    }
+
 }
