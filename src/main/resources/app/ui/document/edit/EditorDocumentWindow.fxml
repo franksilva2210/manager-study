@@ -56,7 +56,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="24.0" prefWidth="35.0">
+                        <Button fx:id="bttBold" mnemonicParsing="false" prefHeight="24.0" prefWidth="35.0">
                            <graphic>
                               <ImageView fitHeight="14.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -65,11 +65,20 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" prefWidth="35.0">
+                        <Button fx:id="bttItalic" mnemonicParsing="false" prefWidth="35.0">
                            <graphic>
                               <ImageView fitHeight="14.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@italic-button.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="bttAttachImg" layoutX="88.0" layoutY="10.0" mnemonicParsing="false" prefWidth="35.0">
+                           <graphic>
+                              <ImageView fitHeight="14.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@image.png" />
                                  </image>
                               </ImageView>
                            </graphic>
