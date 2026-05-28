@@ -15,6 +15,7 @@ import app.ui.study.register.RegisterStudyController;
 import app.ui.study.register.RegisterStudyWindow;
 import app.ui.topic.register.RegisterTopicController;
 import app.ui.topic.register.RegisterTopicWindow;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -106,7 +107,7 @@ public class ScreenMainController implements Initializable {
 		});
 
 		menuClose.setOnAction(event -> {
-			System.exit(0);
+			Platform.exit();
 		});
 
 		txtSearch.setOnAction(event -> {
@@ -162,6 +163,9 @@ public class ScreenMainController implements Initializable {
 		ScreenBackupController controller = new ScreenBackupController();
 		ScreenBackupWindow window = new ScreenBackupWindow(stage, controller);
 		window.showScreen();
+		if (controller.isSucessRestore()) {
+			Platform.exit();
+		}
 	}
 
 	private void newStudy() {

@@ -1,5 +1,6 @@
 package app.ui.backup;
 
+import javafx.animation.PauseTransition;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -7,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.net.URL;
@@ -31,6 +33,10 @@ public class ScreenBackupController implements Initializable {
 
     private ScreenBackupService screenBackupService = new ScreenBackupService();
 
+    private boolean restoring = false;
+
+    private boolean sucessRestore = false;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         bttGenerateBackup.setOnAction(event -> {
@@ -39,6 +45,12 @@ public class ScreenBackupController implements Initializable {
 
         bttRestoreBackup.setOnAction(event -> {
             restoreBackup();
+        });
+
+        stage.setOnCloseRequest(event -> {
+            if (restoring) {
+                event.consume();
+            }
         });
     }
 
@@ -94,10 +106,57 @@ public class ScreenBackupController implements Initializable {
             return;
         }
 
+        restoring = true;
 
+        txtMsgRestore.setText("Restaurando backup...");
+        bttRestoreBackup.setDisable(true);
+
+        Task<Void> task = new Task<>() {
+
+            @Override
+            protected Void call() throws Exception {
+                screenBackupService.restoreBackup(file);
+                return null;
+            }
+        };
+
+        task.setOnSucceeded(event -> {
+            sucessRestore = true;
+
+            txtMsgRestore.setText(
+                    "Backup restaurado com sucesso! A\n" +
+                    "aplicação será fechada. \n" +
+                    "Abra novamente na área de trabalho. "
+            );
+
+            PauseTransition pause =
+                    new PauseTransition(Duration.seconds(5));
+
+            pause.setOnFinished(
+                    e -> stage.close()
+            );
+
+            pause.play();
+        });
+
+        task.setOnFailed(event -> {
+            txtMsgRestore.setText(
+                    "Erro ao restaurar backup."
+            );
+            restoring = false;
+            bttRestoreBackup.setDisable(false);
+        });
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
     }
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public boolean isSucessRestore() {
+        return sucessRestore;
     }
 }
