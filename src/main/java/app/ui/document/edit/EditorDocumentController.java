@@ -11,10 +11,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
+import java.io.File;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -35,6 +37,15 @@ public class EditorDocumentController implements Initializable {
 
     @FXML
     private Button bttBlocCod;
+
+    @FXML
+    private Button bttBold;
+
+    @FXML
+    private Button bttItalic;
+
+    @FXML
+    private Button bttAttachImg;
 
     @FXML
     private Button bttRemove;
@@ -78,6 +89,18 @@ public class EditorDocumentController implements Initializable {
 
         bttBlocCod.setOnAction(event -> {
             onCodeBlock();
+        });
+
+        bttBold.setOnAction(event -> {
+            onBold();
+        });
+
+        bttItalic.setOnAction(event -> {
+            onItalic();
+        });
+
+        bttAttachImg.setOnAction(event -> {
+            onAttachImage();
         });
 
         bttRemove.setOnAction(event -> {
@@ -190,6 +213,42 @@ public class EditorDocumentController implements Initializable {
             """.formatted(selectedText);
 
             codeArea.replaceSelection(blocFenced);
+        }
+    }
+
+    private void onBold() {
+        String selectedText = codeArea.getSelectedText();
+
+        if (selectedText == null || selectedText.isBlank()) {
+            codeArea.replaceSelection("**texto em negrito**");
+            return;
+        }
+
+        codeArea.replaceSelection("**%s**".formatted(selectedText));
+    }
+
+    private void onItalic() {
+        String selectedText = codeArea.getSelectedText();
+
+        if (selectedText != null && !selectedText.isBlank()) {
+
+            String italicText = "*%s*".formatted(selectedText);
+
+            codeArea.replaceSelection(italicText);
+        }
+    }
+
+    private void onAttachImage() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Imagens", "*.png", "*.jpg", "*.jpeg")
+        );
+
+        File file = fileChooser.showOpenDialog(stage);
+
+        if (file != null) {
+            String path = file.toURI().toString();
+            codeArea.replaceSelection("![](" + path + ")");
         }
     }
 
