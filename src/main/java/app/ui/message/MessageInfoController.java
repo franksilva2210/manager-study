@@ -8,14 +8,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
-public class MessageInfoControl implements Initializable {
+public class MessageInfoController implements Initializable {
 	
 	@FXML private Button bttOk;
 	@FXML private Text txtMsgInfo;
 	
 	private String msgUser;
-	private MessageInfoWindow window;
+	private Stage stage;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -24,7 +25,7 @@ public class MessageInfoControl implements Initializable {
 		
 		bttOk.setOnMouseClicked((MouseEvent mouse) -> {
 			if (mouse.getClickCount() == 1) {
-				window.getStage().close();
+				stage.close();
 			}
 		});
 	}
@@ -37,11 +38,7 @@ public class MessageInfoControl implements Initializable {
 		this.msgUser = msgUser;
 	}
 
-	public MessageInfoWindow getWindow() {
-		return window;
-	}
-
-	public void setWindow(MessageInfoWindow window) {
-		this.window = window;
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 }

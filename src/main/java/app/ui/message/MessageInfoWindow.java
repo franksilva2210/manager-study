@@ -15,7 +15,38 @@ public class MessageInfoWindow {
 	private Stage stage;
 	private Scene scene;
 	private Parent root;
-	private MessageInfoControl controller;
+	private MessageInfoController controller;
+
+	public MessageInfoWindow(Stage stageOwner, MessageInfoController controller) {
+		stage = new Stage();
+		stage.setTitle("Informação");
+		stage.setResizable(false);
+
+		if (stageOwner != null) {
+			stage.initModality(Modality.WINDOW_MODAL);
+			stage.initOwner(stageOwner);
+		}
+
+		this.controller = controller;
+		controller.setStage(stage);
+
+		FXMLLoader rootFxml = new FXMLLoader();
+		rootFxml.setLocation(MessageInfoWindow.class.getResource("MessageInfoWindow.fxml"));
+		rootFxml.setController(controller);
+
+		try {
+			root = rootFxml.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		scene = new Scene(root);
+		JMetro jMetro = new JMetro();
+		jMetro.setStyle(Style.LIGHT);
+		jMetro.setScene(scene);
+
+		stage.setScene(scene);
+	}
 	
 	public Stage getStage() {
 		return stage;
@@ -41,54 +72,15 @@ public class MessageInfoWindow {
 		this.root = root;
 	}
 
-	public MessageInfoControl getController() {
+	public MessageInfoController getController() {
 		return controller;
 	}
 
-	public void setController(MessageInfoControl controller) {
+	public void setController(MessageInfoController controller) {
 		this.controller = controller;
 	}
 
-	public void buildScreen(Stage stageOwner) {
-		buildRoot();
-		buildScene();
-		buildStage(stageOwner);
-	}
-	
 	public void showScreen() {
 		stage.showAndWait();
-	}
-	
-	public void buildAndShowScreen(Stage stageOwner) {
-		buildScreen(stageOwner);
-		showScreen();
-	}
-
-	private void buildRoot() {
-		FXMLLoader rootFxml = new FXMLLoader();
-		rootFxml.setLocation(MessageInfoWindow.class.getResource("MessageInfoWindow.fxml"));
-		rootFxml.setController(this.controller);
-			
-		try {
-			root = rootFxml.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-		
-	private void buildScene() {
-		scene = new Scene(root);
-		JMetro jMetro = new JMetro();
-		jMetro.setStyle(Style.LIGHT);
-		jMetro.setScene(scene);
-	}
-		
-	private void buildStage(Stage stageOwner) {
-		stage = new Stage();
-		stage.setTitle("Mensagem");
-		stage.setScene(scene);
-		stage.initModality(Modality.WINDOW_MODAL);
-		stage.initOwner(stageOwner);
-		stage.setResizable(false);
 	}
 }

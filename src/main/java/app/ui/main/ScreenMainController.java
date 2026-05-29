@@ -11,6 +11,10 @@ import app.ui.backup.ScreenBackupController;
 import app.ui.backup.ScreenBackupWindow;
 import app.ui.document.edit.EditorDocumentController;
 import app.ui.document.edit.EditorDocumentWindow;
+import app.ui.message.MessageConfirmController;
+import app.ui.message.MessageConfirmWindow;
+import app.ui.message.MessageInfoController;
+import app.ui.message.MessageInfoWindow;
 import app.ui.roadmap.RoadMapController;
 import app.ui.roadmap.RoadMapWindow;
 import app.ui.study.register.RegisterStudyController;
@@ -213,18 +217,18 @@ public class ScreenMainController implements Initializable {
 	private void removeStudy(Object objectDeletion) {
 		StudyDTO studyDeletionDto = (StudyDTO) objectDeletion;
 
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Confirmação");
-		alert.setHeaderText("Remover estudo");
-		alert.setContentText(
+		MessageConfirmController controller = new MessageConfirmController();
+		controller.setConfirm(false);
+		controller.setMsgUser(
 				"Deseja realmente remover o estudo selecionado?\n" +
 				"Todos os tópicos de: " + studyDeletionDto.getMatter().toUpperCase() + ", também " +
 				"serão removidos!"
 		);
 
-		Optional<ButtonType> result = alert.showAndWait();
+		MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
+		window.showScreen();
 
-		if (result.isPresent() && result.get() == ButtonType.OK) {
+		if (controller.getConfirm()) {
 			screenMainService.removeStudy(studyDeletionDto);
 			navigationService.removeStudy(studyDeletionDto);
 			objectCurrentSelected = null;
@@ -281,26 +285,25 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void removeTopic() {
-		TopicDTO topicSelectedDto =
-				listViewTopics.getSelectionModel().getSelectedItem();
+		TopicDTO topicSelectedDto = listViewTopics.getSelectionModel().getSelectedItem();
 
 		if (objectCurrentSelected == null || topicSelectedDto == null) {
 			return;
 		}
 
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Confirmação");
-		alert.setHeaderText("Remover Tópico");
-		alert.setContentText(
+		MessageConfirmController controller = new MessageConfirmController();
+		controller.setConfirm(false);
+		controller.setMsgUser(
 				"Deseja realmente remover o tópico selecionado?\n" +
 				"Todos os tópicos de: " + topicSelectedDto.getTitle().toUpperCase() + ", também " +
 				"serão removidos!"
 		);
 
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.isPresent() && result.get() == ButtonType.OK) {
+		MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
+		window.showScreen();
+
+		if (controller.getConfirm()) {
 			screenMainService.removeTopic(topicSelectedDto);
-			//atualizar navigation, também remover topico da navegação
 			refreshObjectCurrentSelected();
 			showData();
 		}
@@ -366,14 +369,14 @@ public class ScreenMainController implements Initializable {
 
 	private void addNewTabDocument(DocumentDTO documentDto) {
 		if (objectCurrentSelected == null) {
-			Alert alert = new Alert(Alert.AlertType.INFORMATION);
-			alert.setTitle("Informação");
-			alert.setHeaderText("Adicionar Novo Texto");
-			alert.setContentText(
-					"Selecione primeiro um estudo para criar\n" +
-							"um novo texto."
+			MessageInfoController controller = new MessageInfoController();
+			controller.setMsgUser(
+					"Selecione primeiro um estudo para adicionar\n" +
+					"um novo texto."
 			);
-			alert.showAndWait();
+
+			MessageInfoWindow window = new MessageInfoWindow(stage, controller);
+			window.showScreen();
 
 			Tab tabMain = tabPaneStudy.getTabs().get(0);
 			tabPaneStudy.getSelectionModel().select(tabMain);
