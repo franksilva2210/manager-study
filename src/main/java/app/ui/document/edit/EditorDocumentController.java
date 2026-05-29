@@ -17,7 +17,9 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -36,6 +38,15 @@ public class EditorDocumentController implements Initializable {
     private Button bttEdit;
 
     @FXML
+    private Button bttRemove;
+
+    @FXML
+    private Button bttExport;
+
+    @FXML
+    private Button bttImport;
+
+    @FXML
     private Button bttBlocCod;
 
     @FXML
@@ -46,9 +57,6 @@ public class EditorDocumentController implements Initializable {
 
     @FXML
     private Button bttAttachImg;
-
-    @FXML
-    private Button bttRemove;
 
     @FXML
     private VBox vboxMain;
@@ -87,6 +95,18 @@ public class EditorDocumentController implements Initializable {
             previewDocument();
         });
 
+        bttRemove.setOnAction(event -> {
+            removeDocument();
+        });
+
+        bttImport.setOnAction(event -> {
+            importDocument();
+        });
+
+        bttExport.setOnAction(event -> {
+            exportDocument();
+        });
+        
         bttBlocCod.setOnAction(event -> {
             onCodeBlock();
         });
@@ -101,10 +121,6 @@ public class EditorDocumentController implements Initializable {
 
         bttAttachImg.setOnAction(event -> {
             onAttachImage();
-        });
-
-        bttRemove.setOnAction(event -> {
-            removeDocument();
         });
 
         bttSave.setOnAction(event -> {
@@ -196,6 +212,68 @@ public class EditorDocumentController implements Initializable {
                 editorDocumentService.remove(documentDto.getId());
             }
             tabPaneStudy.getTabs().remove(tab);
+        }
+    }
+
+    private void exportDocument() {
+        if (documentDto == null) return;
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Exportar Documento");
+
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Markdown (*.md)", "*.md")
+        );
+
+        fileChooser.setInitialFileName(
+                documentDto.getTitle() != null ? documentDto.getTitle() + ".md" : "documento.md"
+        );
+
+        File file = fileChooser.showSaveDialog(stage);
+
+        if (file == null) return;
+
+        try {
+            String content = codeArea.getText();
+
+            Files.writeString(file.toPath(), content);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void importDocument() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Importar Documento");
+
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Markdown (*.md)", "*.md")
+        );
+
+        File file = fileChooser.showOpenDialog(stage);
+
+        if (file == null) return;
+
+        try {
+            String content = Files.readString(file.toPath());
+
+            codeArea.replaceText(content);
+
+            String fileName = file.getName();
+            if (fileName.endsWith(".md")) {
+                fileName = fileName.substring(0, fileName.length() - 3);
+            }
+
+            lblTitle.setText(fileName);
+
+            bttSave.setDisable(false);
+            bttCancel.setDisable(false);
+
+            editDocument();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

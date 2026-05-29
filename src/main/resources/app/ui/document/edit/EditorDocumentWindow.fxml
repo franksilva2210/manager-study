@@ -34,6 +34,24 @@
                               </ImageView>
                            </graphic>
                         </Button>
+                        <Button fx:id="bttImport" mnemonicParsing="false" prefWidth="100.0" text="Importar">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@import.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="bttExport" mnemonicParsing="false" prefWidth="100.0" text="Exportar">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@export.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                         <Button fx:id="bttRemove" mnemonicParsing="false" prefWidth="100.0" text="Remover">
                            <graphic>
                               <ImageView fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -44,6 +62,9 @@
                            </graphic>
                         </Button>
                      </items>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </ToolBar>
                   <ToolBar prefHeight="40.0" prefWidth="200.0">
                     <items>
