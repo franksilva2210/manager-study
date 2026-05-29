@@ -60,6 +60,29 @@ public class StudyMapper {
         return dto;
     }
 
+    public static StudyDTO toFullDTO(Study entity) {
+        if (entity == null) {
+            return null;
+        }
+
+        StudyDTO dto = new StudyDTO(
+                entity.getId(),
+                entity.getMatter()
+        );
+
+        if (entity.getListTopics() != null) {
+            List<TopicDTO> listTopicsDto = new ArrayList<>();
+
+            for (Topic topic : entity.getListTopics()) {
+                listTopicsDto.add(TopicMapper.toFullDTO(topic));
+            }
+
+            dto.setListTopicsDto(listTopicsDto);
+        }
+
+        return dto;
+    }
+
     public static Study toEntity(StudyDTO dto) {
 
         if (dto == null) {

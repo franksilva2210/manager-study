@@ -5,7 +5,6 @@ import app.application.document.DocumentDTO;
 import app.application.topic.TopicDTO;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.util.List;
@@ -158,7 +157,7 @@ public class ScreenMainUIHelper {
                 createNewTabText.accept(documentDto);
             }
         } else if(objectCurrentSelected instanceof TopicDTO topicDto) {
-            for (DocumentDTO documentDto : topicDto.getListTextDto()) {
+            for (DocumentDTO documentDto : topicDto.getListDocumentsDto()) {
                 createNewTabText.accept(documentDto);
             }
         }

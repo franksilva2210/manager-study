@@ -11,6 +11,8 @@ import app.ui.backup.ScreenBackupController;
 import app.ui.backup.ScreenBackupWindow;
 import app.ui.document.edit.EditorDocumentController;
 import app.ui.document.edit.EditorDocumentWindow;
+import app.ui.roadmap.RoadMapController;
+import app.ui.roadmap.RoadMapWindow;
 import app.ui.study.register.RegisterStudyController;
 import app.ui.study.register.RegisterStudyWindow;
 import app.ui.topic.register.RegisterTopicController;
@@ -67,6 +69,9 @@ public class ScreenMainController implements Initializable {
 
 	@FXML
 	private Label lblTitleMain;
+
+	@FXML
+	private Button bttRoadMap;
 
 	@FXML
 	private Button bttSearchTopic;
@@ -126,6 +131,10 @@ public class ScreenMainController implements Initializable {
 
 		bttNavigationRight.setOnAction(event -> {
 			navigateForward();
+		});
+
+		bttRoadMap.setOnAction(event -> {
+			showRoadMap();
 		});
 
 		tabAdd.setOnSelectionChanged(event -> {
@@ -403,6 +412,13 @@ public class ScreenMainController implements Initializable {
 		tabPaneStudy.getTabs().add(indexTabs, newTab);
 
 		return newTab;
+	}
+
+	private void showRoadMap() {
+		RoadMapController roadMapController = new RoadMapController();
+		roadMapController.setObjectCurrentSelected(objectCurrentSelected);
+		RoadMapWindow roadMapWindow	= new RoadMapWindow(stage, roadMapController);
+		roadMapWindow.showScreen();
 	}
 
 	public void setStage(Stage stage) {

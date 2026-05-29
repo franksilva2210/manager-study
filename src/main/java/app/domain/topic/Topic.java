@@ -48,11 +48,11 @@ public class Topic {
         this.title = title;
     }
 
-    public List<Document> getListText() {
+    public List<Document> getListDocuments() {
         return listDocuments;
     }
 
-    public void setListText(List<Document> listDocuments) {
+    public void setListDocuments(List<Document> listDocuments) {
         this.listDocuments = listDocuments;
     }
 

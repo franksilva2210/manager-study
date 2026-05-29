@@ -68,14 +68,40 @@ public class TopicMapper {
             }
         }
 
-        if (entity.getListText() != null && !entity.getListText().isEmpty()) {
+        if (entity.getListDocuments() != null && !entity.getListDocuments().isEmpty()) {
             List<DocumentDTO> listDocumentsDto = new ArrayList<>();
 
-            for (Document document : entity.getListText()) {
+            for (Document document : entity.getListDocuments()) {
                 listDocumentsDto.add(DocumentMapper.toDTO(document));
             }
 
-            dto.setListTextDto(listDocumentsDto);
+            dto.setListDocumentsDto(listDocumentsDto);
+        }
+
+        return dto;
+    }
+
+    public static TopicDTO toFullDTO(Topic entity) {
+
+        if (entity == null) {
+            return null;
+        }
+
+        TopicDTO dto = new TopicDTO(
+                entity.getId(),
+                entity.getTitle(),
+                entity.getStudy() != null ? entity.getStudy().getId() : null,
+                entity.getTopicParent() != null ? entity.getTopicParent().getId() : null
+        );
+
+        if (entity.getListTopics() != null) {
+            List<TopicDTO> listTopicsDto = new ArrayList<>();
+
+            for (Topic child : entity.getListTopics()) {
+                listTopicsDto.add(toFullDTO(child));
+            }
+
+            dto.setListTopicsDto(listTopicsDto);
         }
 
         return dto;
