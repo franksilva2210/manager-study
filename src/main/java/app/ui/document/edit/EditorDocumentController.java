@@ -92,7 +92,7 @@ public class EditorDocumentController implements Initializable {
         });
 
         bttPreview.setOnAction(event -> {
-            previewDocument();
+            previewDocument(codeArea.getText());
         });
 
         bttRemove.setOnAction(event -> {
@@ -157,8 +157,7 @@ public class EditorDocumentController implements Initializable {
         });
     }
 
-    private void previewDocument() {
-        String markdown = codeArea.getText();
+    private void previewDocument(String markdown) {
 
         String htmlContent = MarkdownConverter.toHtml(markdown);
 
@@ -333,12 +332,37 @@ public class EditorDocumentController implements Initializable {
     private void save() {
         uiHelper.extractValues(lblTitle, codeArea, documentDto);
         documentDto = editorDocumentService.save(documentDto);
-        previewDocument();
+        previewDocument(codeArea.getText());
     }
 
     private void cancel() {
-        lblTitle.setText(documentDto.getTitle());
-        previewDocument();
+        MessageConfirmController messageConfirmController
+                = new MessageConfirmController();
+
+        messageConfirmController.setConfirm(false);
+        messageConfirmController.setMsgUser(
+                "Deseja realmente cancelar a edição?"
+        );
+
+        MessageConfirmWindow messageConfirmWindow
+                = new MessageConfirmWindow();
+
+        messageConfirmController.setMessageConfirmWindow(messageConfirmWindow);
+
+        messageConfirmWindow.setController(messageConfirmController);
+        messageConfirmWindow.buildAndShowScreen(stage);
+
+        if (messageConfirmController.getConfirm()) {
+            if (documentDto.getId() != null && documentDto.getId() > 0) {
+                lblTitle.setText(documentDto.getTitle());
+            }
+
+            codeArea.replaceText(
+                    documentDto.getContent() != null ? documentDto.getContent() : ""
+            );
+
+            previewDocument(codeArea.getText());
+        }
     }
 
     private void showInitial() {
@@ -346,7 +370,7 @@ public class EditorDocumentController implements Initializable {
             codeArea.replaceText(
                     documentDto.getContent() != null ? documentDto.getContent() : ""
             );
-            previewDocument();
+            previewDocument(codeArea.getText());
         } else {
             editDocument();
         }
