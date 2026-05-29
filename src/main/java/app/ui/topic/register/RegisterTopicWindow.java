@@ -19,7 +19,7 @@ public class RegisterTopicWindow {
 
     public RegisterTopicWindow(Stage stageOwner, RegisterTopicController controller) {
         stage = new Stage();
-        stage.setTitle("Novo Tópico");
+        stage.setTitle("Tópico");
         stage.setResizable(false);
 
         if (stageOwner != null) {

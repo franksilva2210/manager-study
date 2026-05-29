@@ -7,20 +7,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="161.0" prefWidth="362.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="160.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox layoutX="54.0" layoutY="-19.0" prefHeight="181.0" prefWidth="334.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="187.0" prefWidth="391.0">
+            <HBox alignment="CENTER" prefHeight="125.0" prefWidth="360.0">
                <children>
                   <Text fx:id="txtMsgInfo" strokeType="OUTSIDE" strokeWidth="0.0" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="58.0" prefWidth="360.0">
                <children>
                   <Button fx:id="bttOk" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" text="OK">
                      <HBox.margin>
-                        <Insets right="5.0" />
+                        <Insets right="15.0" />
                      </HBox.margin></Button>
                </children>
             </HBox>

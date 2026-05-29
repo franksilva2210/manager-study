@@ -8,15 +8,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="154.0" prefWidth="390.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="120.0" prefWidth="335.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox layoutX="71.0" layoutY="52.0" prefHeight="438.0" prefWidth="499.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="390.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="335.0">
                <children>
-                  <Label text="Estudo:">
+                  <Label text="Tema:">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
@@ -28,18 +27,13 @@
             </HBox>
             <HBox prefHeight="10.0" prefWidth="380.0">
                <children>
-                  <TextField fx:id="txtMatter" prefHeight="25.0" prefWidth="381.0" promptText="Assunto/Matéria/Tema Geral" />
+                  <TextField fx:id="txtMatter" prefHeight="25.0" prefWidth="381.0" />
                </children>
                <VBox.margin>
-                  <Insets left="5.0" right="5.0" top="5.0" />
+                  <Insets bottom="30.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="48.0" prefWidth="390.0">
-               <children>
-                  <Text fx:id="msgUser" strokeType="OUTSIDE" strokeWidth="0.0" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="39.0" prefWidth="499.0">
+            <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="335.0">
                <children>
                   <Button fx:id="bttSave" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="OK">
                      <HBox.margin>

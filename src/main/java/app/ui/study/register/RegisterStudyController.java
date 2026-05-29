@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import app.application.study.StudyDTO;
+import app.ui.util.ValidateDataUIException;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -16,9 +17,6 @@ public class RegisterStudyController implements Initializable {
 
 	@FXML
 	private TextField txtMatter;
-
-	@FXML
-	private Text msgUser;
 
 	@FXML
 	private Button bttSave;
@@ -65,14 +63,15 @@ public class RegisterStudyController implements Initializable {
 			uiHelper.extractFields(componentsUI, studyDto);
 			studyDto = registerStudyService.saveStudy(studyDto);
 			stage.close();
-        } catch (Exception e) {
-			msgUser.setText(e.getMessage());
+        } catch (ValidateDataUIException e) {
+			txtMatter.setPromptText(e.getMessage());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
         }
     }
 
 	private void loadComponentsUI() {
 		componentsUI.setTxtMatter(txtMatter);
-		componentsUI.setMsgUser(msgUser);
 	}
 
 	public void setStage(Stage stage) {
