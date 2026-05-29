@@ -2,16 +2,17 @@ package app.ui.topic.register;
 
 import app.application.topic.TopicDTO;
 import app.ui.util.ValidateControlFx;
+import app.ui.util.ValidateDataUIException;
 
 public class RegisterTopicUIHelper {
 
-    public void validateFields(RegisterTopicComponentsUI componentsUI) throws Exception {
+    public void validateFields(RegisterTopicComponentsUI componentsUI) throws ValidateDataUIException {
         ValidateControlFx validate = new ValidateControlFx();
         validate.setControl(componentsUI.getTxtTitle());
         validate.setError(false);
         validate.validateControl();
         if (validate.getError()) {
-            throw new Exception("Titulo invalido.");
+            throw new ValidateDataUIException("Título invalido.");
         }
     }
 

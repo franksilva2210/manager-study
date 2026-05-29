@@ -29,7 +29,7 @@ public class RegisterStudyWindow {
 		controller.setStage(stage);
 
 		FXMLLoader rootFxml = new FXMLLoader();
-		rootFxml.setLocation(RegisterStudyWindow.class.getResource("StudyRegisterWindow.fxml"));
+		rootFxml.setLocation(RegisterStudyWindow.class.getResource("RegisterStudyWindow.fxml"));
 		rootFxml.setController(controller);
 
 		try {

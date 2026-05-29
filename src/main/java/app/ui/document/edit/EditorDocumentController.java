@@ -336,7 +336,7 @@ public class EditorDocumentController implements Initializable {
         messageConfirmController.setConfirm(false);
         messageConfirmController.setMsgUser(
                 "Deseja realmente cancelar a edição?\n" +
-                "O registro voltará ao seu estado anterior. "
+                "O Texto voltará ao seu estado anterior. "
         );
 
         MessageConfirmWindow messageConfirmWindow = new MessageConfirmWindow(stage, messageConfirmController);

@@ -2,6 +2,7 @@ package app.ui.topic.register;
 
 import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
+import app.ui.util.ValidateDataUIException;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -60,6 +61,8 @@ public class RegisterTopicController implements Initializable {
             uiHelper.extractFields(topicDto, componentsUI);
             topicDto = registerTopicService.save(topicDto);
             stage.close();
+        } catch (ValidateDataUIException e) {
+            txtTitle.setPromptText(e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
