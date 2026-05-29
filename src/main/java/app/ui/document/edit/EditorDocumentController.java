@@ -194,16 +194,12 @@ public class EditorDocumentController implements Initializable {
 
     private void removeDocument() {
         MessageConfirmController messageConfirmController = new MessageConfirmController();
+        messageConfirmController.setConfirm(false);
         messageConfirmController.setMsgUser(
-                "Deseja realmente remover este texto?"
+                "Deseja realmente remover este Texto?"
         );
 
-        MessageConfirmWindow messageConfirmWindow = new MessageConfirmWindow();
-        messageConfirmWindow.setController(messageConfirmController);
-
-        messageConfirmController.setMessageConfirmWindow(messageConfirmWindow);
-
-        messageConfirmWindow.buildScreen(stage);
+        MessageConfirmWindow messageConfirmWindow = new MessageConfirmWindow(stage, messageConfirmController);
         messageConfirmWindow.showScreen();
 
         if (messageConfirmController.getConfirm()) {
@@ -336,21 +332,15 @@ public class EditorDocumentController implements Initializable {
     }
 
     private void cancel() {
-        MessageConfirmController messageConfirmController
-                = new MessageConfirmController();
-
+        MessageConfirmController messageConfirmController = new MessageConfirmController();
         messageConfirmController.setConfirm(false);
         messageConfirmController.setMsgUser(
-                "Deseja realmente cancelar a edição?"
+                "Deseja realmente cancelar a edição?\n" +
+                "O registro voltará ao seu estado anterior. "
         );
 
-        MessageConfirmWindow messageConfirmWindow
-                = new MessageConfirmWindow();
-
-        messageConfirmController.setMessageConfirmWindow(messageConfirmWindow);
-
-        messageConfirmWindow.setController(messageConfirmController);
-        messageConfirmWindow.buildAndShowScreen(stage);
+        MessageConfirmWindow messageConfirmWindow = new MessageConfirmWindow(stage, messageConfirmController);
+        messageConfirmWindow.showScreen();
 
         if (messageConfirmController.getConfirm()) {
             if (documentDto.getId() != null && documentDto.getId() > 0) {

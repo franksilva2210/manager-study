@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class MessageConfirmController implements Initializable {
 	
@@ -17,7 +18,7 @@ public class MessageConfirmController implements Initializable {
 	
 	private boolean confirm;
 	private String msgUser;
-	private MessageConfirmWindow messageConfirmWindow;
+	private Stage stage;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -27,17 +28,16 @@ public class MessageConfirmController implements Initializable {
 		bttOk.setOnMouseClicked((MouseEvent mouse) -> {
 			if(mouse.getClickCount() == 1) {
 				confirm = true;
-				messageConfirmWindow.getStage().close();
+				stage.close();
 			}
 		});
 		
 		bttCancel.setOnMouseClicked((MouseEvent mouse) -> {
 			if(mouse.getClickCount() == 1) {
 				confirm = false;
-				messageConfirmWindow.getStage().close();
+				stage.close();
 			}
 		});
-		
 	}
 
 	public boolean getConfirm() {
@@ -56,11 +56,7 @@ public class MessageConfirmController implements Initializable {
 		this.msgUser = msgUser;
 	}
 
-	public MessageConfirmWindow getMessageConfirmWindow() {
-		return messageConfirmWindow;
-	}
-
-	public void setMessageConfirmWindow(MessageConfirmWindow messageConfirmWindow) {
-		this.messageConfirmWindow = messageConfirmWindow;
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 }
