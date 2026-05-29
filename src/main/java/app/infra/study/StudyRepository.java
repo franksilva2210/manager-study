@@ -2,12 +2,16 @@ package app.infra.study;
 
 import app.application.study.StudyDTO;
 import app.domain.study.Study;
+import app.domain.topic.Topic;
 import app.infra.HibernateUtil;
+import app.infra.topic.TopicRepository;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
 
 public class StudyRepository {
+
+    private TopicRepository topicRepository = new TopicRepository();
 
     public Study save(Study study) {
         EntityManager em = HibernateUtil.getEntityManager();
@@ -118,6 +122,35 @@ public class StudyRepository {
                     )
                     .setParameter("id", id)
                     .getSingleResult();
+
+        } finally {
+            em.close();
+        }
+    }
+
+    public Study findStudyFull(Long studyId) {
+
+        EntityManager em = HibernateUtil.getEntityManager();
+
+        try {
+
+            Study study = em.createQuery(
+                            """
+                            SELECT DISTINCT s
+                            FROM Study s
+                            LEFT JOIN FETCH s.listTopics
+                            WHERE s.id = :id
+                            """,
+                            Study.class
+                    )
+                    .setParameter("id", studyId)
+                    .getSingleResult();
+
+            for (Topic topic : study.getListTopics()) {
+                topicRepository.loadTopicsChildren(topic);
+            }
+
+            return study;
 
         } finally {
             em.close();

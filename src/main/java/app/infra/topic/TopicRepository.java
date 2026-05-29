@@ -235,4 +235,40 @@ public class TopicRepository {
         }
     }
 
+    public Topic findTopicFull(Long topicId) {
+        EntityManager em = HibernateUtil.getEntityManager();
+
+        try {
+
+            Topic topic = em.createQuery(
+                            """
+                            SELECT DISTINCT t
+                            FROM Topic t
+                            LEFT JOIN FETCH t.topicParent
+                            LEFT JOIN FETCH t.listTopics
+                            WHERE t.id = :id
+                            """,
+                            Topic.class
+                    )
+                    .setParameter("id", topicId)
+                    .getSingleResult();
+
+            for (Topic item : topic.getListTopics()) {
+                loadTopicsChildren(item);
+            }
+
+            return topic;
+
+        } finally {
+            em.close();
+        }
+    }
+
+    public void loadTopicsChildren(Topic topic) {
+        topic.getListTopics().size();
+        for (Topic child : topic.getListTopics()) {
+            loadTopicsChildren(child);
+        }
+    }
+
 }

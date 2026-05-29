@@ -79,11 +79,11 @@ public class TopicDTO {
         this.listTopicsDto = listTopicsDto;
     }
 
-    public List<DocumentDTO> getListTextDto() {
+    public List<DocumentDTO> getListDocumentsDto() {
         return listDocumentsDto;
     }
 
-    public void setListTextDto(List<DocumentDTO> listDocumentsDto) {
+    public void setListDocumentsDto(List<DocumentDTO> listDocumentsDto) {
         this.listDocumentsDto = listDocumentsDto;
     }
 

@@ -38,7 +38,7 @@ public class ScreenMainService {
     public TopicDTO loadTopic(Long id) {
         Topic topic = topicRepository.findByIdWithTopics(id);
         List<Document> listDocuments = documentRepository.findByTopic(id);
-        topic.setListText(listDocuments);
+        topic.setListDocuments(listDocuments);
         return TopicMapper.toDTO(topic);
     }
 
