@@ -11,7 +11,7 @@ public class StudyDTO {
     private Long id;
     private String matter;
     private List<TopicDTO> listTopicsDto = new ArrayList<>();
-    private List<DocumentDTO> listTextsDto = new ArrayList<>();
+    private List<DocumentDTO> listDocumentsDto = new ArrayList<>();
 
     public StudyDTO() {
 
@@ -46,12 +46,12 @@ public class StudyDTO {
         this.listTopicsDto = listTopicsDto;
     }
 
-    public List<DocumentDTO> getListTextsDto() {
-        return listTextsDto;
+    public List<DocumentDTO> getListDocumentsDto() {
+        return listDocumentsDto;
     }
 
-    public void setListTextsDto(List<DocumentDTO> listTextsDto) {
-        this.listTextsDto = listTextsDto;
+    public void setListDocumentsDto(List<DocumentDTO> listDocumentsDto) {
+        this.listDocumentsDto = listDocumentsDto;
     }
 
     @Override

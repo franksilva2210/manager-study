@@ -62,6 +62,7 @@ public class ScreenMainUIHelper {
             title = documentDto.getTitle();
         } else {
             title = "Texto " + indexTabs;
+            documentDto.setTitle(title);
         }
 
         lblTitle.setText(title);
@@ -162,7 +163,7 @@ public class ScreenMainUIHelper {
         tabPaneStudy.getTabs().removeIf(tab -> tab != tabFixed && tab != tabFixed2);
 
         if (objectCurrentSelected instanceof StudyDTO studyDto) {
-            for (DocumentDTO documentDto : studyDto.getListTextsDto()) {
+            for (DocumentDTO documentDto : studyDto.getListDocumentsDto()) {
                 createNewTabText.accept(documentDto);
             }
         } else if(objectCurrentSelected instanceof TopicDTO topicDto) {

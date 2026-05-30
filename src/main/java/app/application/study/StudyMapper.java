@@ -54,7 +54,7 @@ public class StudyMapper {
                 listDocumentsDto.add(DocumentMapper.toDTO(document));
             }
 
-            dto.setListTextsDto(listDocumentsDto);
+            dto.setListDocumentsDto(listDocumentsDto);
         }
 
         return dto;
