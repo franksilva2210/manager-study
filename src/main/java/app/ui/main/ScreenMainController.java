@@ -52,7 +52,7 @@ public class ScreenMainController implements Initializable {
 	private Button bttSearch;
 
 	@FXML
-	private TreeView<Object> treeStudies;
+	private TreeView<Object> treeView;
 
 	@FXML
 	private TabPane tabPaneStudy;
@@ -123,7 +123,7 @@ public class ScreenMainController implements Initializable {
 //			searchStudy();
 		});
 
-		treeStudies.setOnMouseClicked(event -> {
+		treeView.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {
 				selectItemMenuLeft();
 			}
@@ -165,11 +165,9 @@ public class ScreenMainController implements Initializable {
 			removeTopic();
 		});
 
-		loadStudies();
+		initUI();
 
-		boolean canGoBack = navigationService.canGoBack();
-		boolean canGoForward = navigationService.canGoForward();
-		uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
+		refreshStudies();
 	}
 
 	private void openScreenBackup() {
@@ -194,7 +192,7 @@ public class ScreenMainController implements Initializable {
 
 		if (controller.getStudyDto().getId() != null &&
 			controller.getStudyDto().getId() > 0) {
-			loadStudies();
+			refreshStudies();
 		}
 	}
 
@@ -210,7 +208,7 @@ public class ScreenMainController implements Initializable {
 		StudyDTO studyDtoUpdated = controller.getStudyDto();
 
 		navigationService.refreshItem(studyDtoUpdated);
-		loadStudies();
+		refreshStudies();
 		showData();
 	}
 
@@ -232,7 +230,7 @@ public class ScreenMainController implements Initializable {
 			screenMainService.removeStudy(studyDeletionDto);
 			navigationService.removeStudy(studyDeletionDto);
 			objectCurrentSelected = null;
-			loadStudies();
+			refreshStudies();
 			showData();
 		}
 	}
@@ -309,14 +307,13 @@ public class ScreenMainController implements Initializable {
 		}
 	}
 
-	public void loadStudies() {
+	public void refreshStudies() {
 		List<StudyDTO> listStudyDTO = screenMainService.consultAllStudyDto();
-		uiHelper.generateTreeItem(treeStudies, listStudyDTO);
-		uiHelper.configureContextMenu(treeStudies, this::editStudy, this::removeStudy);
+		uiHelper.generateTreeItems(treeView, listStudyDTO);
 	}
 
 	private void selectItemMenuLeft() {
-		TreeItem<Object> itemSelected = treeStudies.getSelectionModel().getSelectedItem();
+		TreeItem<Object> itemSelected = treeView.getSelectionModel().getSelectedItem();
 		if (itemSelected != null) {
 			objectCurrentSelected = itemSelected.getValue();
 			refreshObjectCurrentSelected();
@@ -422,6 +419,10 @@ public class ScreenMainController implements Initializable {
 		roadMapController.setObjectCurrentSelected(objectCurrentSelected);
 		RoadMapWindow roadMapWindow	= new RoadMapWindow(stage, roadMapController);
 		roadMapWindow.showScreen();
+	}
+
+	private void initUI() {
+		uiHelper.initTreeView(treeView, this::editStudy, this::removeStudy);
 	}
 
 	public void setStage(Stage stage) {
