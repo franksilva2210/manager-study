@@ -8,8 +8,7 @@ import app.ui.message.MessageConfirmWindow;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -59,7 +58,7 @@ public class EditorDocumentController implements Initializable {
     private Button bttAttachImg;
 
     @FXML
-    private VBox vboxMain;
+    private StackPane pane;
 
     @FXML
     private Button bttSave;
@@ -171,8 +170,7 @@ public class EditorDocumentController implements Initializable {
 
         webView.getEngine().loadContent(html);
 
-        VBox.setVgrow(webView, Priority.ALWAYS);
-        vboxMain.getChildren().setAll(webView);
+        uiHelper.showPane(webView, pane);
 
         bttPreview.setDisable(true);
         bttEdit.setDisable(false);
@@ -182,8 +180,7 @@ public class EditorDocumentController implements Initializable {
     }
 
     private void editDocument() {
-        VBox.setVgrow(scrollPaneCodeArea, Priority.ALWAYS);
-        vboxMain.getChildren().setAll(scrollPaneCodeArea);
+        uiHelper.showPane(scrollPaneCodeArea, pane);
 
         bttPreview.setDisable(false);
         bttEdit.setDisable(true);
@@ -369,10 +366,20 @@ public class EditorDocumentController implements Initializable {
     private void createCodeArea() {
         codeArea = new CodeArea();
         scrollPaneCodeArea = new VirtualizedScrollPane<>(codeArea);
+
+        pane.getChildren().add(scrollPaneCodeArea);
+
+        scrollPaneCodeArea.setVisible(false);
+        scrollPaneCodeArea.setManaged(false);
     }
 
     private void createWebView() {
         webView = new WebView();
+
+        pane.getChildren().add(webView);
+
+        webView.setVisible(false);
+        webView.setManaged(false);
     }
 
     public void setDocumentDto(DocumentDTO documentDto) {
