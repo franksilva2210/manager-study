@@ -75,20 +75,21 @@ public class ScreenMainUIHelper {
         return tab;
     }
 
-    public void generateTreeItem(TreeView<Object> treeStudies, List<StudyDTO> listStudyDTO) {
+    public void initTreeView(
+            TreeView<Object> treeView,
+            Consumer<Object> editStudy,
+            Consumer<Object> removeStudy) {
+
         TreeItem<Object> treeItemRoot = new TreeItem<>("Estudos");
         treeItemRoot.setExpanded(true);
 
-        for (StudyDTO studyDto : listStudyDTO) {
-            TreeItem<Object> treeItemStudy = new TreeItem<>(studyDto);
-            treeItemRoot.getChildren().add(treeItemStudy);
-        }
+        treeView.setRoot(treeItemRoot);
+        treeView.setShowRoot(false);
 
-        treeStudies.setRoot(treeItemRoot);
-        treeStudies.setShowRoot(false);
+        configureContextMenu(treeView, editStudy, removeStudy);
     }
 
-    public void configureContextMenu(
+    private void configureContextMenu(
             TreeView<Object> treeStudies,
             Consumer<Object> editStudy,
             Consumer<Object> removeStudy) {
@@ -141,6 +142,14 @@ public class ScreenMainUIHelper {
 
             return cell;
         });
+    }
+
+    public void generateTreeItems(TreeView<Object> treeStudies, List<StudyDTO> listStudyDTO) {
+        treeStudies.getRoot().getChildren().clear();
+        for (StudyDTO studyDto : listStudyDTO) {
+            TreeItem<Object> treeItemStudy = new TreeItem<>(studyDto);
+            treeStudies.getRoot().getChildren().add(treeItemStudy);
+        }
     }
 
     public void updateTabs(

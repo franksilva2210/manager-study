@@ -95,7 +95,7 @@
                               <Insets left="2.0" right="2.0" />
                            </VBox.margin>
                         </HBox>
-                        <TreeView fx:id="treeStudies" prefHeight="488.0" prefWidth="270.0" style="-fx-background-color: #F4F4F4;">
+                        <TreeView fx:id="treeView" prefHeight="488.0" prefWidth="270.0" style="-fx-background-color: #F4F4F4;">
                            <VBox.margin>
                               <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                            </VBox.margin>
@@ -105,7 +105,7 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="33.0">
                            <children>
-                              <Button fx:id="bttNavigationLeft" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="38.0">
+                              <Button fx:id="bttNavigationLeft" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="38.0">
                                  <graphic>
                                     <ImageView fitHeight="15.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -117,7 +117,7 @@
                                     <Insets left="2.0" right="5.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="bttNavigationRight" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="38.0">
+                              <Button fx:id="bttNavigationRight" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="38.0">
                                  <graphic>
                                     <ImageView fitHeight="15.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
