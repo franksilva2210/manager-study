@@ -6,6 +6,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox prefHeight="445.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
@@ -110,10 +111,13 @@
             </VBox>
          </children>
       </HBox>
-      <VBox fx:id="vboxMain" prefHeight="326.0" prefWidth="606.0">
+      <VBox prefHeight="326.0" prefWidth="606.0">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
+         <children>
+            <StackPane fx:id="pane" prefHeight="328.0" prefWidth="606.0" />
+         </children>
       </VBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0" spacing="20.0">
          <children>
