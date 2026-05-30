@@ -132,9 +132,25 @@ public class EditorDocumentController implements Initializable {
 
         createCodeArea();
 
+        codeArea.richChanges()
+                .subscribe(change -> {
+
+                });
+
         createWebView();
 
         showInitial();
+    }
+
+    public boolean isEditing() {
+
+        String persisted = documentDto.getContent();
+
+        if (persisted == null) {
+            persisted = "";
+        }
+
+        return !codeArea.getText().equals(persisted);
     }
 
     public void editTitle() {
@@ -174,9 +190,6 @@ public class EditorDocumentController implements Initializable {
 
         bttPreview.setDisable(true);
         bttEdit.setDisable(false);
-
-        bttSave.setDisable(true);
-        bttCancel.setDisable(true);
     }
 
     private void editDocument() {
@@ -333,7 +346,7 @@ public class EditorDocumentController implements Initializable {
         messageConfirmController.setConfirm(false);
         messageConfirmController.setMsgUser(
                 "Deseja realmente cancelar a edição?\n" +
-                "O Texto voltará ao seu estado anterior. "
+                "O Texto voltará ao seu estado atual. "
         );
 
         MessageConfirmWindow messageConfirmWindow = new MessageConfirmWindow(stage, messageConfirmController);
@@ -384,6 +397,10 @@ public class EditorDocumentController implements Initializable {
 
     public void setDocumentDto(DocumentDTO documentDto) {
         this.documentDto = documentDto;
+    }
+
+    public DocumentDTO getDocumentDto() {
+        return documentDto;
     }
 
     public void setTopicDto(TopicDTO topicDto) {

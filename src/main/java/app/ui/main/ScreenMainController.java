@@ -171,6 +171,9 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void openScreenBackup() {
+		if (!confirmChangeStudyOrTopic())
+			return;
+
 		ScreenBackupController controller = new ScreenBackupController();
 		ScreenBackupWindow window = new ScreenBackupWindow(stage, controller);
 		window.showScreen();
@@ -209,7 +212,7 @@ public class ScreenMainController implements Initializable {
 
 		navigationService.refreshItem(studyDtoUpdated);
 		refreshStudies();
-		showData();
+		loadDataScreen();
 	}
 
 	private void removeStudy(Object objectDeletion) {
@@ -231,7 +234,7 @@ public class ScreenMainController implements Initializable {
 			navigationService.removeStudy(studyDeletionDto);
 			objectCurrentSelected = null;
 			refreshStudies();
-			showData();
+			loadDataScreen();
 		}
 	}
 
@@ -255,7 +258,7 @@ public class ScreenMainController implements Initializable {
 		if (registerTopicController.getTopicDto().getId() != null &&
 				registerTopicController.getTopicDto().getId() > 0) {
 			refreshObjectCurrentSelected();
-			showData();
+			loadDataScreen();
 		}
 	}
 
@@ -279,7 +282,7 @@ public class ScreenMainController implements Initializable {
 
 		navigationService.refreshItem(topicUpdatedDto);
 		refreshObjectCurrentSelected();
-		showData();
+		loadDataScreen();
 	}
 
 	private void removeTopic() {
@@ -303,7 +306,7 @@ public class ScreenMainController implements Initializable {
 		if (controller.getConfirm()) {
 			screenMainService.removeTopic(topicSelectedDto);
 			refreshObjectCurrentSelected();
-			showData();
+			loadDataScreen();
 		}
 	}
 
@@ -313,35 +316,47 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void selectItemMenuLeft() {
+		if (!confirmChangeStudyOrTopic())
+			return;
+
 		TreeItem<Object> itemSelected = treeView.getSelectionModel().getSelectedItem();
 		if (itemSelected != null) {
 			objectCurrentSelected = itemSelected.getValue();
 			refreshObjectCurrentSelected();
 			navigationService.navigateTo(objectCurrentSelected);
-			showData();
+			loadDataScreen();
 		}
 	}
 
 	private void selectItemListView() {
+		if (!confirmChangeStudyOrTopic())
+			return;
+
 		TopicDTO topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
 		if (topicSelected != null) {
 			objectCurrentSelected = topicSelected;
 			refreshObjectCurrentSelected();
 			navigationService.navigateTo(objectCurrentSelected);
-			showData();
+			loadDataScreen();
 		}
 	}
 
 	private void navigateBack() {
+		if (!confirmChangeStudyOrTopic())
+			return;
+
 		objectCurrentSelected = navigationService.back();
 		refreshObjectCurrentSelected();
-		showData();
+		loadDataScreen();
 	}
 
 	private void navigateForward() {
+		if (!confirmChangeStudyOrTopic())
+			return;
+
 		objectCurrentSelected = navigationService.forward();
 		refreshObjectCurrentSelected();
-		showData();
+		loadDataScreen();
 	}
 
 	private void refreshObjectCurrentSelected() {
@@ -352,7 +367,7 @@ public class ScreenMainController implements Initializable {
 		}
 	}
 
-	public void showData() {
+	public void loadDataScreen() {
 		boolean canGoBack = navigationService.canGoBack();
 		boolean canGoForward = navigationService.canGoForward();
 		String hierarchyPath = navigationService.getHierarchyPath();
@@ -409,6 +424,8 @@ public class ScreenMainController implements Initializable {
 		editorDocumentController.setTab(newTab);
 		editorDocumentController.setTabPaneStudy(tabPaneStudy);
 
+		newTab.setUserData(editorDocumentController);
+
 		tabPaneStudy.getTabs().add(indexTabs, newTab);
 
 		return newTab;
@@ -419,6 +436,41 @@ public class ScreenMainController implements Initializable {
 		roadMapController.setObjectCurrentSelected(objectCurrentSelected);
 		RoadMapWindow roadMapWindow	= new RoadMapWindow(stage, roadMapController);
 		roadMapWindow.showScreen();
+	}
+
+	private boolean confirmChangeStudyOrTopic() {
+		boolean existDocumentEditing = false;
+		EditorDocumentController editorDocumentController = null;
+
+		for (Tab tab : tabPaneStudy.getTabs()) {
+			if (tab == tabMain || tab == tabAdd) {
+				continue;
+			}
+
+			editorDocumentController = (EditorDocumentController) tab.getUserData();
+
+			if (editorDocumentController != null && editorDocumentController.isEditing()) {
+				existDocumentEditing = true;
+				break;
+			}
+		}
+
+		if (existDocumentEditing) {
+			MessageConfirmController controller = new MessageConfirmController();
+			controller.setConfirm(false);
+			controller.setMsgUser(
+					"Existem Documentos com alterações não salvas.\n" +
+					"Deseja continuar mesmo assim?\n\n" +
+					"Documento editando: " + editorDocumentController.getDocumentDto().getTitle()
+			);
+
+			MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
+			window.showScreen();
+
+			return controller.getConfirm();
+		}
+
+		return true;
 	}
 
 	private void initUI() {
