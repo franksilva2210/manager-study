@@ -104,6 +104,14 @@ public class ScreenMainController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		initUI();
+
+		treeView.setOnKeyPressed(event -> {
+			if (event.getCode() == KeyCode.ENTER) {
+				selectItemMenuLeft();
+			}
+		});
+
 		listViewTopics.setItems(listTopicsObservable);
 
 		listViewTopics.setOnKeyPressed(event -> {
@@ -185,8 +193,6 @@ public class ScreenMainController implements Initializable {
 		bttRemoveTopic.setOnAction(event -> {
 			removeTopic();
 		});
-
-		initUI();
 
 		refreshStudies();
 	}
