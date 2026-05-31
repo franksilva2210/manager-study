@@ -42,6 +42,9 @@ public class ScreenMainController implements Initializable {
 	private MenuItem menuBackup;
 
 	@FXML
+	private Menu menuRoadMap;
+
+	@FXML
 	private MenuItem menuClose;
 
 	//Menu Lateral
@@ -122,6 +125,10 @@ public class ScreenMainController implements Initializable {
 
 		menuNewStudy.setOnAction(event -> {
 			newStudy();
+		});
+
+		menuRoadMap.setOnAction(event -> {
+			showRoadMap();
 		});
 
 		menuBackup.setOnAction(event -> {
@@ -505,6 +512,9 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void showRoadMap() {
+		if (objectCurrentSelected == null) {
+			return;
+		}
 		RoadMapController roadMapController = new RoadMapController();
 		roadMapController.setObjectCurrentSelected(objectCurrentSelected);
 		RoadMapWindow roadMapWindow	= new RoadMapWindow(stage, roadMapController);

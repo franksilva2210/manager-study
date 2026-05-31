@@ -46,7 +46,7 @@
                               <MenuItem fx:id="menuClose" mnemonicParsing="false" text="Sair" />
                            </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Visualizar">
+                        <Menu fx:id="menuRoadMap" mnemonicParsing="false" text="Visualizar">
                            <items>
                               <MenuItem fx:id="menuViewMap" mnemonicParsing="false" text="Ver Mapa">
                                  <graphic>
