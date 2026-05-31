@@ -448,10 +448,9 @@ public class ScreenMainController implements Initializable {
 	public void loadDataScreen() {
 		boolean canGoBack = navigationService.canGoBack();
 		boolean canGoForward = navigationService.canGoForward();
-		String hierarchyPath = "";
 
 		uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
-		uiHelper.updateTxtHierarchyPath(txtHierarchyPath, hierarchyPath);
+		uiHelper.updateTxtHierarchyPath(txtHierarchyPath, navigationService.getBackStack());
 		uiHelper.updateTitleItemMain(lblTitleMain, objectCurrentSelected);
 		uiHelper.updateTabs(tabPaneStudy, tabMain, tabAdd, objectCurrentSelected, this::createNewTabDocument);
 		uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, objectCurrentSelected);
