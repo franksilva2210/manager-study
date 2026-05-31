@@ -296,8 +296,8 @@ public class ScreenMainController implements Initializable {
 		controller.setConfirm(false);
 		controller.setMsgUser(
 				"Deseja realmente remover o tópico selecionado?\n" +
-				"Todos os tópicos de: " + topicSelectedDto.getTitle().toUpperCase() + ", também " +
-				"serão removidos!"
+				"Todos os tópicos de: " + topicSelectedDto.getTitle().toUpperCase() + "\n" +
+				"também serão removidos!"
 		);
 
 		MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
@@ -449,7 +449,7 @@ public class ScreenMainController implements Initializable {
 
 			editorDocumentController = (EditorDocumentController) tab.getUserData();
 
-			if (editorDocumentController != null && editorDocumentController.isEditing()) {
+			if (editorDocumentController.isEditing() || editorDocumentController.getDocumentDto().getId() == null) {
 				existDocumentEditing = true;
 				break;
 			}
