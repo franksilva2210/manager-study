@@ -310,7 +310,7 @@
                                     </AnchorPane>
                                  </content>
                                  <graphic>
-                                    <ImageView fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="19.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@home.png" />
                                        </image>
