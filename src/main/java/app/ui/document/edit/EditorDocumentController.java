@@ -167,13 +167,17 @@ public class EditorDocumentController implements Initializable {
         EditTitleWindow window = new EditTitleWindow(stage, controller);
         window.showScreen();
 
-        if (controller.getNewTitle() != null && !controller.getNewTitle().isBlank()) {
-            lblTitle.setText(controller.getNewTitle());
+        String titleCurrent = lblTitle.getText();
+        String newTitle = controller.getNewTitle();
+
+        if (newTitle != null && !newTitle.isBlank() && !newTitle.equals(titleCurrent)) {
+            lblTitle.setText(newTitle);
+            bttSave.setDisable(false);
+            bttCancel.setDisable(false);
         }
     }
 
     private void previewDocument(String markdown) {
-
         String htmlContent = MarkdownConverter.toHtml(markdown);
 
         String html = """
@@ -190,6 +194,9 @@ public class EditorDocumentController implements Initializable {
 
         bttPreview.setDisable(true);
         bttEdit.setDisable(false);
+
+        bttSave.setDisable(true);
+        bttCancel.setDisable(true);
     }
 
     private void editDocument() {
@@ -336,8 +343,14 @@ public class EditorDocumentController implements Initializable {
     }
 
     private void save() {
-        uiHelper.extractValues(lblTitle, codeArea, documentDto);
+        uiHelper.extractValues(
+                lblTitle,
+                codeArea,
+                documentDto
+        );
+
         documentDto = editorDocumentService.save(documentDto);
+
         previewDocument(codeArea.getText());
     }
 
@@ -353,9 +366,7 @@ public class EditorDocumentController implements Initializable {
         messageConfirmWindow.showScreen();
 
         if (messageConfirmController.getConfirm()) {
-            if (documentDto.getId() != null && documentDto.getId() > 0) {
-                lblTitle.setText(documentDto.getTitle());
-            }
+            lblTitle.setText(documentDto.getTitle());
 
             codeArea.replaceText(
                     documentDto.getContent() != null ? documentDto.getContent() : ""
