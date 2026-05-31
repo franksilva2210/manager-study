@@ -163,7 +163,7 @@ public class EditorDocumentController implements Initializable {
 
     public void editTitle() {
         EditTitleController controller = new EditTitleController();
-        controller.setTitleCurrent(documentDto.getTitle());
+        controller.setTitleCurrent(lblTitle.getText());
         EditTitleWindow window = new EditTitleWindow(stage, controller);
         window.showScreen();
 
