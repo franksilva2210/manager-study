@@ -95,7 +95,7 @@ public class ScreenMainController implements Initializable {
 
 	private Stage stage;
 	private List<StudyDTO> listStudyDTO = new ArrayList<>();
-	private ObservableList<TopicDTO> observableListTopics = FXCollections.observableArrayList();
+	private ObservableList<TopicDTO> listTopicsObservable = FXCollections.observableArrayList();
 	private ScreenMainService screenMainService = new ScreenMainService();
 	private ScreenMainUIHelper uiHelper = new ScreenMainUIHelper();
 	private Object objectCurrentSelected;
@@ -104,7 +104,7 @@ public class ScreenMainController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		listViewTopics.setItems(observableListTopics);
+		listViewTopics.setItems(listTopicsObservable);
 
 		menuNewStudy.setOnAction(event -> {
 			newStudy();
@@ -144,6 +144,16 @@ public class ScreenMainController implements Initializable {
 
 		bttRoadMap.setOnAction(event -> {
 			showRoadMap();
+		});
+
+		txtSearchTopics.setOnAction(event -> {
+			searchTopic();
+		});
+
+		txtSearchTopics.setOnKeyPressed(event -> {
+			if (event.getCode() == KeyCode.BACK_SPACE && txtSearchTopics.getText().isBlank()) {
+				uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, objectCurrentSelected);
+			}
 		});
 
 		tabAdd.setOnSelectionChanged(event -> {
@@ -263,6 +273,28 @@ public class ScreenMainController implements Initializable {
 			objectCurrentSelected = null;
 			refreshStudies();
 			loadDataScreen();
+		}
+	}
+
+	private void searchTopic() {
+		String search = txtSearchTopics.getText();
+		List<TopicDTO> listPossible = new ArrayList<>();
+
+		if (!search.equals("")) {
+
+			for (TopicDTO topicDto : listTopicsObservable) {
+				if (topicDto.getTitle().toLowerCase().indexOf(search.toLowerCase()) != -1) {
+					listPossible.add(topicDto);
+				}
+			}
+
+			if (listPossible.size() > 0) {
+				listTopicsObservable.clear();
+				listTopicsObservable.addAll(listPossible);
+				listViewTopics.refresh();
+			}
+		} else {
+			uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, objectCurrentSelected);
 		}
 	}
 
@@ -405,7 +437,7 @@ public class ScreenMainController implements Initializable {
 		uiHelper.updateTxtHierarchyPath(txtHierarchyPath, hierarchyPath);
 		uiHelper.updateTitleItemMain(lblTitleMain, objectCurrentSelected);
 		uiHelper.updateTabs(tabPaneStudy, tabMain, tabAdd, objectCurrentSelected, this::createNewTabDocument);
-		uiHelper.updateListViewTopics(observableListTopics, listViewTopics, objectCurrentSelected);
+		uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, objectCurrentSelected);
 	}
 
 	private void addNewTabDocument(DocumentDTO documentDto) {
