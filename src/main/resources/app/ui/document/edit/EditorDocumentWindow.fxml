@@ -69,15 +69,6 @@
                   </ToolBar>
                   <ToolBar prefHeight="40.0" prefWidth="200.0">
                     <items>
-                        <Button fx:id="bttBlocCod" mnemonicParsing="false" prefHeight="24.0" prefWidth="35.0">
-                           <graphic>
-                              <ImageView fitHeight="30.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@coding.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
                         <Button fx:id="bttBold" mnemonicParsing="false" prefHeight="24.0" prefWidth="35.0">
                            <graphic>
                               <ImageView fitHeight="14.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -101,6 +92,15 @@
                               <ImageView fitHeight="14.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@image.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="bttBlocCod" mnemonicParsing="false" prefHeight="24.0" prefWidth="35.0">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@coding.png" />
                                  </image>
                               </ImageView>
                            </graphic>
