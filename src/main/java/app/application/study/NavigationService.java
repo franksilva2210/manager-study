@@ -62,6 +62,10 @@ public class NavigationService {
         return backStack.peek();
     }
 
+    public Deque<Object> getBackStack() {
+        return backStack;
+    }
+
     public boolean canGoBack() {
         return backStack.size() > 1;
     }

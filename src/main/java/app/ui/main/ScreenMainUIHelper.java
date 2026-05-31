@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
+import java.util.Deque;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -22,8 +23,9 @@ public class ScreenMainUIHelper {
         bttNavigationRight.setDisable(!canGoForward);
     }
 
-    public void updateTxtHierarchyPath(TextField txtHierarchyPath, String hierarchyPath) {
-        txtHierarchyPath.setText(hierarchyPath);
+    public void updateTxtHierarchyPath(TextField txtHierarchyPath, Deque<Object> backStack) {
+        HierarchyPathUtil pathUtil = new HierarchyPathUtil();
+        txtHierarchyPath.setText(pathUtil.buildPath(backStack));
     }
 
     public void updateTitleItemMain(Label lblTitleMain, Object objectCurrentSelected) {
