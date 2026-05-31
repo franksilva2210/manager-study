@@ -106,6 +106,12 @@ public class ScreenMainController implements Initializable {
 
 		listViewTopics.setItems(listTopicsObservable);
 
+		listViewTopics.setOnKeyPressed(event -> {
+			if (event.getCode() == KeyCode.ENTER) {
+				selectItemListView();
+			}
+		});
+
 		menuNewStudy.setOnAction(event -> {
 			newStudy();
 		});
