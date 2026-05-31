@@ -6,7 +6,7 @@ import java.util.*;
 import app.application.study.StudyDTO;
 import app.application.document.DocumentDTO;
 import app.application.topic.TopicDTO;
-import app.application.study.StudyNavigationService;
+import app.application.study.NavigationService;
 import app.ui.backup.ScreenBackupController;
 import app.ui.backup.ScreenBackupWindow;
 import app.ui.document.edit.EditorDocumentController;
@@ -102,7 +102,7 @@ public class ScreenMainController implements Initializable {
 	private ScreenMainService screenMainService = new ScreenMainService();
 	private ScreenMainUIHelper uiHelper = new ScreenMainUIHelper();
 	private Object objectCurrentSelected;
-	private StudyNavigationService navigationService = new StudyNavigationService();
+	private NavigationService navigationService = new NavigationService();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -267,7 +267,6 @@ public class ScreenMainController implements Initializable {
 
 		StudyDTO studyDtoUpdated = controller.getStudyDto();
 
-		navigationService.refreshItem(studyDtoUpdated);
 		refreshStudies();
 		loadDataScreen();
 	}
@@ -288,7 +287,7 @@ public class ScreenMainController implements Initializable {
 
 		if (controller.getConfirm()) {
 			screenMainService.removeStudy(studyDeletionDto);
-			navigationService.removeStudy(studyDeletionDto);
+
 			objectCurrentSelected = null;
 			refreshStudies();
 			loadDataScreen();
@@ -359,7 +358,6 @@ public class ScreenMainController implements Initializable {
 
 		TopicDTO topicUpdatedDto = registerTopicController.getTopicDto();
 
-		navigationService.refreshItem(topicUpdatedDto);
 		refreshObjectCurrentSelected();
 		loadDataScreen();
 	}
@@ -403,7 +401,7 @@ public class ScreenMainController implements Initializable {
 		if (itemSelected != null) {
 			objectCurrentSelected = itemSelected.getValue();
 			refreshObjectCurrentSelected();
-			navigationService.navigateTo(objectCurrentSelected);
+			navigationService.navigate(objectCurrentSelected);
 			loadDataScreen();
 		}
 	}
@@ -416,7 +414,7 @@ public class ScreenMainController implements Initializable {
 		if (topicSelected != null) {
 			objectCurrentSelected = topicSelected;
 			refreshObjectCurrentSelected();
-			navigationService.navigateTo(objectCurrentSelected);
+			navigationService.navigate(objectCurrentSelected);
 			loadDataScreen();
 		}
 	}
@@ -450,7 +448,7 @@ public class ScreenMainController implements Initializable {
 	public void loadDataScreen() {
 		boolean canGoBack = navigationService.canGoBack();
 		boolean canGoForward = navigationService.canGoForward();
-		String hierarchyPath = navigationService.getHierarchyPath();
+		String hierarchyPath = "";
 
 		uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
 		uiHelper.updateTxtHierarchyPath(txtHierarchyPath, hierarchyPath);
