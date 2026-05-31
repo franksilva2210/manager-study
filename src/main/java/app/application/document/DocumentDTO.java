@@ -9,6 +9,7 @@ public class DocumentDTO {
     private Long topicId;
 
     public DocumentDTO() {
+        title = new String();
         content = new String();
     }
 
