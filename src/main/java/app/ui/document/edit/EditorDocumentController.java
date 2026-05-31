@@ -8,6 +8,8 @@ import app.ui.message.MessageConfirmWindow;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
@@ -136,6 +138,13 @@ public class EditorDocumentController implements Initializable {
                 .subscribe(change -> {
 
                 });
+
+        codeArea.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.isControlDown() && event.getCode() == KeyCode.S) {
+                save();
+                event.consume();
+            }
+        });
 
         createWebView();
 
