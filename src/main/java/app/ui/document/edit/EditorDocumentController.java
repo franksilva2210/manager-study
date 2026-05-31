@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class EditorDocumentController implements Initializable {
@@ -163,22 +162,14 @@ public class EditorDocumentController implements Initializable {
     }
 
     public void editTitle() {
-        TextInputDialog dialog = new TextInputDialog(lblTitle.getText());
+        EditTitleController controller = new EditTitleController();
+        controller.setTitleCurrent(documentDto.getTitle());
+        EditTitleWindow window = new EditTitleWindow(stage, controller);
+        window.showScreen();
 
-        dialog.setTitle("Renomear Aba");
-        dialog.setHeaderText("");
-        dialog.setContentText("Titulo: ");
-
-        Optional<String> result = dialog.showAndWait();
-
-        result.ifPresent(newName -> {
-            if (!newName.isBlank()) {
-                lblTitle.setText(newName);
-
-                bttSave.setDisable(false);
-                bttCancel.setDisable(false);
-            }
-        });
+        if (controller.getNewTitle() != null && !controller.getNewTitle().isBlank()) {
+            lblTitle.setText(controller.getNewTitle());
+        }
     }
 
     private void previewDocument(String markdown) {
