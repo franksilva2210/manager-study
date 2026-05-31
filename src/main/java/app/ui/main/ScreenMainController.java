@@ -27,6 +27,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -46,10 +47,7 @@ public class ScreenMainController implements Initializable {
 	//Menu Lateral
 
 	@FXML
-	private TextField txtSearch;
-
-	@FXML
-	private Button bttSearch;
+	private TextField txtSearchStudies;
 
 	@FXML
 	private TreeView<Object> treeView;
@@ -78,7 +76,7 @@ public class ScreenMainController implements Initializable {
 	private Button bttRoadMap;
 
 	@FXML
-	private Button bttSearchTopic;
+	private TextField txtSearchTopics;
 
 	@FXML
 	private Button bttAddTopic;
@@ -96,6 +94,7 @@ public class ScreenMainController implements Initializable {
 	private Tab tabAdd;
 
 	private Stage stage;
+	private List<StudyDTO> listStudyDTO = new ArrayList<>();
 	private ObservableList<TopicDTO> observableListTopics = FXCollections.observableArrayList();
 	private ScreenMainService screenMainService = new ScreenMainService();
 	private ScreenMainUIHelper uiHelper = new ScreenMainUIHelper();
@@ -119,8 +118,14 @@ public class ScreenMainController implements Initializable {
 			Platform.exit();
 		});
 
-		txtSearch.setOnAction(event -> {
-//			searchStudy();
+		txtSearchStudies.setOnAction(event -> {
+			searchStudies();
+		});
+
+		txtSearchStudies.setOnKeyPressed(event -> {
+			if (event.getCode() == KeyCode.BACK_SPACE && txtSearchStudies.getText().isBlank()) {
+				refreshStudies();
+			}
 		});
 
 		treeView.setOnMouseClicked(event -> {
@@ -168,6 +173,29 @@ public class ScreenMainController implements Initializable {
 		initUI();
 
 		refreshStudies();
+	}
+
+	private void searchStudies() {
+		String search = txtSearchStudies.getText();
+		List<StudyDTO> listPossible = new ArrayList<>();
+
+		if (!search.equals("")) {
+
+			for (StudyDTO studyDto : listStudyDTO) {
+				if (studyDto.getMatter().toLowerCase().indexOf(search.toLowerCase()) != -1) {
+					listPossible.add(studyDto);
+				}
+			}
+
+			if (listPossible.size() > 0) {
+				listStudyDTO.clear();
+				listStudyDTO.addAll(listPossible);
+				uiHelper.generateTreeItems(treeView, listStudyDTO);
+			}
+
+		} else {
+			refreshStudies();
+		}
 	}
 
 	private void openScreenBackup() {
@@ -311,7 +339,8 @@ public class ScreenMainController implements Initializable {
 	}
 
 	public void refreshStudies() {
-		List<StudyDTO> listStudyDTO = screenMainService.consultAllStudyDto();
+		listStudyDTO.clear();
+		listStudyDTO.addAll(screenMainService.consultAllStudyDto());
 		uiHelper.generateTreeItems(treeView, listStudyDTO);
 	}
 
