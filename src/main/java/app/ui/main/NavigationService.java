@@ -1,5 +1,6 @@
-package app.application.study;
+package app.ui.main;
 
+import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
 
 import java.util.*;

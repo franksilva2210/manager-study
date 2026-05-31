@@ -6,7 +6,6 @@ import java.util.*;
 import app.application.study.StudyDTO;
 import app.application.document.DocumentDTO;
 import app.application.topic.TopicDTO;
-import app.application.study.NavigationService;
 import app.ui.backup.ScreenBackupController;
 import app.ui.backup.ScreenBackupWindow;
 import app.ui.document.edit.EditorDocumentController;
