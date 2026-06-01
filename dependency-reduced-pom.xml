@@ -5,7 +5,7 @@
   <artifactId>study-manager</artifactId>
   <name>Gerenciador de Estudos</name>
   <version>1.0.0</version>
-  <description>Consiste em um app para criação e organição de tópicos de assuntos diversos que se relacionam entre si.</description>
+  <description>Consiste em um app para criação e organização de tópicos de assuntos diversos que se relacionam.</description>
   <inceptionYear>2024</inceptionYear>
   <build>
     <finalName>study-manager</finalName>
