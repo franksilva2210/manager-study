@@ -389,6 +389,7 @@ public class EditorDocumentController implements Initializable {
 
     private void createCodeArea() {
         codeArea = new CodeArea();
+        codeArea.setWrapText(true);
         scrollPaneCodeArea = new VirtualizedScrollPane<>(codeArea);
 
         pane.getChildren().add(scrollPaneCodeArea);
