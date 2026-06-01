@@ -5,9 +5,7 @@ A ideia principal não é apenas armazenar notas, mas criar uma rede de conhecim
 
 ## Download
 
-Versão 1.0.0 
-
-[[Releases] ](https://github.com/franksilva2210/manager-study/releases/tag/v1.0.0)
+Versão 1.0.0 [[Releases] ](https://github.com/franksilva2210/manager-study/releases/tag/v1.0.0)
 
 ## Tecnologias
 
