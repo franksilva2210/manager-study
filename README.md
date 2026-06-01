@@ -1,6 +1,6 @@
 # Manager Study
 
-Um aplicativo desktop para criação e organição de tópicos de temas diversos que se relacionam. Basicamente pode ser definido como um Gerenciador de Conhecimento/Estudo. 
+Um aplicativo desktop para criação e organização de tópicos de temas diversos que se relacionam. Basicamente pode ser definido como um Gerenciador de Conhecimento/Estudo. 
 A ideia principal não é apenas armazenar notas, mas criar uma rede de conhecimento, onde a pessoa organiza conhecimento de forma conectada.
 
 ## Download
