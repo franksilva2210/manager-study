@@ -6,6 +6,7 @@ import java.util.*;
 import app.application.study.StudyDTO;
 import app.application.document.DocumentDTO;
 import app.application.topic.TopicDTO;
+import app.ui.about.AboutWindow;
 import app.ui.backup.ScreenBackupController;
 import app.ui.backup.ScreenBackupWindow;
 import app.ui.document.edit.EditorDocumentController;
@@ -42,6 +43,9 @@ public class ScreenMainController implements Initializable {
 
 	@FXML
 	private Menu menuRoadMap;
+
+	@FXML
+	private MenuItem menuAbout;
 
 	@FXML
 	private MenuItem menuClose;
@@ -130,6 +134,10 @@ public class ScreenMainController implements Initializable {
 			showRoadMap();
 		});
 
+		menuAbout.setOnAction(event -> {
+			showAbout();
+		});
+
 		menuBackup.setOnAction(event -> {
 			openScreenBackup();
 		});
@@ -201,6 +209,11 @@ public class ScreenMainController implements Initializable {
 		});
 
 		refreshStudies();
+	}
+
+	private void showAbout() {
+		AboutWindow window = new AboutWindow(stage);
+		window.showScreen();
 	}
 
 	private void searchStudies() {
