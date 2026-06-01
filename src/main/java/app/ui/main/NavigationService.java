@@ -67,6 +67,10 @@ public class NavigationService {
         return backStack;
     }
 
+    public Deque<Object> getForwardStack() {
+        return forwardStack;
+    }
+
     public boolean canGoBack() {
         return backStack.size() > 1;
     }
@@ -89,6 +93,84 @@ public class NavigationService {
         }
 
         return false;
+    }
+
+    public void refreshItem(Object objectUpdated) {
+
+        if (objectUpdated == null) {
+            return;
+        }
+
+        refreshStack(backStack, objectUpdated);
+        refreshStack(forwardStack, objectUpdated);
+    }
+
+    private void refreshStack(Deque<Object> stack, Object objectUpdated) {
+
+        List<Object> updatedItems = new ArrayList<>();
+
+        for (Object item : stack) {
+            if (isSame(item, objectUpdated)) {
+                updatedItems.add(objectUpdated);
+            } else {
+                updatedItems.add(item);
+            }
+        }
+
+        stack.clear();
+
+        for (int i = updatedItems.size() - 1; i >= 0; i--) {
+            stack.push(updatedItems.get(i));
+        }
+    }
+
+    public void removeItem(Object objectToRemove) {
+
+        if (objectToRemove == null) {
+            return;
+        }
+
+        removeFromBackStack(objectToRemove);
+
+        // invalida histórico futuro
+        forwardStack.clear();
+    }
+
+    private void removeFromBackStack(Object objectToRemove) {
+
+        // Study remove tudo
+        if (objectToRemove instanceof StudyDTO) {
+            backStack.clear();
+            return;
+        }
+
+        // Topic remove ele e todos acima
+        if (objectToRemove instanceof TopicDTO) {
+
+            List<Object> items = new ArrayList<>(backStack);
+
+            int indexToRemove = -1;
+
+            for (int i = 0; i < items.size(); i++) {
+
+                if (isSame(items.get(i), objectToRemove)) {
+                    indexToRemove = i;
+                    break;
+                }
+            }
+
+            if (indexToRemove == -1) {
+                return;
+            }
+
+            List<Object> remaining = items.subList(indexToRemove + 1, items.size());
+
+            backStack.clear();
+
+            for (int i = remaining.size() - 1; i >= 0; i--) {
+                backStack.push(remaining.get(i));
+            }
+        }
     }
 
 }
