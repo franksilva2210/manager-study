@@ -57,12 +57,11 @@ Observação: O Windows pode exibir um alerta de segurança devido à ausência 
   - Tópicos para revisar;
 
 ## Screenshots
-
-<img width="1022" height="607" alt="Captura de tela 2026-05-31 224459" src="https://github.com/user-attachments/assets/a414afb3-b2b3-427e-8b86-650669530c5d" />
-
-<img width="1017" height="601" alt="Captura de tela 2026-05-31 224547" src="https://github.com/user-attachments/assets/50cc6895-935c-4f24-9574-d0675d859167" />
-
-<img width="1014" height="599" alt="Captura de tela 2026-05-31 224537" src="https://github.com/user-attachments/assets/a8e1bd27-4c3f-4ea2-827e-9c810a248df0" />
+<img width="1522" height="890" alt="Captura 5" src="https://github.com/user-attachments/assets/d8d86bc0-0e3d-4398-a6be-56e61eab113a" />
+<img width="1522" height="893" alt="Captura 6" src="https://github.com/user-attachments/assets/b74792aa-e67c-4a2b-a7ce-e5f588a103a1" />
+<img width="1525" height="889" alt="Captura 7" src="https://github.com/user-attachments/assets/49062bed-0a72-46fd-8989-bd7e40863c14" />
+<img width="1519" height="892" alt="Captura 8" src="https://github.com/user-attachments/assets/b8ec39fd-dfdd-4825-bd78-ab9ca4dc71a1" />
+<img width="1530" height="890" alt="Captura 9" src="https://github.com/user-attachments/assets/05baebc8-a986-4350-a205-2f74a1520a37" />
 
 ## Requisitos
 
