@@ -266,6 +266,8 @@ public class ScreenMainController implements Initializable {
 
 		StudyDTO studyDtoUpdated = controller.getStudyDto();
 
+		navigationService.refreshItem(studyDtoUpdated);
+
 		refreshStudies();
 		loadDataScreen();
 	}
@@ -286,7 +288,7 @@ public class ScreenMainController implements Initializable {
 
 		if (controller.getConfirm()) {
 			screenMainService.removeStudy(studyDeletionDto);
-
+			navigationService.removeItem(studyDeletionDto);
 			objectCurrentSelected = null;
 			refreshStudies();
 			loadDataScreen();
@@ -340,8 +342,7 @@ public class ScreenMainController implements Initializable {
 	}
 
 	public void editTopic() {
-		TopicDTO topicSelectedDto =
-				listViewTopics.getSelectionModel().getSelectedItem();
+		TopicDTO topicSelectedDto = listViewTopics.getSelectionModel().getSelectedItem();
 
 		if (objectCurrentSelected == null || topicSelectedDto == null) {
 			return;
@@ -350,14 +351,13 @@ public class ScreenMainController implements Initializable {
 		RegisterTopicController registerTopicController = new RegisterTopicController();
 		registerTopicController.setTopicDto(topicSelectedDto);
 
-		RegisterTopicWindow registerTopicWindow =
-				new RegisterTopicWindow(stage, registerTopicController);
-
+		RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage, registerTopicController);
 		registerTopicWindow.showScreen();
 
-		TopicDTO topicUpdatedDto = registerTopicController.getTopicDto();
+		navigationService.refreshItem(registerTopicController.getTopicDto());
 
 		refreshObjectCurrentSelected();
+
 		loadDataScreen();
 	}
 
@@ -381,7 +381,11 @@ public class ScreenMainController implements Initializable {
 
 		if (controller.getConfirm()) {
 			screenMainService.removeTopic(topicSelectedDto);
+
+			navigationService.removeItem(topicSelectedDto);
+
 			refreshObjectCurrentSelected();
+
 			loadDataScreen();
 		}
 	}
