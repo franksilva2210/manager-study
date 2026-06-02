@@ -70,7 +70,7 @@ public class PaneRightController implements Initializable {
     private ObservableList<TopicDTO> listTopicsObservable = FXCollections.observableArrayList();
     private PaneRightService paneRightService = new PaneRightService();
     private PaneRightUIHelper uiHelper = new PaneRightUIHelper();
-    private NavigationService navigationService = new NavigationService();
+    private PaneRightNavigator navigator = new PaneRightNavigator();
     private Object itemSelected;
 
     public void setStage(Stage stage) {
@@ -143,19 +143,19 @@ public class PaneRightController implements Initializable {
     }
 
     private void navigateBack() {
-        if (!confirmChangeStudyOrTopic())
+        if (!verifyDocumentEditingOrNotSave())
             return;
 
-        Object itemBack = navigationService.back();
+        Object itemBack = navigator.back();
         refreshItemSelected(itemBack);
         loadDataScreen();
     }
 
     private void navigateForward() {
-        if (!confirmChangeStudyOrTopic())
+        if (!verifyDocumentEditingOrNotSave())
             return;
 
-        Object itemForward = navigationService.forward();
+        Object itemForward = navigator.forward();
         refreshItemSelected(itemForward);
         loadDataScreen();
     }
@@ -217,9 +217,6 @@ public class PaneRightController implements Initializable {
     }
 
     private void selectTopicInListView() {
-        if (!confirmChangeStudyOrTopic())
-            return;
-
         TopicDTO topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
         if (topicSelected != null) {
             openItem(topicSelected);
@@ -285,7 +282,7 @@ public class PaneRightController implements Initializable {
         RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage, registerTopicController);
         registerTopicWindow.showScreen();
 
-        navigationService.refreshItem(registerTopicController.getTopicDto());
+        navigator.refreshItem(registerTopicController.getTopicDto());
 
         refreshItemSelected(this.itemSelected);
 
@@ -312,7 +309,7 @@ public class PaneRightController implements Initializable {
 
         if (controller.getConfirm()) {
             paneRightService.removeTopic(topicSelectedDto);
-            navigationService.removeItem(topicSelectedDto);
+            navigator.removeItem(topicSelectedDto);
 
             refreshItemSelected(this.itemSelected);
             loadDataScreen();
@@ -328,34 +325,34 @@ public class PaneRightController implements Initializable {
     }
 
     public void loadDataScreen() {
-        boolean canGoBack = navigationService.canGoBack();
-        boolean canGoForward = navigationService.canGoForward();
+        boolean canGoBack = navigator.canGoBack();
+        boolean canGoForward = navigator.canGoForward();
 
         uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
-        uiHelper.updateTxtHierarchyPath(txtHierarchyPath, navigationService.getBackStack());
+        uiHelper.updateTxtHierarchyPath(txtHierarchyPath, navigator.getBackStack());
         uiHelper.updateTitleItemMain(lblTitleMain, itemSelected);
         uiHelper.updateTabs(tabPaneStudy, tabMain, tabAdd, itemSelected, this::createNewTabDocument);
         uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, itemSelected);
     }
 
-    private boolean confirmChangeStudyOrTopic() {
-        boolean existDocumentEditing = false;
-        EditorDocumentController editorDocumentController = null;
+    public void openItem(Object itemSelected) {
+        if (!verifyDocumentEditingOrNotSave())
+            return;
 
-        for (Tab tab : tabPaneStudy.getTabs()) {
-            if (tab == tabMain || tab == tabAdd) {
-                continue;
-            }
+        refreshItemSelected(itemSelected);
+        navigator.navigate(this.itemSelected);
+        loadDataScreen();
+    }
 
-            editorDocumentController = (EditorDocumentController) tab.getUserData();
+    private boolean verifyDocumentEditingOrNotSave() {
+        EditorDocumentController editorDocumentController =
+                uiHelper.verifyDocumentEditingOrNotSave(
+                        tabPaneStudy,
+                        tabMain,
+                        tabAdd
+                );
 
-            if (editorDocumentController.isEditing() || editorDocumentController.getDocumentDto().getId() == null) {
-                existDocumentEditing = true;
-                break;
-            }
-        }
-
-        if (existDocumentEditing) {
+        if (editorDocumentController != null) {
             MessageConfirmController controller = new MessageConfirmController();
             controller.setConfirm(false);
             controller.setMsgUser(
@@ -371,12 +368,6 @@ public class PaneRightController implements Initializable {
         }
 
         return true;
-    }
-
-    public void openItem(Object itemSelected) {
-        refreshItemSelected(itemSelected);
-        navigationService.navigate(this.itemSelected);
-        loadDataScreen();
     }
 
 }

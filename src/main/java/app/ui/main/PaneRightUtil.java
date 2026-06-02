@@ -8,7 +8,7 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 
-public class HierarchyPathUtil {
+public class PaneRightUtil {
 
     public String buildPath(Deque<Object> backStack) {
 
