@@ -1,24 +1,22 @@
 package app.ui.main;
 
-import app.ui.roadmap.RoadMapWindow;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 
 import java.io.IOException;
 
-public class MenuLeftWindow {
+public class PaneLeftWindow {
 
     private Stage stage;
     private Scene scene;
     private AnchorPane root;
-    private MenuLeftController controller;
+    private PaneLeftController controller;
 
-    public MenuLeftWindow(MenuLeftController controller) {
+    public PaneLeftWindow(PaneLeftController controller) {
         stage = new Stage();
         stage.setResizable(false);
 
@@ -26,7 +24,7 @@ public class MenuLeftWindow {
         controller.setStage(stage);
 
         FXMLLoader rootFxml = new FXMLLoader();
-        rootFxml.setLocation(MenuLeftWindow.class.getResource("MenuLeftWindow.fxml"));
+        rootFxml.setLocation(PaneLeftWindow.class.getResource("MenuLeftWindow.fxml"));
         rootFxml.setController(controller);
 
         try {
@@ -47,7 +45,7 @@ public class MenuLeftWindow {
         return root;
     }
 
-    public MenuLeftController getController() {
+    public PaneLeftController getController() {
         return controller;
     }
 }
