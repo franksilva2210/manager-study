@@ -43,7 +43,7 @@ public class ScreenMainController implements Initializable {
 
 	private Stage stage;
 
-	private MenuLeftController menuLeftController;
+	private PaneLeftController paneLeftController;
 
 	private PaneRightController paneRightController;
 
@@ -130,13 +130,13 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void loadMenuLeft() {
-		menuLeftController = new MenuLeftController();
-		MenuLeftWindow window = new MenuLeftWindow(menuLeftController);
+		paneLeftController = new PaneLeftController();
+		PaneLeftWindow window = new PaneLeftWindow(paneLeftController);
 		menuLeft.getChildren().setAll(window.getRoot());
 	}
 
 	private void connectControllers() {
-		menuLeftController.setPaneRightController(paneRightController);
+		paneLeftController.setPaneRightController(paneRightController);
 	}
 
 }

@@ -68,8 +68,8 @@ public class PaneRightController implements Initializable {
 
     private Stage stage;
     private ObservableList<TopicDTO> listTopicsObservable = FXCollections.observableArrayList();
-    private ScreenMainService screenMainService = new ScreenMainService();
-    private ScreenMainUIHelper uiHelper = new ScreenMainUIHelper();
+    private PaneRightService paneRightService = new PaneRightService();
+    private PaneRightUIHelper uiHelper = new PaneRightUIHelper();
     private NavigationService navigationService = new NavigationService();
     private Object itemSelected;
 
@@ -311,7 +311,7 @@ public class PaneRightController implements Initializable {
         window.showScreen();
 
         if (controller.getConfirm()) {
-            screenMainService.removeTopic(topicSelectedDto);
+            paneRightService.removeTopic(topicSelectedDto);
             navigationService.removeItem(topicSelectedDto);
 
             refreshItemSelected(this.itemSelected);
@@ -321,9 +321,9 @@ public class PaneRightController implements Initializable {
 
     private void refreshItemSelected(Object itemSelected) {
         if (itemSelected instanceof StudyDTO studyDto) {
-            this.itemSelected = screenMainService.loadStudy(studyDto.getId());
+            this.itemSelected = paneRightService.loadStudy(studyDto.getId());
         } else if (itemSelected instanceof TopicDTO topicDto) {
-            this.itemSelected = screenMainService.loadTopic(topicDto.getId());
+            this.itemSelected = paneRightService.loadTopic(topicDto.getId());
         }
     }
 

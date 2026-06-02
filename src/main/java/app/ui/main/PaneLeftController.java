@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MenuLeftController implements Initializable {
+public class PaneLeftController implements Initializable {
 
     @FXML
     private TextField txtSearchStudies;
@@ -28,9 +28,8 @@ public class MenuLeftController implements Initializable {
 
     private Stage stage;
     private List<StudyDTO> listStudyDTO = new ArrayList<>();
-    private ScreenMainService screenMainService = new ScreenMainService();
-    private ScreenMainUIHelper uiHelper = new ScreenMainUIHelper();
-    private NavigationService navigationService = new NavigationService();
+    private PaneLeftService paneLeftService = new PaneLeftService();
+    private PaneLeftUIHelper uiHelper = new PaneLeftUIHelper();
     private PaneRightController paneRightController;
 
     public void setStage(Stage stage) {
@@ -102,7 +101,7 @@ public class MenuLeftController implements Initializable {
 
     public void refreshStudies() {
         listStudyDTO.clear();
-        listStudyDTO.addAll(screenMainService.consultAllStudyDto());
+        listStudyDTO.addAll(paneLeftService.consultAllStudyDto());
         uiHelper.generateTreeItems(treeView, listStudyDTO);
     }
 
@@ -117,7 +116,7 @@ public class MenuLeftController implements Initializable {
 
         StudyDTO studyDtoUpdated = controller.getStudyDto();
 
-        navigationService.refreshItem(studyDtoUpdated);
+//        navigationService.refreshItem(studyDtoUpdated);
 
         refreshStudies();
 //        loadDataScreen();
@@ -130,16 +129,16 @@ public class MenuLeftController implements Initializable {
         controller.setConfirm(false);
         controller.setMsgUser(
                 "Deseja realmente remover o estudo selecionado?\n" +
-                        "Todos os tópicos de: " + studyDeletionDto.getMatter().toUpperCase() + ", também " +
-                        "serão removidos!"
+                "Todos os tópicos de: " + studyDeletionDto.getMatter().toUpperCase() + ", também " +
+                "serão removidos!"
         );
 
         MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
         window.showScreen();
 
         if (controller.getConfirm()) {
-            screenMainService.removeStudy(studyDeletionDto);
-            navigationService.removeItem(studyDeletionDto);
+            paneLeftService.removeStudy(studyDeletionDto);
+//            navigationService.removeItem(studyDeletionDto);
 //            objectCurrentSelected = null;
             refreshStudies();
 //            loadDataScreen();
