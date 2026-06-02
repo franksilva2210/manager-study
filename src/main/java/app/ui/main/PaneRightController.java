@@ -1,0 +1,382 @@
+package app.ui.main;
+
+import app.application.document.DocumentDTO;
+import app.application.study.StudyDTO;
+import app.application.topic.TopicDTO;
+import app.ui.document.edit.EditorDocumentController;
+import app.ui.document.edit.EditorDocumentWindow;
+import app.ui.message.MessageConfirmController;
+import app.ui.message.MessageConfirmWindow;
+import app.ui.message.MessageInfoController;
+import app.ui.message.MessageInfoWindow;
+import app.ui.topic.register.RegisterTopicController;
+import app.ui.topic.register.RegisterTopicWindow;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class PaneRightController implements Initializable {
+
+    @FXML
+    private TabPane tabPaneStudy;
+
+    @FXML
+    private Button bttNavigationLeft;
+
+    @FXML
+    private Button bttNavigationRight;
+
+    @FXML
+    private TextField txtHierarchyPath;
+
+    @FXML
+    private Tab tabMain;
+
+    @FXML
+    private Label lblTitleMain;
+
+    @FXML
+    private Button bttRoadMap;
+
+    @FXML
+    private TextField txtSearchTopics;
+
+    @FXML
+    private Button bttAddTopic;
+
+    @FXML
+    private Button bttEditTopic;
+
+    @FXML
+    private Button bttRemoveTopic;
+
+    @FXML
+    private ListView<TopicDTO> listViewTopics;
+
+    @FXML
+    private Tab tabAdd;
+
+    private Stage stage;
+    private ObservableList<TopicDTO> listTopicsObservable = FXCollections.observableArrayList();
+    private ScreenMainService screenMainService = new ScreenMainService();
+    private ScreenMainUIHelper uiHelper = new ScreenMainUIHelper();
+    private NavigationService navigationService = new NavigationService();
+    private Object itemSelected;
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public void setItemSelected(Object objectCurrentSelected) {
+        this.itemSelected = objectCurrentSelected;
+    }
+
+    public Object getItemSelected() {
+        return itemSelected;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        listViewTopics.setItems(listTopicsObservable);
+
+        listViewTopics.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                selectTopicInListView();
+            }
+        });
+
+        bttNavigationLeft.setOnAction(event -> {
+            navigateBack();
+        });
+
+        bttNavigationRight.setOnAction(event -> {
+            navigateForward();
+        });
+
+        bttRoadMap.setOnAction(event -> {
+            showRoadMap();
+        });
+
+        txtSearchTopics.setOnAction(event -> {
+            searchTopic();
+        });
+
+        txtSearchTopics.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.BACK_SPACE && txtSearchTopics.getText().isBlank()) {
+                uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, itemSelected);
+            }
+        });
+
+        tabAdd.setOnSelectionChanged(event -> {
+            if (tabAdd.isSelected()) {
+                addNewTabDocument(new DocumentDTO());
+            }
+        });
+
+        listViewTopics.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                selectTopicInListView();
+            }
+        });
+
+        bttAddTopic.setOnAction(event -> {
+            newTopic();
+        });
+
+        bttEditTopic.setOnAction(event -> {
+            editTopic();
+        });
+
+        bttRemoveTopic.setOnAction(event -> {
+            removeTopic();
+        });
+    }
+
+    private void navigateBack() {
+        if (!confirmChangeStudyOrTopic())
+            return;
+
+        Object itemBack = navigationService.back();
+        refreshItemSelected(itemBack);
+        loadDataScreen();
+    }
+
+    private void navigateForward() {
+        if (!confirmChangeStudyOrTopic())
+            return;
+
+        Object itemForward = navigationService.forward();
+        refreshItemSelected(itemForward);
+        loadDataScreen();
+    }
+
+    private void addNewTabDocument(DocumentDTO documentDto) {
+        if (itemSelected == null) {
+            MessageInfoController controller = new MessageInfoController();
+            controller.setMsgUser(
+                    "Selecione primeiro um estudo para adicionar\n" +
+                            "um novo texto."
+            );
+
+            MessageInfoWindow window = new MessageInfoWindow(stage, controller);
+            window.showScreen();
+
+            Tab tabMain = tabPaneStudy.getTabs().get(0);
+            tabPaneStudy.getSelectionModel().select(tabMain);
+
+        } else {
+            Tab newTab = createNewTabDocument(documentDto);
+            tabPaneStudy.getSelectionModel().select(newTab);
+        }
+    }
+
+    private Tab createNewTabDocument(DocumentDTO documentDto) {
+        EditorDocumentController editorDocumentController = new EditorDocumentController();
+
+        Label lblTitle = new Label();
+
+        editorDocumentController.setLblTitle(lblTitle);
+        editorDocumentController.setDocumentDto(documentDto);
+        editorDocumentController.setStage(stage);
+
+        if (itemSelected instanceof StudyDTO studyDto) {
+            editorDocumentController.setStudyDto(studyDto);
+        } else if (itemSelected instanceof TopicDTO topicDto) {
+            editorDocumentController.setTopicDto(topicDto);
+        }
+
+        EditorDocumentWindow editorDocumentWindow = new EditorDocumentWindow(editorDocumentController);
+
+        int indexTabs = tabPaneStudy.getTabs().indexOf(tabAdd);
+        VBox root = editorDocumentWindow.getRoot();
+
+        Tab newTab = uiHelper.createNewTab(indexTabs, root, lblTitle, documentDto);
+
+        editorDocumentController.setTab(newTab);
+        editorDocumentController.setTabPaneStudy(tabPaneStudy);
+
+        newTab.setUserData(editorDocumentController);
+
+        tabPaneStudy.getTabs().add(indexTabs, newTab);
+
+        return newTab;
+    }
+
+    private void showRoadMap() {
+
+    }
+
+    private void selectTopicInListView() {
+        if (!confirmChangeStudyOrTopic())
+            return;
+
+        TopicDTO topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
+        if (topicSelected != null) {
+            openItem(topicSelected);
+        }
+    }
+
+    private void searchTopic() {
+        String search = txtSearchTopics.getText();
+        List<TopicDTO> listPossible = new ArrayList<>();
+
+        if (!search.equals("")) {
+
+            for (TopicDTO topicDto : listTopicsObservable) {
+                if (topicDto.getTitle().toLowerCase().indexOf(search.toLowerCase()) != -1) {
+                    listPossible.add(topicDto);
+                }
+            }
+
+            if (listPossible.size() > 0) {
+                listTopicsObservable.clear();
+                listTopicsObservable.addAll(listPossible);
+                listViewTopics.refresh();
+            }
+        } else {
+            uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, itemSelected);
+        }
+    }
+
+    private void newTopic() {
+        if (itemSelected == null) {
+            return;
+        }
+
+        RegisterTopicController registerTopicController = new RegisterTopicController();
+        registerTopicController.setTopicDto(new TopicDTO());
+
+        if (itemSelected instanceof StudyDTO studyDto) {
+            registerTopicController.setStudy(studyDto);
+        } else if (itemSelected instanceof TopicDTO topicDto) {
+            registerTopicController.setTopicParent(topicDto);
+        }
+
+        RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage, registerTopicController);
+        registerTopicWindow.showScreen();
+
+        if (registerTopicController.getTopicDto().getId() != null &&
+                registerTopicController.getTopicDto().getId() > 0) {
+            refreshItemSelected(this.itemSelected);
+            loadDataScreen();
+        }
+    }
+
+    public void editTopic() {
+        TopicDTO topicSelectedDto = listViewTopics.getSelectionModel().getSelectedItem();
+
+        if (itemSelected == null || topicSelectedDto == null) {
+            return;
+        }
+
+        RegisterTopicController registerTopicController = new RegisterTopicController();
+        registerTopicController.setTopicDto(topicSelectedDto);
+
+        RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage, registerTopicController);
+        registerTopicWindow.showScreen();
+
+        navigationService.refreshItem(registerTopicController.getTopicDto());
+
+        refreshItemSelected(this.itemSelected);
+
+        loadDataScreen();
+    }
+
+    private void removeTopic() {
+        TopicDTO topicSelectedDto = listViewTopics.getSelectionModel().getSelectedItem();
+
+        if (itemSelected == null || topicSelectedDto == null) {
+            return;
+        }
+
+        MessageConfirmController controller = new MessageConfirmController();
+        controller.setConfirm(false);
+        controller.setMsgUser(
+                "Deseja realmente remover o tópico selecionado?\n" +
+                        "Todos os tópicos de: " + topicSelectedDto.getTitle().toUpperCase() + "\n" +
+                        "também serão removidos!"
+        );
+
+        MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
+        window.showScreen();
+
+        if (controller.getConfirm()) {
+            screenMainService.removeTopic(topicSelectedDto);
+            navigationService.removeItem(topicSelectedDto);
+
+            refreshItemSelected(this.itemSelected);
+            loadDataScreen();
+        }
+    }
+
+    private void refreshItemSelected(Object itemSelected) {
+        if (itemSelected instanceof StudyDTO studyDto) {
+            this.itemSelected = screenMainService.loadStudy(studyDto.getId());
+        } else if (itemSelected instanceof TopicDTO topicDto) {
+            this.itemSelected = screenMainService.loadTopic(topicDto.getId());
+        }
+    }
+
+    public void loadDataScreen() {
+        boolean canGoBack = navigationService.canGoBack();
+        boolean canGoForward = navigationService.canGoForward();
+
+        uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
+        uiHelper.updateTxtHierarchyPath(txtHierarchyPath, navigationService.getBackStack());
+        uiHelper.updateTitleItemMain(lblTitleMain, itemSelected);
+        uiHelper.updateTabs(tabPaneStudy, tabMain, tabAdd, itemSelected, this::createNewTabDocument);
+        uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, itemSelected);
+    }
+
+    private boolean confirmChangeStudyOrTopic() {
+        boolean existDocumentEditing = false;
+        EditorDocumentController editorDocumentController = null;
+
+        for (Tab tab : tabPaneStudy.getTabs()) {
+            if (tab == tabMain || tab == tabAdd) {
+                continue;
+            }
+
+            editorDocumentController = (EditorDocumentController) tab.getUserData();
+
+            if (editorDocumentController.isEditing() || editorDocumentController.getDocumentDto().getId() == null) {
+                existDocumentEditing = true;
+                break;
+            }
+        }
+
+        if (existDocumentEditing) {
+            MessageConfirmController controller = new MessageConfirmController();
+            controller.setConfirm(false);
+            controller.setMsgUser(
+                    "Existem Documentos com alterações não salvas.\n" +
+                            "Deseja continuar mesmo assim?\n\n" +
+                            "Documento editando: " + editorDocumentController.getDocumentDto().getTitle()
+            );
+
+            MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
+            window.showScreen();
+
+            return controller.getConfirm();
+        }
+
+        return true;
+    }
+
+    public void openItem(Object itemSelected) {
+        refreshItemSelected(itemSelected);
+        navigationService.navigate(this.itemSelected);
+        loadDataScreen();
+    }
+
+}
