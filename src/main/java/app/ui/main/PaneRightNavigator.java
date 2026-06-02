@@ -5,7 +5,7 @@ import app.application.topic.TopicDTO;
 
 import java.util.*;
 
-public class NavigationService {
+public class PaneRightNavigator {
 
     private final Deque<Object> backStack = new ArrayDeque<>();
     private final Deque<Object> forwardStack = new ArrayDeque<>();

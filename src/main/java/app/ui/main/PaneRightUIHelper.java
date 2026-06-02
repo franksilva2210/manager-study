@@ -3,6 +3,7 @@ package app.ui.main;
 import app.application.document.DocumentDTO;
 import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
+import app.ui.document.edit.EditorDocumentController;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -23,7 +24,7 @@ public class PaneRightUIHelper {
     }
 
     public void updateTxtHierarchyPath(TextField txtHierarchyPath, Deque<Object> backStack) {
-        HierarchyPathUtil pathUtil = new HierarchyPathUtil();
+        PaneRightUtil pathUtil = new PaneRightUtil();
         txtHierarchyPath.setText(pathUtil.buildPath(backStack));
     }
 
@@ -95,6 +96,23 @@ public class PaneRightUIHelper {
         tab.setText("");
 
         return tab;
+    }
+
+    public EditorDocumentController verifyDocumentEditingOrNotSave(TabPane tabPaneStudy, Tab tabMain, Tab tabAdd) {
+
+        for (Tab tab : tabPaneStudy.getTabs()) {
+            if (tab == tabMain || tab == tabAdd) {
+                continue;
+            }
+
+            EditorDocumentController editorDocumentController = (EditorDocumentController) tab.getUserData();
+
+            if (editorDocumentController.isEditing() || editorDocumentController.getDocumentDto().getId() == null) {
+                return editorDocumentController;
+            }
+        }
+
+        return null;
     }
 
 }
