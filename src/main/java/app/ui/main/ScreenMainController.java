@@ -4,36 +4,21 @@ import java.net.URL;
 import java.util.*;
 
 import app.application.study.StudyDTO;
-import app.application.document.DocumentDTO;
-import app.application.topic.TopicDTO;
 import app.ui.about.AboutWindow;
 import app.ui.backup.ScreenBackupController;
 import app.ui.backup.ScreenBackupWindow;
-import app.ui.document.edit.EditorDocumentController;
-import app.ui.document.edit.EditorDocumentWindow;
-import app.ui.message.MessageConfirmController;
-import app.ui.message.MessageConfirmWindow;
-import app.ui.message.MessageInfoController;
-import app.ui.message.MessageInfoWindow;
 import app.ui.roadmap.RoadMapController;
 import app.ui.roadmap.RoadMapWindow;
 import app.ui.study.register.RegisterStudyController;
 import app.ui.study.register.RegisterStudyWindow;
-import app.ui.topic.register.RegisterTopicController;
-import app.ui.topic.register.RegisterTopicWindow;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class ScreenMainController implements Initializable {
-
-	//Menu superior
 
 	@FXML
 	private MenuItem menuNewStudy;
@@ -50,81 +35,32 @@ public class ScreenMainController implements Initializable {
 	@FXML
 	private MenuItem menuClose;
 
-	//Menu Lateral
+	@FXML
+	private VBox menuLeft;
 
 	@FXML
-	private TextField txtSearchStudies;
-
-	@FXML
-	private TreeView<Object> treeView;
-
-	@FXML
-	private TabPane tabPaneStudy;
-
-	//Tela central principal
-
-	@FXML
-	private Button bttNavigationLeft;
-
-	@FXML
-	private Button bttNavigationRight;
-
-	@FXML
-	private TextField txtHierarchyPath;
-
-	@FXML
-	private Tab tabMain;
-
-	@FXML
-	private Label lblTitleMain;
-
-	@FXML
-	private Button bttRoadMap;
-
-	@FXML
-	private TextField txtSearchTopics;
-
-	@FXML
-	private Button bttAddTopic;
-
-	@FXML
-	private Button bttEditTopic;
-
-	@FXML
-	private Button bttRemoveTopic;
-
-	@FXML
-	private ListView<TopicDTO> listViewTopics;
-
-	@FXML
-	private Tab tabAdd;
+	private VBox paneRight;
 
 	private Stage stage;
-	private List<StudyDTO> listStudyDTO = new ArrayList<>();
-	private ObservableList<TopicDTO> listTopicsObservable = FXCollections.observableArrayList();
-	private ScreenMainService screenMainService = new ScreenMainService();
-	private ScreenMainUIHelper uiHelper = new ScreenMainUIHelper();
-	private Object objectCurrentSelected;
-	private NavigationService navigationService = new NavigationService();
+
+	private MenuLeftController menuLeftController;
+
+	private PaneRightController paneRightController;
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+
+	public VBox getMenuLeft() {
+		return menuLeft;
+	}
+
+	public VBox getPaneRight() {
+		return paneRight;
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
-		initUI();
-
-		treeView.setOnKeyPressed(event -> {
-			if (event.getCode() == KeyCode.ENTER) {
-				selectItemMenuLeft();
-			}
-		});
-
-		listViewTopics.setItems(listTopicsObservable);
-
-		listViewTopics.setOnKeyPressed(event -> {
-			if (event.getCode() == KeyCode.ENTER) {
-				selectItemListView();
-			}
-		});
 
 		menuNewStudy.setOnAction(event -> {
 			newStudy();
@@ -146,109 +82,12 @@ public class ScreenMainController implements Initializable {
 			Platform.exit();
 		});
 
-		txtSearchStudies.setOnAction(event -> {
-			searchStudies();
-		});
+		loadMenuLeft();
 
-		txtSearchStudies.setOnKeyPressed(event -> {
-			if (event.getCode() == KeyCode.BACK_SPACE && txtSearchStudies.getText().isBlank()) {
-				refreshStudies();
-			}
-		});
+		loadPaneRight();
 
-		treeView.setOnMouseClicked(event -> {
-			if (event.getClickCount() == 2) {
-				selectItemMenuLeft();
-			}
-		});
+		connectControllers();
 
-		bttNavigationLeft.setOnAction(event -> {
-			navigateBack();
-		});
-
-		bttNavigationRight.setOnAction(event -> {
-			navigateForward();
-		});
-
-		bttRoadMap.setOnAction(event -> {
-			showRoadMap();
-		});
-
-		txtSearchTopics.setOnAction(event -> {
-			searchTopic();
-		});
-
-		txtSearchTopics.setOnKeyPressed(event -> {
-			if (event.getCode() == KeyCode.BACK_SPACE && txtSearchTopics.getText().isBlank()) {
-				uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, objectCurrentSelected);
-			}
-		});
-
-		tabAdd.setOnSelectionChanged(event -> {
-			if (tabAdd.isSelected()) {
-				addNewTabDocument(new DocumentDTO());
-			}
-		});
-
-		listViewTopics.setOnMouseClicked(event -> {
-			if (event.getClickCount() == 2) {
-				selectItemListView();
-			}
-		});
-
-		bttAddTopic.setOnAction(event -> {
-			newTopic();
-		});
-
-		bttEditTopic.setOnAction(event -> {
-			editTopic();
-		});
-
-		bttRemoveTopic.setOnAction(event -> {
-			removeTopic();
-		});
-
-		refreshStudies();
-	}
-
-	private void showAbout() {
-		AboutWindow window = new AboutWindow(stage);
-		window.showScreen();
-	}
-
-	private void searchStudies() {
-		String search = txtSearchStudies.getText();
-		List<StudyDTO> listPossible = new ArrayList<>();
-
-		if (!search.equals("")) {
-
-			for (StudyDTO studyDto : listStudyDTO) {
-				if (studyDto.getMatter().toLowerCase().indexOf(search.toLowerCase()) != -1) {
-					listPossible.add(studyDto);
-				}
-			}
-
-			if (listPossible.size() > 0) {
-				listStudyDTO.clear();
-				listStudyDTO.addAll(listPossible);
-				uiHelper.generateTreeItems(treeView, listStudyDTO);
-			}
-
-		} else {
-			refreshStudies();
-		}
-	}
-
-	private void openScreenBackup() {
-		if (!confirmChangeStudyOrTopic())
-			return;
-
-		ScreenBackupController controller = new ScreenBackupController();
-		ScreenBackupWindow window = new ScreenBackupWindow(stage, controller);
-		window.showScreen();
-		if (controller.isSucessRestore()) {
-			Platform.exit();
-		}
 	}
 
 	private void newStudy() {
@@ -261,323 +100,43 @@ public class ScreenMainController implements Initializable {
 				new RegisterStudyWindow(stage, controller);
 
 		registerStudyWindow.showScreen();
-
-		if (controller.getStudyDto().getId() != null &&
-			controller.getStudyDto().getId() > 0) {
-			refreshStudies();
-		}
 	}
 
-	public void editStudy(Object objectSelected) {
-		StudyDTO studyDto = (StudyDTO) objectSelected;
-
-		RegisterStudyController controller = new RegisterStudyController();
-		controller.setStudyDto(studyDto);
-
-		RegisterStudyWindow window = new RegisterStudyWindow(stage, controller);
+	private void openScreenBackup() {
+		ScreenBackupController controller = new ScreenBackupController();
+		ScreenBackupWindow window = new ScreenBackupWindow(stage, controller);
 		window.showScreen();
-
-		StudyDTO studyDtoUpdated = controller.getStudyDto();
-
-		navigationService.refreshItem(studyDtoUpdated);
-
-		refreshStudies();
-		loadDataScreen();
-	}
-
-	private void removeStudy(Object objectDeletion) {
-		StudyDTO studyDeletionDto = (StudyDTO) objectDeletion;
-
-		MessageConfirmController controller = new MessageConfirmController();
-		controller.setConfirm(false);
-		controller.setMsgUser(
-				"Deseja realmente remover o estudo selecionado?\n" +
-				"Todos os tópicos de: " + studyDeletionDto.getMatter().toUpperCase() + ", também " +
-				"serão removidos!"
-		);
-
-		MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
-		window.showScreen();
-
-		if (controller.getConfirm()) {
-			screenMainService.removeStudy(studyDeletionDto);
-			navigationService.removeItem(studyDeletionDto);
-			objectCurrentSelected = null;
-			refreshStudies();
-			loadDataScreen();
+		if (controller.isSucessRestore()) {
+			Platform.exit();
 		}
-	}
-
-	private void searchTopic() {
-		String search = txtSearchTopics.getText();
-		List<TopicDTO> listPossible = new ArrayList<>();
-
-		if (!search.equals("")) {
-
-			for (TopicDTO topicDto : listTopicsObservable) {
-				if (topicDto.getTitle().toLowerCase().indexOf(search.toLowerCase()) != -1) {
-					listPossible.add(topicDto);
-				}
-			}
-
-			if (listPossible.size() > 0) {
-				listTopicsObservable.clear();
-				listTopicsObservable.addAll(listPossible);
-				listViewTopics.refresh();
-			}
-		} else {
-			uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, objectCurrentSelected);
-		}
-	}
-
-	private void newTopic() {
-		if (objectCurrentSelected == null) {
-			return;
-		}
-
-		RegisterTopicController registerTopicController = new RegisterTopicController();
-		registerTopicController.setTopicDto(new TopicDTO());
-
-		if (objectCurrentSelected instanceof StudyDTO studyDto) {
-			registerTopicController.setStudy(studyDto);
-		} else if (objectCurrentSelected instanceof TopicDTO topicDto) {
-			registerTopicController.setTopicParent(topicDto);
-		}
-
-		RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage, registerTopicController);
-		registerTopicWindow.showScreen();
-
-		if (registerTopicController.getTopicDto().getId() != null &&
-				registerTopicController.getTopicDto().getId() > 0) {
-			refreshObjectCurrentSelected();
-			loadDataScreen();
-		}
-	}
-
-	public void editTopic() {
-		TopicDTO topicSelectedDto = listViewTopics.getSelectionModel().getSelectedItem();
-
-		if (objectCurrentSelected == null || topicSelectedDto == null) {
-			return;
-		}
-
-		RegisterTopicController registerTopicController = new RegisterTopicController();
-		registerTopicController.setTopicDto(topicSelectedDto);
-
-		RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage, registerTopicController);
-		registerTopicWindow.showScreen();
-
-		navigationService.refreshItem(registerTopicController.getTopicDto());
-
-		refreshObjectCurrentSelected();
-
-		loadDataScreen();
-	}
-
-	private void removeTopic() {
-		TopicDTO topicSelectedDto = listViewTopics.getSelectionModel().getSelectedItem();
-
-		if (objectCurrentSelected == null || topicSelectedDto == null) {
-			return;
-		}
-
-		MessageConfirmController controller = new MessageConfirmController();
-		controller.setConfirm(false);
-		controller.setMsgUser(
-				"Deseja realmente remover o tópico selecionado?\n" +
-				"Todos os tópicos de: " + topicSelectedDto.getTitle().toUpperCase() + "\n" +
-				"também serão removidos!"
-		);
-
-		MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
-		window.showScreen();
-
-		if (controller.getConfirm()) {
-			screenMainService.removeTopic(topicSelectedDto);
-
-			navigationService.removeItem(topicSelectedDto);
-
-			refreshObjectCurrentSelected();
-
-			loadDataScreen();
-		}
-	}
-
-	public void refreshStudies() {
-		listStudyDTO.clear();
-		listStudyDTO.addAll(screenMainService.consultAllStudyDto());
-		uiHelper.generateTreeItems(treeView, listStudyDTO);
-	}
-
-	private void selectItemMenuLeft() {
-		if (!confirmChangeStudyOrTopic())
-			return;
-
-		TreeItem<Object> itemSelected = treeView.getSelectionModel().getSelectedItem();
-		if (itemSelected != null) {
-			objectCurrentSelected = itemSelected.getValue();
-			refreshObjectCurrentSelected();
-			navigationService.navigate(objectCurrentSelected);
-			loadDataScreen();
-		}
-	}
-
-	private void selectItemListView() {
-		if (!confirmChangeStudyOrTopic())
-			return;
-
-		TopicDTO topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
-		if (topicSelected != null) {
-			objectCurrentSelected = topicSelected;
-			refreshObjectCurrentSelected();
-			navigationService.navigate(objectCurrentSelected);
-			loadDataScreen();
-		}
-	}
-
-	private void navigateBack() {
-		if (!confirmChangeStudyOrTopic())
-			return;
-
-		objectCurrentSelected = navigationService.back();
-		refreshObjectCurrentSelected();
-		loadDataScreen();
-	}
-
-	private void navigateForward() {
-		if (!confirmChangeStudyOrTopic())
-			return;
-
-		objectCurrentSelected = navigationService.forward();
-		refreshObjectCurrentSelected();
-		loadDataScreen();
-	}
-
-	private void refreshObjectCurrentSelected() {
-		if (objectCurrentSelected instanceof StudyDTO studyDto) {
-			objectCurrentSelected = screenMainService.loadStudy(studyDto.getId());
-		} else if (objectCurrentSelected instanceof TopicDTO topicDto) {
-			objectCurrentSelected = screenMainService.loadTopic(topicDto.getId());
-		}
-	}
-
-	public void loadDataScreen() {
-		boolean canGoBack = navigationService.canGoBack();
-		boolean canGoForward = navigationService.canGoForward();
-
-		uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
-		uiHelper.updateTxtHierarchyPath(txtHierarchyPath, navigationService.getBackStack());
-		uiHelper.updateTitleItemMain(lblTitleMain, objectCurrentSelected);
-		uiHelper.updateTabs(tabPaneStudy, tabMain, tabAdd, objectCurrentSelected, this::createNewTabDocument);
-		uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, objectCurrentSelected);
-	}
-
-	private void addNewTabDocument(DocumentDTO documentDto) {
-		if (objectCurrentSelected == null) {
-			MessageInfoController controller = new MessageInfoController();
-			controller.setMsgUser(
-					"Selecione primeiro um estudo para adicionar\n" +
-					"um novo texto."
-			);
-
-			MessageInfoWindow window = new MessageInfoWindow(stage, controller);
-			window.showScreen();
-
-			Tab tabMain = tabPaneStudy.getTabs().get(0);
-			tabPaneStudy.getSelectionModel().select(tabMain);
-
-		} else {
-			Tab newTab = createNewTabDocument(documentDto);
-			tabPaneStudy.getSelectionModel().select(newTab);
-		}
-	}
-
-	private Tab createNewTabDocument(DocumentDTO documentDto) {
-		EditorDocumentController editorDocumentController = new EditorDocumentController();
-
-		Label lblTitle = new Label();
-
-		editorDocumentController.setLblTitle(lblTitle);
-		editorDocumentController.setDocumentDto(documentDto);
-		editorDocumentController.setStage(stage);
-
-		if (objectCurrentSelected instanceof StudyDTO studyDto) {
-			editorDocumentController.setStudyDto(studyDto);
-		} else if (objectCurrentSelected instanceof TopicDTO topicDto) {
-			editorDocumentController.setTopicDto(topicDto);
-		}
-
-		EditorDocumentWindow editorDocumentWindow = new EditorDocumentWindow(editorDocumentController);
-
-		int indexTabs = tabPaneStudy.getTabs().indexOf(tabAdd);
-		VBox root = editorDocumentWindow.getRoot();
-
-		Tab newTab = uiHelper.createNewTab(indexTabs, root, lblTitle, documentDto);
-
-		editorDocumentController.setTab(newTab);
-		editorDocumentController.setTabPaneStudy(tabPaneStudy);
-
-		newTab.setUserData(editorDocumentController);
-
-		tabPaneStudy.getTabs().add(indexTabs, newTab);
-
-		return newTab;
 	}
 
 	private void showRoadMap() {
-		if (objectCurrentSelected == null) {
-			return;
-		}
 		RoadMapController roadMapController = new RoadMapController();
-		roadMapController.setObjectCurrentSelected(objectCurrentSelected);
+
 		RoadMapWindow roadMapWindow	= new RoadMapWindow(stage, roadMapController);
 		roadMapWindow.showScreen();
 	}
 
-	private boolean confirmChangeStudyOrTopic() {
-		boolean existDocumentEditing = false;
-		EditorDocumentController editorDocumentController = null;
-
-		for (Tab tab : tabPaneStudy.getTabs()) {
-			if (tab == tabMain || tab == tabAdd) {
-				continue;
-			}
-
-			editorDocumentController = (EditorDocumentController) tab.getUserData();
-
-			if (editorDocumentController.isEditing() || editorDocumentController.getDocumentDto().getId() == null) {
-				existDocumentEditing = true;
-				break;
-			}
-		}
-
-		if (existDocumentEditing) {
-			MessageConfirmController controller = new MessageConfirmController();
-			controller.setConfirm(false);
-			controller.setMsgUser(
-					"Existem Documentos com alterações não salvas.\n" +
-					"Deseja continuar mesmo assim?\n\n" +
-					"Documento editando: " + editorDocumentController.getDocumentDto().getTitle()
-			);
-
-			MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
-			window.showScreen();
-
-			return controller.getConfirm();
-		}
-
-		return true;
+	private void showAbout() {
+		AboutWindow window = new AboutWindow(stage);
+		window.showScreen();
 	}
 
-	private void initUI() {
-		uiHelper.initTreeView(treeView, this::editStudy, this::removeStudy);
+	private void loadPaneRight() {
+		paneRightController = new PaneRightController();
+		PaneRightWindow window = new PaneRightWindow(paneRightController);
+		paneRight.getChildren().setAll(window.getRoot());
 	}
 
-	public void setStage(Stage stage) {
-		this.stage = stage;
+	private void loadMenuLeft() {
+		menuLeftController = new MenuLeftController();
+		MenuLeftWindow window = new MenuLeftWindow(menuLeftController);
+		menuLeft.getChildren().setAll(window.getRoot());
 	}
 
-	public Stage getStage() {
-		return stage;
+	private void connectControllers() {
+		menuLeftController.setPaneRightController(paneRightController);
 	}
+
 }
