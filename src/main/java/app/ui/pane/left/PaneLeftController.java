@@ -1,8 +1,9 @@
-package app.ui.main;
+package app.ui.pane.left;
 
 import app.application.study.StudyDTO;
 import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
+import app.ui.pane.right.PaneRightController;
 import app.ui.study.register.RegisterStudyController;
 import app.ui.study.register.RegisterStudyWindow;
 import javafx.fxml.FXML;

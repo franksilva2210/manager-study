@@ -1,4 +1,4 @@
-package app.ui.main;
+package app.ui.pane.right;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,14 +9,14 @@ import jfxtras.styles.jmetro.Style;
 
 import java.io.IOException;
 
-public class PaneLeftWindow {
+public class PaneRightWindow {
 
     private Stage stage;
     private Scene scene;
     private AnchorPane root;
-    private PaneLeftController controller;
+    private PaneRightController controller;
 
-    public PaneLeftWindow(PaneLeftController controller) {
+    public PaneRightWindow(PaneRightController controller) {
         stage = new Stage();
         stage.setResizable(false);
 
@@ -24,7 +24,7 @@ public class PaneLeftWindow {
         controller.setStage(stage);
 
         FXMLLoader rootFxml = new FXMLLoader();
-        rootFxml.setLocation(PaneLeftWindow.class.getResource("MenuLeftWindow.fxml"));
+        rootFxml.setLocation(PaneRightWindow.class.getResource("PaneRightWindow.fxml"));
         rootFxml.setController(controller);
 
         try {
@@ -45,7 +45,4 @@ public class PaneLeftWindow {
         return root;
     }
 
-    public PaneLeftController getController() {
-        return controller;
-    }
 }
