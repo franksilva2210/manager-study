@@ -76,7 +76,7 @@ public class TabDocumentFactory {
         return tab;
     }
 
-    public void updateTabs(
+    public void generateTabs(
             Stage stage,
             TabPane tabPaneStudy,
             Tab tabFixed,

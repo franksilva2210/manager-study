@@ -305,7 +305,7 @@ public class PaneRightController implements Initializable {
         uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
         uiHelper.updateTxtHierarchyPath(txtHierarchyPath, navigator.getBackStack());
         uiHelper.updateTitleItemMain(lblTitleMain, itemSelected);
-        tabDocumentFactory.updateTabs(stage, tabPaneStudy, tabMain, tabAdd, itemSelected);
+        tabDocumentFactory.generateTabs(stage, tabPaneStudy, tabMain, tabAdd, itemSelected);
         uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, itemSelected);
     }
 
