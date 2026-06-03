@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox fx:id="paneStudy" prefHeight="532.0" prefWidth="730.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -231,17 +230,10 @@
                         </ImageView>
                      </graphic>
                   </Tab>
-                  <Tab fx:id="tabAdd" text="Novo Texto">
+                  <Tab fx:id="tabAdd" text="+">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
-                     <graphic>
-                        <ImageView fitHeight="11.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@plus.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
                   </Tab>
                </tabs>
                <VBox.margin>
