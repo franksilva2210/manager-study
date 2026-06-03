@@ -4,7 +4,6 @@ import app.application.document.DocumentDTO;
 import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
 import app.ui.document.edit.EditorDocumentController;
-import app.ui.document.edit.EditorDocumentWindow;
 import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
 import app.ui.message.MessageInfoController;
@@ -17,7 +16,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -70,6 +68,7 @@ public class PaneRightController implements Initializable {
     private ObservableList<TopicDTO> listTopicsObservable = FXCollections.observableArrayList();
     private PaneRightService paneRightService = new PaneRightService();
     private PaneRightUIHelper uiHelper = new PaneRightUIHelper();
+    private TabDocumentFactory tabDocumentFactory = new TabDocumentFactory();
     private PaneRightNavigator navigator = new PaneRightNavigator();
     private Object itemSelected;
 
@@ -175,41 +174,16 @@ public class PaneRightController implements Initializable {
             tabPaneStudy.getSelectionModel().select(tabMain);
 
         } else {
-            Tab newTab = createNewTabDocument(documentDto);
+            Tab newTab = tabDocumentFactory.addTabDocument(
+                    stage,
+                    tabPaneStudy,
+                    tabAdd,
+                    itemSelected,
+                    documentDto
+            );
+
             tabPaneStudy.getSelectionModel().select(newTab);
         }
-    }
-
-    private Tab createNewTabDocument(DocumentDTO documentDto) {
-        EditorDocumentController editorDocumentController = new EditorDocumentController();
-
-        Label lblTitle = new Label();
-
-        editorDocumentController.setLblTitle(lblTitle);
-        editorDocumentController.setDocumentDto(documentDto);
-        editorDocumentController.setStage(stage);
-
-        if (itemSelected instanceof StudyDTO studyDto) {
-            editorDocumentController.setStudyDto(studyDto);
-        } else if (itemSelected instanceof TopicDTO topicDto) {
-            editorDocumentController.setTopicDto(topicDto);
-        }
-
-        EditorDocumentWindow editorDocumentWindow = new EditorDocumentWindow(editorDocumentController);
-
-        int indexTabs = tabPaneStudy.getTabs().indexOf(tabAdd);
-        VBox root = editorDocumentWindow.getRoot();
-
-        Tab newTab = uiHelper.createNewTab(indexTabs, root, lblTitle, documentDto);
-
-        editorDocumentController.setTab(newTab);
-        editorDocumentController.setTabPaneStudy(tabPaneStudy);
-
-        newTab.setUserData(editorDocumentController);
-
-        tabPaneStudy.getTabs().add(indexTabs, newTab);
-
-        return newTab;
     }
 
     private void showRoadMap() {
@@ -331,7 +305,7 @@ public class PaneRightController implements Initializable {
         uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
         uiHelper.updateTxtHierarchyPath(txtHierarchyPath, navigator.getBackStack());
         uiHelper.updateTitleItemMain(lblTitleMain, itemSelected);
-        uiHelper.updateTabs(tabPaneStudy, tabMain, tabAdd, itemSelected, this::createNewTabDocument);
+        tabDocumentFactory.updateTabs(stage, tabPaneStudy, tabMain, tabAdd, itemSelected);
         uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, itemSelected);
     }
 
@@ -346,7 +320,7 @@ public class PaneRightController implements Initializable {
 
     private boolean verifyDocumentEditingOrNotSave() {
         EditorDocumentController editorDocumentController =
-                uiHelper.verifyDocumentEditingOrNotSave(
+                tabDocumentFactory.verifyDocumentEditingOrNotSave(
                         tabPaneStudy,
                         tabMain,
                         tabAdd
