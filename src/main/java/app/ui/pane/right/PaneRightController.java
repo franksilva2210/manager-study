@@ -27,9 +27,6 @@ import java.util.ResourceBundle;
 public class PaneRightController implements Initializable {
 
     @FXML
-    private TabPane tabPaneStudy;
-
-    @FXML
     private Button bttNavigationLeft;
 
     @FXML
@@ -39,13 +36,16 @@ public class PaneRightController implements Initializable {
     private TextField txtHierarchyPath;
 
     @FXML
+    private TabPane tabPaneStudy;
+
+    @FXML
     private Tab tabMain;
 
     @FXML
-    private Label lblTitleMain;
+    private Button bttRoadMap;
 
     @FXML
-    private Button bttRoadMap;
+    private Label lblTitleMain;
 
     @FXML
     private TextField txtSearchTopics;
@@ -308,6 +308,17 @@ public class PaneRightController implements Initializable {
         }
     }
 
+    // Helpers -----------------------
+
+    public void openItem(Object itemSelected) {
+        if (!verifyDocumentEditingOrNotSave())
+            return;
+
+        refreshItemSelected(itemSelected);
+        navigator.navigate(this.itemSelected);
+        loadDataScreen();
+    }
+
     private void refreshItemSelected(Object itemSelected) {
         if (itemSelected instanceof StudyDTO studyDto) {
             this.itemSelected = paneRightService.loadStudy(studyDto.getId());
@@ -325,15 +336,6 @@ public class PaneRightController implements Initializable {
         uiHelper.updateTitleItemMain(lblTitleMain, itemSelected);
         tabDocumentFactory.generateTabs(stage, tabPaneStudy, tabMain, tabAdd, itemSelected);
         uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, itemSelected);
-    }
-
-    public void openItem(Object itemSelected) {
-        if (!verifyDocumentEditingOrNotSave())
-            return;
-
-        refreshItemSelected(itemSelected);
-        navigator.navigate(this.itemSelected);
-        loadDataScreen();
     }
 
     private boolean verifyDocumentEditingOrNotSave() {
