@@ -84,6 +84,10 @@ public class PaneRightController implements Initializable {
         return itemSelected;
     }
 
+    public PaneRightNavigator getNavigator() {
+        return navigator;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         listViewTopics.setItems(listTopicsObservable);
@@ -141,6 +145,8 @@ public class PaneRightController implements Initializable {
         });
     }
 
+    // Navegação ------------------------------
+
     private void navigateBack() {
         if (!verifyDocumentEditingOrNotSave())
             return;
@@ -158,6 +164,8 @@ public class PaneRightController implements Initializable {
         refreshItemSelected(itemForward);
         loadDataScreen();
     }
+
+    // Aba Document
 
     private void addNewTabDocument(DocumentDTO documentDto) {
         if (itemSelected == null) {
@@ -186,9 +194,13 @@ public class PaneRightController implements Initializable {
         }
     }
 
+    // Tools -------------------------
+
     private void showRoadMap() {
 
     }
+
+    // Topics -------------------------
 
     private void selectTopicInListView() {
         TopicDTO topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
