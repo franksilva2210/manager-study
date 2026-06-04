@@ -358,12 +358,20 @@ public class PaneRightController implements Initializable {
                 );
 
         if (editorDocumentController != null) {
+            String nameItem = null;
+            if (itemSelected instanceof StudyDTO studyDto) {
+                nameItem = studyDto.getMatter();
+            } else if (itemSelected instanceof TopicDTO topicDto) {
+                nameItem = topicDto.getTitle();
+            }
+
             MessageConfirmController controller = new MessageConfirmController();
             controller.setConfirm(false);
             controller.setMsgUser(
-                    "Existem Documentos com alterações não salvas.\n" +
-                            "Deseja continuar mesmo assim?\n\n" +
-                            "Documento editando: " + editorDocumentController.getDocumentDto().getTitle()
+                    "Existem Documentos não salvos em:\n" +
+                    nameItem + "\n" +
+                    "Deseja continuar mesmo assim?\n\n" +
+                    "Documento editando: " + editorDocumentController.getDocumentDto().getTitle()
             );
 
             MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
