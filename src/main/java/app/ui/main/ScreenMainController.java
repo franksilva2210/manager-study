@@ -116,8 +116,11 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void showRoadMap() {
-		RoadMapController roadMapController = new RoadMapController();
+		if (paneRightController == null || paneRightController.getItemSelected() == null)
+			return;
 
+		RoadMapController roadMapController = new RoadMapController();
+		roadMapController.setItemSelected(paneRightController.getItemSelected());
 		RoadMapWindow roadMapWindow	= new RoadMapWindow(stage, roadMapController);
 		roadMapWindow.showScreen();
 	}
@@ -128,13 +131,13 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void loadPaneRight() {
-		paneRightController = new PaneRightController();
+		paneRightController = new PaneRightController(stage);
 		PaneRightWindow window = new PaneRightWindow(paneRightController);
 		paneRight.getChildren().setAll(window.getRoot());
 	}
 
 	private void loadMenuLeft() {
-		paneLeftController = new PaneLeftController();
+		paneLeftController = new PaneLeftController(stage);
 		PaneLeftWindow window = new PaneLeftWindow(paneLeftController);
 		menuLeft.getChildren().setAll(window.getRoot());
 	}
