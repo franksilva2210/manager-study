@@ -8,6 +8,7 @@ import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
 import app.ui.message.MessageInfoController;
 import app.ui.message.MessageInfoWindow;
+import app.ui.pane.left.PaneLeftController;
 import app.ui.topic.register.RegisterTopicController;
 import app.ui.topic.register.RegisterTopicWindow;
 import javafx.collections.FXCollections;
@@ -71,6 +72,7 @@ public class PaneRightController implements Initializable {
     private TabDocumentFactory tabDocumentFactory = new TabDocumentFactory();
     private PaneRightNavigator navigator = new PaneRightNavigator();
     private Object itemSelected;
+    private PaneLeftController paneLeftController;
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -86,6 +88,10 @@ public class PaneRightController implements Initializable {
 
     public PaneRightNavigator getNavigator() {
         return navigator;
+    }
+
+    public void setPaneLeftController(PaneLeftController paneLeftController) {
+        this.paneLeftController = paneLeftController;
     }
 
     @Override
