@@ -160,7 +160,7 @@ public class PaneRightController implements Initializable {
     // Navegação ------------------------------
 
     private void navigateBack() {
-        if (!verifyDocumentEditingOrNotSave())
+        if (!confirmChangeStudyOrTopic())
             return;
 
         Object itemBack = navigator.back();
@@ -169,7 +169,7 @@ public class PaneRightController implements Initializable {
     }
 
     private void navigateForward() {
-        if (!verifyDocumentEditingOrNotSave())
+        if (!confirmChangeStudyOrTopic())
             return;
 
         Object itemForward = navigator.forward();
@@ -322,7 +322,7 @@ public class PaneRightController implements Initializable {
     // Helpers -----------------------
 
     public void openStudy(Object itemSelected) {
-        if (!verifyDocumentEditingOrNotSave())
+        if (!confirmChangeStudyOrTopic())
             return;
 
         refreshItemSelected(itemSelected);
@@ -349,7 +349,7 @@ public class PaneRightController implements Initializable {
         uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, itemSelected);
     }
 
-    private boolean verifyDocumentEditingOrNotSave() {
+    private boolean confirmChangeStudyOrTopic() {
         EditorDocumentController editorDocumentController =
                 tabDocumentFactory.verifyDocumentEditingOrNotSave(
                         tabPaneStudy,
