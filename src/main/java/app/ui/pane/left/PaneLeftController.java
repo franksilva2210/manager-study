@@ -100,12 +100,6 @@ public class PaneLeftController implements Initializable {
         }
     }
 
-    public void refreshStudies() {
-        listStudyDTO.clear();
-        listStudyDTO.addAll(paneLeftService.consultAllStudyDto());
-        uiHelper.generateTreeItems(treeView, listStudyDTO);
-    }
-
     public void editStudy(Object objectSelected) {
         StudyDTO studyDto = (StudyDTO) objectSelected;
 
@@ -117,10 +111,12 @@ public class PaneLeftController implements Initializable {
 
         StudyDTO studyDtoUpdated = controller.getStudyDto();
 
-//        navigationService.refreshItem(studyDtoUpdated);
+        paneRightController.getNavigator()
+                .refreshItem(studyDtoUpdated);
+
+        paneRightController.loadDataScreen();
 
         refreshStudies();
-//        loadDataScreen();
     }
 
     private void removeStudy(Object objectDeletion) {
@@ -139,11 +135,16 @@ public class PaneLeftController implements Initializable {
 
         if (controller.getConfirm()) {
             paneLeftService.removeStudy(studyDeletionDto);
-//            navigationService.removeItem(studyDeletionDto);
-//            objectCurrentSelected = null;
             refreshStudies();
-//            loadDataScreen();
+            paneRightController.getNavigator().removeItem(studyDeletionDto);
+            paneRightController.loadDataScreen();
         }
+    }
+
+    public void refreshStudies() {
+        listStudyDTO.clear();
+        listStudyDTO.addAll(paneLeftService.consultAllStudyDto());
+        uiHelper.generateTreeItems(treeView, listStudyDTO);
     }
 
     private void initUI() {
