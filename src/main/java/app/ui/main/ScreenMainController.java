@@ -141,6 +141,7 @@ public class ScreenMainController implements Initializable {
 
 	private void connectControllers() {
 		paneLeftController.setPaneRightController(paneRightController);
+		paneRightController.setPaneLeftController(paneLeftController);
 	}
 
 }
