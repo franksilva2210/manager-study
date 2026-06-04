@@ -106,7 +106,7 @@ public class PaneRightController implements Initializable {
 
         listViewTopics.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                selectTopicInListView();
+                openTopic();
             }
         });
 
@@ -140,7 +140,7 @@ public class PaneRightController implements Initializable {
 
         listViewTopics.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                selectTopicInListView();
+                openTopic();
             }
         });
 
@@ -217,10 +217,12 @@ public class PaneRightController implements Initializable {
 
     // Topics -------------------------
 
-    private void selectTopicInListView() {
+    private void openTopic() {
         TopicDTO topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
         if (topicSelected != null) {
-            openItem(topicSelected);
+            refreshItemSelected(topicSelected);
+            navigator.navigate(this.itemSelected);
+            loadDataScreen();
         }
     }
 
@@ -319,7 +321,7 @@ public class PaneRightController implements Initializable {
 
     // Helpers -----------------------
 
-    public void openItem(Object itemSelected) {
+    public void openStudy(Object itemSelected) {
         if (!verifyDocumentEditingOrNotSave())
             return;
 

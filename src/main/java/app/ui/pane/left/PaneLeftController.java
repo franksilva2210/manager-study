@@ -100,7 +100,7 @@ public class PaneLeftController implements Initializable {
     private void selectItemMenuLeft() {
         TreeItem<Object> itemSelected = treeView.getSelectionModel().getSelectedItem();
         if (itemSelected != null) {
-            paneRightController.openItem(itemSelected.getValue());
+            paneRightController.openStudy(itemSelected.getValue());
         }
     }
 
