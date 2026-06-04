@@ -9,6 +9,8 @@ import app.ui.message.MessageConfirmWindow;
 import app.ui.message.MessageInfoController;
 import app.ui.message.MessageInfoWindow;
 import app.ui.pane.left.PaneLeftController;
+import app.ui.roadmap.RoadMapController;
+import app.ui.roadmap.RoadMapWindow;
 import app.ui.topic.register.RegisterTopicController;
 import app.ui.topic.register.RegisterTopicWindow;
 import javafx.collections.FXCollections;
@@ -73,6 +75,10 @@ public class PaneRightController implements Initializable {
     private PaneRightNavigator navigator = new PaneRightNavigator();
     private Object itemSelected;
     private PaneLeftController paneLeftController;
+
+    public PaneRightController(Stage stage) {
+        this.stage = stage;
+    }
 
     public void setStage(Stage stage) {
         this.stage = stage;
@@ -203,7 +209,10 @@ public class PaneRightController implements Initializable {
     // Tools -------------------------
 
     private void showRoadMap() {
-
+        RoadMapController roadMapController = new RoadMapController();
+        roadMapController.setItemSelected(itemSelected);
+        RoadMapWindow roadMapWindow	= new RoadMapWindow(stage, roadMapController);
+        roadMapWindow.showScreen();
     }
 
     // Topics -------------------------

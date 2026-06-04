@@ -23,7 +23,7 @@ public class RoadMapController implements Initializable {
 
     private Stage stage;
 
-    private Object objectCurrentSelected;
+    private Object itemSelected;
 
     private RoadMapService roadMapService = new RoadMapService();
 
@@ -33,10 +33,10 @@ public class RoadMapController implements Initializable {
     }
 
     private void showRoadMap() {
-        if (objectCurrentSelected instanceof StudyDTO studySelectedDto) {
+        if (itemSelected instanceof StudyDTO studySelectedDto) {
             StudyDTO studyFullDto = roadMapService.loadStudyFull(studySelectedDto.getId());
             renderStudy(studyFullDto, 0);
-        } else if (objectCurrentSelected instanceof TopicDTO topicSelectedDto) {
+        } else if (itemSelected instanceof TopicDTO topicSelectedDto) {
             TopicDTO topicFullDto = roadMapService.loadTopicFull(topicSelectedDto.getId());
             renderTopic(topicFullDto, 0);
         }
@@ -74,7 +74,7 @@ public class RoadMapController implements Initializable {
         this.stage = stage;
     }
 
-    public void setObjectCurrentSelected(Object objectCurrentSelected) {
-        this.objectCurrentSelected = objectCurrentSelected;
+    public void setItemSelected(Object itemSelected) {
+        this.itemSelected = itemSelected;
     }
 }

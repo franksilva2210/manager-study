@@ -21,7 +21,6 @@ public class PaneRightWindow {
         stage.setResizable(false);
 
         this.controller = controller;
-        controller.setStage(stage);
 
         FXMLLoader rootFxml = new FXMLLoader();
         rootFxml.setLocation(PaneRightWindow.class.getResource("PaneRightWindow.fxml"));

@@ -33,6 +33,10 @@ public class PaneLeftController implements Initializable {
     private PaneLeftUIHelper uiHelper = new PaneLeftUIHelper();
     private PaneRightController paneRightController;
 
+    public PaneLeftController(Stage stage) {
+        this.stage = stage;
+    }
+
     public void setStage(Stage stage) {
         this.stage = stage;
     }
