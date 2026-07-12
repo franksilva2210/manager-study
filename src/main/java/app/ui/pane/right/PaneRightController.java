@@ -229,6 +229,9 @@ public class PaneRightController implements Initializable {
     // Topics -------------------------
 
     private void openTopic() {
+        if (!confirmChangeStudyOrTopic())
+            return;
+
         TopicDTO topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
         if (topicSelected != null) {
             refreshItemSelected(topicSelected);
@@ -360,7 +363,7 @@ public class PaneRightController implements Initializable {
         uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, itemSelected);
     }
 
-    private boolean confirmChangeStudyOrTopic() {
+    public boolean confirmChangeStudyOrTopic() {
         EditorDocumentController editorDocumentController =
                 tabDocumentFactory.verifyDocumentEditingOrNotSave(
                         tabPaneStudy,

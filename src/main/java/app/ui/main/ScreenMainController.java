@@ -92,6 +92,13 @@ public class ScreenMainController implements Initializable {
 
 		connectControllers();
 
+		stage.setOnCloseRequest(event -> {
+			boolean confirm = paneRightController.confirmChangeStudyOrTopic();
+			if (!confirm) {
+				event.consume();
+			}
+		});
+
 	}
 
 	private void newStudy() {
