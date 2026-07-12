@@ -107,7 +107,7 @@ public class ConfigDragDroppedListView {
 
             try {
 
-                service.moveTopic(topicDragged, topicDestination);
+                service.moveTopicToTopic(topicDragged, topicDestination);
                 reloadCallback.run();
                 event.setDropCompleted(true);
                 event.consume();

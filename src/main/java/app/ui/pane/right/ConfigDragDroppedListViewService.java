@@ -14,7 +14,7 @@ public class ConfigDragDroppedListViewService {
         return TopicMapper.toSimpleDTO(topic);
     }
 
-    public void moveTopic(
+    public void moveTopicToTopic(
             TopicDTO topicDragged,
             TopicDTO topicDestination) {
 
