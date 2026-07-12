@@ -95,15 +95,16 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void newStudy() {
-		RegisterStudyController controller =
-				new RegisterStudyController();
-
+		RegisterStudyController controller = new RegisterStudyController();
 		controller.setStudyDto(new StudyDTO());
 
-		RegisterStudyWindow registerStudyWindow =
-				new RegisterStudyWindow(stage, controller);
+		RegisterStudyWindow window = new RegisterStudyWindow(stage, controller);
+		window.showScreen();
 
-		registerStudyWindow.showScreen();
+		StudyDTO studyCreateDto = controller.getStudyDto();
+		if (studyCreateDto.getId() != null && studyCreateDto.getId() > 0) {
+			paneLeftController.refreshStudies();
+		}
 	}
 
 	private void openScreenBackup() {

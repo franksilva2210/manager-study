@@ -115,9 +115,7 @@ public class PaneLeftController implements Initializable {
 
         StudyDTO studyDtoUpdated = controller.getStudyDto();
 
-        paneRightController.getNavigator()
-                .refreshItem(studyDtoUpdated);
-
+        paneRightController.getNavigator().refreshItem(studyDtoUpdated);
         paneRightController.loadDataScreen();
 
         refreshStudies();
