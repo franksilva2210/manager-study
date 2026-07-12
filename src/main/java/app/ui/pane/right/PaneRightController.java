@@ -71,6 +71,7 @@ public class PaneRightController implements Initializable {
     private ObservableList<TopicDTO> listTopicsObservable = FXCollections.observableArrayList();
     private PaneRightService paneRightService = new PaneRightService();
     private PaneRightUIHelper uiHelper = new PaneRightUIHelper();
+    private ConfigDragDroppedListView configDragDroppedListView = new ConfigDragDroppedListView();
     private TabDocumentFactory tabDocumentFactory = new TabDocumentFactory();
     private PaneRightNavigator navigator = new PaneRightNavigator();
     private Object itemSelected;
@@ -102,6 +103,7 @@ public class PaneRightController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         listViewTopics.setItems(listTopicsObservable);
 
         listViewTopics.setOnKeyPressed(event -> {
@@ -109,6 +111,21 @@ public class PaneRightController implements Initializable {
                 openTopic();
             }
         });
+
+        listViewTopics.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                openTopic();
+            }
+        });
+
+        configDragDroppedListView.configureDragDropped(
+                listViewTopics,
+                stage,
+                () -> {
+                    refreshItemSelected(itemSelected);
+                    loadDataScreen();
+                }
+        );
 
         bttNavigationLeft.setOnAction(event -> {
             navigateBack();
@@ -135,12 +152,6 @@ public class PaneRightController implements Initializable {
         tabAdd.setOnSelectionChanged(event -> {
             if (tabAdd.isSelected()) {
                 addNewTabDocument(new DocumentDTO());
-            }
-        });
-
-        listViewTopics.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                openTopic();
             }
         });
 
