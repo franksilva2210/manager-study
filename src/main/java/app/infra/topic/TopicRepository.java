@@ -1,6 +1,7 @@
 package app.infra.topic;
 
 import app.application.topic.TopicDTO;
+import app.domain.study.Study;
 import app.domain.topic.Topic;
 import app.infra.HibernateUtil;
 import jakarta.persistence.EntityManager;
@@ -157,7 +158,7 @@ public class TopicRepository {
         }
     }
 
-    public void moveTopic(TopicDTO dto) {
+    public void updateTopicParent(TopicDTO dto) {
         EntityManager em = HibernateUtil.getEntityManager();
 
         try {
@@ -168,6 +169,34 @@ public class TopicRepository {
 
             topic.setStudy(null);
             topic.setTopicParent(topicParent);
+
+            em.getTransaction().commit();
+
+        } catch (Exception e) {
+
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+
+            throw e;
+
+        } finally {
+            em.close();
+        }
+    }
+
+    public void updateStudyParent(TopicDTO topicDto) {
+        EntityManager em = HibernateUtil.getEntityManager();
+
+        try {
+
+            em.getTransaction().begin();
+
+            Topic topic = em.find(Topic.class, topicDto.getId());
+            Study study = em.find(Study.class, topicDto.getStudyId());
+
+            topic.setTopicParent(null);
+            topic.setStudy(study);
 
             em.getTransaction().commit();
 

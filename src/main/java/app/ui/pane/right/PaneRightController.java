@@ -4,6 +4,7 @@ import app.application.document.DocumentDTO;
 import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
 import app.ui.document.edit.EditorDocumentController;
+import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
 import app.ui.message.MessageInfoController;
@@ -67,30 +68,19 @@ public class PaneRightController implements Initializable {
     @FXML
     private Tab tabAdd;
 
-    private Stage stage;
+    private final Stage stage;
+    private final ScreenMainState state;
     private ObservableList<TopicDTO> listTopicsObservable = FXCollections.observableArrayList();
     private PaneRightService paneRightService = new PaneRightService();
     private PaneRightUIHelper uiHelper = new PaneRightUIHelper();
     private ConfigDragDroppedListView configDragDroppedListView = new ConfigDragDroppedListView();
     private TabDocumentFactory tabDocumentFactory = new TabDocumentFactory();
     private PaneRightNavigator navigator = new PaneRightNavigator();
-    private Object itemSelected;
     private PaneLeftController paneLeftController;
 
-    public PaneRightController(Stage stage) {
+    public PaneRightController(Stage stage, ScreenMainState state) {
         this.stage = stage;
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    public void setItemSelected(Object objectCurrentSelected) {
-        this.itemSelected = objectCurrentSelected;
-    }
-
-    public Object getItemSelected() {
-        return itemSelected;
+        this.state = state;
     }
 
     public PaneRightNavigator getNavigator() {
@@ -120,9 +110,8 @@ public class PaneRightController implements Initializable {
 
         configDragDroppedListView.configureDragDropped(
                 listViewTopics,
-                stage,
                 () -> {
-                    refreshItemSelected(itemSelected);
+                    refreshItemSelected(state.getItemSelected());
                     loadDataScreen();
                 }
         );
@@ -145,7 +134,7 @@ public class PaneRightController implements Initializable {
 
         txtSearchTopics.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.BACK_SPACE && txtSearchTopics.getText().isBlank()) {
-                uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, itemSelected);
+                uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, state.getItemSelected());
             }
         });
 
@@ -191,7 +180,7 @@ public class PaneRightController implements Initializable {
     // Aba Document
 
     private void addNewTabDocument(DocumentDTO documentDto) {
-        if (itemSelected == null) {
+        if (state.getItemSelected() == null) {
             MessageInfoController controller = new MessageInfoController();
             controller.setMsgUser(
                     "Selecione primeiro um estudo para adicionar\n" +
@@ -209,7 +198,7 @@ public class PaneRightController implements Initializable {
                     stage,
                     tabPaneStudy,
                     tabAdd,
-                    itemSelected,
+                    state.getItemSelected(),
                     documentDto
             );
 
@@ -221,7 +210,7 @@ public class PaneRightController implements Initializable {
 
     private void showRoadMap() {
         RoadMapController roadMapController = new RoadMapController();
-        roadMapController.setItemSelected(itemSelected);
+        roadMapController.setItemSelected(state.getItemSelected());
         RoadMapWindow roadMapWindow	= new RoadMapWindow(stage, roadMapController);
         roadMapWindow.showScreen();
     }
@@ -235,7 +224,7 @@ public class PaneRightController implements Initializable {
         TopicDTO topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
         if (topicSelected != null) {
             refreshItemSelected(topicSelected);
-            navigator.navigate(this.itemSelected);
+            navigator.navigate(state.getItemSelected());
             loadDataScreen();
         }
     }
@@ -258,21 +247,21 @@ public class PaneRightController implements Initializable {
                 listViewTopics.refresh();
             }
         } else {
-            uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, itemSelected);
+            uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, state.getItemSelected());
         }
     }
 
     private void newTopic() {
-        if (itemSelected == null) {
+        if (state.getItemSelected() == null) {
             return;
         }
 
         RegisterTopicController registerTopicController = new RegisterTopicController();
         registerTopicController.setTopicDto(new TopicDTO());
 
-        if (itemSelected instanceof StudyDTO studyDto) {
+        if (state.getItemSelected() instanceof StudyDTO studyDto) {
             registerTopicController.setStudy(studyDto);
-        } else if (itemSelected instanceof TopicDTO topicDto) {
+        } else if (state.getItemSelected() instanceof TopicDTO topicDto) {
             registerTopicController.setTopicParent(topicDto);
         }
 
@@ -281,7 +270,7 @@ public class PaneRightController implements Initializable {
 
         if (registerTopicController.getTopicDto().getId() != null &&
                 registerTopicController.getTopicDto().getId() > 0) {
-            refreshItemSelected(this.itemSelected);
+            refreshItemSelected(state.getItemSelected());
             loadDataScreen();
         }
     }
@@ -289,7 +278,7 @@ public class PaneRightController implements Initializable {
     public void editTopic() {
         TopicDTO topicSelectedDto = listViewTopics.getSelectionModel().getSelectedItem();
 
-        if (itemSelected == null || topicSelectedDto == null) {
+        if (state.getItemSelected() == null || topicSelectedDto == null) {
             return;
         }
 
@@ -301,7 +290,7 @@ public class PaneRightController implements Initializable {
 
         navigator.refreshItem(registerTopicController.getTopicDto());
 
-        refreshItemSelected(this.itemSelected);
+        refreshItemSelected(state.getItemSelected());
 
         loadDataScreen();
     }
@@ -309,7 +298,7 @@ public class PaneRightController implements Initializable {
     private void removeTopic() {
         TopicDTO topicSelectedDto = listViewTopics.getSelectionModel().getSelectedItem();
 
-        if (itemSelected == null || topicSelectedDto == null) {
+        if (state.getItemSelected() == null || topicSelectedDto == null) {
             return;
         }
 
@@ -328,7 +317,7 @@ public class PaneRightController implements Initializable {
             paneRightService.removeTopic(topicSelectedDto);
             navigator.removeItem(topicSelectedDto);
 
-            refreshItemSelected(this.itemSelected);
+            refreshItemSelected(state.getItemSelected());
             loadDataScreen();
         }
     }
@@ -340,15 +329,15 @@ public class PaneRightController implements Initializable {
             return;
 
         refreshItemSelected(itemSelected);
-        navigator.navigate(this.itemSelected);
+        navigator.navigate(state.getItemSelected());
         loadDataScreen();
     }
 
     public void refreshItemSelected(Object itemSelected) {
         if (itemSelected instanceof StudyDTO studyDto) {
-            this.itemSelected = paneRightService.loadStudy(studyDto.getId());
+            state.setItemSelected(paneRightService.loadStudy(studyDto.getId()));
         } else if (itemSelected instanceof TopicDTO topicDto) {
-            this.itemSelected = paneRightService.loadTopic(topicDto.getId());
+            state.setItemSelected(paneRightService.loadTopic(topicDto.getId()));
         }
     }
 
@@ -358,9 +347,9 @@ public class PaneRightController implements Initializable {
 
         uiHelper.updateNavigationButtons(bttNavigationLeft, bttNavigationRight, canGoBack, canGoForward);
         uiHelper.updateTxtHierarchyPath(txtHierarchyPath, navigator.getBackStack());
-        uiHelper.updateTitleItemMain(lblTitleMain, itemSelected);
-        tabDocumentFactory.generateTabs(stage, tabPaneStudy, tabMain, tabAdd, itemSelected);
-        uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, itemSelected);
+        uiHelper.updateTitleItemMain(lblTitleMain, state.getItemSelected());
+        tabDocumentFactory.generateTabs(stage, tabPaneStudy, tabMain, tabAdd, state.getItemSelected());
+        uiHelper.updateListViewTopics(listTopicsObservable, listViewTopics, state.getItemSelected());
     }
 
     public boolean confirmChangeStudyOrTopic() {
@@ -373,9 +362,9 @@ public class PaneRightController implements Initializable {
 
         if (editorDocumentController != null) {
             String nameItem = null;
-            if (itemSelected instanceof StudyDTO studyDto) {
+            if (state.getItemSelected() instanceof StudyDTO studyDto) {
                 nameItem = studyDto.getMatter();
-            } else if (itemSelected instanceof TopicDTO topicDto) {
+            } else if (state.getItemSelected() instanceof TopicDTO topicDto) {
                 nameItem = topicDto.getTitle();
             }
 

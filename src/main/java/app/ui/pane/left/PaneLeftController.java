@@ -1,6 +1,7 @@
 package app.ui.pane.left;
 
 import app.application.study.StudyDTO;
+import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
 import app.ui.pane.right.PaneRightController;
@@ -27,18 +28,17 @@ public class PaneLeftController implements Initializable {
     @FXML
     private TreeView<Object> treeView;
 
-    private Stage stage;
+    private final Stage stage;
+    private final ScreenMainState state;
     private List<StudyDTO> listStudyDTO = new ArrayList<>();
     private PaneLeftService paneLeftService = new PaneLeftService();
     private PaneLeftUIHelper uiHelper = new PaneLeftUIHelper();
+    private ConfigDragDroppedTreeView configDragDroppedTreeView = new ConfigDragDroppedTreeView();
     private PaneRightController paneRightController;
 
-    public PaneLeftController(Stage stage) {
+    public PaneLeftController(Stage stage, ScreenMainState state) {
         this.stage = stage;
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
+        this.state = state;
     }
 
     public void setPaneRightController(PaneRightController paneRightController) {
@@ -59,6 +59,17 @@ public class PaneLeftController implements Initializable {
             }
         });
 
+        uiHelper.initTreeView(treeView, this::editStudy, this::removeStudy);
+
+        configDragDroppedTreeView.configureDragDropped(
+                treeView,
+                () -> {
+                    paneRightController.refreshItemSelected(state.getItemSelected());
+                    paneRightController.getNavigator().refreshItem(state.getItemSelected());
+                    paneRightController.loadDataScreen();
+                }
+        );
+
         txtSearchStudies.setOnAction(event -> {
             searchStudies();
         });
@@ -68,8 +79,6 @@ public class PaneLeftController implements Initializable {
                 refreshStudies();
             }
         });
-
-        initUI();
 
         refreshStudies();
     }
@@ -147,9 +156,5 @@ public class PaneLeftController implements Initializable {
         listStudyDTO.clear();
         listStudyDTO.addAll(paneLeftService.consultAllStudyDto());
         uiHelper.generateTreeItems(treeView, listStudyDTO);
-    }
-
-    private void initUI() {
-        uiHelper.initTreeView(treeView, this::editStudy, this::removeStudy);
     }
 }

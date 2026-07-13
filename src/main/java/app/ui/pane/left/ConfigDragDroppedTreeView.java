@@ -1,30 +1,40 @@
-package app.ui.pane.right;
+package app.ui.pane.left;
 
+import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import app.ui.pane.right.DragDroppedService;
+import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 
-public class ConfigDragDroppedListView {
+public class ConfigDragDroppedTreeView {
 
     private DragDroppedService service =
             new DragDroppedService();
 
     public void configureDragDropped(
-            ListView<TopicDTO> listViewTopics,
+            TreeView<Object> treeView,
             Runnable reloadCallback
     ) {
-        listViewTopics.setCellFactory(lv -> {
 
-            ListCell<TopicDTO> cell = new ListCell<>() {
+        treeView.setCellFactory(tv -> {
+
+            TreeCell<Object> cell = new TreeCell<>() {
 
                 @Override
-                protected void updateItem(TopicDTO item, boolean empty) {
+                protected void updateItem(Object item, boolean empty) {
+
                     super.updateItem(item, empty);
 
-                    setText(empty || item == null ? null : item.getTitle());
+                    if (empty) {
+                        setText(null);
+                    } else if (item instanceof StudyDTO study) {
+                        setText(study.getMatter());
+                    } else if (item instanceof TopicDTO topic) {
+                        setText(topic.getTitle());
+                    }
                 }
             };
 
@@ -37,7 +47,7 @@ public class ConfigDragDroppedListView {
         });
     }
 
-    private void setOnDragDetected(ListCell<TopicDTO> cell) {
+    private void setOnDragDetected(TreeCell<Object> cell) {
         cell.setOnDragDetected(event -> {
 
             if (cell.isEmpty()) {
@@ -48,9 +58,17 @@ public class ConfigDragDroppedListView {
 
             ClipboardContent content = new ClipboardContent();
 
-            content.putString(
-                    cell.getItem().getId().toString()
-            );
+            Object objectDestination = cell.getItem();
+
+            if (objectDestination instanceof StudyDTO studyDestination) {
+                content.putString(
+                        studyDestination.getId().toString()
+                );
+            } else if (objectDestination instanceof TopicDTO topicDestination) {
+                content.putString(
+                        topicDestination.getId().toString()
+                );
+            }
 
             dragboard.setContent(content);
 
@@ -58,8 +76,7 @@ public class ConfigDragDroppedListView {
         });
     }
 
-    private void setOnDragOver(ListCell<TopicDTO> cell) {
-
+    private void setOnDragOver(TreeCell<Object> cell) {
         cell.setOnDragOver(event -> {
             if (!cell.isEmpty()) {
                 event.acceptTransferModes(TransferMode.MOVE);
@@ -69,9 +86,8 @@ public class ConfigDragDroppedListView {
 
     }
 
-    private void setFeedBackVisual(ListCell<TopicDTO> cell) {
+    private void setFeedBackVisual(TreeCell<Object> cell) {
         cell.setOnDragEntered(event -> {
-
             if (!cell.isEmpty()) {
                 cell.setStyle(
                         "-fx-background-color: #3c78d8;"
@@ -85,7 +101,7 @@ public class ConfigDragDroppedListView {
     }
 
     private void setOnDragDropped(
-            ListCell<TopicDTO> cell,
+            TreeCell<Object> cell,
             Runnable reloadCallback) {
 
         cell.setOnDragDropped(event -> {
@@ -98,9 +114,14 @@ public class ConfigDragDroppedListView {
 
             Long draggedId = Long.valueOf(dragboard.getString());
             TopicDTO topicDragged = service.loadSimpleTopic(draggedId);
-            TopicDTO topicDestination = cell.getItem();
+            Object objectDestination = cell.getItem();
 
-            service.moveTopicToTopic(topicDragged, topicDestination);
+            if (objectDestination instanceof StudyDTO studyDestination) {
+                service.moveTopicToStudy(topicDragged, studyDestination);
+            } else if (objectDestination instanceof TopicDTO topicDestination) {
+                service.moveTopicToTopic(topicDragged, topicDestination);
+            }
+
             reloadCallback.run();
             event.setDropCompleted(true);
             event.consume();

@@ -1,6 +1,7 @@
 package app.infra.study;
 
 import app.application.study.StudyDTO;
+import app.application.topic.TopicDTO;
 import app.domain.study.Study;
 import app.domain.topic.Topic;
 import app.infra.HibernateUtil;
@@ -94,18 +95,6 @@ public class StudyRepository {
         }
     }
 
-    public Study findById(Long id) {
-        EntityManager em = HibernateUtil.getEntityManager();
-
-        try {
-
-            return em.find(Study.class, id);
-
-        } finally {
-            em.close();
-        }
-    }
-
     public Study findByIdWithTopics(Long id) {
         EntityManager em = HibernateUtil.getEntityManager();
 
@@ -152,21 +141,6 @@ public class StudyRepository {
 
             return study;
 
-        } finally {
-            em.close();
-        }
-    }
-
-    public List<Study> findAll() {
-        EntityManager em = HibernateUtil.getEntityManager();
-        try {
-            return em.createQuery(
-                    """
-                    SELECT DISTINCT s
-                    FROM Study s
-                    """,
-                    Study.class
-            ).getResultList();
         } finally {
             em.close();
         }
