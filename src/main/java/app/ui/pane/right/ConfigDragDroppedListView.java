@@ -1,8 +1,6 @@
 package app.ui.pane.right;
 
 import app.application.topic.TopicDTO;
-import app.ui.message.MessageInfoController;
-import app.ui.message.MessageInfoWindow;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.ClipboardContent;
@@ -12,8 +10,8 @@ import javafx.stage.Stage;
 
 public class ConfigDragDroppedListView {
 
-    private ConfigDragDroppedListViewService service =
-            new ConfigDragDroppedListViewService();
+    private DragDroppedService service =
+            new DragDroppedService();
 
     public void configureDragDropped(
             ListView<TopicDTO> listViewTopics,
@@ -35,7 +33,7 @@ public class ConfigDragDroppedListView {
             setOnDragDetected(cell);
             setOnDragOver(cell);
             setFeedBackVisual(cell);
-            setOnDragDropped(cell, stage, reloadCallback);
+            setOnDragDropped(cell, reloadCallback);
 
             return cell;
         });
@@ -90,7 +88,6 @@ public class ConfigDragDroppedListView {
 
     private void setOnDragDropped(
             ListCell<TopicDTO> cell,
-            Stage stage,
             Runnable reloadCallback) {
 
         cell.setOnDragDropped(event -> {
@@ -105,26 +102,10 @@ public class ConfigDragDroppedListView {
             TopicDTO topicDragged = service.loadSimpleTopic(draggedId);
             TopicDTO topicDestination = cell.getItem();
 
-            try {
-
-                service.moveTopicToTopic(topicDragged, topicDestination);
-                reloadCallback.run();
-                event.setDropCompleted(true);
-                event.consume();
-
-            } catch (Exception e) {
-                MessageInfoController controller = new MessageInfoController();
-                controller.setMsgUser(e.getMessage());
-
-                MessageInfoWindow window = new MessageInfoWindow(
-                        stage,
-                        controller
-                );
-
-                window.showScreen();
-
-                event.setDropCompleted(false);
-            }
+            service.moveTopicToTopic(topicDragged, topicDestination);
+            reloadCallback.run();
+            event.setDropCompleted(true);
+            event.consume();
         });
     }
 }

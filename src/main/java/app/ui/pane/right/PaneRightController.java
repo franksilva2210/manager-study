@@ -344,7 +344,7 @@ public class PaneRightController implements Initializable {
         loadDataScreen();
     }
 
-    private void refreshItemSelected(Object itemSelected) {
+    public void refreshItemSelected(Object itemSelected) {
         if (itemSelected instanceof StudyDTO studyDto) {
             this.itemSelected = paneRightService.loadStudy(studyDto.getId());
         } else if (itemSelected instanceof TopicDTO topicDto) {
