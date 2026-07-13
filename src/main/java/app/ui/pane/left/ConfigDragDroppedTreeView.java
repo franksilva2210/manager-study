@@ -56,19 +56,10 @@ public class ConfigDragDroppedTreeView {
 
             Dragboard dragboard = cell.startDragAndDrop(TransferMode.MOVE);
 
+            StudyDTO studyDrag = (StudyDTO) cell.getItem();
+
             ClipboardContent content = new ClipboardContent();
-
-            Object objectDestination = cell.getItem();
-
-            if (objectDestination instanceof StudyDTO studyDestination) {
-                content.putString(
-                        studyDestination.getId().toString()
-                );
-            } else if (objectDestination instanceof TopicDTO topicDestination) {
-                content.putString(
-                        topicDestination.getId().toString()
-                );
-            }
+            content.putString(studyDrag.getId().toString());
 
             dragboard.setContent(content);
 
@@ -114,15 +105,11 @@ public class ConfigDragDroppedTreeView {
 
             Long draggedId = Long.valueOf(dragboard.getString());
             TopicDTO topicDragged = service.loadSimpleTopic(draggedId);
-            Object objectDestination = cell.getItem();
+            StudyDTO studyDestination = (StudyDTO) cell.getItem();
 
-            if (objectDestination instanceof StudyDTO studyDestination) {
-                service.moveTopicToStudy(topicDragged, studyDestination);
-            } else if (objectDestination instanceof TopicDTO topicDestination) {
-                service.moveTopicToTopic(topicDragged, topicDestination);
-            }
-
+            service.moveTopicToStudy(topicDragged, studyDestination);
             reloadCallback.run();
+
             event.setDropCompleted(true);
             event.consume();
         });
