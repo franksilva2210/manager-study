@@ -131,7 +131,7 @@ public class PaneRightController implements Initializable {
         configDragDroppedListView.configureDragDropped(
                 listViewTopics,
                 () -> {
-                    refreshItemSelected(mainState.getItemSelected());
+                    mainState.refreshItemSelected();
                 }
         );
 
@@ -157,7 +157,7 @@ public class PaneRightController implements Initializable {
 
         tabAdd.setOnSelectionChanged(event -> {
             if (tabAdd.isSelected()) {
-                addNewTabDocument(new DocumentDTO());
+                addNewDocument(new DocumentDTO());
             }
         });
 
@@ -190,7 +190,8 @@ public class PaneRightController implements Initializable {
             return;
 
         Object itemBack = navigator.back();
-        refreshItemSelected(itemBack);
+        mainState.setItemSelected(itemBack);
+        mainState.refreshItemSelected();
         mappingStacksNavigatorState();
         loadTabsDocument();
     }
@@ -200,14 +201,15 @@ public class PaneRightController implements Initializable {
             return;
 
         Object itemForward = navigator.forward();
-        refreshItemSelected(itemForward);
+        mainState.setItemSelected(itemForward);
+        mainState.refreshItemSelected();
         mappingStacksNavigatorState();
         loadTabsDocument();
     }
 
-    // Aba Document
+    // Tabs -----------------------------
 
-    private void addNewTabDocument(DocumentDTO documentDto) {
+    private void addNewDocument(DocumentDTO documentDto) {
         if (mainState.getItemSelected() == null) {
             MessageInfoController controller = new MessageInfoController();
             controller.setMsgUser(
@@ -251,7 +253,8 @@ public class PaneRightController implements Initializable {
 
         TopicDTO topicSelected = listViewTopics.getSelectionModel().getSelectedItem();
         if (topicSelected != null) {
-            refreshItemSelected(topicSelected);
+            mainState.setItemSelected(topicSelected);
+            mainState.refreshItemSelected();
             navigator.navigate(mainState.getItemSelected());
             mappingStacksNavigatorState();
             loadTabsDocument();
@@ -287,7 +290,7 @@ public class PaneRightController implements Initializable {
 
         if (registerTopicController.getTopicDto().getId() != null &&
                 registerTopicController.getTopicDto().getId() > 0) {
-            refreshItemSelected(mainState.getItemSelected());
+            mainState.refreshItemSelected();
             loadTabsDocument();
         }
     }
@@ -307,7 +310,7 @@ public class PaneRightController implements Initializable {
 
         navigator.refreshItem(registerTopicController.getTopicDto());
 
-        refreshItemSelected(mainState.getItemSelected());
+        mainState.refreshItemSelected();
 
         loadTabsDocument();
     }
@@ -334,7 +337,7 @@ public class PaneRightController implements Initializable {
             paneRightService.removeTopic(topicSelectedDto);
             navigator.removeItem(topicSelectedDto);
 
-            refreshItemSelected(mainState.getItemSelected());
+            mainState.refreshItemSelected();
             loadTabsDocument();
         }
     }
@@ -345,18 +348,11 @@ public class PaneRightController implements Initializable {
         if (!confirmChangeStudyOrTopic())
             return;
 
-        refreshItemSelected(itemSelected);
+        mainState.setItemSelected(itemSelected);
+        mainState.refreshItemSelected();
         navigator.navigate(mainState.getItemSelected());
         mappingStacksNavigatorState();
         loadTabsDocument();
-    }
-
-    public void refreshItemSelected(Object itemSelected) {
-        if (itemSelected instanceof StudyDTO studyDto) {
-            mainState.setItemSelected(paneRightService.loadStudy(studyDto.getId()));
-        } else if (itemSelected instanceof TopicDTO topicDto) {
-            mainState.setItemSelected(paneRightService.loadTopic(topicDto.getId()));
-        }
     }
 
     public void loadTabsDocument() {

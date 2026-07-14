@@ -64,7 +64,7 @@ public class PaneLeftController implements Initializable {
         configDragDroppedTreeView.configureDragDropped(
                 treeView,
                 () -> {
-                    paneRightController.refreshItemSelected(state.getItemSelected());
+                    state.refreshItemSelected();
                     paneRightController.getNavigator().refreshItem(state.getItemSelected());
                 }
         );
