@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="1003.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="557.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="543.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -57,10 +57,10 @@
                      </menus>
                   </MenuBar>
                </children></VBox>
-            <HBox prefHeight="533.0" prefWidth="900.0">
+            <HBox prefHeight="533.0">
                <children>
-                  <VBox fx:id="menuLeft" prefHeight="468.0" prefWidth="276.0" />
-                  <VBox fx:id="paneRight" prefHeight="532.0" prefWidth="681.0" />
+                  <VBox fx:id="menuLeft" prefHeight="532.0" prefWidth="272.0" />
+                  <VBox fx:id="paneRight" prefHeight="532.0" prefWidth="778.0" />
                </children>
             </HBox>
          </children>
