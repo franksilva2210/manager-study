@@ -66,7 +66,6 @@ public class PaneLeftController implements Initializable {
                 () -> {
                     paneRightController.refreshItemSelected(state.getItemSelected());
                     paneRightController.getNavigator().refreshItem(state.getItemSelected());
-                    paneRightController.loadDataScreen();
                 }
         );
 
@@ -125,7 +124,7 @@ public class PaneLeftController implements Initializable {
         StudyDTO studyDtoUpdated = controller.getStudyDto();
 
         paneRightController.getNavigator().refreshItem(studyDtoUpdated);
-        paneRightController.loadDataScreen();
+        paneRightController.loadTabsDocument();
 
         refreshStudies();
     }
@@ -148,7 +147,7 @@ public class PaneLeftController implements Initializable {
             paneLeftService.removeStudy(studyDeletionDto);
             refreshStudies();
             paneRightController.getNavigator().removeItem(studyDeletionDto);
-            paneRightController.loadDataScreen();
+            paneRightController.loadTabsDocument();
         }
     }
 

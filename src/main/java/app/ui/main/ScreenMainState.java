@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleObjectProperty;
 
 public class ScreenMainState {
 
+    /* Item selected */
+
     private final ObjectProperty<Object> itemSelected =
             new SimpleObjectProperty<>();
 

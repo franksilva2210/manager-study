@@ -2,22 +2,19 @@ package app.ui.pane.right;
 
 import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
+import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class PaneRightUtil {
 
-    public String buildPath(Deque<Object> backStack) {
-
+    public String buildPath(ObservableList<Object> backStack) {
         List<String> parts = new ArrayList<>();
+        ListIterator<Object> iterator = backStack.listIterator(backStack.size());
 
-        Iterator<Object> iterator = backStack.descendingIterator();
+        while (iterator.hasPrevious()) {
 
-        while (iterator.hasNext()) {
-            Object item = iterator.next();
+            Object item = iterator.previous();
 
             if (item instanceof StudyDTO study) {
                 parts.add(study.getMatter());
