@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class TopicsController implements Initializable {
+public class TopicsPaneController implements Initializable {
 
     @FXML
     private Button bttAddTopic;
@@ -47,7 +47,7 @@ public class TopicsController implements Initializable {
     private final FilteredList<TopicDTO> filteredTopics = new FilteredList<>(listTopics);
     private final PaneRightService paneRightService = new PaneRightService();
 
-    public TopicsController(
+    public TopicsPaneController(
             Stage stage,
             ScreenMainState mainState,
             ScreenMainController screenMainController,

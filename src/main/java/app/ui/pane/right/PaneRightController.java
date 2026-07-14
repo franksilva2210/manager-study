@@ -6,7 +6,7 @@ import app.ui.main.ScreenMainState;
 import app.ui.message.MessageInfoController;
 import app.ui.message.MessageInfoWindow;
 import app.ui.pane.left.PaneLeftController;
-import app.ui.pane.right.topics.TopicsController;
+import app.ui.pane.right.topics.TopicsPaneController;
 import app.ui.pane.right.topics.TopicsPane;
 import app.ui.roadmap.RoadMapController;
 import app.ui.roadmap.RoadMapWindow;
@@ -212,7 +212,7 @@ public class PaneRightController implements Initializable {
     }
 
     private void loadPaneTopics() {
-        TopicsController controller = new TopicsController(stage, mainState, screenMainController, this, navigator);
+        TopicsPaneController controller = new TopicsPaneController(stage, mainState, screenMainController, this, navigator);
         TopicsPane pane = new TopicsPane(controller);
         pane.getRoot();
         paneTopics.getChildren().setAll(pane.getRoot());

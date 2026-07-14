@@ -3,7 +3,6 @@ package app.ui.pane.right.topics;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
@@ -15,9 +14,9 @@ public class TopicsPane {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    private TopicsController controller;
+    private TopicsPaneController controller;
 
-    public TopicsPane(TopicsController controller) {
+    public TopicsPane(TopicsPaneController controller) {
         stage = new Stage();
         stage.setResizable(false);
 
