@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
@@ -104,81 +103,7 @@
                                                 </HBox>
                                              </children>
                                           </VBox>
-                                          <VBox alignment="CENTER_LEFT" prefHeight="421.0" prefWidth="468.0" style="-fx-border-color: #cccccc; -fx-border-width: 0 0 0 1;">
-                                             <children>
-                                                <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="434.0">
-                                                   <children>
-                                                      <Label styleClass="label-title" stylesheets="@label-title.css" text="Tópicos" textFill="#4a4848">
-                                                         <HBox.margin>
-                                                            <Insets left="3.0" />
-                                                         </HBox.margin>
-                                                      </Label>
-                                                      <ToolBar prefHeight="34.0" prefWidth="411.0">
-                                                        <items>
-                                                            <Button fx:id="bttAddTopic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="35.0">
-                                                               <graphic>
-                                                                  <ImageView fitHeight="15.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
-                                                                     <image>
-                                                                        <Image url="@plus.png" />
-                                                                     </image>
-                                                                  </ImageView>
-                                                               </graphic>
-                                                            </Button>
-                                                            <Button fx:id="bttEditTopic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="35.0">
-                                                               <graphic>
-                                                                  <ImageView fitHeight="15.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
-                                                                     <image>
-                                                                        <Image url="@pencil.png" />
-                                                                     </image>
-                                                                  </ImageView>
-                                                               </graphic>
-                                                            </Button>
-                                                            <Button fx:id="bttRemoveTopic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="35.0">
-                                                               <graphic>
-                                                                  <ImageView fitHeight="15.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
-                                                                     <image>
-                                                                        <Image url="@rubbish-bin.png" />
-                                                                     </image>
-                                                                  </ImageView>
-                                                               </graphic>
-                                                            </Button>
-                                                        </items>
-                                                         <HBox.margin>
-                                                            <Insets left="5.0" />
-                                                         </HBox.margin>
-                                                      </ToolBar>
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets top="2.0" />
-                                                   </VBox.margin>
-                                                </HBox>
-                                                <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="322.0" style="-fx-border-color: #cccccc; -fx-background-color: white;">
-                                                   <children>
-                                                      <ImageView fitHeight="16.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@search.png" />
-                                                         </image>
-                                                         <HBox.margin>
-                                                            <Insets left="2.0" />
-                                                         </HBox.margin>
-                                                      </ImageView>
-                                                      <TextField fx:id="txtSearchTopics" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="328.0" promptText="Buscar" style="-fx-background-color: none;">
-                                                         <HBox.margin>
-                                                            <Insets />
-                                                         </HBox.margin>
-                                                      </TextField>
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets left="2.0" right="2.0" top="5.0" />
-                                                   </VBox.margin>
-                                                </HBox>
-                                                <ListView fx:id="listViewTopics" prefHeight="348.0" prefWidth="420.0" style="-fx-background-color: transparent; -fx-border-color: #cccccc;">
-                                                   <VBox.margin>
-                                                      <Insets bottom="2.0" left="2.0" right="2.0" top="5.0" />
-                                                   </VBox.margin>
-                                                </ListView>
-                                             </children>
-                                          </VBox>
+                                          <VBox fx:id="paneTopics" alignment="CENTER_LEFT" prefHeight="421.0" prefWidth="468.0" />
                                        </children>
                                     </HBox>
                                  </children>

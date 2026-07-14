@@ -12,52 +12,51 @@ public class PaneRightUIBinder {
     public static void bind(
             PaneRightController view,
             ScreenMainState screenMainState,
-            PaneRightUIState paneRightUIState) {
+            PaneRightState paneRightState) {
 
-        bindNavigationButtons(view, paneRightUIState);
-        bindHierarchyPath(view, paneRightUIState);
+        bindNavigationButtons(view, paneRightState);
+        bindHierarchyPath(view, paneRightState);
         bindTitleMain(view, screenMainState);
-        bindListTopics(view, screenMainState);
     }
 
     public static void bindNavigationButtons(
             PaneRightController view,
-            PaneRightUIState paneRightUIState
+            PaneRightState paneRightState
     ) {
 
         view.getBttNavigationLeft().disableProperty().bind(
                 Bindings.createBooleanBinding(
                         () -> {
-                            boolean canGoBack = paneRightUIState.getBackStack().size() > 1;
+                            boolean canGoBack = paneRightState.getBackStack().size() > 1;
                             return !canGoBack;
                         },
-                        paneRightUIState.getBackStack()
+                        paneRightState.getBackStack()
                 )
         );
 
         view.getBttNavigationRight().disableProperty().bind(
                 Bindings.createBooleanBinding(
                         () -> {
-                            boolean canGoForward = !paneRightUIState.getForwardStack().isEmpty();
+                            boolean canGoForward = !paneRightState.getForwardStack().isEmpty();
                             return !canGoForward;
                         },
-                        paneRightUIState.getForwardStack()
+                        paneRightState.getForwardStack()
                 )
         );
     }
 
     public static void bindHierarchyPath(
             PaneRightController view,
-            PaneRightUIState paneRightUIState
+            PaneRightState paneRightState
     ) {
 
         view.getTxtHierarchyPath().textProperty().bind(
                 Bindings.createStringBinding(
                         () -> {
-                            String hierarchyPath = util.buildPath(paneRightUIState.getBackStack());
+                            String hierarchyPath = util.buildPath(paneRightState.getBackStack());
                             return hierarchyPath;
                         },
-                        paneRightUIState.getBackStack()
+                        paneRightState.getBackStack()
                 )
         );
     }
@@ -84,24 +83,6 @@ public class PaneRightUIBinder {
 
                 }, screenMainState.itemSelectedProperty())
         );
-    }
-
-    public static void bindListTopics(
-            PaneRightController view,
-            ScreenMainState screenMainState
-    ) {
-
-        screenMainState.itemSelectedProperty().addListener((obs, oldValue, newValue) -> {
-            view.getListTopics().clear();
-
-            if (newValue instanceof StudyDTO study) {
-                view.getListTopics().addAll(study.getListTopicsDto());
-            }
-
-            if (newValue instanceof TopicDTO topic) {
-                view.getListTopics().addAll(topic.getListTopicsDto());
-            }
-        });
     }
 
 }

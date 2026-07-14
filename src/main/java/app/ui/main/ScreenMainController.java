@@ -4,13 +4,19 @@ import java.net.URL;
 import java.util.*;
 
 import app.application.study.StudyDTO;
+import app.application.topic.TopicDTO;
 import app.ui.about.AboutWindow;
 import app.ui.backup.ScreenBackupController;
 import app.ui.backup.ScreenBackupWindow;
+import app.ui.document.edit.EditorDocumentController;
+import app.ui.message.MessageConfirmController;
+import app.ui.message.MessageConfirmWindow;
 import app.ui.pane.left.PaneLeftController;
 import app.ui.pane.left.PaneLeftWindow;
 import app.ui.pane.right.PaneRightController;
+import app.ui.pane.right.PaneRightNavigator;
 import app.ui.pane.right.PaneRightWindow;
+import app.ui.pane.right.TabDocumentFactory;
 import app.ui.roadmap.RoadMapController;
 import app.ui.roadmap.RoadMapWindow;
 import app.ui.study.register.RegisterStudyController;
@@ -48,6 +54,10 @@ public class ScreenMainController implements Initializable {
 	private Stage stage;
 
 	private final ScreenMainState state = new ScreenMainState();
+
+	private final TabDocumentFactory tabDocumentFactory = new TabDocumentFactory();
+
+	private final PaneRightNavigator navigator = new PaneRightNavigator();
 
 	private PaneLeftController paneLeftController;
 
@@ -95,7 +105,7 @@ public class ScreenMainController implements Initializable {
 		connectControllers();
 
 		stage.setOnCloseRequest(event -> {
-			boolean confirm = paneRightController.confirmChangeStudyOrTopic();
+			boolean confirm = confirmChangeStudyOrTopic();
 			if (!confirm) {
 				event.consume();
 			}
@@ -140,14 +150,48 @@ public class ScreenMainController implements Initializable {
 		window.showScreen();
 	}
 
+	public boolean confirmChangeStudyOrTopic() {
+		EditorDocumentController editorDocumentController =
+				tabDocumentFactory.verifyDocumentEditingOrNotSave(
+						paneRightController.getTabPaneStudy(),
+						paneRightController.getTabMain(),
+						paneRightController.getTabAdd()
+				);
+
+		if (editorDocumentController != null) {
+			String nameItem = null;
+			if (state.getItemSelected() instanceof StudyDTO studyDto) {
+				nameItem = studyDto.getMatter();
+			} else if (state.getItemSelected() instanceof TopicDTO topicDto) {
+				nameItem = topicDto.getTitle();
+			}
+
+			MessageConfirmController controller = new MessageConfirmController();
+			controller.setConfirm(false);
+			controller.setMsgUser(
+					"Existem Documentos não salvos em:\n" +
+							nameItem + "\n" +
+							"Deseja continuar mesmo assim?\n\n" +
+							"Documento editando: " + editorDocumentController.getDocumentDto().getTitle()
+			);
+
+			MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
+			window.showScreen();
+
+			return controller.getConfirm();
+		}
+
+		return true;
+	}
+
 	private void loadPaneRight() {
-		paneRightController = new PaneRightController(stage, state);
+		paneRightController = new PaneRightController(stage, state, this, navigator);
 		PaneRightWindow window = new PaneRightWindow(paneRightController);
 		paneRight.getChildren().setAll(window.getRoot());
 	}
 
 	private void loadMenuLeft() {
-		paneLeftController = new PaneLeftController(stage, state);
+		paneLeftController = new PaneLeftController(stage, state, this, navigator);
 		PaneLeftWindow window = new PaneLeftWindow(paneLeftController);
 		menuLeft.getChildren().setAll(window.getRoot());
 	}

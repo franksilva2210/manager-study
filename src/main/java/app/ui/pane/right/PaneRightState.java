@@ -5,7 +5,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class PaneRightUIState {
+public class PaneRightState {
 
     /* Back */
 

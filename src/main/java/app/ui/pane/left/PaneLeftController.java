@@ -1,10 +1,12 @@
 package app.ui.pane.left;
 
 import app.application.study.StudyDTO;
+import app.ui.main.ScreenMainController;
 import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
 import app.ui.pane.right.PaneRightController;
+import app.ui.pane.right.PaneRightNavigator;
 import app.ui.study.register.RegisterStudyController;
 import app.ui.study.register.RegisterStudyWindow;
 import javafx.fxml.FXML;
@@ -29,16 +31,25 @@ public class PaneLeftController implements Initializable {
     private TreeView<Object> treeView;
 
     private final Stage stage;
-    private final ScreenMainState state;
+    private final ScreenMainState mainState;
+    private final ScreenMainController screenMainController;
+    private final PaneRightNavigator navigator;
+
     private List<StudyDTO> listStudyDTO = new ArrayList<>();
     private PaneLeftService paneLeftService = new PaneLeftService();
     private PaneLeftUIHelper uiHelper = new PaneLeftUIHelper();
     private ConfigDragDroppedTreeView configDragDroppedTreeView = new ConfigDragDroppedTreeView();
     private PaneRightController paneRightController;
 
-    public PaneLeftController(Stage stage, ScreenMainState state) {
+    public PaneLeftController(
+            Stage stage,
+            ScreenMainState mainState, ScreenMainController screenMainController,
+            PaneRightNavigator navigator) {
+
         this.stage = stage;
-        this.state = state;
+        this.mainState = mainState;
+        this.screenMainController = screenMainController;
+        this.navigator = navigator;
     }
 
     public void setPaneRightController(PaneRightController paneRightController) {
@@ -49,13 +60,13 @@ public class PaneLeftController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         treeView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                selectItemMenuLeft();
+                openStudy();
             }
         });
 
         treeView.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
-                selectItemMenuLeft();
+                openStudy();
             }
         });
 
@@ -64,8 +75,8 @@ public class PaneLeftController implements Initializable {
         configDragDroppedTreeView.configureDragDropped(
                 treeView,
                 () -> {
-                    state.refreshItemSelected();
-                    paneRightController.getNavigator().refreshItem(state.getItemSelected());
+                    mainState.refreshItemSelected();
+                    paneRightController.getNavigator().refreshItem(mainState.getItemSelected());
                 }
         );
 
@@ -105,10 +116,17 @@ public class PaneLeftController implements Initializable {
         }
     }
 
-    private void selectItemMenuLeft() {
+    private void openStudy() {
+        if (!screenMainController.confirmChangeStudyOrTopic())
+            return;
+
         TreeItem<Object> itemSelected = treeView.getSelectionModel().getSelectedItem();
         if (itemSelected != null) {
-            paneRightController.openStudy(itemSelected.getValue());
+            mainState.setItemSelected(itemSelected.getValue());
+            mainState.refreshItemSelected();
+            navigator.navigate(mainState.getItemSelected());
+            paneRightController.mappingStacksNavigatorState();
+            paneRightController.loadTabsDocument();
         }
     }
 
