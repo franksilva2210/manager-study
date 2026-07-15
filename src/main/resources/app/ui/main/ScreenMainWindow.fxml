@@ -59,8 +59,8 @@
                </children></VBox>
             <HBox prefHeight="533.0">
                <children>
-                  <VBox fx:id="menuLeft" prefHeight="532.0" prefWidth="272.0" />
-                  <VBox fx:id="paneRight" prefHeight="532.0" prefWidth="778.0" />
+                  <VBox fx:id="menuLeft" prefHeight="532.0" prefWidth="235.0" />
+                  <VBox fx:id="paneRight" prefHeight="532.0" prefWidth="815.0" />
                </children>
             </HBox>
          </children>

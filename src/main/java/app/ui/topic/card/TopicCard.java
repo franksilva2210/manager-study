@@ -5,12 +5,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.util.Duration;
 
 public class TopicCard {
 
@@ -22,9 +22,9 @@ public class TopicCard {
     public TopicCard(TopicCardController controller) {
 
         root = new AnchorPane();
-        root.setPrefSize(160, 110);
-        root.setMinSize(160, 110);
-        root.setMaxSize(160, 110);
+        root.setPrefSize(150, 110);
+        root.setMinSize(150, 110);
+        root.setMaxSize(150, 110);
         root.setStyle("-fx-border-color: #dddddd;");
 
         VBox content = new VBox();
@@ -43,7 +43,22 @@ public class TopicCard {
         header.setStyle("-fx-border-color: #dddddd; -fx-border-width: 0 0 1 0;");
 
         titleTopic = new Label();
+        titleTopic.setText(controller.getTopic().getTitle());
+
+        titleTopic.setMaxWidth(Double.MAX_VALUE);
+        titleTopic.setWrapText(false);
+        titleTopic.setTextOverrun(OverrunStyle.ELLIPSIS);
+
+        Tooltip tooltip = new Tooltip(controller.getTopic().getTitle());
+
+        tooltip.setShowDelay(Duration.millis(200));
+        tooltip.setShowDuration(Duration.seconds(10));
+        tooltip.setHideDelay(Duration.millis(100));
+
+        titleTopic.setTooltip(tooltip);
+
         HBox.setMargin(titleTopic, new Insets(0, 0, 0, 2));
+        HBox.setHgrow(titleTopic, Priority.ALWAYS);
 
         header.getChildren().add(titleTopic);
 

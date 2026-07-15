@@ -52,7 +52,7 @@ public class PaneTopicsController implements Initializable {
     private final FilteredList<TopicDTO> filteredTopics = new FilteredList<>(listTopics);
     private final PaneRightService paneRightService = new PaneRightService();
     private final GridPane gridTopics = new GridPane();
-    private static final int MAX_COLUMNS = 2;
+    private static final int MAX_COLUMNS = 3;
 
     public PaneTopicsController(
             Stage stage,

@@ -85,7 +85,7 @@
                                     </HBox>
                                     <BorderPane prefHeight="420.0" prefWidth="778.0">
                                        <left>
-                                          <VBox prefHeight="408.0" prefWidth="310.0" BorderPane.alignment="CENTER">
+                                          <VBox prefHeight="408.0" prefWidth="305.0" BorderPane.alignment="CENTER">
                                              <children>
                                                 <HBox prefHeight="30.0" prefWidth="292.0">
                                                    <children>

@@ -9,17 +9,16 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="532.0" prefWidth="276.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="532.0" prefWidth="235.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox fx:id="paneListStudy" prefHeight="532.0" prefWidth="276.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="paneListStudy" prefHeight="532.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="280.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="30.0">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <children>
-                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="272.0" style="-fx-border-color: #cccccc; -fx-background-color: white;">
+                  <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="228.0" style="-fx-border-color: #cccccc; -fx-background-color: white;">
                      <children>
                         <ImageView fitHeight="16.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -29,19 +28,19 @@
                               <Insets left="2.0" />
                            </HBox.margin>
                         </ImageView>
-                        <TextField fx:id="txtSearchStudies" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="245.0" promptText="Buscar" style="-fx-background-color: none;">
+                        <TextField fx:id="txtSearchStudies" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="202.0" promptText="Buscar" style="-fx-background-color: none;">
                            <HBox.margin>
                               <Insets left="3.0" />
                            </HBox.margin>
                         </TextField>
                      </children>
                      <HBox.margin>
-                        <Insets bottom="4.0" left="4.0" top="4.0" />
+                        <Insets left="4.0" top="4.0" />
                      </HBox.margin>
                   </HBox>
                </children>
             </HBox>
-            <TreeView fx:id="treeView" prefHeight="490.0" prefWidth="272.0" style="-fx-background-color: transparent; -fx-border-color: #cccccc;">
+            <TreeView fx:id="treeView" prefHeight="494.0" style="-fx-background-color: transparent; -fx-border-color: #cccccc;">
                <VBox.margin>
                   <Insets bottom="4.0" left="4.0" top="2.0" />
                </VBox.margin>
