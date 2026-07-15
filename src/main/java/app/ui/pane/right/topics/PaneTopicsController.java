@@ -118,7 +118,11 @@ public class PaneTopicsController implements Initializable {
             TopicCardController controller = new TopicCardController(topic, mainState);
             TopicCard card = new TopicCard(controller);
 
-            GridPane.setMargin(card.getRoot(), new Insets(0, 10, 10, 0));
+            if (column == MAX_COLUMNS - 1) {
+                GridPane.setMargin(card.getRoot(), new Insets(0, 0, 10, 0));
+            } else {
+                GridPane.setMargin(card.getRoot(), new Insets(0, 10, 10, 0));
+            }
 
             gridTopics.add(card.getRoot(), column, row);
 

@@ -22,10 +22,10 @@ public class TopicCard {
     public TopicCard(TopicCardController controller) {
 
         root = new AnchorPane();
-        root.setPrefSize(150, 110);
-        root.setMinSize(150, 110);
-        root.setMaxSize(150, 110);
-        root.setStyle("-fx-border-color: #dddddd;");
+        root.setPrefSize(110, 100);
+        root.setMinSize(110, 100);
+        root.setMaxSize(110, 100);
+        root.setStyle("-fx-border-color: #cccccc; -fx-border-radius: 3;");
 
         VBox content = new VBox();
         AnchorPane.setTopAnchor(content, 0.0);
@@ -40,7 +40,7 @@ public class TopicCard {
         HBox header = new HBox();
         header.setAlignment(Pos.CENTER_LEFT);
         header.setPrefHeight(25);
-        header.setStyle("-fx-border-color: #dddddd; -fx-border-width: 0 0 1 0;");
+        header.setStyle("-fx-border-color: #dddddd; -fx-border-width: 0 0 1 0; -fx-background-color: #F7F7F7");
 
         titleTopic = new Label();
         titleTopic.setText(controller.getTopic().getTitle());
