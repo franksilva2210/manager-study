@@ -54,6 +54,7 @@ public class TopicCard {
         tooltip.setShowDelay(Duration.millis(200));
         tooltip.setShowDuration(Duration.seconds(10));
         tooltip.setHideDelay(Duration.millis(100));
+        tooltip.setStyle("-fx-background-color: white");
 
         titleTopic.setTooltip(tooltip);
 
