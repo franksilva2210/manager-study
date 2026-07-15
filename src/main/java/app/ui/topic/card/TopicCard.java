@@ -1,4 +1,4 @@
-package app.ui.pane.right.topics;
+package app.ui.topic.card;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,21 +9,21 @@ import jfxtras.styles.jmetro.Style;
 
 import java.io.IOException;
 
-public class TopicsPane {
+public class TopicCard {
 
     private Stage stage;
     private Scene scene;
     private Parent root;
-    private TopicsPaneController controller;
+    private TopicCardController controller;
 
-    public TopicsPane(TopicsPaneController controller) {
+    public TopicCard(TopicCardController controller) {
         stage = new Stage();
         stage.setResizable(false);
 
         this.controller = controller;
 
         FXMLLoader rootFxml = new FXMLLoader();
-        rootFxml.setLocation(TopicsPane.class.getResource("TopicsPane.fxml"));
+        rootFxml.setLocation(TopicCard.class.getResource("TopicCard.fxml"));
         rootFxml.setController(controller);
 
         try {
@@ -43,4 +43,5 @@ public class TopicsPane {
     public Parent getRoot() {
         return root;
     }
+
 }

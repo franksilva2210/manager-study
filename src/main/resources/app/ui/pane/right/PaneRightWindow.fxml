@@ -10,6 +10,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -82,9 +83,9 @@
                                           </ToolBar>
                                        </children>
                                     </HBox>
-                                    <HBox prefHeight="422.0" prefWidth="778.0">
-                                       <children>
-                                          <VBox prefHeight="408.0" prefWidth="310.0">
+                                    <BorderPane prefHeight="420.0" prefWidth="778.0">
+                                       <left>
+                                          <VBox prefHeight="408.0" prefWidth="310.0" BorderPane.alignment="CENTER">
                                              <children>
                                                 <HBox prefHeight="30.0" prefWidth="292.0">
                                                    <children>
@@ -103,9 +104,11 @@
                                                 </HBox>
                                              </children>
                                           </VBox>
-                                          <VBox fx:id="paneTopics" alignment="CENTER_LEFT" prefHeight="421.0" prefWidth="468.0" />
-                                       </children>
-                                    </HBox>
+                                       </left>
+                                       <center>
+                                          <VBox fx:id="paneTopics" alignment="CENTER_LEFT" prefWidth="468.0" BorderPane.alignment="CENTER" />
+                                       </center>
+                                    </BorderPane>
                                  </children>
                               </VBox>
                            </children>

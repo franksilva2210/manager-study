@@ -7,6 +7,8 @@ import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
 import app.ui.pane.right.*;
+import app.ui.topic.card.TopicCard;
+import app.ui.topic.card.TopicCardController;
 import app.ui.topic.register.RegisterTopicController;
 import app.ui.topic.register.RegisterTopicWindow;
 import javafx.collections.FXCollections;
@@ -14,13 +16,16 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class TopicsPaneController implements Initializable {
+public class PaneTopicsController implements Initializable {
 
     @FXML
     private Button bttAddTopic;
@@ -32,7 +37,7 @@ public class TopicsPaneController implements Initializable {
     private Button bttRemoveTopic;
 
     @FXML
-    private ScrollPane paneCardsTopic;
+    private VBox paneCardsTopic;
 
     @FXML
     private TextField txtSearchTopics;
@@ -46,8 +51,10 @@ public class TopicsPaneController implements Initializable {
     private final ObservableList<TopicDTO> listTopics = FXCollections.observableArrayList();
     private final FilteredList<TopicDTO> filteredTopics = new FilteredList<>(listTopics);
     private final PaneRightService paneRightService = new PaneRightService();
+    private final GridPane gridTopics = new GridPane();
+    private static final int MAX_COLUMNS = 2;
 
-    public TopicsPaneController(
+    public PaneTopicsController(
             Stage stage,
             ScreenMainState mainState,
             ScreenMainController screenMainController,
@@ -84,6 +91,44 @@ public class TopicsPaneController implements Initializable {
             removeTopic();
         });
 
+        paneCardsTopic.getChildren().setAll(gridTopics);
+
+        mainState.itemSelectedProperty().addListener((obs, oldValue, newValue) -> {
+            loadListTopics();
+        });
+    }
+
+    private void loadListTopics() {
+
+        listTopics.clear();
+
+        if (mainState.getItemSelected() instanceof StudyDTO studyDto) {
+            listTopics.addAll(studyDto.getListTopicsDto());
+        } else if(mainState.getItemSelected() instanceof TopicDTO topicDto) {
+            listTopics.addAll(topicDto.getListTopicsDto());
+        }
+
+        gridTopics.getChildren().clear();
+
+        int row = 0;
+        int column = 0;
+
+        for (TopicDTO topic : listTopics) {
+
+            TopicCardController controller = new TopicCardController(topic, mainState);
+            TopicCard card = new TopicCard(controller);
+
+            GridPane.setMargin(card.getRoot(), new Insets(0, 10, 10, 0));
+
+            gridTopics.add(card.getRoot(), column, row);
+
+            column++;
+
+            if (column == MAX_COLUMNS) {
+                column = 0;
+                row++;
+            }
+        }
     }
 
     private void openTopic() {

@@ -1,4 +1,4 @@
 package app.ui.pane.right.topics;
 
-public class TopicsPaneService {
+public class PaneTopicsService {
 }
