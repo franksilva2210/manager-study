@@ -2,21 +2,8 @@ package app.ui.topic.card;
 
 import app.application.topic.TopicDTO;
 import app.ui.main.ScreenMainState;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class TopicCardController implements Initializable {
-
-    @FXML
-    private Button bttOpenTopic;
-
-    @FXML
-    private Label titleTopic;
+public class TopicCardController {
 
     private final TopicDTO topic;
     private final ScreenMainState mainState;
@@ -29,17 +16,11 @@ public class TopicCardController implements Initializable {
         this.mainState = mainState;
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        titleTopic.setText(topic.getTitle());
+    public TopicDTO getTopic() {
+        return topic;
+    }
 
-        bttOpenTopic.setOnAction(e -> {
-
-            mainState.setItemSelected(topic);
-
-
-
-        });
-
+    public void openTopic() {
+        // lógica
     }
 }
