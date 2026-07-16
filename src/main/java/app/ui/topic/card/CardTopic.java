@@ -125,6 +125,8 @@ public class CardTopic {
     //----------------------------
 
     private void loadController(CardTopicController controller) {
+        root.setOnMouseClicked(e -> controller.select());
+
         titleTopic.setText(controller.getTopic().getTitle());
 
         bttRemove.setOnAction(event -> controller.removeTopic());

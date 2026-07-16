@@ -11,6 +11,8 @@ import app.ui.topic.card.CardTopic;
 import app.ui.topic.card.CardTopicController;
 import app.ui.topic.register.RegisterTopicController;
 import app.ui.topic.register.RegisterTopicWindow;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -50,6 +52,25 @@ public class PaneTopicsController implements Initializable {
     private final PaneTopicsService paneTopicsService = new PaneTopicsService();
     private final GridPane gridTopics = new GridPane();
     private static final int MAX_COLUMNS = 3;
+
+    private final ObjectProperty<TopicDTO> selectedTopic =
+            new SimpleObjectProperty<>();
+
+    public TopicDTO getSelectedTopic() {
+        return selectedTopic.get();
+    }
+
+    public void setSelectedTopic(TopicDTO topic) {
+        selectedTopic.set(topic);
+    }
+
+    public ObjectProperty<TopicDTO> selectedTopicProperty() {
+        return selectedTopic;
+    }
+
+    public void clearSelection() {
+        setSelectedTopic(null);
+    }
 
     public PaneTopicsController(
             Stage stage,
@@ -93,6 +114,12 @@ public class PaneTopicsController implements Initializable {
         mainState.itemSelectedProperty().addListener((obs, oldValue, newValue) -> {
             loadListTopics();
         });
+
+        gridTopics.setOnMouseClicked(event -> {
+            if (event.getTarget() == gridTopics) {
+                clearSelection();
+            }
+        });
     }
 
     private void loadListTopics() {
@@ -124,6 +151,8 @@ public class PaneTopicsController implements Initializable {
                     );
 
             CardTopic card = new CardTopic(controller);
+
+            controller.setRoot(card.getRoot());
 
             if (column == MAX_COLUMNS - 1) {
                 GridPane.setMargin(card.getRoot(), new Insets(0, 0, 10, 0));
@@ -176,7 +205,7 @@ public class PaneTopicsController implements Initializable {
     }
 
     public void editTopic() {
-        TopicDTO topicSelectedDto = null;
+        TopicDTO topicSelectedDto = getSelectedTopic();
 
         if (mainState.getItemSelected() == null || topicSelectedDto == null) {
             return;
@@ -193,7 +222,7 @@ public class PaneTopicsController implements Initializable {
     }
 
     private void removeTopic() {
-        TopicDTO topicSelectedDto = null;
+        TopicDTO topicSelectedDto = getSelectedTopic();
 
         if (mainState.getItemSelected() == null || topicSelectedDto == null) {
             return;
