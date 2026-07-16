@@ -50,7 +50,7 @@ public class PaneTopicsController implements Initializable {
     private final PaneRightNavigator navigator;
 
     private final ObservableList<TopicDTO> listTopics = FXCollections.observableArrayList();
-    private final FilteredList<TopicDTO> filteredTopics = new FilteredList<>(listTopics);
+    private final FilteredList<TopicDTO> listTopicsFiltered = new FilteredList<>(listTopics);
     private final PaneTopicsService paneTopicsService = new PaneTopicsService();
     private final GridPane gridTopics = new GridPane();
     private static final int MAX_COLUMNS = 3;
@@ -129,7 +129,7 @@ public class PaneTopicsController implements Initializable {
         int row = 0;
         int column = 0;
 
-        for (TopicDTO topic : listTopics) {
+        for (TopicDTO topic : listTopicsFiltered) {
 
             CardTopicController controller =
                     new CardTopicController(
@@ -166,11 +166,13 @@ public class PaneTopicsController implements Initializable {
     private void searchTopic() {
         String search = txtSearchTopics.getText().trim().toLowerCase();
 
-        filteredTopics.setPredicate(topic ->
+        listTopicsFiltered.setPredicate(topic ->
                 search.isBlank()
                         ||
                         topic.getTitle().toLowerCase().indexOf(search.toLowerCase()) != -1
         );
+
+        loadListTopics();
     }
 
     private void newTopic() {
