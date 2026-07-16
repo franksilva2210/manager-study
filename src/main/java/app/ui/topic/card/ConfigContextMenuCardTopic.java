@@ -65,6 +65,8 @@ public class ConfigContextMenuCardTopic {
                     event.getScreenY()
             );
         });
+
+        root.setOnMousePressed(e -> contextMenu.hide());
     }
 
 }
