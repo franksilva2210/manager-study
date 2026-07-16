@@ -67,6 +67,14 @@ public class CardTopicController {
         this.root = root;
     }
 
+    public ScreenMainState getMainState() {
+        return mainState;
+    }
+
+    public CardTopicService getService() {
+        return service;
+    }
+
     public void select() {
         paneTopicsController.getCardSelection().select(topic);
     }

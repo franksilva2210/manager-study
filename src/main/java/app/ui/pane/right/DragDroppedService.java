@@ -4,13 +4,11 @@ import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
 import app.application.topic.TopicMapper;
 import app.domain.topic.Topic;
-import app.infra.study.StudyRepository;
 import app.infra.topic.TopicRepository;
 
 public class DragDroppedService {
 
     private TopicRepository topicRepository = new TopicRepository();
-    private StudyRepository studyRepository = new StudyRepository();
 
     public TopicDTO loadSimpleTopic(Long id) {
         Topic topic = topicRepository.findById(id);

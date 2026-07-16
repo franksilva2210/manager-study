@@ -132,6 +132,13 @@ public class CardTopic {
         bttRemove.setOnAction(event -> controller.removeTopic());
 
         bttOpenTopic.setOnAction(event -> controller.openTopic());
+
+        configureDragDropped(controller);
+    }
+
+    private void configureDragDropped(CardTopicController controller) {
+        ConfigDragDroppedCard configDragDroppedCard = new ConfigDragDroppedCard();
+        configDragDroppedCard.configureDragAndDropped(controller, root);
     }
 
     public Parent getRoot() {
