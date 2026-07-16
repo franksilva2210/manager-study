@@ -11,8 +11,6 @@ import app.ui.topic.card.CardTopic;
 import app.ui.topic.card.CardTopicController;
 import app.ui.topic.register.RegisterTopicController;
 import app.ui.topic.register.RegisterTopicWindow;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -52,25 +50,7 @@ public class PaneTopicsController implements Initializable {
     private final PaneTopicsService paneTopicsService = new PaneTopicsService();
     private final GridPane gridTopics = new GridPane();
     private static final int MAX_COLUMNS = 3;
-
-    private final ObjectProperty<TopicDTO> selectedTopic =
-            new SimpleObjectProperty<>();
-
-    public TopicDTO getSelectedTopic() {
-        return selectedTopic.get();
-    }
-
-    public void setSelectedTopic(TopicDTO topic) {
-        selectedTopic.set(topic);
-    }
-
-    public ObjectProperty<TopicDTO> selectedTopicProperty() {
-        return selectedTopic;
-    }
-
-    public void clearSelection() {
-        setSelectedTopic(null);
-    }
+    private final CardSelectionModel<TopicDTO> cardSelection = new CardSelectionModel<>();
 
     public PaneTopicsController(
             Stage stage,
@@ -86,8 +66,8 @@ public class PaneTopicsController implements Initializable {
         this.navigator = navigator;
     }
 
-    public ObservableList<TopicDTO> getListTopics() {
-        return listTopics;
+    public CardSelectionModel<TopicDTO> getCardSelection() {
+        return cardSelection;
     }
 
     @Override
@@ -109,16 +89,16 @@ public class PaneTopicsController implements Initializable {
             removeTopic();
         });
 
+        gridTopics.setOnMouseClicked(event -> {
+            if (event.getTarget() == gridTopics) {
+                cardSelection.clearSelection();
+            }
+        });
+
         paneCardsTopic.getChildren().setAll(gridTopics);
 
         mainState.itemSelectedProperty().addListener((obs, oldValue, newValue) -> {
             loadListTopics();
-        });
-
-        gridTopics.setOnMouseClicked(event -> {
-            if (event.getTarget() == gridTopics) {
-                clearSelection();
-            }
         });
     }
 
@@ -205,7 +185,7 @@ public class PaneTopicsController implements Initializable {
     }
 
     public void editTopic() {
-        TopicDTO topicSelectedDto = getSelectedTopic();
+        TopicDTO topicSelectedDto = cardSelection.getSelectedItem();
 
         if (mainState.getItemSelected() == null || topicSelectedDto == null) {
             return;
@@ -222,7 +202,7 @@ public class PaneTopicsController implements Initializable {
     }
 
     private void removeTopic() {
-        TopicDTO topicSelectedDto = getSelectedTopic();
+        TopicDTO topicSelectedDto = cardSelection.getSelectedItem();
 
         if (mainState.getItemSelected() == null || topicSelectedDto == null) {
             return;

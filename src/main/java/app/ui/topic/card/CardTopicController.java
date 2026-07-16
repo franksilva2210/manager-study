@@ -40,7 +40,7 @@ public class CardTopicController {
         this.paneTopicsController = paneTopicsController;
         this.navigator = navigator;
 
-        this.paneTopicsController.selectedTopicProperty().addListener((obs, oldValue, newValue) -> {
+        this.paneTopicsController.getCardSelection().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
             if (topic.equals(newValue)) {
                 root.setStyle("""
                         -fx-border-color: #3B82F6;
@@ -68,7 +68,7 @@ public class CardTopicController {
     }
 
     public void select() {
-        paneTopicsController.setSelectedTopic(topic);
+        paneTopicsController.getCardSelection().select(topic);
     }
 
     public void openTopic() {
