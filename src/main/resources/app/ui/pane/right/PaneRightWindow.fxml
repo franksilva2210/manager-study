@@ -129,7 +129,7 @@
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@notes.png" />
+                              <Image url="@add-note.png" />
                            </image>
                         </ImageView>
                      </graphic>
