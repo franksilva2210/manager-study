@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -38,9 +39,9 @@ public class PaneLeftController implements Initializable {
 
     private final ObservableList<StudyDTO> listStudyDTO = FXCollections.observableArrayList();
     private final FilteredList<StudyDTO> listStudyFiltered = new FilteredList<>(listStudyDTO);
+    private final StudyConfigContextMenuListView studyConfigContextMenu = new StudyConfigContextMenuListView();
     private final StudyConfigDragDropped studyConfigDragDropped = new StudyConfigDragDropped();
     private final PaneLeftService service = new PaneLeftService();
-    private final PaneLeftUIHelper uiHelper = new PaneLeftUIHelper();
     private PaneRightController paneRightController;
 
     public PaneLeftController(
@@ -75,10 +76,30 @@ public class PaneLeftController implements Initializable {
             }
         });
 
-        studyConfigDragDropped.configureDragDropped(
-                listViewStudy,
-                this
-        );
+        listViewStudy.setCellFactory(lv -> {
+
+            ListCell<StudyDTO> cell = new ListCell<>() {
+                @Override
+                protected void updateItem(StudyDTO item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    setText(empty || item == null ? null : item.getMatter());
+                }
+            };
+
+            studyConfigContextMenu.configure(
+                    cell,
+                    this::renameStudy,
+                    this::deleteStudy
+            );
+
+            studyConfigDragDropped.configure(
+                    cell,
+                    this
+            );
+
+            return cell;
+        });
 
         txtSearchStudies.setOnAction(event -> {
             searchStudies();
@@ -115,7 +136,7 @@ public class PaneLeftController implements Initializable {
         }
     }
 
-    public void editStudy(Object objectSelected) {
+    public void renameStudy(Object objectSelected) {
         StudyDTO studyDto = (StudyDTO) objectSelected;
 
         RegisterStudyController controller = new RegisterStudyController();
@@ -132,7 +153,7 @@ public class PaneLeftController implements Initializable {
         refreshStudies();
     }
 
-    private void removeStudy(Object objectDeletion) {
+    private void deleteStudy(Object objectDeletion) {
         StudyDTO studyDeletionDto = (StudyDTO) objectDeletion;
 
         MessageConfirmController controller = new MessageConfirmController();
