@@ -9,6 +9,7 @@ import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
@@ -130,8 +131,22 @@ public class CardTopic {
         root.setOnMouseClicked(event -> {
             controller.select();
 
+            root.requestFocus();
+
             if (event.getClickCount() == 2 && event.getButton() == MouseButton.PRIMARY) {
                 controller.openTopic();
+            }
+        });
+
+        root.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                controller.openTopic();
+            }
+        });
+
+        root.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.DELETE) {
+                controller.removeTopic();
             }
         });
 
