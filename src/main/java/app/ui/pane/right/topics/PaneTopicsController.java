@@ -31,9 +31,6 @@ public class PaneTopicsController implements Initializable {
     private Button bttAddTopic;
 
     @FXML
-    private Button bttEditTopic;
-
-    @FXML
     private Button bttRemoveTopic;
 
     @FXML
@@ -85,10 +82,6 @@ public class PaneTopicsController implements Initializable {
 
         bttAddTopic.setOnAction(event -> {
             newTopic();
-        });
-
-        bttEditTopic.setOnAction(event -> {
-            editTopic();
         });
 
         bttRemoveTopic.setOnAction(event -> {

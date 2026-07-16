@@ -20,9 +20,9 @@
                   <Insets left="5.0" />
                </HBox.margin>
             </Label>
-            <ToolBar prefHeight="34.0" prefWidth="137.0">
+            <ToolBar prefHeight="34.0" prefWidth="373.0">
                <items>
-                  <Button fx:id="bttAddTopic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="35.0">
+                  <Button fx:id="bttAddTopic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="23.0" prefWidth="35.0">
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -31,16 +31,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="bttEditTopic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="35.0">
-                     <graphic>
-                        <ImageView fitHeight="15.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../pencil.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="bttRemoveTopic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="35.0">
+                  <Button fx:id="bttRemoveTopic" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="23.0" prefWidth="35.0">
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
                            <image>
