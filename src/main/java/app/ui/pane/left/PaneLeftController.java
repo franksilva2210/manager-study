@@ -9,11 +9,12 @@ import app.ui.pane.right.PaneRightController;
 import app.ui.pane.right.PaneRightNavigator;
 import app.ui.study.register.RegisterStudyController;
 import app.ui.study.register.RegisterStudyWindow;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
@@ -28,17 +29,17 @@ public class PaneLeftController implements Initializable {
     private TextField txtSearchStudies;
 
     @FXML
-    private TreeView<Object> treeView;
+    private ListView<StudyDTO> listViewStudy;
 
     private final Stage stage;
     private final ScreenMainState mainState;
     private final ScreenMainController screenMainController;
     private final PaneRightNavigator navigator;
 
-    private List<StudyDTO> listStudyDTO = new ArrayList<>();
+    private final ObservableList<StudyDTO> listStudyDTO = FXCollections.observableArrayList();
+    private final StudyConfigDragDropped studyConfigDragDropped = new StudyConfigDragDropped();
     private PaneLeftService paneLeftService = new PaneLeftService();
     private PaneLeftUIHelper uiHelper = new PaneLeftUIHelper();
-    private ConfigDragDroppedTreeView configDragDroppedTreeView = new ConfigDragDroppedTreeView();
     private PaneRightController paneRightController;
 
     public PaneLeftController(
@@ -58,25 +59,25 @@ public class PaneLeftController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        treeView.setOnMouseClicked(event -> {
+
+        listViewStudy.setItems(listStudyDTO);
+
+        listViewStudy.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 openStudy();
             }
         });
 
-        treeView.setOnKeyPressed(event -> {
+        listViewStudy.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 openStudy();
             }
         });
 
-        uiHelper.initTreeView(treeView, this::editStudy, this::removeStudy);
-
-        configDragDroppedTreeView.configureDragDropped(
-                treeView,
+        studyConfigDragDropped.configureDragDropped(
+                listViewStudy,
                 () -> {
                     mainState.refreshItemSelected();
-                    paneRightController.getNavigator().refreshItem(mainState.getItemSelected());
                 }
         );
 
@@ -108,7 +109,7 @@ public class PaneLeftController implements Initializable {
             if (listPossible.size() > 0) {
                 listStudyDTO.clear();
                 listStudyDTO.addAll(listPossible);
-                uiHelper.generateTreeItems(treeView, listStudyDTO);
+
             }
 
         } else {
@@ -120,9 +121,9 @@ public class PaneLeftController implements Initializable {
         if (!screenMainController.confirmChangeStudyOrTopic())
             return;
 
-        TreeItem<Object> itemSelected = treeView.getSelectionModel().getSelectedItem();
-        if (itemSelected != null) {
-            mainState.setItemSelected(itemSelected.getValue());
+        StudyDTO studySelectedDto = listViewStudy.getSelectionModel().getSelectedItem();
+        if (studySelectedDto != null) {
+            mainState.setItemSelected(studySelectedDto);
             mainState.refreshItemSelected();
             navigator.navigate(mainState.getItemSelected());
             paneRightController.mappingStacksNavigatorState();
@@ -172,6 +173,5 @@ public class PaneLeftController implements Initializable {
     public void refreshStudies() {
         listStudyDTO.clear();
         listStudyDTO.addAll(paneLeftService.consultAllStudyDto());
-        uiHelper.generateTreeItems(treeView, listStudyDTO);
     }
 }

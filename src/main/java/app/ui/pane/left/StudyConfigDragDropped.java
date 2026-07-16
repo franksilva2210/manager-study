@@ -1,34 +1,32 @@
 package app.ui.pane.left;
 
+import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 
-public class ConfigDragDroppedListView {
+public class StudyConfigDragDropped {
 
-    private DragDroppedService service =
-            new DragDroppedService();
+    private DragDroppedService service = new DragDroppedService();
 
     public void configureDragDropped(
-            ListView<TopicDTO> listViewTopics,
+            ListView<StudyDTO> listViewStudy,
             Runnable reloadCallback
     ) {
-        listViewTopics.setCellFactory(lv -> {
+        listViewStudy.setCellFactory(lv -> {
 
-            ListCell<TopicDTO> cell = new ListCell<>() {
+            ListCell<StudyDTO> cell = new ListCell<>() {
 
                 @Override
-                protected void updateItem(TopicDTO item, boolean empty) {
+                protected void updateItem(StudyDTO item, boolean empty) {
                     super.updateItem(item, empty);
 
-                    setText(empty || item == null ? null : item.getTitle());
+                    setText(empty || item == null ? null : item.getMatter());
                 }
             };
 
-            setOnDragDetected(cell);
             setOnDragOver(cell);
             setFeedBackVisual(cell);
             setOnDragDropped(cell, reloadCallback);
@@ -37,55 +35,37 @@ public class ConfigDragDroppedListView {
         });
     }
 
-    private void setOnDragDetected(ListCell<TopicDTO> cell) {
-        cell.setOnDragDetected(event -> {
-
-            if (cell.isEmpty()) {
-                return;
-            }
-
-            Dragboard dragboard = cell.startDragAndDrop(TransferMode.MOVE);
-
-            ClipboardContent content = new ClipboardContent();
-
-            content.putString(
-                    cell.getItem().getId().toString()
-            );
-
-            dragboard.setContent(content);
-
-            event.consume();
-        });
-    }
-
-    private void setOnDragOver(ListCell<TopicDTO> cell) {
-
+    private void setOnDragOver(ListCell<StudyDTO> cell) {
         cell.setOnDragOver(event -> {
-            if (!cell.isEmpty()) {
+
+            if (!cell.isEmpty() && event.getDragboard().hasString()) {
                 event.acceptTransferModes(TransferMode.MOVE);
             }
+
             event.consume();
         });
-
     }
 
-    private void setFeedBackVisual(ListCell<TopicDTO> cell) {
+    private void setFeedBackVisual(ListCell<StudyDTO> cell) {
         cell.setOnDragEntered(event -> {
 
             if (!cell.isEmpty()) {
                 cell.setStyle(
-                        "-fx-background-color: #3c78d8;"
+                        "-fx-background-color: #3c78d8;" +
+                        "-fx-text-fill: white;"
                 );
+                event.consume();
             }
         });
 
         cell.setOnDragExited(event -> {
             cell.setStyle("");
+            event.consume();
         });
     }
 
     private void setOnDragDropped(
-            ListCell<TopicDTO> cell,
+            ListCell<StudyDTO> cell,
             Runnable reloadCallback) {
 
         cell.setOnDragDropped(event -> {
@@ -98,9 +78,9 @@ public class ConfigDragDroppedListView {
 
             Long draggedId = Long.valueOf(dragboard.getString());
             TopicDTO topicDragged = service.loadSimpleTopic(draggedId);
-            TopicDTO topicDestination = cell.getItem();
+            StudyDTO studyDestination = cell.getItem();
 
-            service.moveTopicToTopic(topicDragged, topicDestination);
+            service.moveTopicToStudy(topicDragged, studyDestination);
             reloadCallback.run();
             event.setDropCompleted(true);
             event.consume();
