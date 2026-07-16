@@ -134,10 +134,10 @@ public class CardTopicController {
         MessageConfirmController controller = new MessageConfirmController();
         controller.setConfirm(false);
         controller.setMsgUser(
-                "Deseja realmente mover o tópico:\n" +
-                topicDragged.getTitle().toUpperCase() + "\n" +
-                "para: " + topicDestination.getTitle().toUpperCase() + "?\n" +
-                "todos os sub tópicos também serão movidos"
+                "Deseja realmente mover o tópico selecionado?\n" +
+                "Origem: " + topicDragged.getTitle() + "\n" +
+                "Destino: " + topicDestination.getTitle() + "\n" +
+                "Todos os sub tópicos também serão movidos."
         );
 
         MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
