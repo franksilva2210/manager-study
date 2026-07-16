@@ -11,6 +11,7 @@ import app.ui.topic.card.CardTopic;
 import app.ui.topic.card.CardTopicController;
 import app.ui.topic.register.RegisterTopicController;
 import app.ui.topic.register.RegisterTopicWindow;
+import app.ui.util.ScrollPaneUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -32,6 +33,9 @@ public class PaneTopicsController implements Initializable {
 
     @FXML
     private Button bttRemoveTopic;
+
+    @FXML
+    private ScrollPane scrollPaneCards;
 
     @FXML
     private VBox paneCardsTopic;
@@ -102,6 +106,8 @@ public class PaneTopicsController implements Initializable {
         });
 
         paneCardsTopic.getChildren().setAll(gridTopics);
+
+        configScrollPane();
 
         mainState.itemSelectedProperty().addListener((obs, oldValue, newValue) -> {
             loadListTopics();
@@ -230,6 +236,11 @@ public class PaneTopicsController implements Initializable {
             navigator.removeItem(topicSelectedDto);
             mainState.refreshItemSelected();
         }
+    }
+
+    private void configScrollPane() {
+        ScrollPaneUtils scrollPaneUtils = new ScrollPaneUtils();
+        scrollPaneUtils.configurateScroll(scrollPaneCards);
     }
 
 }
