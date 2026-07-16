@@ -17,7 +17,7 @@ public class CardTopic {
 
     private AnchorPane root;
     private Label titleTopic;
-    private Button bttRemove;
+    private Button bttMenuTopic;
     private Button bttOpenTopic;
 
     public CardTopic(CardTopicController controller) {
@@ -64,23 +64,23 @@ public class CardTopic {
         HBox.setMargin(titleTopic, new Insets(0, 0, 0, 2));
         HBox.setHgrow(titleTopic, Priority.ALWAYS);
 
-        bttRemove = new Button();
+        bttMenuTopic = new Button();
 
         ImageView imageInfo = new ImageView(
-                new Image(CardTopic.class.getResourceAsStream("trash.png"))
+                new Image(CardTopic.class.getResourceAsStream("dots.png"))
         );
 
         imageInfo.setFitWidth(10);
         imageInfo.setFitHeight(10);
 
-        bttRemove.setGraphic(imageInfo);
-        bttRemove.setFocusTraversable(false);
-        bttRemove.setStyle(
+        bttMenuTopic.setGraphic(imageInfo);
+        bttMenuTopic.setFocusTraversable(false);
+        bttMenuTopic.setStyle(
                 "-fx-background-color: transparent;" +
                         "-fx-padding: 2;"
         );
 
-        header.getChildren().addAll(titleTopic, bttRemove);
+        header.getChildren().addAll(titleTopic, bttMenuTopic);
 
         //----------------------------
         // Corpo
@@ -137,8 +137,6 @@ public class CardTopic {
 
         titleTopic.setText(controller.getTopic().getTitle());
 
-        bttRemove.setOnAction(event -> controller.removeTopic());
-
         bttOpenTopic.setOnAction(event -> controller.openTopic());
 
         configureContextMenu(controller);
@@ -148,7 +146,7 @@ public class CardTopic {
 
     private void configureContextMenu(CardTopicController controller) {
         ConfigContextMenuCardTopic configContextMenu = new ConfigContextMenuCardTopic();
-        configContextMenu.configure(controller, root);
+        configContextMenu.configure(controller, root, bttMenuTopic);
     }
 
     private void configureDragDropped(CardTopicController controller) {
