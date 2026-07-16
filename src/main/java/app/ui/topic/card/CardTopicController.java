@@ -109,4 +109,22 @@ public class CardTopicController {
             mainState.refreshItemSelected();
         }
     }
+
+    public void moveTopicToTopic(TopicDTO topicDragged, TopicDTO topicDestination) {
+        MessageConfirmController controller = new MessageConfirmController();
+        controller.setConfirm(false);
+        controller.setMsgUser(
+                "Deseja realmente mover o tópico:\n" +
+                topicDragged.getTitle().toUpperCase() + "\n" +
+                "para: " + topicDestination.getTitle().toUpperCase() + "?\n" +
+                "todos os sub tópicos também serão movidos"
+        );
+
+        MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
+        window.showScreen();
+
+        if (controller.getConfirm()) {
+            service.moveTopicToTopic(topicDragged, topicDestination);
+        }
+    }
 }

@@ -137,8 +137,8 @@ public class CardTopic {
     }
 
     private void configureDragDropped(CardTopicController controller) {
-        ConfigDragDroppedCard configDragDroppedCard = new ConfigDragDroppedCard();
-        configDragDroppedCard.configureDragAndDropped(controller, root);
+        CardTopicConfigDragDropped cardTopicConfigDragDropped = new CardTopicConfigDragDropped();
+        cardTopicConfigDragDropped.configureDragAndDropped(controller, root);
     }
 
     public Parent getRoot() {

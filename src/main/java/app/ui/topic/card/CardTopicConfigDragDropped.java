@@ -7,11 +7,11 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 
-public class ConfigDragDroppedCard {
+public class CardTopicConfigDragDropped {
 
     private final DropShadow dragShadow = new DropShadow();
 
-    public ConfigDragDroppedCard() {
+    public CardTopicConfigDragDropped() {
         configureDragShadow();
     }
 
@@ -109,7 +109,7 @@ public class ConfigDragDroppedCard {
             TopicDTO topicDragged = controller.getService().loadSimpleTopic(draggedId);
             TopicDTO topicDestination = controller.getTopic();
 
-            controller.getService().moveTopicToTopic(topicDragged, topicDestination);
+            controller.moveTopicToTopic(topicDragged, topicDestination);
             controller.getMainState().refreshItemSelected();
 
             event.setDropCompleted(true);
