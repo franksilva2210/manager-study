@@ -85,7 +85,7 @@
                                     </HBox>
                                     <BorderPane prefHeight="420.0" prefWidth="778.0">
                                        <left>
-                                          <VBox prefHeight="420.0" prefWidth="380.0" BorderPane.alignment="CENTER">
+                                          <VBox prefHeight="420.0" prefWidth="350.0" BorderPane.alignment="CENTER">
                                              <children>
                                                 <HBox prefHeight="30.0" prefWidth="292.0">
                                                    <children>
@@ -106,7 +106,7 @@
                                           </VBox>
                                        </left>
                                        <center>
-                                          <VBox fx:id="paneTopics" alignment="CENTER" BorderPane.alignment="CENTER" />
+                                          <VBox fx:id="paneTopics" alignment="CENTER_LEFT" BorderPane.alignment="CENTER" />
                                        </center>
                                     </BorderPane>
                                  </children>

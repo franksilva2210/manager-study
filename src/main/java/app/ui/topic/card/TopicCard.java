@@ -15,16 +15,15 @@ import javafx.util.Duration;
 public class TopicCard {
 
     private final AnchorPane root;
-
     private final Label titleTopic;
     private final Button bttOpenTopic;
 
     public TopicCard(TopicCardController controller) {
 
         root = new AnchorPane();
-        root.setPrefSize(110, 100);
-        root.setMinSize(110, 100);
-        root.setMaxSize(110, 100);
+        root.setPrefSize(127, 100);
+        root.setMinSize(127, 100);
+        root.setMaxSize(127, 100);
         root.setStyle("-fx-border-color: #cccccc; -fx-border-radius: 3;");
 
         VBox content = new VBox();

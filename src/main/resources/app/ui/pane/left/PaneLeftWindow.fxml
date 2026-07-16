@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,24 +13,24 @@
    <children>
       <VBox fx:id="paneListStudy" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="25.0" style="-fx-border-color: #cccccc; -fx-border-radius: 5;">
+            <HBox alignment="CENTER_LEFT" prefHeight="26.0" style="-fx-border-color: #cccccc; -fx-background-color: #F7F7F7; -fx-border-radius: 3;">
                <children>
                   <ImageView fitHeight="16.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@search.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id="txtSearchStudies" prefHeight="25.0" prefWidth="234.0" promptText="Buscar" style="-fx-background-color: transparent;" />
+                  <TextField fx:id="txtSearchStudies" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="234.0" promptText="Buscar" style="-fx-background-color: transparent;" />
                </children>
                <VBox.margin>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </VBox.margin>
             </HBox>
-            <TreeView fx:id="treeView" prefHeight="501.0" prefWidth="256.0" style="-fx-background-color: transparent; -fx-border-color: #cccccc;">
+            <ListView fx:id="listViewStudy" prefHeight="496.0" prefWidth="256.0" style="-fx-background-color: transparent; -fx-border-color: #cccccc; -fx-border-radius: 3;">
                <VBox.margin>
                   <Insets bottom="2.0" left="2.0" right="2.0" />
                </VBox.margin>
-            </TreeView>
+            </ListView>
          </children>
       </VBox>
    </children>
