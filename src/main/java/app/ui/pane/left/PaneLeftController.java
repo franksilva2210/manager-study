@@ -12,6 +12,7 @@ import app.ui.study.register.RegisterStudyController;
 import app.ui.study.register.RegisterStudyWindow;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
@@ -20,8 +21,6 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class PaneLeftController implements Initializable {
@@ -38,6 +37,7 @@ public class PaneLeftController implements Initializable {
     private final PaneRightNavigator navigator;
 
     private final ObservableList<StudyDTO> listStudyDTO = FXCollections.observableArrayList();
+    private final FilteredList<StudyDTO> listStudyFiltered = new FilteredList<>(listStudyDTO);
     private final StudyConfigDragDropped studyConfigDragDropped = new StudyConfigDragDropped();
     private final PaneLeftService service = new PaneLeftService();
     private final PaneLeftUIHelper uiHelper = new PaneLeftUIHelper();
@@ -61,7 +61,7 @@ public class PaneLeftController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        listViewStudy.setItems(listStudyDTO);
+        listViewStudy.setItems(listStudyFiltered);
 
         listViewStudy.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -84,10 +84,8 @@ public class PaneLeftController implements Initializable {
             searchStudies();
         });
 
-        txtSearchStudies.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.BACK_SPACE && txtSearchStudies.getText().isBlank()) {
-                refreshStudies();
-            }
+        txtSearchStudies.textProperty().addListener((obs, oldValue, newValue) -> {
+            searchStudies();
         });
 
         refreshStudies();
@@ -95,25 +93,12 @@ public class PaneLeftController implements Initializable {
 
     private void searchStudies() {
         String search = txtSearchStudies.getText();
-        List<StudyDTO> listPossible = new ArrayList<>();
 
-        if (!search.equals("")) {
-
-            for (StudyDTO studyDto : listStudyDTO) {
-                if (studyDto.getMatter().toLowerCase().indexOf(search.toLowerCase()) != -1) {
-                    listPossible.add(studyDto);
-                }
-            }
-
-            if (listPossible.size() > 0) {
-                listStudyDTO.clear();
-                listStudyDTO.addAll(listPossible);
-
-            }
-
-        } else {
-            refreshStudies();
-        }
+        listStudyFiltered.setPredicate(topic ->
+                search.isBlank()
+                        ||
+                        topic.getMatter().toLowerCase().indexOf(search.toLowerCase()) != -1
+        );
     }
 
     private void openStudy() {
