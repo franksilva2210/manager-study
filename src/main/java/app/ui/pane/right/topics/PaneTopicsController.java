@@ -50,7 +50,7 @@ public class PaneTopicsController implements Initializable {
 
     private final ObservableList<TopicDTO> listTopics = FXCollections.observableArrayList();
     private final FilteredList<TopicDTO> filteredTopics = new FilteredList<>(listTopics);
-    private final PaneRightService paneRightService = new PaneRightService();
+    private final PaneTopicsService paneTopicsService = new PaneTopicsService();
     private final GridPane gridTopics = new GridPane();
     private static final int MAX_COLUMNS = 3;
 
@@ -121,6 +121,7 @@ public class PaneTopicsController implements Initializable {
 
             CardTopicController controller =
                     new CardTopicController(
+                            stage,
                             topic,
                             mainState,
                             screenMainController,
@@ -217,7 +218,7 @@ public class PaneTopicsController implements Initializable {
         window.showScreen();
 
         if (controller.getConfirm()) {
-            paneRightService.removeTopic(topicSelectedDto);
+            paneTopicsService.removeTopic(topicSelectedDto);
             navigator.removeItem(topicSelectedDto);
             mainState.refreshItemSelected();
         }

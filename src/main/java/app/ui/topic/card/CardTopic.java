@@ -16,6 +16,7 @@ public class CardTopic {
 
     private AnchorPane root;
     private Label titleTopic;
+    private Button bttRemove;
     private Button bttOpenTopic;
 
     public CardTopic(CardTopicController controller) {
@@ -62,7 +63,23 @@ public class CardTopic {
         HBox.setMargin(titleTopic, new Insets(0, 0, 0, 2));
         HBox.setHgrow(titleTopic, Priority.ALWAYS);
 
-        header.getChildren().add(titleTopic);
+        bttRemove = new Button();
+
+        ImageView imageInfo = new ImageView(
+                new Image(CardTopic.class.getResourceAsStream("trash.png"))
+        );
+
+        imageInfo.setFitWidth(10);
+        imageInfo.setFitHeight(10);
+
+        bttRemove.setGraphic(imageInfo);
+        bttRemove.setFocusTraversable(false);
+        bttRemove.setStyle(
+                "-fx-background-color: transparent;" +
+                        "-fx-padding: 2;"
+        );
+
+        header.getChildren().addAll(titleTopic, bttRemove);
 
         //----------------------------
         // Corpo
@@ -109,7 +126,10 @@ public class CardTopic {
 
     private void loadController(CardTopicController controller) {
         titleTopic.setText(controller.getTopic().getTitle());
-        bttOpenTopic.setOnAction(e -> controller.openTopic());
+
+        bttRemove.setOnAction(event -> controller.removeTopic());
+
+        bttOpenTopic.setOnAction(event -> controller.openTopic());
     }
 
     public Parent getRoot() {

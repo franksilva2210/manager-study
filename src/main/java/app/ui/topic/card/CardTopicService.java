@@ -1,9 +1,9 @@
-package app.ui.pane.right;
+package app.ui.topic.card;
 
 import app.application.topic.TopicDTO;
 import app.infra.topic.TopicRepository;
 
-public class PaneRightService {
+public class CardTopicService {
 
     private TopicRepository topicRepository = new TopicRepository();
 
