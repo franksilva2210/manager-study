@@ -12,14 +12,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 
-public class TopicCard {
+public class CardTopic {
 
-    private final AnchorPane root;
-    private final Label titleTopic;
-    private final Button bttOpenTopic;
+    private AnchorPane root;
+    private Label titleTopic;
+    private Button bttOpenTopic;
 
-    public TopicCard(TopicCardController controller) {
+    public CardTopic(CardTopicController controller) {
+        buildCard(controller);
+        loadController(controller);
+    }
 
+    private void buildCard(CardTopicController controller) {
         root = new AnchorPane();
         root.setPrefSize(127, 100);
         root.setMinSize(127, 100);
@@ -42,8 +46,6 @@ public class TopicCard {
         header.setStyle("-fx-border-color: #dddddd; -fx-border-width: 0 0 1 0; -fx-background-color: #F7F7F7");
 
         titleTopic = new Label();
-        titleTopic.setText(controller.getTopic().getTitle());
-
         titleTopic.setMaxWidth(Double.MAX_VALUE);
         titleTopic.setWrapText(false);
         titleTopic.setTextOverrun(OverrunStyle.ELLIPSIS);
@@ -78,7 +80,7 @@ public class TopicCard {
         footer.setPrefHeight(25);
 
         ImageView image = new ImageView(
-                new Image(TopicCard.class.getResourceAsStream("next.png"))
+                new Image(CardTopic.class.getResourceAsStream("next.png"))
         );
         image.setFitWidth(16);
         image.setFitHeight(15);
@@ -99,13 +101,14 @@ public class TopicCard {
         content.getChildren().addAll(header, body, footer);
 
         root.getChildren().add(content);
+    }
 
-        //----------------------------
-        // Controller
-        //----------------------------
+    //----------------------------
+    // Controller
+    //----------------------------
 
+    private void loadController(CardTopicController controller) {
         titleTopic.setText(controller.getTopic().getTitle());
-
         bttOpenTopic.setOnAction(e -> controller.openTopic());
     }
 

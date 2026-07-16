@@ -122,10 +122,17 @@
                         </ImageView>
                      </graphic>
                   </Tab>
-                  <Tab fx:id="tabAdd" text="+">
+                  <Tab fx:id="tabAdd">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
+                     <graphic>
+                        <ImageView fitHeight="18.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@notes.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Tab>
                </tabs>
                <VBox.margin>

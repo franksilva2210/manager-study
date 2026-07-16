@@ -7,8 +7,8 @@ import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
 import app.ui.pane.right.*;
-import app.ui.topic.card.TopicCard;
-import app.ui.topic.card.TopicCardController;
+import app.ui.topic.card.CardTopic;
+import app.ui.topic.card.CardTopicController;
 import app.ui.topic.register.RegisterTopicController;
 import app.ui.topic.register.RegisterTopicWindow;
 import javafx.collections.FXCollections;
@@ -68,6 +68,10 @@ public class PaneTopicsController implements Initializable {
         this.navigator = navigator;
     }
 
+    public ObservableList<TopicDTO> getListTopics() {
+        return listTopics;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -115,8 +119,17 @@ public class PaneTopicsController implements Initializable {
 
         for (TopicDTO topic : listTopics) {
 
-            TopicCardController controller = new TopicCardController(topic, mainState);
-            TopicCard card = new TopicCard(controller);
+            CardTopicController controller =
+                    new CardTopicController(
+                            topic,
+                            mainState,
+                            screenMainController,
+                            paneRightController,
+                            this,
+                            navigator
+                    );
+
+            CardTopic card = new CardTopic(controller);
 
             if (column == MAX_COLUMNS - 1) {
                 GridPane.setMargin(card.getRoot(), new Insets(0, 0, 10, 0));
@@ -132,20 +145,6 @@ public class PaneTopicsController implements Initializable {
                 column = 0;
                 row++;
             }
-        }
-    }
-
-    private void openTopic() {
-        if (!screenMainController.confirmChangeStudyOrTopic())
-            return;
-
-        TopicDTO topicSelected = null;
-        if (topicSelected != null) {
-            mainState.setItemSelected(topicSelected);
-            mainState.refreshItemSelected();
-            navigator.navigate(mainState.getItemSelected());
-            paneRightController.mappingStacksNavigatorState();
-            paneRightController.loadTabsDocument();
         }
     }
 
