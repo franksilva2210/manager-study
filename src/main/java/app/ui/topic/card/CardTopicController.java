@@ -94,7 +94,7 @@ public class CardTopicController {
         MessageConfirmController controller = new MessageConfirmController();
         controller.setConfirm(false);
         controller.setMsgUser(
-                "Deseja realmente remover o tópico: \n" +
+                "Deseja realmente remover o tópico selecionado: \n" +
                 topic.getTitle().toUpperCase() + "?\n" +
                 "todos os sub tópicos pertencentes a ele\n" +
                 "também serão removidos!"

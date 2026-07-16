@@ -223,9 +223,10 @@ public class PaneTopicsController implements Initializable {
         MessageConfirmController controller = new MessageConfirmController();
         controller.setConfirm(false);
         controller.setMsgUser(
-                "Deseja realmente remover o tópico selecionado?\n" +
-                        "Todos os tópicos de: " + topicSelectedDto.getTitle().toUpperCase() + "\n" +
-                        "também serão removidos!"
+                "Deseja realmente remover o tópico selecionado: \n" +
+                topicSelectedDto.getTitle().toUpperCase() + "?\n" +
+                "todos os sub tópicos pertencentes a ele\n" +
+                "também serão removidos!"
         );
 
         MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
