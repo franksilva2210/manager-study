@@ -1,4 +1,4 @@
-package app.ui.pane.right;
+package app.ui.pane.left;
 
 import app.application.topic.TopicDTO;
 import javafx.scene.control.ListCell;

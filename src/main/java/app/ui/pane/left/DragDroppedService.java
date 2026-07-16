@@ -1,4 +1,4 @@
-package app.ui.pane.right;
+package app.ui.pane.left;
 
 import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
