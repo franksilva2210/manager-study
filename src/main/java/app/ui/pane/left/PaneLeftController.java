@@ -164,6 +164,7 @@ public class PaneLeftController implements Initializable {
         if (controller.getConfirm()) {
             service.removeStudy(studyDeletionDto);
             refreshStudies();
+            mainState.setItemSelected(null);
             paneRightController.getNavigator().removeItem(studyDeletionDto);
             paneRightController.loadTabsDocument();
         }
