@@ -8,6 +8,8 @@ import app.ui.message.MessageConfirmWindow;
 import app.ui.pane.right.PaneRightController;
 import app.ui.pane.right.PaneRightNavigator;
 import app.ui.pane.right.topics.PaneTopicsController;
+import app.ui.topic.register.RegisterTopicController;
+import app.ui.topic.register.RegisterTopicWindow;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 
@@ -108,6 +110,17 @@ public class CardTopicController {
             navigator.removeItem(topic);
             mainState.refreshItemSelected();
         }
+    }
+
+    public void renameTopic() {
+        RegisterTopicController registerTopicController = new RegisterTopicController();
+        registerTopicController.setTopicDto(topic);
+
+        RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage, registerTopicController);
+        registerTopicWindow.showScreen();
+
+        navigator.refreshItem(registerTopicController.getTopicDto());
+        mainState.refreshItemSelected();
     }
 
     public void moveTopicToTopic(TopicDTO topicDragged, TopicDTO topicDestination) {

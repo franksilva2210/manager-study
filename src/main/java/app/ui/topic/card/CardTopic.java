@@ -141,12 +141,19 @@ public class CardTopic {
 
         bttOpenTopic.setOnAction(event -> controller.openTopic());
 
+        configureContextMenu(controller);
+
         configureDragDropped(controller);
     }
 
+    private void configureContextMenu(CardTopicController controller) {
+        ConfigContextMenuCardTopic configContextMenu = new ConfigContextMenuCardTopic();
+        configContextMenu.configure(controller, root);
+    }
+
     private void configureDragDropped(CardTopicController controller) {
-        CardTopicConfigDragDropped cardTopicConfigDragDropped = new CardTopicConfigDragDropped();
-        cardTopicConfigDragDropped.configureDragAndDropped(controller, root);
+        ConfigDragDroppedCardTopic configDragDroppedCardTopic = new ConfigDragDroppedCardTopic();
+        configDragDroppedCardTopic.configureDragAndDropped(controller, root);
     }
 
     public Parent getRoot() {

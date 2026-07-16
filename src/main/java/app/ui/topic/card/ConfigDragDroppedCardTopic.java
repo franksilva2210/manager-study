@@ -7,11 +7,11 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 
-public class CardTopicConfigDragDropped {
+public class ConfigDragDroppedCardTopic {
 
     private final DropShadow dragShadow = new DropShadow();
 
-    public CardTopicConfigDragDropped() {
+    public ConfigDragDroppedCardTopic() {
         configureDragShadow();
     }
 

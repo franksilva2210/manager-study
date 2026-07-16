@@ -198,23 +198,6 @@ public class PaneTopicsController implements Initializable {
         }
     }
 
-    public void editTopic() {
-        TopicDTO topicSelectedDto = cardSelection.getSelectedItem();
-
-        if (mainState.getItemSelected() == null || topicSelectedDto == null) {
-            return;
-        }
-
-        RegisterTopicController registerTopicController = new RegisterTopicController();
-        registerTopicController.setTopicDto(topicSelectedDto);
-
-        RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage, registerTopicController);
-        registerTopicWindow.showScreen();
-
-        navigator.refreshItem(registerTopicController.getTopicDto());
-        mainState.refreshItemSelected();
-    }
-
     private void removeTopic() {
         TopicDTO topicSelectedDto = cardSelection.getSelectedItem();
 
