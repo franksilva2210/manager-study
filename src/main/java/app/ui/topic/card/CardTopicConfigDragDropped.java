@@ -110,7 +110,6 @@ public class CardTopicConfigDragDropped {
             TopicDTO topicDestination = controller.getTopic();
 
             controller.moveTopicToTopic(topicDragged, topicDestination);
-            controller.getMainState().refreshItemSelected();
 
             event.setDropCompleted(true);
             event.consume();

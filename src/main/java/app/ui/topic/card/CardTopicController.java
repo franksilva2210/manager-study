@@ -111,6 +111,13 @@ public class CardTopicController {
     }
 
     public void moveTopicToTopic(TopicDTO topicDragged, TopicDTO topicDestination) {
+
+        if (topicDragged == null || topicDestination == null) {
+            return;
+        } else if (topicDragged.getId().equals(topicDestination.getId())) {
+            return;
+        }
+
         MessageConfirmController controller = new MessageConfirmController();
         controller.setConfirm(false);
         controller.setMsgUser(
@@ -125,6 +132,7 @@ public class CardTopicController {
 
         if (controller.getConfirm()) {
             service.moveTopicToTopic(topicDragged, topicDestination);
+            mainState.refreshItemSelected();
         }
     }
 }

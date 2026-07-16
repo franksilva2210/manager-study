@@ -19,28 +19,9 @@ public class CardTopicService {
             TopicDTO topicDragged,
             TopicDTO topicDestination) {
 
-        if (topicDragged == null || topicDestination == null) {
-            return;
-        } else if (topicDragged.getId().equals(topicDestination.getId())) {
-            return;
-        }
-
         topicDragged.setTopicParentId(topicDestination.getId());
 
         topicRepository.updateTopicParent(topicDragged);
-    }
-
-    public void moveTopicToStudy(
-            TopicDTO topicDragged,
-            StudyDTO studyDestination) {
-
-        if (topicDragged == null || studyDestination == null) {
-            return;
-        }
-
-        topicDragged.setStudyId(studyDestination.getId());
-
-        topicRepository.updateStudyParent(topicDragged);
     }
 
     public void removeTopic(TopicDTO topicDto) {

@@ -1,6 +1,7 @@
 package app.ui.pane.left;
 
 import app.application.study.StudyDTO;
+import app.application.topic.TopicDTO;
 import app.ui.main.ScreenMainController;
 import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
@@ -38,8 +39,8 @@ public class PaneLeftController implements Initializable {
 
     private final ObservableList<StudyDTO> listStudyDTO = FXCollections.observableArrayList();
     private final StudyConfigDragDropped studyConfigDragDropped = new StudyConfigDragDropped();
-    private PaneLeftService paneLeftService = new PaneLeftService();
-    private PaneLeftUIHelper uiHelper = new PaneLeftUIHelper();
+    private final PaneLeftService service = new PaneLeftService();
+    private final PaneLeftUIHelper uiHelper = new PaneLeftUIHelper();
     private PaneRightController paneRightController;
 
     public PaneLeftController(
@@ -76,9 +77,7 @@ public class PaneLeftController implements Initializable {
 
         studyConfigDragDropped.configureDragDropped(
                 listViewStudy,
-                () -> {
-                    mainState.refreshItemSelected();
-                }
+                this
         );
 
         txtSearchStudies.setOnAction(event -> {
@@ -163,15 +162,44 @@ public class PaneLeftController implements Initializable {
         window.showScreen();
 
         if (controller.getConfirm()) {
-            paneLeftService.removeStudy(studyDeletionDto);
+            service.removeStudy(studyDeletionDto);
             refreshStudies();
             paneRightController.getNavigator().removeItem(studyDeletionDto);
             paneRightController.loadTabsDocument();
         }
     }
 
+    public void moveTopicToStudy(Long idTopicDragged, StudyDTO studyDestination) {
+        if (idTopicDragged == null || studyDestination == null) {
+            return;
+        }
+
+        TopicDTO topicDragged = service.loadSimpleTopic(idTopicDragged);
+
+        if (topicDragged.getStudyId().equals(studyDestination.getId())) {
+            return;
+        }
+
+        MessageConfirmController controller = new MessageConfirmController();
+        controller.setConfirm(false);
+        controller.setMsgUser(
+                "Deseja realmente mover o tópico:\n" +
+                topicDragged.getTitle().toUpperCase() + "\n" +
+                "para: " + studyDestination.getMatter().toUpperCase() + "?\n" +
+                "todos os sub tópicos também serão movidos"
+        );
+
+        MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
+        window.showScreen();
+
+        if (controller.getConfirm()) {
+            service.moveTopicToStudy(topicDragged, studyDestination);
+            mainState.refreshItemSelected();
+        }
+    }
+
     public void refreshStudies() {
         listStudyDTO.clear();
-        listStudyDTO.addAll(paneLeftService.consultAllStudyDto());
+        listStudyDTO.addAll(service.consultAllStudyDto());
     }
 }

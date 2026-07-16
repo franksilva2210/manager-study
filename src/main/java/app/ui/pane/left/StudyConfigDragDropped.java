@@ -1,7 +1,6 @@
 package app.ui.pane.left;
 
 import app.application.study.StudyDTO;
-import app.application.topic.TopicDTO;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.input.Dragboard;
@@ -9,11 +8,9 @@ import javafx.scene.input.TransferMode;
 
 public class StudyConfigDragDropped {
 
-    private DragDroppedService service = new DragDroppedService();
-
     public void configureDragDropped(
             ListView<StudyDTO> listViewStudy,
-            Runnable reloadCallback
+            PaneLeftController controller
     ) {
         listViewStudy.setCellFactory(lv -> {
 
@@ -29,7 +26,7 @@ public class StudyConfigDragDropped {
 
             setOnDragOver(cell);
             setFeedBackVisual(cell);
-            setOnDragDropped(cell, reloadCallback);
+            setOnDragDropped(cell, controller);
 
             return cell;
         });
@@ -66,7 +63,7 @@ public class StudyConfigDragDropped {
 
     private void setOnDragDropped(
             ListCell<StudyDTO> cell,
-            Runnable reloadCallback) {
+            PaneLeftController controller) {
 
         cell.setOnDragDropped(event -> {
 
@@ -76,12 +73,11 @@ public class StudyConfigDragDropped {
                 return;
             }
 
-            Long draggedId = Long.valueOf(dragboard.getString());
-            TopicDTO topicDragged = service.loadSimpleTopic(draggedId);
+            Long idTopicDragged = Long.valueOf(dragboard.getString());
             StudyDTO studyDestination = cell.getItem();
 
-            service.moveTopicToStudy(topicDragged, studyDestination);
-            reloadCallback.run();
+            controller.moveTopicToStudy(idTopicDragged, studyDestination);
+
             event.setDropCompleted(true);
             event.consume();
         });
