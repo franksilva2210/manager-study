@@ -95,6 +95,12 @@ public class PaneTopicsController implements Initializable {
             }
         });
 
+        paneCardsTopic.setOnMouseClicked(event -> {
+            if (event.getTarget() == paneCardsTopic) {
+                cardSelection.clearSelection();
+            }
+        });
+
         paneCardsTopic.getChildren().setAll(gridTopics);
 
         mainState.itemSelectedProperty().addListener((obs, oldValue, newValue) -> {

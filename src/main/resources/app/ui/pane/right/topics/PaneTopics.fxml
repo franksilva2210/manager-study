@@ -77,7 +77,7 @@
          <children>
             <ScrollPane prefHeight="303.0" prefWidth="429.0">
                <content>
-                  <VBox fx:id="paneCardsTopic" prefHeight="190.0" prefWidth="402.0" />
+                  <VBox fx:id="paneCardsTopic" prefHeight="299.0" prefWidth="402.0" />
                </content>
                <HBox.margin>
                   <Insets />
