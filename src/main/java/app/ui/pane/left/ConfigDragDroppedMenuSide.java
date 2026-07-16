@@ -5,7 +5,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 
-public class StudyConfigDragDropped {
+public class ConfigDragDroppedMenuSide {
 
     public void configure(
             ListCell<StudyDTO> cell,

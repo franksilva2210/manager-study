@@ -39,8 +39,8 @@ public class PaneLeftController implements Initializable {
 
     private final ObservableList<StudyDTO> listStudyDTO = FXCollections.observableArrayList();
     private final FilteredList<StudyDTO> listStudyFiltered = new FilteredList<>(listStudyDTO);
-    private final StudyConfigContextMenuListView studyConfigContextMenu = new StudyConfigContextMenuListView();
-    private final StudyConfigDragDropped studyConfigDragDropped = new StudyConfigDragDropped();
+    private final ConfigContextMenuSide configContextMenuSide = new ConfigContextMenuSide();
+    private final ConfigDragDroppedMenuSide configDragDroppedMenuSide = new ConfigDragDroppedMenuSide();
     private final PaneLeftService service = new PaneLeftService();
     private PaneRightController paneRightController;
 
@@ -87,13 +87,13 @@ public class PaneLeftController implements Initializable {
                 }
             };
 
-            studyConfigContextMenu.configure(
+            configContextMenuSide.configure(
                     cell,
                     this::renameStudy,
                     this::deleteStudy
             );
 
-            studyConfigDragDropped.configure(
+            configDragDroppedMenuSide.configure(
                     cell,
                     this
             );

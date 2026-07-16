@@ -5,7 +5,7 @@ import javafx.scene.control.*;
 
 import java.util.function.Consumer;
 
-public class StudyConfigContextMenuListView {
+public class ConfigContextMenuSide {
 
     public void configure(
             ListCell<StudyDTO> cell,
