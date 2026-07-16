@@ -9,6 +9,7 @@ import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 
@@ -125,7 +126,14 @@ public class CardTopic {
     //----------------------------
 
     private void loadController(CardTopicController controller) {
-        root.setOnMouseClicked(e -> controller.select());
+
+        root.setOnMouseClicked(event -> {
+            controller.select();
+
+            if (event.getClickCount() == 2 && event.getButton() == MouseButton.PRIMARY) {
+                controller.openTopic();
+            }
+        });
 
         titleTopic.setText(controller.getTopic().getTitle());
 
