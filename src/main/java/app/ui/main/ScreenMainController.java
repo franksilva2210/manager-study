@@ -54,13 +54,10 @@ public class ScreenMainController implements Initializable {
 	private Stage stage;
 
 	private final ScreenMainState state = new ScreenMainState();
-
 	private final TabDocumentFactory tabDocumentFactory = new TabDocumentFactory();
-
 	private final PaneRightNavigator navigator = new PaneRightNavigator();
 
 	private PaneLeftController paneLeftController;
-
 	private PaneRightController paneRightController;
 
 	public void setStage(Stage stage) {
