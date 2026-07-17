@@ -24,6 +24,10 @@ public class ConfigContextMenuCardTopic {
             controller.renameTopic();
         });
 
+        moveLevel.setOnAction(e ->
+            controller.moveOneLevelUp()
+        );
+
         remove.setOnAction(e -> {
             controller.removeTopic();
         });

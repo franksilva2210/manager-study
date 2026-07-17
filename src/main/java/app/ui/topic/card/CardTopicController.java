@@ -5,11 +5,14 @@ import app.ui.main.ScreenMainController;
 import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
+import app.ui.message.MessageInfoController;
+import app.ui.message.MessageInfoWindow;
 import app.ui.pane.right.PaneRightController;
 import app.ui.pane.right.PaneRightNavigator;
 import app.ui.pane.right.topics.PaneTopicsController;
 import app.ui.topic.register.RegisterTopicController;
 import app.ui.topic.register.RegisterTopicWindow;
+import app.ui.util.BusinessException;
 import javafx.css.PseudoClass;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
@@ -140,4 +143,17 @@ public class CardTopicController {
             mainState.refreshItemSelected();
         }
     }
+
+    public void moveOneLevelUp() {
+        try {
+            service.moveOneLevelUp(topic);
+            mainState.refreshItemSelected();
+        } catch (BusinessException e) {
+            MessageInfoController controller = new MessageInfoController();
+            controller.setMsgUser(e.getMessage());
+            MessageInfoWindow window = new MessageInfoWindow(stage, controller);
+            window.showScreen();
+        }
+    }
+
 }

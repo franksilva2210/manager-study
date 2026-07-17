@@ -1,7 +1,6 @@
 package app.infra.study;
 
 import app.application.study.StudyDTO;
-import app.application.topic.TopicDTO;
 import app.domain.study.Study;
 import app.domain.topic.Topic;
 import app.infra.HibernateUtil;
