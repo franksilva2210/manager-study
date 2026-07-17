@@ -45,8 +45,9 @@ public class CardTopicService {
             if (topic.getTopicParent() == null && topic.getStudy() != null) {
                 throw new BusinessException(
                         "Não é possível mover o tópico. O\n" +
-                                "tópico já está no nível mais alto do estudo.\n" +
-                                "Você pode usar a opção: Converter em novo estudo.\n"
+                        "tópico já está no nível mais alto do estudo.\n" +
+                        "Você pode criar um novo estudo e arrastar os sub-tópicos\n" +
+                        "deste tópico para lá."
                 );
             }
 
