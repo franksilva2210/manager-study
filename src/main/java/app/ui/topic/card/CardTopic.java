@@ -142,11 +142,7 @@ public class CardTopic {
         root.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 controller.openTopic();
-            }
-        });
-
-        root.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.DELETE) {
+            } else if (event.getCode() == KeyCode.DELETE) {
                 controller.removeTopic();
             }
         });
