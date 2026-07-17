@@ -13,7 +13,7 @@ public class ConfigContextMenuCardTopic {
 
         MenuItem open = new MenuItem("Abrir");
         MenuItem rename = new MenuItem("Renomear");
-        MenuItem moveLevel = new MenuItem("Mover para nível acima");
+        MenuItem moveLevel = new MenuItem("Mover um nível acima");
         MenuItem remove = new MenuItem("Remover");
 
         open.setOnAction(e -> {
