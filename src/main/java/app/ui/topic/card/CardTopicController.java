@@ -10,6 +10,7 @@ import app.ui.pane.right.PaneRightNavigator;
 import app.ui.pane.right.topics.PaneTopicsController;
 import app.ui.topic.register.RegisterTopicController;
 import app.ui.topic.register.RegisterTopicWindow;
+import javafx.css.PseudoClass;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
 
@@ -42,22 +43,13 @@ public class CardTopicController {
         this.paneTopicsController = paneTopicsController;
         this.navigator = navigator;
 
+        PseudoClass SELECTED = PseudoClass.getPseudoClass("selected");
+
         this.paneTopicsController.getCardSelection().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
-            if (topic.equals(newValue)) {
-                root.setStyle("""
-                        -fx-border-color: #3B82F6;
-                        -fx-border-width: 2;
-                        -fx-background-color: #EAF3FF;
-                        -fx-border-radius: 3;
-                        """);
-            } else {
-                root.setStyle("""
-                        -fx-border-color: #cccccc;
-                        -fx-border-width: 1;
-                        -fx-background-color: transparent;
-                        -fx-border-radius: 3;
-                        """);
-            }
+            root.pseudoClassStateChanged(
+                    SELECTED,
+                    topic.equals(newValue)
+            );
         });
     }
 

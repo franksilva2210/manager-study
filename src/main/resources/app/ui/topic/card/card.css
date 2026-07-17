@@ -1,0 +1,17 @@
+.card {
+    -fx-border-radius: 3;
+    -fx-border-width: 1;
+    -fx-border-color: #CCCCCC;
+    -fx-background-color: transparent;
+    -fx-background-radius: 3;
+}
+
+.card:hover {
+    -fx-border-width: 2;
+}
+
+.card:selected {
+    -fx-border-color: #3B82F6;
+    -fx-background-color: #EAF3FF;
+    -fx-border-width: 2;
+}

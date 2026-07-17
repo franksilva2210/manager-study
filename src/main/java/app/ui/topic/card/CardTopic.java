@@ -31,7 +31,8 @@ public class CardTopic {
         root.setPrefSize(127, 100);
         root.setMinSize(127, 100);
         root.setMaxSize(127, 100);
-        root.setStyle("-fx-border-color: #cccccc; -fx-border-radius: 3;");
+        root.getStylesheets().add(getClass().getResource("card.css").toExternalForm());
+        root.getStyleClass().add("card");
 
         VBox content = new VBox();
         AnchorPane.setTopAnchor(content, 0.0);
