@@ -14,6 +14,7 @@ public class EditorDocumentUIBinder {
         bindTitle(facade.getLblTitle(), state);
         bindCodeArea(facade.getCodeArea(), state);
         bindButtonSave(facade.getBttSave(), state);
+        bindButtonCancel(facade.getBttCancel(), state);
     }
 
     private static void bindTitle(Label lblTitle, DocumentState state) {
@@ -82,6 +83,24 @@ public class EditorDocumentUIBinder {
     }
 
     private static void bindButtonCancel(Button bttCancel, DocumentState state) {
+        bttCancel.disableProperty().bind(
+                Bindings.createBooleanBinding(
+                        () -> {
+                            DocumentDTO dto = state.getDocumentDTO();
 
+                            if (dto == null) {
+                                return true;
+                            }
+
+                            boolean isNotModified = Objects.equals(dto.getTitle(), state.getTitle())
+                                    && Objects.equals(dto.getContent(), state.getContent());
+
+                            return isNotModified;
+                        },
+                        state.documentDtoProperty(),
+                        state.titleProperty(),
+                        state.contentProperty()
+                )
+        );
     }
 }

@@ -217,36 +217,28 @@ public class EditorDocumentController implements Initializable {
         messageConfirmWindow.showScreen();
 
         if (messageConfirmController.getConfirm()) {
-            if (documentDto.getId() != null && documentDto.getId() > 0) {
-                service.remove(documentDto.getId());
+            if (state.getId() != null && state.getId() > 0) {
+                service.remove(state.getId());
             }
             tabPaneStudy.getTabs().remove(tab);
         }
     }
 
     private void exportDocument() {
-        if (documentDto == null) return;
-
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Exportar Documento");
-
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Markdown (*.md)", "*.md")
         );
-
         fileChooser.setInitialFileName(
-                documentDto.getTitle() != null ? documentDto.getTitle() + ".md" : "documento.md"
+                state.getTitle() != null ? state.getTitle() + ".md" : "documento.md"
         );
 
         File file = fileChooser.showSaveDialog(stage);
-
         if (file == null) return;
 
         try {
-            String content = codeArea.getText();
-
-            Files.writeString(file.toPath(), content);
-
+            Files.writeString(file.toPath(), state.getContent());
         } catch (IOException e) {
             e.printStackTrace();
         }
