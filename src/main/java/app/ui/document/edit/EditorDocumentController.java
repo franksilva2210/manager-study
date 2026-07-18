@@ -247,13 +247,11 @@ public class EditorDocumentController implements Initializable {
     private void importDocument() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Importar Documento");
-
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Markdown (*.md)", "*.md")
         );
 
         File file = fileChooser.showOpenDialog(stage);
-
         if (file == null) return;
 
         try {
