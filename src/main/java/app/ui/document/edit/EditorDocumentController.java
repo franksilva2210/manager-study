@@ -275,41 +275,39 @@ public class EditorDocumentController implements Initializable {
 
     private void onCodeBlock() {
         String selectedText = codeArea.getSelectedText();
-
-        if (selectedText != null && !selectedText.isBlank()) {
-
-            String blocFenced = """
-            
-            ```
-            %s
-            ```
-            
-            """.formatted(selectedText);
-
-            codeArea.replaceSelection(blocFenced);
+        if (selectedText == null || selectedText.isBlank()) {
+            return;
         }
+
+        String codeBlock = """
+                
+                ```
+                %s
+                ```
+                
+                """.formatted(selectedText);
+
+        codeArea.replaceSelection(codeBlock);
     }
 
     private void onBold() {
         String selectedText = codeArea.getSelectedText();
-
         if (selectedText == null || selectedText.isBlank()) {
-            codeArea.replaceSelection("**texto em negrito**");
             return;
         }
 
-        codeArea.replaceSelection("**%s**".formatted(selectedText));
+        String boldText = "**%s**".formatted(selectedText);
+        codeArea.replaceSelection(boldText);
     }
 
     private void onItalic() {
         String selectedText = codeArea.getSelectedText();
-
-        if (selectedText != null && !selectedText.isBlank()) {
-
-            String italicText = "*%s*".formatted(selectedText);
-
-            codeArea.replaceSelection(italicText);
+        if (selectedText == null || selectedText.isBlank()) {
+            return;
         }
+
+        String italicText = "*%s*".formatted(selectedText);
+        codeArea.replaceSelection(italicText);
     }
 
     private void onAttachImage() {
@@ -319,7 +317,6 @@ public class EditorDocumentController implements Initializable {
         );
 
         File file = fileChooser.showOpenDialog(stage);
-
         if (file != null) {
             String path = file.toURI().toString();
             codeArea.replaceSelection("![](" + path + ")");
