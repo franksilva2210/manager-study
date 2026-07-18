@@ -358,13 +358,8 @@ public class EditorDocumentController implements Initializable {
         messageConfirmWindow.showScreen();
 
         if (messageConfirmController.getConfirm()) {
-            lblTitle.setText(documentDto.getTitle());
-
-            codeArea.replaceText(
-                    documentDto.getContent() != null ? documentDto.getContent() : ""
-            );
-
-            previewDocument(codeArea.getText());
+            DocumentStateMapper.fillState(state, documentDto);
+            previewDocument(state.getContent());
         }
     }
 

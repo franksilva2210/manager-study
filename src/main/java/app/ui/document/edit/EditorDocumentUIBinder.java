@@ -45,9 +45,12 @@ public class EditorDocumentUIBinder {
     private static void bindCodeArea(CodeArea codeArea, DocumentState state) {
         codeArea.replaceText(state.getContent());
 
-        codeArea.richChanges().subscribe(change ->
-                state.contentProperty().set(codeArea.getText())
-        );
+        codeArea.richChanges().subscribe(change -> {
+            String text = codeArea.getText();
+            if (!Objects.equals(text, state.getContent())) {
+                state.contentProperty().set(text);
+            }
+        });
 
         state.contentProperty().addListener((obs, oldValue, newValue) -> {
             if (!codeArea.getText().equals(newValue)) {
