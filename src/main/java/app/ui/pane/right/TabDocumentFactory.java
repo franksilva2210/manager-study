@@ -43,6 +43,7 @@ public class TabDocumentFactory {
 
         editorDocumentController.setTab(newTab);
         editorDocumentController.setTabPaneStudy(tabPaneStudy);
+        editorDocumentController.init();
 
         newTab.setUserData(editorDocumentController);
 

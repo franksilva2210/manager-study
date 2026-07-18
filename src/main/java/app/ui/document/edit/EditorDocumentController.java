@@ -74,9 +74,36 @@ public class EditorDocumentController implements Initializable {
     private VirtualizedScrollPane<CodeArea> scrollPaneCodeArea;
 
     private Stage stage;
+
     private DocumentDTO documentDto;
-    private EditorDocumentService editorDocumentService = new EditorDocumentService();
-    private EditorDocumentUIHelper uiHelper = new EditorDocumentUIHelper();
+    private final DocumentState state = new DocumentState();
+    private final EditorDocumentService service = new EditorDocumentService();
+    private final EditorDocumentUIHelper uiHelper = new EditorDocumentUIHelper();
+    private final EditorDocumentFacade facade = new EditorDocumentFacade();
+
+    public void setDocumentDto(DocumentDTO documentDto) {
+        this.documentDto = documentDto;
+    }
+
+    public DocumentDTO getDocumentDto() {
+        return documentDto;
+    }
+
+    public void setLblTitle(Label lblTitle) {
+        this.lblTitle = lblTitle;
+    }
+
+    public void setTabPaneStudy(TabPane tabPaneStudy) {
+        this.tabPaneStudy = tabPaneStudy;
+    }
+
+    public void setTab(Tab tab) {
+        this.tab = tab;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -133,11 +160,6 @@ public class EditorDocumentController implements Initializable {
 
         createCodeArea();
 
-        codeArea.richChanges()
-                .subscribe(change -> {
-
-                });
-
         codeArea.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.isControlDown() && event.getCode() == KeyCode.S) {
                 save();
@@ -147,33 +169,20 @@ public class EditorDocumentController implements Initializable {
 
         createWebView();
 
+        DocumentStateMapper.fillState(state, documentDto);
+
         showInitial();
-    }
-
-    public boolean isEditing() {
-
-        String persisted = documentDto.getContent();
-
-        if (persisted == null) {
-            persisted = "";
-        }
-
-        return !codeArea.getText().equals(persisted);
     }
 
     public void editTitle() {
         EditTitleController controller = new EditTitleController();
-        controller.setTitleCurrent(lblTitle.getText());
+        controller.setTitleCurrent(state.getTitle());
         EditTitleWindow window = new EditTitleWindow(stage, controller);
         window.showScreen();
 
-        String titleCurrent = lblTitle.getText();
         String newTitle = controller.getNewTitle();
-
-        if (newTitle != null && !newTitle.isBlank() && !newTitle.equals(titleCurrent)) {
-            lblTitle.setText(newTitle);
-            bttSave.setDisable(false);
-            bttCancel.setDisable(false);
+        if (newTitle != null) {
+            state.titleProperty().set(newTitle);
         }
     }
 
@@ -191,22 +200,10 @@ public class EditorDocumentController implements Initializable {
         webView.getEngine().loadContent(html);
 
         uiHelper.showPane(webView, pane);
-
-        bttPreview.setDisable(true);
-        bttEdit.setDisable(false);
-
-        bttSave.setDisable(true);
-        bttCancel.setDisable(true);
     }
 
     private void editDocument() {
         uiHelper.showPane(scrollPaneCodeArea, pane);
-
-        bttPreview.setDisable(false);
-        bttEdit.setDisable(true);
-
-        bttSave.setDisable(false);
-        bttCancel.setDisable(false);
     }
 
     private void removeDocument() {
@@ -221,7 +218,7 @@ public class EditorDocumentController implements Initializable {
 
         if (messageConfirmController.getConfirm()) {
             if (documentDto.getId() != null && documentDto.getId() > 0) {
-                editorDocumentService.remove(documentDto.getId());
+                service.remove(documentDto.getId());
             }
             tabPaneStudy.getTabs().remove(tab);
         }
@@ -343,15 +340,10 @@ public class EditorDocumentController implements Initializable {
     }
 
     private void save() {
-        uiHelper.extractValues(
-                lblTitle,
-                codeArea,
-                documentDto
-        );
-
-        documentDto = editorDocumentService.save(documentDto);
-
-        previewDocument(codeArea.getText());
+        DocumentStateMapper.fillDTO(documentDto, state);
+        documentDto = service.save(documentDto);
+        DocumentStateMapper.fillState(state, documentDto);
+        previewDocument(state.getContent());
     }
 
     private void cancel() {
@@ -376,15 +368,36 @@ public class EditorDocumentController implements Initializable {
         }
     }
 
+    /* Helpers */
+
     private void showInitial() {
-        if (documentDto.getId() != null) {
-            codeArea.replaceText(
-                    documentDto.getContent() != null ? documentDto.getContent() : ""
-            );
-            previewDocument(codeArea.getText());
+        if (state.getId() != null) {
+            previewDocument(state.getContent());
         } else {
             editDocument();
         }
+    }
+
+    public void init() {
+        facade.setLblTitle(lblTitle);
+        facade.setBttPreview(bttPreview);
+        facade.setBttEdit(bttEdit);
+        facade.setCodeArea(codeArea);
+        facade.setBttSave(bttSave);
+        facade.setBttCancel(bttCancel);
+
+        EditorDocumentUIBinder.bind(facade, state);
+    }
+
+    public boolean isEditing() {
+
+        String persisted = documentDto.getContent();
+
+        if (persisted == null) {
+            persisted = "";
+        }
+
+        return !codeArea.getText().equals(persisted);
     }
 
     private void createCodeArea() {
@@ -407,14 +420,6 @@ public class EditorDocumentController implements Initializable {
         webView.setManaged(false);
     }
 
-    public void setDocumentDto(DocumentDTO documentDto) {
-        this.documentDto = documentDto;
-    }
-
-    public DocumentDTO getDocumentDto() {
-        return documentDto;
-    }
-
     public void setTopicDto(TopicDTO topicDto) {
         documentDto.setTopicId(topicDto.getId());
     }
@@ -423,19 +428,4 @@ public class EditorDocumentController implements Initializable {
         documentDto.setStudyId(studyDto.getId());
     }
 
-    public void setLblTitle(Label lblTitle) {
-        this.lblTitle = lblTitle;
-    }
-
-    public void setTabPaneStudy(TabPane tabPaneStudy) {
-        this.tabPaneStudy = tabPaneStudy;
-    }
-
-    public void setTab(Tab tab) {
-        this.tab = tab;
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
 }
