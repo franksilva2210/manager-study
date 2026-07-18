@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class EditorDocumentController implements Initializable {
@@ -369,14 +370,9 @@ public class EditorDocumentController implements Initializable {
     }
 
     public boolean isEditing() {
-
-        String persisted = documentDto.getContent();
-
-        if (persisted == null) {
-            persisted = "";
-        }
-
-        return !codeArea.getText().equals(persisted);
+        boolean isEditing = !Objects.equals(documentDto.getTitle(), state.getTitle())
+                || !Objects.equals(documentDto.getContent(), state.getContent());
+        return isEditing;
     }
 
     private void createCodeArea() {
