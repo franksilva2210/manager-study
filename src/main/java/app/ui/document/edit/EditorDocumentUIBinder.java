@@ -35,14 +35,6 @@ public class EditorDocumentUIBinder {
         );
     }
 
-    private static void bindButtonPreview(Button bttPreview, DocumentState state) {
-
-    }
-
-    private static void bindButtonEdit(Button bttEdit, DocumentState state) {
-
-    }
-
     private static void bindCodeArea(CodeArea codeArea, DocumentState state) {
         codeArea.replaceText(state.getContent());
 

@@ -382,8 +382,8 @@ public class EditorDocumentController implements Initializable {
     private void createCodeArea() {
         codeArea = new CodeArea();
         codeArea.setWrapText(true);
-        scrollPaneCodeArea = new VirtualizedScrollPane<>(codeArea);
 
+        scrollPaneCodeArea = new VirtualizedScrollPane<>(codeArea);
         pane.getChildren().add(scrollPaneCodeArea);
 
         scrollPaneCodeArea.setVisible(false);
@@ -392,11 +392,9 @@ public class EditorDocumentController implements Initializable {
 
     private void createWebView() {
         webView = new WebView();
-
-        pane.getChildren().add(webView);
-
         webView.setVisible(false);
         webView.setManaged(false);
+        pane.getChildren().add(webView);
     }
 
     public void setTopicDto(TopicDTO topicDto) {
