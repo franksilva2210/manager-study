@@ -257,19 +257,16 @@ public class EditorDocumentController implements Initializable {
         if (file == null) return;
 
         try {
-            String content = Files.readString(file.toPath());
-
-            codeArea.replaceText(content);
 
             String fileName = file.getName();
             if (fileName.endsWith(".md")) {
                 fileName = fileName.substring(0, fileName.length() - 3);
             }
 
-            lblTitle.setText(fileName);
+            state.titleProperty().set(fileName);
 
-            bttSave.setDisable(false);
-            bttCancel.setDisable(false);
+            String content = Files.readString(file.toPath());
+            state.contentProperty().set(content);
 
             editDocument();
 
