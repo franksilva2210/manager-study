@@ -23,8 +23,8 @@ public class EditorDocumentUIBinder {
                         () -> {
                             DocumentDTO dto = state.getDocumentDTO();
 
-                            boolean isEditing = !Objects.equals(dto.getTitle(), state.getTitle())
-                                    || !Objects.equals(dto.getContent(), state.getContent());
+                            boolean isEditing = state.getId() == null || (!Objects.equals(dto.getTitle(), state.getTitle())
+                                    || !Objects.equals(dto.getContent(), state.getContent()));
 
                             return isEditing ? state.getTitle() + " *" : state.getTitle();
                         },
