@@ -147,6 +147,25 @@ public class ScreenMainController implements Initializable {
 		window.showScreen();
 	}
 
+	/* Helpers */
+
+	private void loadPaneRight() {
+		paneRightController = new PaneRightController(stage, state, this, navigator);
+		PaneRightWindow window = new PaneRightWindow(paneRightController);
+		paneRight.getChildren().setAll(window.getRoot());
+	}
+
+	private void loadMenuLeft() {
+		paneLeftController = new PaneLeftController(stage, state, this, navigator);
+		PaneLeftWindow window = new PaneLeftWindow(paneLeftController);
+		menuLeft.getChildren().setAll(window.getRoot());
+	}
+
+	private void connectControllers() {
+		paneLeftController.setPaneRightController(paneRightController);
+		paneRightController.setPaneLeftController(paneLeftController);
+	}
+
 	public boolean confirmChangeStudyOrTopic() {
 		EditorDocumentController editorDocumentController = paneRightController.verifyDocumentEditingOrNotSave();
 
@@ -174,23 +193,6 @@ public class ScreenMainController implements Initializable {
 		}
 
 		return true;
-	}
-
-	private void loadPaneRight() {
-		paneRightController = new PaneRightController(stage, state, this, navigator);
-		PaneRightWindow window = new PaneRightWindow(paneRightController);
-		paneRight.getChildren().setAll(window.getRoot());
-	}
-
-	private void loadMenuLeft() {
-		paneLeftController = new PaneLeftController(stage, state, this, navigator);
-		PaneLeftWindow window = new PaneLeftWindow(paneLeftController);
-		menuLeft.getChildren().setAll(window.getRoot());
-	}
-
-	private void connectControllers() {
-		paneLeftController.setPaneRightController(paneRightController);
-		paneRightController.setPaneLeftController(paneLeftController);
 	}
 
 }
