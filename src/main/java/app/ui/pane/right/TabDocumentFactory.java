@@ -37,9 +37,7 @@ public class TabDocumentFactory {
         return tab;
     }
 
-    private Tab createTab(
-            EditorDocumentController editorDocumentController) {
-
+    private Tab createTab(EditorDocumentController editorDocumentController) {
         Tab tab = new Tab();
         tab.setText("");
         tab.setClosable(true);
