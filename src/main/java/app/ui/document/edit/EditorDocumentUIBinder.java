@@ -37,6 +37,7 @@ public class EditorDocumentUIBinder {
 
     private static void bindCodeArea(CodeArea codeArea, DocumentState state) {
         codeArea.replaceText(state.getContent());
+        codeArea.getUndoManager().forgetHistory();
 
         codeArea.richChanges().subscribe(change -> {
             String text = codeArea.getText();
@@ -46,8 +47,10 @@ public class EditorDocumentUIBinder {
         });
 
         state.contentProperty().addListener((obs, oldValue, newValue) -> {
-            if (!codeArea.getText().equals(newValue)) {
+            String text = codeArea.getText();
+            if (!Objects.equals(text, newValue)) {
                 codeArea.replaceText(newValue);
+                codeArea.getUndoManager().forgetHistory();
             }
         });
     }

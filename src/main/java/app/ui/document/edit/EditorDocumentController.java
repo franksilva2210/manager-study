@@ -90,6 +90,10 @@ public class EditorDocumentController implements Initializable {
         return documentDto;
     }
 
+    public DocumentState getState() {
+        return state;
+    }
+
     public void setLblTitle(Label lblTitle) {
         this.lblTitle = lblTitle;
     }
@@ -373,6 +377,7 @@ public class EditorDocumentController implements Initializable {
     }
 
     private void loadFacade() {
+        facade.setTab(tab);
         facade.setLblTitle(lblTitle);
         facade.setBttPreview(bttPreview);
         facade.setBttEdit(bttEdit);

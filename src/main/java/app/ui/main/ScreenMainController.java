@@ -183,7 +183,7 @@ public class ScreenMainController implements Initializable {
 					"Existem Documentos não salvos em:\n" +
 					nameItem + "\n" +
 					"Deseja continuar mesmo assim?\n" +
-					"Documento editando: " + editorDocumentController.getDocumentDto().getTitle()
+					"Documento editando: " + editorDocumentController.getState().getTitle()
 			);
 
 			MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
