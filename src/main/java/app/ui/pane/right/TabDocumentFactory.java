@@ -56,24 +56,4 @@ public class TabDocumentFactory {
 
         return tab;
     }
-
-    public EditorDocumentController verifyDocumentEditingOrNotSave(
-            TabPane tabPaneStudy,
-            Tab tabMain,
-            Tab tabAdd) {
-
-        for (Tab tab : tabPaneStudy.getTabs()) {
-            if (tab == tabMain || tab == tabAdd) {
-                continue;
-            }
-
-            EditorDocumentController editorDocumentController = (EditorDocumentController) tab.getUserData();
-
-            if (editorDocumentController.getDocumentDto().getId() == null || editorDocumentController.isEditing()) {
-                return editorDocumentController;
-            }
-        }
-
-        return null;
-    }
 }

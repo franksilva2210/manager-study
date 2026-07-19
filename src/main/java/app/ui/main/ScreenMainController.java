@@ -148,12 +148,7 @@ public class ScreenMainController implements Initializable {
 	}
 
 	public boolean confirmChangeStudyOrTopic() {
-		EditorDocumentController editorDocumentController =
-				tabDocumentFactory.verifyDocumentEditingOrNotSave(
-						paneRightController.getTabPaneStudy(),
-						paneRightController.getTabMain(),
-						paneRightController.getTabAdd()
-				);
+		EditorDocumentController editorDocumentController = paneRightController.verifyDocumentEditingOrNotSave();
 
 		if (editorDocumentController != null) {
 			String nameItem = null;
@@ -167,9 +162,9 @@ public class ScreenMainController implements Initializable {
 			controller.setConfirm(false);
 			controller.setMsgUser(
 					"Existem Documentos não salvos em:\n" +
-							nameItem + "\n" +
-							"Deseja continuar mesmo assim?\n\n" +
-							"Documento editando: " + editorDocumentController.getDocumentDto().getTitle()
+					nameItem + "\n" +
+					"Deseja continuar mesmo assim?\n" +
+					"Documento editando: " + editorDocumentController.getDocumentDto().getTitle()
 			);
 
 			MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);

@@ -3,6 +3,7 @@ package app.ui.pane.right;
 import app.application.document.DocumentDTO;
 import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
+import app.ui.document.edit.EditorDocumentController;
 import app.ui.main.ScreenMainController;
 import app.ui.main.ScreenMainState;
 import app.ui.message.MessageInfoController;
@@ -57,6 +58,7 @@ public class PaneRightController implements Initializable {
 
     private final PaneRightState paneRightState = new PaneRightState();
     private final TabDocumentFactory tabDocumentFactory = new TabDocumentFactory();
+    private final PaneRightUIHelper uiHelper = new PaneRightUIHelper();
     private PaneLeftController paneLeftController;
 
     public PaneRightController(
@@ -226,6 +228,10 @@ public class PaneRightController implements Initializable {
                 tabPaneStudy.getTabs().add(indexTabs, tabCreate);
             }
         }
+    }
+
+    public EditorDocumentController verifyDocumentEditingOrNotSave() {
+        return uiHelper.verifyDocumentEditingOrNotSave(tabPaneStudy, tabMain, tabAdd);
     }
 
     public void mappingStacksNavigatorState() {
