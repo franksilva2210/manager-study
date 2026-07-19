@@ -170,7 +170,11 @@ public class EditorDocumentController implements Initializable {
 
         createWebView();
 
+        loadFacade();
+
         DocumentStateMapper.fillState(state, documentDto);
+
+        EditorDocumentUIBinder.bind(facade, state);
 
         showInitial();
     }
@@ -350,31 +354,6 @@ public class EditorDocumentController implements Initializable {
 
     /* Helpers */
 
-    private void showInitial() {
-        if (state.getId() != null) {
-            previewDocument(state.getContent());
-        } else {
-            editDocument();
-        }
-    }
-
-    public void init() {
-        facade.setLblTitle(lblTitle);
-        facade.setBttPreview(bttPreview);
-        facade.setBttEdit(bttEdit);
-        facade.setCodeArea(codeArea);
-        facade.setBttSave(bttSave);
-        facade.setBttCancel(bttCancel);
-
-        EditorDocumentUIBinder.bind(facade, state);
-    }
-
-    public boolean isEditing() {
-        boolean isEditing = !Objects.equals(documentDto.getTitle(), state.getTitle())
-                || !Objects.equals(documentDto.getContent(), state.getContent());
-        return isEditing;
-    }
-
     private void createCodeArea() {
         codeArea = new CodeArea();
         codeArea.setWrapText(true);
@@ -391,6 +370,29 @@ public class EditorDocumentController implements Initializable {
         webView.setVisible(false);
         webView.setManaged(false);
         pane.getChildren().add(webView);
+    }
+
+    private void loadFacade() {
+        facade.setLblTitle(lblTitle);
+        facade.setBttPreview(bttPreview);
+        facade.setBttEdit(bttEdit);
+        facade.setCodeArea(codeArea);
+        facade.setBttSave(bttSave);
+        facade.setBttCancel(bttCancel);
+    }
+
+    public boolean isEditing() {
+        boolean isEditing = !Objects.equals(documentDto.getTitle(), state.getTitle())
+                || !Objects.equals(documentDto.getContent(), state.getContent());
+        return isEditing;
+    }
+
+    private void showInitial() {
+        if (state.getId() != null) {
+            previewDocument(state.getContent());
+        } else {
+            editDocument();
+        }
     }
 
     public void setTopicDto(TopicDTO topicDto) {

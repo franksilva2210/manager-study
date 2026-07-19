@@ -11,7 +11,6 @@ public class DocumentStateMapper {
         }
 
         state.idProperty().set(dto.getId());
-
         state.titleProperty().set(dto.getTitle());
         state.contentProperty().set(dto.getContent());
         state.studyIdProperty().set(dto.getStudyId());

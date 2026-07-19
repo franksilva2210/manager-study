@@ -13,18 +13,14 @@ import javafx.stage.Stage;
 
 public class TabDocumentFactory {
 
-    public Tab addTabDocument(
+    public Tab createTabDocument(
             Stage stage,
             TabPane tabPaneStudy,
-            Tab tabAdd,
             Object itemSelected,
             DocumentDTO documentDto) {
 
         EditorDocumentController editorDocumentController = new EditorDocumentController();
-
-        Label lblTitle = new Label();
-
-        editorDocumentController.setLblTitle(lblTitle);
+        editorDocumentController.setTabPaneStudy(tabPaneStudy);
         editorDocumentController.setDocumentDto(documentDto);
         editorDocumentController.setStage(stage);
 
@@ -34,77 +30,33 @@ public class TabDocumentFactory {
             editorDocumentController.setTopicDto(topicDto);
         }
 
-        EditorDocumentWindow editorDocumentWindow = new EditorDocumentWindow(editorDocumentController);
+        Tab tab = createTab(editorDocumentController);
 
-        int indexTabs = tabPaneStudy.getTabs().indexOf(tabAdd);
-        VBox root = editorDocumentWindow.getRoot();
-
-        Tab newTab = createTab(indexTabs, root, lblTitle, documentDto);
-
-        editorDocumentController.setTab(newTab);
-        editorDocumentController.setTabPaneStudy(tabPaneStudy);
-        editorDocumentController.init();
-
-        newTab.setUserData(editorDocumentController);
-
-        tabPaneStudy.getTabs().add(indexTabs, newTab);
-
-        return newTab;
-    }
-
-    private Tab createTab(
-            int indexTabs,
-            VBox root,
-            Label lblTitle,
-            DocumentDTO documentDto) {
-
-        String title = "";
-
-        if (documentDto.getTitle() != null && !documentDto.getTitle().isEmpty()) {
-            title = documentDto.getTitle();
-        } else {
-            title = "Texto " + indexTabs;
-        }
-
-        lblTitle.setText(title);
-
-        Tab tab = new Tab();
-        tab.setClosable(true);
-        tab.setContent(root);
-        tab.setGraphic(lblTitle);
-        tab.setText("");
+        editorDocumentController.setTab(tab);
 
         return tab;
     }
 
-    public void loadTabsDocument(
-            Stage stage,
-            TabPane tabPaneStudy,
-            Tab tabFixed,
-            Tab tabFixed2,
-            Object itemSelected) {
+    private Tab createTab(
+            EditorDocumentController editorDocumentController) {
 
-        tabPaneStudy.getTabs().removeIf(tab -> tab != tabFixed && tab != tabFixed2);
+        Tab tab = new Tab();
+        tab.setText("");
+        tab.setClosable(true);
 
-        if (itemSelected instanceof StudyDTO studyDto) {
-            for (DocumentDTO dto : studyDto.getListDocumentsDto()) {
-                addTabDocument(
-                        stage,
-                        tabPaneStudy,
-                        tabFixed2,
-                        itemSelected,
-                        dto);
-            }
-        } else if(itemSelected instanceof TopicDTO topicDto) {
-            for (DocumentDTO dto : topicDto.getListDocumentsDto()) {
-                addTabDocument(
-                        stage,
-                        tabPaneStudy,
-                        tabFixed2,
-                        itemSelected,
-                        dto);
-            }
-        }
+        Label lblTitle = new Label();
+        tab.setGraphic(lblTitle);
+
+        editorDocumentController.setLblTitle(lblTitle);
+
+        tab.setUserData(editorDocumentController);
+
+        EditorDocumentWindow editorDocumentWindow = new EditorDocumentWindow(editorDocumentController);
+        VBox root = editorDocumentWindow.getRoot();
+
+        tab.setContent(root);
+
+        return tab;
     }
 
     public EditorDocumentController verifyDocumentEditingOrNotSave(
@@ -119,7 +71,7 @@ public class TabDocumentFactory {
 
             EditorDocumentController editorDocumentController = (EditorDocumentController) tab.getUserData();
 
-            if (editorDocumentController.isEditing() || editorDocumentController.getDocumentDto().getId() == null) {
+            if (editorDocumentController.getDocumentDto().getId() == null || editorDocumentController.isEditing()) {
                 return editorDocumentController;
             }
         }

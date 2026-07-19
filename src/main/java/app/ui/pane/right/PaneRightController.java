@@ -1,6 +1,8 @@
 package app.ui.pane.right;
 
 import app.application.document.DocumentDTO;
+import app.application.study.StudyDTO;
+import app.application.topic.TopicDTO;
 import app.ui.main.ScreenMainController;
 import app.ui.main.ScreenMainState;
 import app.ui.message.MessageInfoController;
@@ -122,7 +124,7 @@ public class PaneRightController implements Initializable {
 
         tabAdd.setOnSelectionChanged(event -> {
             if (tabAdd.isSelected()) {
-                addNewDocument(new DocumentDTO());
+                addNewDocument();
             }
         });
 
@@ -164,7 +166,7 @@ public class PaneRightController implements Initializable {
 
     // Tabs -----------------------------
 
-    private void addNewDocument(DocumentDTO documentDto) {
+    private void addNewDocument() {
         if (mainState.getItemSelected() == null) {
             MessageInfoController controller = new MessageInfoController();
             controller.setMsgUser(
@@ -179,14 +181,20 @@ public class PaneRightController implements Initializable {
             tabPaneStudy.getSelectionModel().select(tabMain);
 
         } else {
-            Tab newTab = tabDocumentFactory.addTabDocument(
+
+            int indexTabs = tabPaneStudy.getTabs().indexOf(tabAdd);
+
+            DocumentDTO documentDto = new DocumentDTO();
+            documentDto.setTitle("Texto " + indexTabs);
+
+            Tab newTab = tabDocumentFactory.createTabDocument(
                     stage,
                     tabPaneStudy,
-                    tabAdd,
                     mainState.getItemSelected(),
                     documentDto
             );
 
+            tabPaneStudy.getTabs().add(indexTabs, newTab);
             tabPaneStudy.getSelectionModel().select(newTab);
         }
     }
@@ -203,7 +211,21 @@ public class PaneRightController implements Initializable {
     // Helpers -----------------------
 
     public void loadTabsDocument() {
-        tabDocumentFactory.loadTabsDocument(stage, tabPaneStudy, tabMain, tabAdd, mainState.getItemSelected());
+        tabPaneStudy.getTabs().removeIf(tab -> tab != tabMain && tab != tabAdd);
+
+        int indexTabs = tabPaneStudy.getTabs().indexOf(tabAdd);
+
+        if (mainState.getItemSelected() instanceof StudyDTO studyDto) {
+            for (DocumentDTO dto : studyDto.getListDocumentsDto()) {
+                Tab tab = tabDocumentFactory.createTabDocument(stage, tabPaneStudy, mainState.getItemSelected(), dto);
+                tabPaneStudy.getTabs().add(indexTabs, tab);
+            }
+        } else if(mainState.getItemSelected() instanceof TopicDTO topicDto) {
+            for (DocumentDTO dto : topicDto.getListDocumentsDto()) {
+                Tab tabCreate = tabDocumentFactory.createTabDocument(stage, tabPaneStudy, mainState.getItemSelected(), dto);
+                tabPaneStudy.getTabs().add(indexTabs, tabCreate);
+            }
+        }
     }
 
     public void mappingStacksNavigatorState() {
