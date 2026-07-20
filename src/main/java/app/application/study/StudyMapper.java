@@ -47,10 +47,10 @@ public class StudyMapper {
             dto.setListTopicsDto(listTopicsDto);
         }
 
-        if (entity.getListText() != null && !entity.getListText().isEmpty()) {
+        if (entity.getListDocuments() != null && !entity.getListDocuments().isEmpty()) {
             List<DocumentDTO> listDocumentsDto = new ArrayList<>();
 
-            for (Document document : entity.getListText()) {
+            for (Document document : entity.getListDocuments()) {
                 listDocumentsDto.add(DocumentMapper.toDTO(document));
             }
 

@@ -35,6 +35,7 @@ public class Topic {
 
     public Topic() {
         this.listTopics = new ArrayList<>();
+        this.listDocuments = new ArrayList<>();
     }
 
     public Long getId() {

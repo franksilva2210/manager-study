@@ -4,6 +4,7 @@ import app.application.study.StudyDTO;
 import app.application.study.StudyMapper;
 import app.application.topic.TopicDTO;
 import app.application.topic.TopicMapper;
+import app.domain.document.Document;
 import app.domain.study.Study;
 import app.domain.topic.Topic;
 import app.infra.HibernateUtil;
@@ -38,7 +39,7 @@ public class PaneLeftService {
     }
 
     public void moveTopicToStudy(TopicDTO topicDragged, StudyDTO studyDestination) {
-        if (topicDragged.getStudyId().equals(studyDestination.getId())) {
+        if (topicDragged.getStudyId() != null && topicDragged.getStudyId().equals(studyDestination.getId())) {
             return;
         }
         topicDragged.setStudyId(studyDestination.getId());
@@ -75,6 +76,12 @@ public class PaneLeftService {
                 topic.setStudy(null);
                 topic.setTopicParent(newTopic);
                 newTopic.getListTopics().add(topic);
+            }
+
+            for (Document document : studyDragged.getListDocuments()) {
+                document.setStudy(null);
+                document.setTopic(newTopic);
+                newTopic.getListDocuments().add(document);
             }
 
             em.remove(studyDragged);

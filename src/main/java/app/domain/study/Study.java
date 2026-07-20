@@ -40,11 +40,11 @@ public class Study {
 		this.matter = matter;
 	}
 
-	public List<Document> getListText() {
+	public List<Document> getListDocuments() {
 		return listDocuments;
 	}
 
-	public void setListText(List<Document> listDocuments) {
+	public void setListDocuments(List<Document> listDocuments) {
 		this.listDocuments = listDocuments;
 	}
 

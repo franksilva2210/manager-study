@@ -22,7 +22,7 @@ public class ScreenMainService {
     public StudyDTO loadStudy(Long id) {
         Study study = studyRepository.findByIdWithTopics(id);
         List<Document> listDocuments = documentRepository.findByStudy(id);
-        study.setListText(listDocuments);
+        study.setListDocuments(listDocuments);
         return StudyMapper.toDTO(study);
     }
 

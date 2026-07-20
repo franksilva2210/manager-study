@@ -215,6 +215,10 @@ public class PaneRightController implements Initializable {
     public void loadTabsDocument() {
         tabPaneStudy.getTabs().removeIf(tab -> tab != tabMain && tab != tabAdd);
 
+        if (mainState.getItemSelected() == null) {
+            return;
+        }
+
         int indexTabs = tabPaneStudy.getTabs().indexOf(tabAdd);
 
         if (mainState.getItemSelected() instanceof StudyDTO studyDto) {

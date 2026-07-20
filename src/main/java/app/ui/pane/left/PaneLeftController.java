@@ -183,7 +183,7 @@ public class PaneLeftController implements Initializable {
 
         TopicDTO topicDragged = service.loadSimpleTopic(idTopicDragged);
 
-        if (topicDragged.getStudyId().equals(studyDestination.getId())) {
+        if (topicDragged.getStudyId() != null && topicDragged.getStudyId().equals(studyDestination.getId())) {
             return;
         }
 
@@ -232,6 +232,7 @@ public class PaneLeftController implements Initializable {
             if (mainState.getItemSelected() instanceof StudyDTO studySelectedDto) {
                 if (studyDragged.getId().equals(studySelectedDto.getId())) {
                     mainState.setItemSelected(null);
+                    paneRightController.loadTabsDocument();
                 } else {
                     mainState.refreshItemSelected();
                 }
