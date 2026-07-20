@@ -16,21 +16,20 @@ public class ConfigDragDroppedCardTopic {
 
     public void configureDragAndDropped(CardTopicController controller, Parent root) {
         configureDragDetected(controller, root);
-        configureDragDone(root);
         configureDragOver(controller, root);
         configureDragEntered(root);
         configureDragExited(root);
+        configureDragDone(root);
         configureDragDropped(controller, root);
     }
 
     private void configureDragDetected(CardTopicController controller, Parent root) {
         root.setOnDragDetected(event -> {
 
-            Dragboard dragboard = root.startDragAndDrop(TransferMode.MOVE);
-
             ClipboardContent content = new ClipboardContent();
             content.putString("TOPIC:" + controller.getTopic().getId().toString());
 
+            Dragboard dragboard = root.startDragAndDrop(TransferMode.MOVE);
             dragboard.setContent(content);
 
             // efeito visual do card sendo movido
@@ -38,18 +37,6 @@ public class ConfigDragDroppedCardTopic {
             root.setScaleX(0.95);
             root.setScaleY(0.95);
             root.setEffect(dragShadow);
-
-            event.consume();
-        });
-    }
-
-    private void configureDragDone(Parent root) {
-        root.setOnDragDone(event -> {
-
-            root.setOpacity(1);
-            root.setScaleX(1);
-            root.setScaleY(1);
-            root.setEffect(null);
 
             event.consume();
         });
@@ -80,23 +67,26 @@ public class ConfigDragDroppedCardTopic {
 
     private void configureDragEntered(Parent root) {
         root.setOnDragEntered(event -> {
-
-            root.setStyle(
-                    "-fx-background-color: #3c78d8;"
-            );
-
+            root.setStyle("-fx-background-color: #3c78d8;");
+            event.consume();
         });
     }
 
     private void configureDragExited(Parent root) {
         root.setOnDragExited(event -> {
-
-            root.setStyle(
-                    "-fx-border-color: #cccccc;"
-            );
-
+            root.setStyle("");
             event.consume();
+        });
+    }
 
+    private void configureDragDone(Parent root) {
+        root.setOnDragDone(event -> {
+            root.setStyle("");
+            root.setOpacity(1);
+            root.setScaleX(1);
+            root.setScaleY(1);
+            root.setEffect(null);
+            event.consume();
         });
     }
 
