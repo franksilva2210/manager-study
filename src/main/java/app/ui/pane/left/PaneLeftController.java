@@ -182,17 +182,14 @@ public class PaneLeftController implements Initializable {
         }
 
         TopicDTO topicDragged = service.loadSimpleTopic(idTopicDragged);
-        if (topicDragged.getStudyId().equals(studyDestination.getId())) {
-            return;
-        }
 
         MessageConfirmController controller = new MessageConfirmController();
         controller.setConfirm(false);
         controller.setMsgUser(
-                "Deseja realmente mover o tópico:\n" +
-                topicDragged.getTitle().toUpperCase() + "\n" +
-                "para: " + studyDestination.getMatter().toUpperCase() + "?\n" +
-                "todos os sub tópicos também serão movidos"
+                "Deseja realmente mover o tópico selecionado?\n" +
+                "Origem: " + topicDragged.getTitle() + "\n" +
+                "Destino: " + studyDestination.getMatter() + "\n" +
+                "Todos os sub tópicos também serão movidos."
         );
 
         MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);

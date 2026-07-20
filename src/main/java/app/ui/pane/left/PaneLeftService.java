@@ -28,12 +28,11 @@ public class PaneLeftService {
         return TopicMapper.toSimpleDTO(topic);
     }
 
-    public void moveTopicToStudy(
-            TopicDTO topicDragged,
-            StudyDTO studyDestination) {
-
+    public void moveTopicToStudy(TopicDTO topicDragged, StudyDTO studyDestination) {
+        if (topicDragged.getStudyId().equals(studyDestination.getId())) {
+            return;
+        }
         topicDragged.setStudyId(studyDestination.getId());
-
         topicRepository.updateStudyParent(topicDragged);
     }
 

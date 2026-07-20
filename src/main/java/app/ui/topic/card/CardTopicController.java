@@ -119,10 +119,7 @@ public class CardTopicController {
     }
 
     public void moveTopicToTopic(Long idTopicDragged) {
-
         if (idTopicDragged == null) {
-            return;
-        } else if (idTopicDragged.equals(topic.getId())) {
             return;
         }
 

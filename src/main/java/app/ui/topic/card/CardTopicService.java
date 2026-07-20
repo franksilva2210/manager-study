@@ -20,12 +20,11 @@ public class CardTopicService {
         return TopicMapper.toSimpleDTO(topic);
     }
 
-    public void moveTopicToTopic(
-            TopicDTO topicDragged,
-            TopicDTO topicDestination) {
-
+    public void moveTopicToTopic(TopicDTO topicDragged, TopicDTO topicDestination) {
+        if (topicDragged.getId().equals(topicDestination.getId())) {
+            return;
+        }
         topicDragged.setTopicParentId(topicDestination.getId());
-
         topicRepository.updateTopicParent(topicDragged);
     }
 
