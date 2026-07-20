@@ -182,7 +182,6 @@ public class PaneLeftController implements Initializable {
         }
 
         TopicDTO topicDragged = service.loadSimpleTopic(idTopicDragged);
-
         if (topicDragged.getStudyId().equals(studyDestination.getId())) {
             return;
         }
@@ -203,6 +202,10 @@ public class PaneLeftController implements Initializable {
             service.moveTopicToStudy(topicDragged, studyDestination);
             mainState.refreshItemSelected();
         }
+    }
+
+    public void moveStudyToStudy(Long idStudyDragged, StudyDTO studyDestination) {
+
     }
 
     public void refreshStudies() {

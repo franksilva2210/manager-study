@@ -118,20 +118,22 @@ public class CardTopicController {
         mainState.refreshItemSelected();
     }
 
-    public void moveTopicToTopic(TopicDTO topicDragged, TopicDTO topicDestination) {
+    public void moveTopicToTopic(Long idTopicDragged) {
 
-        if (topicDragged == null || topicDestination == null) {
+        if (idTopicDragged == null) {
             return;
-        } else if (topicDragged.getId().equals(topicDestination.getId())) {
+        } else if (idTopicDragged.equals(topic.getId())) {
             return;
         }
+
+        TopicDTO topicDragged = service.loadSimpleTopic(idTopicDragged);
 
         MessageConfirmController controller = new MessageConfirmController();
         controller.setConfirm(false);
         controller.setMsgUser(
                 "Deseja realmente mover o tópico selecionado?\n" +
                 "Origem: " + topicDragged.getTitle() + "\n" +
-                "Destino: " + topicDestination.getTitle() + "\n" +
+                "Destino: " + topic.getTitle() + "\n" +
                 "Todos os sub tópicos também serão movidos."
         );
 
@@ -139,9 +141,13 @@ public class CardTopicController {
         window.showScreen();
 
         if (controller.getConfirm()) {
-            service.moveTopicToTopic(topicDragged, topicDestination);
+            service.moveTopicToTopic(topicDragged, topic);
             mainState.refreshItemSelected();
         }
+    }
+
+    public void moveStudyToTopic(Long idStudyDragged) {
+
     }
 
     public void moveOneLevelUp() {

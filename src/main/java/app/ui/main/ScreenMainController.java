@@ -16,7 +16,6 @@ import app.ui.pane.left.PaneLeftWindow;
 import app.ui.pane.right.PaneRightController;
 import app.ui.pane.right.PaneRightNavigator;
 import app.ui.pane.right.PaneRightWindow;
-import app.ui.pane.right.TabDocumentFactory;
 import app.ui.roadmap.RoadMapController;
 import app.ui.roadmap.RoadMapWindow;
 import app.ui.study.register.RegisterStudyController;
@@ -54,7 +53,6 @@ public class ScreenMainController implements Initializable {
 	private Stage stage;
 
 	private final ScreenMainState state = new ScreenMainState();
-	private final TabDocumentFactory tabDocumentFactory = new TabDocumentFactory();
 	private final PaneRightNavigator navigator = new PaneRightNavigator();
 
 	private PaneLeftController paneLeftController;

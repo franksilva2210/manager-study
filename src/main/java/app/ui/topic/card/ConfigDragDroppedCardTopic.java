@@ -1,6 +1,5 @@
 package app.ui.topic.card;
 
-import app.application.topic.TopicDTO;
 import javafx.scene.Parent;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.ClipboardContent;
@@ -30,7 +29,7 @@ public class ConfigDragDroppedCardTopic {
             Dragboard dragboard = root.startDragAndDrop(TransferMode.MOVE);
 
             ClipboardContent content = new ClipboardContent();
-            content.putString(controller.getTopic().getId().toString());
+            content.putString("TOPIC:" + controller.getTopic().getId().toString());
 
             dragboard.setContent(content);
 
@@ -60,11 +59,16 @@ public class ConfigDragDroppedCardTopic {
         root.setOnDragOver(event -> {
 
             Dragboard dragboard = event.getDragboard();
+            if (!dragboard.hasString()) {
+                return;
+            }
 
-            if (dragboard.hasString()) {
+            String value = dragboard.getString();
 
-                Long draggedId = Long.valueOf(dragboard.getString());
-
+            if (value.startsWith("STUDY:")) {
+                event.acceptTransferModes(TransferMode.MOVE);
+            } else if (value.startsWith("TOPIC:")) {
+                Long draggedId = Long.valueOf(value.substring(6));
                 if (!draggedId.equals(controller.getTopic().getId())) {
                     event.acceptTransferModes(TransferMode.MOVE);
                 }
@@ -100,16 +104,18 @@ public class ConfigDragDroppedCardTopic {
         root.setOnDragDropped(event -> {
 
             Dragboard dragboard = event.getDragboard();
-
             if (!dragboard.hasString()) {
                 return;
             }
 
-            Long draggedId = Long.valueOf(dragboard.getString());
-            TopicDTO topicDragged = controller.getService().loadSimpleTopic(draggedId);
-            TopicDTO topicDestination = controller.getTopic();
+            String value = dragboard.getString();
+            Long idDragged = Long.valueOf(value.substring(6));
 
-            controller.moveTopicToTopic(topicDragged, topicDestination);
+            if (value.startsWith("TOPIC:")) {
+                controller.moveTopicToTopic(idDragged);
+            } else if (value.startsWith("STUDY:")) {
+                controller.moveStudyToTopic(idDragged);
+            }
 
             event.setDropCompleted(true);
             event.consume();
