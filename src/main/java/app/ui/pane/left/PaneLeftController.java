@@ -160,7 +160,7 @@ public class PaneLeftController implements Initializable {
         controller.setConfirm(false);
         controller.setMsgUser(
                 "Deseja realmente remover o estudo selecionado?\n" +
-                "Todos os tópicos de: " + studyDeletionDto.getMatter().toUpperCase() + ", também " +
+                "Todos os tópicos de: " + studyDeletionDto.getMatter() + ", também " +
                 "serão removidos!"
         );
 
@@ -206,7 +206,39 @@ public class PaneLeftController implements Initializable {
     }
 
     public void moveStudyToStudy(Long idStudyDragged, StudyDTO studyDestination) {
+        if (idStudyDragged == null || studyDestination == null) {
+            return;
+        }
 
+        StudyDTO studyDragged = service.loadSimpleStudy(idStudyDragged);
+
+        MessageConfirmController controller = new MessageConfirmController();
+        controller.setConfirm(false);
+        controller.setMsgUser(
+                "Deseja realmente mover o tópico selecionado?\n" +
+                "Origem: " + studyDragged.getMatter() + "\n" +
+                "Destino: " + studyDestination.getMatter() + "\n" +
+                "Todos os sub tópicos também serão movidos."
+        );
+
+        MessageConfirmWindow window = new MessageConfirmWindow(stage, controller);
+        window.showScreen();
+
+        if (controller.getConfirm()) {
+            Long studyDraggedId = studyDragged.getId();
+            Long studyDestinationId = studyDestination.getId();
+            service.moveStudyToStudy(studyDraggedId, studyDestinationId);
+
+            if (mainState.getItemSelected() instanceof StudyDTO studySelectedDto) {
+                if (studyDragged.getId().equals(studySelectedDto.getId())) {
+                    mainState.setItemSelected(null);
+                } else {
+                    mainState.refreshItemSelected();
+                }
+            }
+
+            refreshStudies();
+        }
     }
 
     public void refreshStudies() {

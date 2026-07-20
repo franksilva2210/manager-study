@@ -94,6 +94,16 @@ public class StudyRepository {
         }
     }
 
+    public Study findById(Long id) {
+        EntityManager em = HibernateUtil.getEntityManager();
+
+        try {
+            return em.find(Study.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
     public Study findByIdWithTopics(Long id) {
         EntityManager em = HibernateUtil.getEntityManager();
 
