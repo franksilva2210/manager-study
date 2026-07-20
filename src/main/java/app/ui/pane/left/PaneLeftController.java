@@ -183,6 +183,10 @@ public class PaneLeftController implements Initializable {
 
         TopicDTO topicDragged = service.loadSimpleTopic(idTopicDragged);
 
+        if (topicDragged.getStudyId().equals(studyDestination.getId())) {
+            return;
+        }
+
         MessageConfirmController controller = new MessageConfirmController();
         controller.setConfirm(false);
         controller.setMsgUser(

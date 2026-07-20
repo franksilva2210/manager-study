@@ -45,12 +45,12 @@ public class ConfigDragDroppedMenuSide {
             }
 
             String value = dragboard.getString();
+            Long draggedId = Long.valueOf(value.substring(6));
 
             if (value.startsWith("TOPIC:")) {
                 event.acceptTransferModes(TransferMode.MOVE);
             } else if (value.startsWith("STUDY:")) {
-                Long draggedIdStudy = Long.valueOf(value.substring(6));
-                if (!draggedIdStudy.equals(cell.getItem().getId())) {
+                if (!draggedId.equals(cell.getItem().getId())) {
                     event.acceptTransferModes(TransferMode.MOVE);
                 }
             }

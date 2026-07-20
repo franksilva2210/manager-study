@@ -1,5 +1,6 @@
 package app.ui.topic.card;
 
+import app.application.topic.TopicDTO;
 import javafx.scene.Parent;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.ClipboardContent;
@@ -51,12 +52,15 @@ public class ConfigDragDroppedCardTopic {
             }
 
             String value = dragboard.getString();
+            Long draggedId = Long.valueOf(value.substring(6));
+            TopicDTO topicDto = controller.getTopic();
 
             if (value.startsWith("STUDY:")) {
-                event.acceptTransferModes(TransferMode.MOVE);
+                if (!draggedId.equals(topicDto.getStudyId())) {
+                    event.acceptTransferModes(TransferMode.MOVE);
+                }
             } else if (value.startsWith("TOPIC:")) {
-                Long draggedId = Long.valueOf(value.substring(6));
-                if (!draggedId.equals(controller.getTopic().getId())) {
+                if (!draggedId.equals(topicDto.getId())) {
                     event.acceptTransferModes(TransferMode.MOVE);
                 }
             }
