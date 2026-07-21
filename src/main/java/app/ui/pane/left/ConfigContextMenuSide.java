@@ -15,7 +15,7 @@ public class ConfigContextMenuSide {
         ContextMenu contextMenu = new ContextMenu();
 
         MenuItem menuEdit = new MenuItem("Renomear");
-        MenuItem menuRemove = new MenuItem("Deletar");
+        MenuItem menuRemove = new MenuItem("Remover");
 
         contextMenu.getItems().addAll(menuEdit, menuRemove);
 

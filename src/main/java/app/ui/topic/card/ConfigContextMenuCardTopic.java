@@ -14,7 +14,7 @@ public class ConfigContextMenuCardTopic {
         MenuItem open = new MenuItem("Abrir");
         MenuItem rename = new MenuItem("Renomear");
         MenuItem moveLevel = new MenuItem("Mover um nível acima");
-        MenuItem convertToStudy = new MenuItem("Converter em novo Estudo");
+        MenuItem convertToStudy = new MenuItem("Converter em novo estudo");
         MenuItem remove = new MenuItem("Remover");
 
         open.setOnAction(e -> {

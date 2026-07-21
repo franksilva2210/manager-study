@@ -167,6 +167,12 @@ public class CardTopicController {
         service.convertTopicToStudy(topic.getId());
         mainState.refreshItemSelected();
         paneLeftController.refreshStudies();
+        MessageInfoController controller = new MessageInfoController();
+        controller.setMsgUser(
+                "Tópico convertido com sucesso!"
+        );
+        MessageInfoWindow window = new MessageInfoWindow(stage, controller);
+        window.showScreen();
     }
 
 }
