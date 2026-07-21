@@ -130,8 +130,6 @@ public class PaneRightController implements Initializable {
             }
         });
 
-        loadPaneTopics();
-
         mappingStacksNavigatorState();
 
         PaneRightUIBinder.bind(
@@ -243,8 +241,17 @@ public class PaneRightController implements Initializable {
         paneRightState.getForwardStack().setAll(navigator.getForwardStack());
     }
 
-    private void loadPaneTopics() {
-        PaneTopicsController controller = new PaneTopicsController(stage, mainState, screenMainController, this, navigator);
+    public void loadPaneTopics() {
+        PaneTopicsController controller =
+                new PaneTopicsController(
+                        stage,
+                        mainState,
+                        screenMainController,
+                        paneLeftController,
+                        this,
+                        navigator
+                );
+
         PaneTopics pane = new PaneTopics(controller);
         pane.getRoot();
         paneTopics.getChildren().setAll(pane.getRoot());

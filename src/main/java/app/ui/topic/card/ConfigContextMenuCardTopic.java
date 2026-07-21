@@ -14,6 +14,7 @@ public class ConfigContextMenuCardTopic {
         MenuItem open = new MenuItem("Abrir");
         MenuItem rename = new MenuItem("Renomear");
         MenuItem moveLevel = new MenuItem("Mover um nível acima");
+        MenuItem convertToStudy = new MenuItem("Converter em novo Estudo");
         MenuItem remove = new MenuItem("Remover");
 
         open.setOnAction(e -> {
@@ -28,6 +29,10 @@ public class ConfigContextMenuCardTopic {
             controller.moveOneLevelUp()
         );
 
+        convertToStudy.setOnAction(e ->
+            controller.convertToStudy()
+        );
+
         remove.setOnAction(e -> {
             controller.removeTopic();
         });
@@ -37,6 +42,7 @@ public class ConfigContextMenuCardTopic {
                 new SeparatorMenuItem(),
                 rename,
                 moveLevel,
+                convertToStudy,
                 new SeparatorMenuItem(),
                 remove
         );

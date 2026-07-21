@@ -7,6 +7,7 @@ import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
 import app.ui.message.MessageInfoController;
 import app.ui.message.MessageInfoWindow;
+import app.ui.pane.left.PaneLeftController;
 import app.ui.pane.right.PaneRightController;
 import app.ui.pane.right.PaneRightNavigator;
 import app.ui.pane.right.topics.PaneTopicsController;
@@ -23,6 +24,7 @@ public class CardTopicController {
     private final TopicDTO topic;
     private final ScreenMainState mainState;
     private final ScreenMainController screenMainController;
+    private final PaneLeftController paneLeftController;
     private final PaneRightController paneRightController;
     private final PaneTopicsController paneTopicsController;
     private final PaneRightNavigator navigator;
@@ -34,6 +36,7 @@ public class CardTopicController {
             Stage stage, TopicDTO topic,
             ScreenMainState mainState,
             ScreenMainController screenMainController,
+            PaneLeftController paneLeftController,
             PaneRightController paneRightController,
             PaneTopicsController paneTopicsController,
             PaneRightNavigator navigator) {
@@ -42,6 +45,7 @@ public class CardTopicController {
         this.topic = topic;
         this.mainState = mainState;
         this.screenMainController = screenMainController;
+        this.paneLeftController = paneLeftController;
         this.paneRightController = paneRightController;
         this.paneTopicsController = paneTopicsController;
         this.navigator = navigator;
@@ -92,8 +96,8 @@ public class CardTopicController {
         controller.setConfirm(false);
         controller.setMsgUser(
                 "Deseja realmente remover o tópico selecionado: \n" +
-                topic.getTitle().toUpperCase() + "?\n" +
-                "todos os sub tópicos pertencentes a ele\n" +
+                topic.getTitle() + "?\n" +
+                "todos os subtópicos pertencentes a ele\n" +
                 "também serão removidos!"
         );
 
@@ -157,6 +161,12 @@ public class CardTopicController {
             MessageInfoWindow window = new MessageInfoWindow(stage, controller);
             window.showScreen();
         }
+    }
+
+    public void convertToStudy() {
+        service.convertTopicToStudy(topic.getId());
+        mainState.refreshItemSelected();
+        paneLeftController.refreshStudies();
     }
 
 }

@@ -2,10 +2,10 @@ package app.ui.topic.card;
 
 import app.application.topic.TopicDTO;
 import app.application.topic.TopicMapper;
+import app.domain.document.Document;
 import app.domain.study.Study;
 import app.domain.topic.Topic;
 import app.infra.HibernateUtil;
-import app.infra.study.StudyRepository;
 import app.infra.topic.TopicRepository;
 import app.ui.util.BusinessException;
 import jakarta.persistence.EntityManager;
@@ -13,7 +13,6 @@ import jakarta.persistence.EntityManager;
 public class CardTopicService {
 
     private TopicRepository topicRepository = new TopicRepository();
-    private StudyRepository studyRepository = new StudyRepository();
 
     public TopicDTO loadSimpleTopic(Long id) {
         Topic topic = topicRepository.findById(id);
@@ -43,10 +42,9 @@ public class CardTopicService {
 
             if (topic.getTopicParent() == null && topic.getStudy() != null) {
                 throw new BusinessException(
-                        "Não é possível mover o tópico. O\n" +
-                        "tópico já está no nível mais alto do estudo.\n" +
-                        "Você pode criar um novo estudo e arrastar os sub-tópicos\n" +
-                        "deste tópico para lá."
+                        "Não é possível mover o tópico acima. O\n" +
+                        "tópico já está no topo do estudo.\n" +
+                        "Você pode usar a opção: Converter em novo estudo."
                 );
             }
 
@@ -70,6 +68,56 @@ public class CardTopicService {
 
         } catch (Exception e) {
             em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
+    }
+
+    public void convertTopicToStudy(Long topicId) {
+        EntityManager em = HibernateUtil.getEntityManager();
+
+        try {
+            em.getTransaction().begin();
+
+            Topic topicCurrent = em.createQuery(
+                            """
+                            SELECT DISTINCT t
+                            FROM Topic t
+                            LEFT JOIN FETCH t.topicParent
+                            LEFT JOIN FETCH t.listTopics
+                            WHERE t.id = :id
+                            """,
+                            Topic.class
+                    )
+                    .setParameter("id", topicId)
+                    .getSingleResult();
+
+            Study newStudy = new Study();
+            newStudy.setMatter(topicCurrent.getTitle());
+
+            em.persist(newStudy);
+
+            for (Topic topic : topicCurrent.getListTopics()) {
+                topic.setStudy(newStudy);
+                topic.setTopicParent(null);
+                newStudy.getListTopics().add(topic);
+            }
+
+            for (Document document : topicCurrent.getListDocuments()) {
+                document.setStudy(newStudy);
+                document.setTopic(null);
+                newStudy.getListDocuments().add(document);
+            }
+
+            em.remove(topicCurrent);
+
+            em.getTransaction().commit();
+
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            throw e;
         } finally {
             em.close();
         }

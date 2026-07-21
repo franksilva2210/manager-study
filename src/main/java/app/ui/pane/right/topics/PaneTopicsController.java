@@ -6,6 +6,7 @@ import app.ui.main.ScreenMainController;
 import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
+import app.ui.pane.left.PaneLeftController;
 import app.ui.pane.right.*;
 import app.ui.topic.card.CardTopic;
 import app.ui.topic.card.CardTopicController;
@@ -46,6 +47,7 @@ public class PaneTopicsController implements Initializable {
     private final Stage stage;
     private final ScreenMainState mainState;
     private final ScreenMainController screenMainController;
+    private final PaneLeftController paneLeftController;
     private final PaneRightController paneRightController;
     private final PaneRightNavigator navigator;
 
@@ -60,12 +62,14 @@ public class PaneTopicsController implements Initializable {
             Stage stage,
             ScreenMainState mainState,
             ScreenMainController screenMainController,
+            PaneLeftController paneLeftController,
             PaneRightController paneRightController,
             PaneRightNavigator navigator) {
 
         this.stage = stage;
         this.mainState = mainState;
         this.screenMainController = screenMainController;
+        this.paneLeftController = paneLeftController;
         this.paneRightController = paneRightController;
         this.navigator = navigator;
     }
@@ -137,6 +141,7 @@ public class PaneTopicsController implements Initializable {
                             topic,
                             mainState,
                             screenMainController,
+                            paneLeftController,
                             paneRightController,
                             this,
                             navigator
@@ -209,8 +214,8 @@ public class PaneTopicsController implements Initializable {
         controller.setConfirm(false);
         controller.setMsgUser(
                 "Deseja realmente remover o tópico selecionado: \n" +
-                topicSelectedDto.getTitle().toUpperCase() + "?\n" +
-                "todos os sub tópicos pertencentes a ele\n" +
+                topicSelectedDto.getTitle() + "?\n" +
+                "todos os subtópicos pertencentes a ele\n" +
                 "também serão removidos!"
         );
 

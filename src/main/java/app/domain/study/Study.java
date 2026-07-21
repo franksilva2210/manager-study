@@ -4,6 +4,7 @@ import app.domain.document.Document;
 import app.domain.topic.Topic;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,7 +24,12 @@ public class Study {
 
 	@OneToMany(mappedBy = "study", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Topic> listTopics;
-	
+
+	public Study() {
+		this.listDocuments = new ArrayList<>();
+		this.listTopics = new ArrayList<>();
+	}
+
 	public Long getId() {
 		return id;
 	}

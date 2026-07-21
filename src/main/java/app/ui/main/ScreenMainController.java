@@ -93,12 +93,6 @@ public class ScreenMainController implements Initializable {
 			Platform.exit();
 		});
 
-		loadMenuLeft();
-
-		loadPaneRight();
-
-		connectControllers();
-
 		stage.setOnCloseRequest(event -> {
 			boolean confirm = confirmChangeStudyOrTopic();
 			if (!confirm) {
@@ -106,6 +100,7 @@ public class ScreenMainController implements Initializable {
 			}
 		});
 
+		initContextScreen();
 	}
 
 	private void newStudy() {
@@ -147,21 +142,20 @@ public class ScreenMainController implements Initializable {
 
 	/* Helpers */
 
-	private void loadPaneRight() {
-		paneRightController = new PaneRightController(stage, state, this, navigator);
-		PaneRightWindow window = new PaneRightWindow(paneRightController);
-		paneRight.getChildren().setAll(window.getRoot());
-	}
-
-	private void loadMenuLeft() {
+	private void initContextScreen() {
 		paneLeftController = new PaneLeftController(stage, state, this, navigator);
-		PaneLeftWindow window = new PaneLeftWindow(paneLeftController);
-		menuLeft.getChildren().setAll(window.getRoot());
-	}
+		paneRightController = new PaneRightController(stage, state, this, navigator);
 
-	private void connectControllers() {
 		paneLeftController.setPaneRightController(paneRightController);
 		paneRightController.setPaneLeftController(paneLeftController);
+
+		PaneLeftWindow paneLeftWindow = new PaneLeftWindow(paneLeftController);
+		PaneRightWindow paneRightWindow = new PaneRightWindow(paneRightController);
+
+		paneRightController.loadPaneTopics();
+
+		menuLeft.getChildren().setAll(paneLeftWindow.getRoot());
+		paneRight.getChildren().setAll(paneRightWindow.getRoot());
 	}
 
 	public boolean confirmChangeStudyOrTopic() {
