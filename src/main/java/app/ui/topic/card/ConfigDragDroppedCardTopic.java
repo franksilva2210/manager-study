@@ -55,11 +55,7 @@ public class ConfigDragDroppedCardTopic {
             Long draggedId = Long.valueOf(value.substring(6));
             TopicDTO topicDto = controller.getTopic();
 
-            if (value.startsWith("STUDY:")) {
-                if (!draggedId.equals(topicDto.getStudyId())) {
-                    event.acceptTransferModes(TransferMode.MOVE);
-                }
-            } else if (value.startsWith("TOPIC:")) {
+            if (value.startsWith("TOPIC:")) {
                 if (!draggedId.equals(topicDto.getId())) {
                     event.acceptTransferModes(TransferMode.MOVE);
                 }
