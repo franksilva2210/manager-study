@@ -217,17 +217,21 @@ public class PaneRightController implements Initializable {
             return;
         }
 
-        int indexTabs = tabPaneStudy.getTabs().indexOf(tabAdd);
-
         if (mainState.getItemSelected() instanceof StudyDTO studyDto) {
             for (DocumentDTO dto : studyDto.getListDocumentsDto()) {
                 Tab tab = tabDocumentFactory.createTabDocument(stage, tabPaneStudy, mainState.getItemSelected(), dto);
-                tabPaneStudy.getTabs().add(indexTabs, tab);
+                tabPaneStudy.getTabs().add(
+                        tabPaneStudy.getTabs().indexOf(tabAdd),
+                        tab
+                );
             }
         } else if(mainState.getItemSelected() instanceof TopicDTO topicDto) {
             for (DocumentDTO dto : topicDto.getListDocumentsDto()) {
                 Tab tabCreate = tabDocumentFactory.createTabDocument(stage, tabPaneStudy, mainState.getItemSelected(), dto);
-                tabPaneStudy.getTabs().add(indexTabs, tabCreate);
+                tabPaneStudy.getTabs().add(
+                        tabPaneStudy.getTabs().indexOf(tabAdd),
+                        tabCreate
+                );
             }
         }
     }
