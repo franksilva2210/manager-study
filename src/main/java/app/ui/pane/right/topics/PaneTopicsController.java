@@ -231,7 +231,7 @@ public class PaneTopicsController implements Initializable {
 
     private void configScrollPane() {
         ScrollPaneUtils scrollPaneUtils = new ScrollPaneUtils();
-        scrollPaneUtils.configurateScroll(scrollPaneCards);
+        scrollPaneUtils.configure(scrollPaneCards);
     }
 
 }
