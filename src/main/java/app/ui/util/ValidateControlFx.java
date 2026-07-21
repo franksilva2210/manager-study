@@ -40,7 +40,7 @@ public class ValidateControlFx {
 
     private void validateTextInputField() {
         TextInputControl textField = (TextInputControl) control;
-        if (textField.getText() == null || textField.getText().equals(""))
+        if (textField.getText() == null || textField.getText().trim().isEmpty())
         	error = true;
         else
         	error = false;
