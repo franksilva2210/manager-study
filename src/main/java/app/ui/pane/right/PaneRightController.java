@@ -55,7 +55,6 @@ public class PaneRightController implements Initializable {
     private final Stage stage;
     private final ScreenMainState mainState;
     private final ScreenMainController mainController;
-    private final Breadcrumb breadcrumb;
 
     private final TabDocumentFactory tabDocumentFactory = new TabDocumentFactory();
     private final PaneRightUIHelper uiHelper = new PaneRightUIHelper();
@@ -64,13 +63,11 @@ public class PaneRightController implements Initializable {
     public PaneRightController(
             Stage stage,
             ScreenMainState mainState,
-            ScreenMainController mainController,
-            Breadcrumb breadcrumb) {
+            ScreenMainController mainController) {
 
         this.stage = stage;
         this.mainState = mainState;
         this.mainController = mainController;
-        this.breadcrumb = breadcrumb;
     }
 
     public void setPaneLeftController(PaneLeftController paneLeftController) {
@@ -212,8 +209,7 @@ public class PaneRightController implements Initializable {
                         mainState,
                         mainController,
                         paneLeftController,
-                        this,
-                        breadcrumb
+                        this
                 );
 
         PaneTopics pane = new PaneTopics(controller);

@@ -2,6 +2,7 @@ package app.ui.pane.left;
 
 import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
+import app.ui.main.ModeUpdateItem;
 import app.ui.main.ScreenMainController;
 import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
@@ -35,7 +36,6 @@ public class PaneLeftController implements Initializable {
     private final Stage stage;
     private final ScreenMainState mainState;
     private final ScreenMainController screenMainController;
-    private final Breadcrumb breadcrumb;
 
     private final ObservableList<StudyDTO> listStudyDTO = FXCollections.observableArrayList();
     private final FilteredList<StudyDTO> listStudyFiltered = new FilteredList<>(listStudyDTO);
@@ -46,13 +46,12 @@ public class PaneLeftController implements Initializable {
 
     public PaneLeftController(
             Stage stage,
-            ScreenMainState mainState, ScreenMainController screenMainController,
-            Breadcrumb breadcrumb) {
+            ScreenMainState mainState,
+            ScreenMainController screenMainController) {
 
         this.stage = stage;
         this.mainState = mainState;
         this.screenMainController = screenMainController;
-        this.breadcrumb = breadcrumb;
     }
 
     public void setPaneRightController(PaneRightController paneRightController) {
@@ -90,7 +89,7 @@ public class PaneLeftController implements Initializable {
             configContextMenuSide.configure(
                     cell,
                     this::renameStudy,
-                    this::deleteStudy
+                    this::removeStudy
             );
 
             configDragDroppedMenuSide.configure(
@@ -144,13 +143,12 @@ public class PaneLeftController implements Initializable {
 
         StudyDTO studyDtoUpdated = controller.getStudyDto();
 
-        breadcrumb.refreshItem(studyDtoUpdated);
-        paneRightController.loadTabsDocument();
+        screenMainController.refreshHierarchyPath(studyDtoUpdated, ModeUpdateItem.UPDATE);
 
         refreshStudies();
     }
 
-    private void deleteStudy(Object objectDeletion) {
+    private void removeStudy(Object objectDeletion) {
         StudyDTO studyDeletionDto = (StudyDTO) objectDeletion;
 
         MessageConfirmController controller = new MessageConfirmController();
@@ -167,8 +165,11 @@ public class PaneLeftController implements Initializable {
         if (controller.getConfirm()) {
             service.removeStudy(studyDeletionDto);
             refreshStudies();
-            breadcrumb.removeItem(studyDeletionDto);
-            mainState.loadItemSelected(null, breadcrumb);
+
+            screenMainController.refreshHierarchyPath(studyDeletionDto, ModeUpdateItem.REMOVE);
+
+            mainState.setItemSelected(null);
+
             paneRightController.loadTabsDocument();
         }
     }

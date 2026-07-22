@@ -3,6 +3,7 @@ package app.ui.pane.right.topics;
 import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
 import app.ui.main.Breadcrumb;
+import app.ui.main.ModeUpdateItem;
 import app.ui.main.ScreenMainController;
 import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
@@ -50,7 +51,6 @@ public class PaneTopicsController implements Initializable {
     private final ScreenMainController screenMainController;
     private final PaneLeftController paneLeftController;
     private final PaneRightController paneRightController;
-    private final Breadcrumb breadCrumb;
 
     private final ObservableList<TopicDTO> listTopics = FXCollections.observableArrayList();
     private final FilteredList<TopicDTO> listTopicsFiltered = new FilteredList<>(listTopics);
@@ -64,15 +64,13 @@ public class PaneTopicsController implements Initializable {
             ScreenMainState mainState,
             ScreenMainController screenMainController,
             PaneLeftController paneLeftController,
-            PaneRightController paneRightController,
-            Breadcrumb breadCrumb) {
+            PaneRightController paneRightController) {
 
         this.stage = stage;
         this.mainState = mainState;
         this.screenMainController = screenMainController;
         this.paneLeftController = paneLeftController;
         this.paneRightController = paneRightController;
-        this.breadCrumb = breadCrumb;
     }
 
     public CardSelectionModel<TopicDTO> getCardSelection() {
@@ -224,7 +222,7 @@ public class PaneTopicsController implements Initializable {
 
         if (controller.getConfirm()) {
             paneTopicsService.removeTopic(topicSelectedDto);
-            breadCrumb.removeItem(topicSelectedDto);
+            screenMainController.refreshHierarchyPath(topicSelectedDto, ModeUpdateItem.REMOVE);
             mainState.refreshItemSelected();
         }
     }

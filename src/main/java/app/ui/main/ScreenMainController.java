@@ -142,8 +142,8 @@ public class ScreenMainController implements Initializable {
 	/* Helpers */
 
 	private void initContextScreen() {
-		paneLeftController = new PaneLeftController(stage, state, this, breadcrumb);
-		paneRightController = new PaneRightController(stage, state, this, breadcrumb);
+		paneLeftController = new PaneLeftController(stage, state, this);
+		paneRightController = new PaneRightController(stage, state, this);
 
 		paneLeftController.setPaneRightController(paneRightController);
 		paneRightController.setPaneLeftController(paneLeftController);
