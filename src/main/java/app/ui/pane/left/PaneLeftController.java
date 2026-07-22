@@ -107,7 +107,7 @@ public class PaneLeftController implements Initializable {
             searchStudies();
         });
 
-        refreshStudies();
+        reloadScreen();
     }
 
     private void searchStudies() {
@@ -132,20 +132,25 @@ public class PaneLeftController implements Initializable {
     }
 
     public void renameStudy(Object objectSelected) {
-        StudyDTO studyDto = (StudyDTO) objectSelected;
+        StudyDTO studyUpdateDto = (StudyDTO) objectSelected;
+        StudyDTO studySelectedDto = null;
+
+        if (screenMainState.getItemSelected() instanceof StudyDTO studyDto) {
+            studySelectedDto = studyDto;
+        }
 
         RegisterStudyController controller = new RegisterStudyController();
-        controller.setStudyDto(studyDto);
+        controller.setStudyDto(studyUpdateDto);
 
         RegisterStudyWindow window = new RegisterStudyWindow(stage, controller);
         window.showScreen();
 
-        StudyDTO studyDtoUpdated = controller.getStudyDto();
+        if (studySelectedDto != null && studySelectedDto.getId().equals(studyUpdateDto.getId())) {
+            screenMainState.refreshItemSelected();
+            screenMainController.reloadScreen(studyUpdateDto, ModeUpdateItem.UPDATE);
+        }
 
-        screenMainController.reloadScreen(studyDtoUpdated, ModeUpdateItem.UPDATE);
-        screenMainState.refreshItemSelected();
-
-        refreshStudies();
+        reloadScreen();
     }
 
     private void removeStudy(Object objectDeletion) {
@@ -164,12 +169,13 @@ public class PaneLeftController implements Initializable {
 
         if (controller.getConfirm()) {
             service.removeStudy(studyDeletionDto);
-            refreshStudies();
 
-            screenMainState.setItemSelected(null);
-            screenMainController.reloadScreen(studyDeletionDto, ModeUpdateItem.REMOVE);
+            screenMainState.refreshItemSelected();
+            if (screenMainState.getItemSelected() == null) {
+                screenMainController.reloadScreen(studyDeletionDto, ModeUpdateItem.REMOVE);
+            }
 
-            paneRightController.loadTabsDocument();
+            reloadScreen();
         }
     }
 
@@ -235,11 +241,11 @@ public class PaneLeftController implements Initializable {
                 }
             }
 
-            refreshStudies();
+            reloadScreen();
         }
     }
 
-    public void refreshStudies() {
+    public void reloadScreen() {
         listStudyDTO.clear();
         listStudyDTO.addAll(service.consultAllStudyDto());
     }

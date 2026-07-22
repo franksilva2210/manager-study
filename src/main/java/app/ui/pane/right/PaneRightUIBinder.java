@@ -68,13 +68,17 @@ public class PaneRightUIBinder {
         view.getLblTitleMain().textProperty().bind(
                 Bindings.createStringBinding(() -> {
 
-                    Object value = state.getItemSelected();
+                    Object itemSelected = state.getItemSelected();
 
-                    if (value instanceof StudyDTO study) {
+                    if (itemSelected == null) {
+                        return "";
+                    }
+
+                    if (itemSelected instanceof StudyDTO study) {
                         return study.getMatter();
                     }
 
-                    if (value instanceof TopicDTO topic) {
+                    if (itemSelected instanceof TopicDTO topic) {
                         return topic.getTitle();
                     }
 

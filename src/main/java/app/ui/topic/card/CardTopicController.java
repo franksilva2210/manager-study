@@ -153,7 +153,7 @@ public class CardTopicController {
     public void convertToStudy() {
         service.convertTopicToStudy(topic.getId());
         screenMainState.refreshItemSelected();
-        paneLeftController.refreshStudies();
+        paneLeftController.reloadScreen();
         MessageInfoController controller = new MessageInfoController();
         controller.setMsgUser(
                 "Tópico convertido com sucesso!"

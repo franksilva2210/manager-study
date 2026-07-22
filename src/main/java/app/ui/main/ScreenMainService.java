@@ -12,6 +12,7 @@ import app.infra.study.StudyRepository;
 import app.infra.topic.TopicRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ScreenMainService {
 
@@ -20,14 +21,22 @@ public class ScreenMainService {
     private DocumentRepository documentRepository = new DocumentRepository();
 
     public StudyDTO loadStudy(Long id) {
-        Study study = studyRepository.findByIdWithTopics(id);
+        Optional<Study> optional = studyRepository.findByIdWithTopics(id);
+
+        if (!optional.isPresent()) return null;
+
+        Study study = optional.get();
         List<Document> listDocuments = documentRepository.findByStudy(id);
         study.setListDocuments(listDocuments);
         return StudyMapper.toDTO(study);
     }
 
     public TopicDTO loadTopic(Long id) {
-        Topic topic = topicRepository.findByIdWithTopics(id);
+        Optional<Topic> optional = topicRepository.findByIdWithTopics(id);
+
+        if (!optional.isPresent()) return null;
+
+        Topic topic = optional.get();
         List<Document> listDocuments = documentRepository.findByTopic(id);
         topic.setListDocuments(listDocuments);
         return TopicMapper.toDTO(topic);

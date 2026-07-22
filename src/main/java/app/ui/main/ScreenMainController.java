@@ -103,7 +103,7 @@ public class ScreenMainController implements Initializable {
 
 		StudyDTO studyCreateDto = controller.getStudyDto();
 		if (studyCreateDto.getId() != null && studyCreateDto.getId() > 0) {
-			paneLeftController.refreshStudies();
+			paneLeftController.reloadScreen();
 		}
 	}
 

@@ -7,6 +7,8 @@ import app.ui.main.ScreenMainController;
 import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
+import app.ui.message.MessageInfoController;
+import app.ui.message.MessageInfoWindow;
 import app.ui.pane.left.PaneLeftController;
 import app.ui.pane.right.*;
 import app.ui.topic.card.CardTopic;
@@ -179,6 +181,14 @@ public class PaneTopicsController implements Initializable {
 
     private void newTopic() {
         if (screenMainState.getItemSelected() == null) {
+            MessageInfoController controller = new MessageInfoController();
+            controller.setMsgUser(
+                    "Selecione primeiro um estudo no menu lateral"
+            );
+
+            MessageInfoWindow window = new MessageInfoWindow(stage, controller);
+            window.showScreen();
+
             return;
         }
 

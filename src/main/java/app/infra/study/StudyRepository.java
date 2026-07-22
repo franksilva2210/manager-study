@@ -6,8 +6,10 @@ import app.domain.topic.Topic;
 import app.infra.HibernateUtil;
 import app.infra.topic.TopicRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 
 import java.util.List;
+import java.util.Optional;
 
 public class StudyRepository {
 
@@ -104,12 +106,11 @@ public class StudyRepository {
         }
     }
 
-    public Study findByIdWithTopics(Long id) {
+    public Optional<Study> findByIdWithTopics(Long id) {
         EntityManager em = HibernateUtil.getEntityManager();
 
         try {
-
-            return em.createQuery(
+            Study study = em.createQuery(
                             """
                             SELECT DISTINCT s
                             FROM Study s
@@ -121,6 +122,10 @@ public class StudyRepository {
                     .setParameter("id", id)
                     .getSingleResult();
 
+            return Optional.of(study);
+
+        } catch (NoResultException e) {
+            return Optional.empty();
         } finally {
             em.close();
         }
