@@ -93,7 +93,7 @@ public class CardTopicController {
 
         if (controller.getConfirm()) {
             service.removeTopic(topic);
-            screenMainController.refreshHierarchyPath(topic, ModeUpdateItem.REMOVE);
+            screenMainController.reloadScreen(topic, ModeUpdateItem.REMOVE);
             screenMainState.refreshItemSelected();
         }
     }
@@ -105,7 +105,7 @@ public class CardTopicController {
         RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage, registerTopicController);
         registerTopicWindow.showScreen();
 
-        screenMainController.refreshHierarchyPath(topic, ModeUpdateItem.UPDATE);
+        screenMainController.reloadScreen(topic, ModeUpdateItem.UPDATE);
         screenMainState.refreshItemSelected();
     }
 

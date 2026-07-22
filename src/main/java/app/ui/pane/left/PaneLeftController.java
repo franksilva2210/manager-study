@@ -142,7 +142,7 @@ public class PaneLeftController implements Initializable {
 
         StudyDTO studyDtoUpdated = controller.getStudyDto();
 
-        screenMainController.refreshHierarchyPath(studyDtoUpdated, ModeUpdateItem.UPDATE);
+        screenMainController.reloadScreen(studyDtoUpdated, ModeUpdateItem.UPDATE);
         screenMainState.refreshItemSelected();
 
         refreshStudies();
@@ -166,9 +166,8 @@ public class PaneLeftController implements Initializable {
             service.removeStudy(studyDeletionDto);
             refreshStudies();
 
-            screenMainController.refreshHierarchyPath(studyDeletionDto, ModeUpdateItem.REMOVE);
-
             screenMainState.setItemSelected(null);
+            screenMainController.reloadScreen(studyDeletionDto, ModeUpdateItem.REMOVE);
 
             paneRightController.loadTabsDocument();
         }

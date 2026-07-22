@@ -221,7 +221,7 @@ public class PaneTopicsController implements Initializable {
 
         if (controller.getConfirm()) {
             paneTopicsService.removeTopic(topicSelectedDto);
-            screenMainController.refreshHierarchyPath(topicSelectedDto, ModeUpdateItem.REMOVE);
+            screenMainController.reloadScreen(topicSelectedDto, ModeUpdateItem.REMOVE);
             screenMainState.refreshItemSelected();
         }
     }

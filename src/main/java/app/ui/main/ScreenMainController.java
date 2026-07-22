@@ -61,14 +61,6 @@ public class ScreenMainController implements Initializable {
 		this.stage = stage;
 	}
 
-	public VBox getMenuLeft() {
-		return menuLeft;
-	}
-
-	public VBox getPaneRight() {
-		return paneRight;
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -188,24 +180,42 @@ public class ScreenMainController implements Initializable {
 
 	public void openItemSelected(Object itemSelected) {
 		breadcrumb.navigate(itemSelected);
-		state.loadItemSelected(itemSelected, breadcrumb);
+
+		state.setItemSelected(itemSelected);
+		state.refreshItemSelected();
+		state.refreshBackStack(breadcrumb);
+		state.refreshForwardStack(breadcrumb);
 	}
 
 	public void navigateForward() {
 		Object itemForward = breadcrumb.forward();
-		state.loadItemSelected(itemForward, breadcrumb);
+
+		state.setItemSelected(itemForward);
+		state.refreshItemSelected();
+		state.refreshBackStack(breadcrumb);
+		state.refreshForwardStack(breadcrumb);
 	}
 
 	public void navigateBack() {
 		Object itemBack = breadcrumb.back();
-		state.loadItemSelected(itemBack, breadcrumb);
+
+		state.setItemSelected(itemBack);
+		state.refreshItemSelected();
+		state.refreshBackStack(breadcrumb);
+		state.refreshForwardStack(breadcrumb);
 	}
 
-	public void refreshHierarchyPath(Object itemSelected, ModeUpdateItem modeUpdateItem) {
+	public void reloadScreen(Object itemSelected, ModeUpdateItem modeUpdateItem) {
+		refreshBreadcrumb(itemSelected, modeUpdateItem);
+	}
+
+	private void refreshBreadcrumb(Object itemSelected, ModeUpdateItem modeUpdateItem) {
 		if (modeUpdateItem == ModeUpdateItem.UPDATE) {
 			breadcrumb.refreshItem(itemSelected);
 		} else if (modeUpdateItem == ModeUpdateItem.REMOVE) {
 			breadcrumb.removeItem(itemSelected);
 		}
+		state.refreshBackStack(breadcrumb);
+		state.refreshForwardStack(breadcrumb);
 	}
 }

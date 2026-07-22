@@ -13,37 +13,6 @@ public class ScreenMainState {
 
     private final ScreenMainService screenMainService = new ScreenMainService();
 
-    /* Back */
-
-    private final ObservableList<Object> backStack =
-            FXCollections.observableArrayList();
-
-    public ObservableList<Object> getBackStack() {
-        return backStack;
-    }
-
-    /* Forward */
-
-    private final ObservableList<Object> forwardStack =
-            FXCollections.observableArrayList();
-
-    public ObservableList<Object> getForwardStack() {
-        return forwardStack;
-    }
-
-    /* Hierarchy path */
-
-    private final StringProperty hierarchyPath =
-            new SimpleStringProperty();
-
-    public String getHierarchyPath() {
-        return hierarchyPath.get();
-    }
-
-    public StringProperty hierarchyPathProperty() {
-        return hierarchyPath;
-    }
-
     /* Item selected */
 
     private final ObjectProperty<Object> itemSelected =
@@ -73,14 +42,42 @@ public class ScreenMainState {
         }
     }
 
-    public void updateStacksProperty(Breadcrumb breadcrumb) {
+    /* Back */
+
+    private final ObservableList<Object> backStack =
+            FXCollections.observableArrayList();
+
+    public ObservableList<Object> getBackStack() {
+        return backStack;
+    }
+
+    public void refreshBackStack(Breadcrumb breadcrumb) {
         backStack.setAll(breadcrumb.getBackStack());
+    }
+
+    /* Forward */
+
+    private final ObservableList<Object> forwardStack =
+            FXCollections.observableArrayList();
+
+    public ObservableList<Object> getForwardStack() {
+        return forwardStack;
+    }
+
+    public void refreshForwardStack(Breadcrumb breadcrumb) {
         forwardStack.setAll(breadcrumb.getForwardStack());
     }
 
-    public void loadItemSelected(Object value, Breadcrumb breadcrumb) {
-        setItemSelected(value);
-        refreshItemSelected();
-        updateStacksProperty(breadcrumb);
+    /* Hierarchy path */
+
+    private final StringProperty hierarchyPath =
+            new SimpleStringProperty();
+
+    public String getHierarchyPath() {
+        return hierarchyPath.get();
+    }
+
+    public StringProperty hierarchyPathProperty() {
+        return hierarchyPath;
     }
 }
