@@ -144,8 +144,7 @@ public class PaneTopicsController implements Initializable {
                             screenMainController,
                             paneLeftController,
                             paneRightController,
-                            this,
-                            breadCrumb
+                            this
                     );
 
             CardTopic card = new CardTopic(controller);

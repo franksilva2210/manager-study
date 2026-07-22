@@ -54,7 +54,7 @@ public class PaneRightController implements Initializable {
 
     private final Stage stage;
     private final ScreenMainState mainState;
-    private final ScreenMainController screenMainController;
+    private final ScreenMainController mainController;
     private final Breadcrumb breadcrumb;
 
     private final TabDocumentFactory tabDocumentFactory = new TabDocumentFactory();
@@ -64,12 +64,12 @@ public class PaneRightController implements Initializable {
     public PaneRightController(
             Stage stage,
             ScreenMainState mainState,
-            ScreenMainController screenMainController,
+            ScreenMainController mainController,
             Breadcrumb breadcrumb) {
 
         this.stage = stage;
         this.mainState = mainState;
-        this.screenMainController = screenMainController;
+        this.mainController = mainController;
         this.breadcrumb = breadcrumb;
     }
 
@@ -117,27 +117,21 @@ public class PaneRightController implements Initializable {
         PaneRightUIBinder.bind(this, mainState);
     }
 
-    // Navegação ------------------------------
-
     private void navigateBack() {
-        if (!screenMainController.confirmChangeStudyOrTopic())
+        if (!mainController.confirmChangeStudyOrTopic())
             return;
 
-        Object itemBack = breadcrumb.back();
-        mainState.loadItemSelected(itemBack, breadcrumb);
+        mainController.navigateBack();
         loadTabsDocument();
     }
 
     private void navigateForward() {
-        if (!screenMainController.confirmChangeStudyOrTopic())
+        if (!mainController.confirmChangeStudyOrTopic())
             return;
 
-        Object itemForward = breadcrumb.forward();
-        mainState.loadItemSelected(itemForward, breadcrumb);
+        mainController.navigateForward();
         loadTabsDocument();
     }
-
-    // Tabs -----------------------------
 
     private void addNewDocument() {
         if (mainState.getItemSelected() == null) {
@@ -171,8 +165,6 @@ public class PaneRightController implements Initializable {
             tabPaneStudy.getSelectionModel().select(newTab);
         }
     }
-
-    // Tools -------------------------
 
     private void showRoadMap() {
         RoadMapController roadMapController = new RoadMapController();
@@ -218,7 +210,7 @@ public class PaneRightController implements Initializable {
                 new PaneTopicsController(
                         stage,
                         mainState,
-                        screenMainController,
+                        mainController,
                         paneLeftController,
                         this,
                         breadcrumb

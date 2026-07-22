@@ -1,6 +1,7 @@
 package app.ui.topic.card;
 
 import app.application.topic.TopicDTO;
+import app.ui.main.ModeUpdateItem;
 import app.ui.main.ScreenMainController;
 import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
@@ -27,10 +28,10 @@ public class CardTopicController {
     private final PaneLeftController paneLeftController;
     private final PaneRightController paneRightController;
     private final PaneTopicsController paneTopicsController;
-    private final Breadcrumb breadcrumb;
+
+    private final CardTopicService service = new CardTopicService();
 
     private Parent root;
-    private final CardTopicService service = new CardTopicService();
 
     public CardTopicController(
             Stage stage, TopicDTO topic,
@@ -38,8 +39,7 @@ public class CardTopicController {
             ScreenMainController screenMainController,
             PaneLeftController paneLeftController,
             PaneRightController paneRightController,
-            PaneTopicsController paneTopicsController,
-            Breadcrumb breadcrumb) {
+            PaneTopicsController paneTopicsController) {
 
         this.stage = stage;
         this.topic = topic;
@@ -48,7 +48,6 @@ public class CardTopicController {
         this.paneLeftController = paneLeftController;
         this.paneRightController = paneRightController;
         this.paneTopicsController = paneTopicsController;
-        this.breadcrumb = breadcrumb;
 
         PseudoClass SELECTED = PseudoClass.getPseudoClass("selected");
 
@@ -68,14 +67,6 @@ public class CardTopicController {
         this.root = root;
     }
 
-    public ScreenMainState getMainState() {
-        return mainState;
-    }
-
-    public CardTopicService getService() {
-        return service;
-    }
-
     public void select() {
         paneTopicsController.getCardSelection().select(topic);
     }
@@ -84,8 +75,7 @@ public class CardTopicController {
         if (!screenMainController.confirmChangeStudyOrTopic())
             return;
 
-        breadcrumb.navigate(topic);
-        mainState.loadItemSelected(topic, breadcrumb);
+        screenMainController.openItemSelected(topic);
         paneRightController.loadTabsDocument();
     }
 
@@ -104,8 +94,7 @@ public class CardTopicController {
 
         if (controller.getConfirm()) {
             service.removeTopic(topic);
-            breadcrumb.removeItem(topic);
-            mainState.loadItemSelected(null, breadcrumb);
+            screenMainController.updateItemSelected(topic, ModeUpdateItem.REMOVE);
         }
     }
 
@@ -116,8 +105,7 @@ public class CardTopicController {
         RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage, registerTopicController);
         registerTopicWindow.showScreen();
 
-        breadcrumb.refreshItem(registerTopicController.getTopicDto());
-        mainState.refreshItemSelected();
+        screenMainController.updateItemSelected(topic, ModeUpdateItem.UPDATE);
     }
 
     public void moveTopicToTopic(Long idTopicDragged) {

@@ -186,4 +186,27 @@ public class ScreenMainController implements Initializable {
 		return true;
 	}
 
+	public void openItemSelected(Object itemSelected) {
+		breadcrumb.navigate(itemSelected);
+		state.loadItemSelected(itemSelected, breadcrumb);
+	}
+
+	public void navigateForward() {
+		Object itemForward = breadcrumb.forward();
+		state.loadItemSelected(itemForward, breadcrumb);
+	}
+
+	public void navigateBack() {
+		Object itemBack = breadcrumb.back();
+		state.loadItemSelected(itemBack, breadcrumb);
+	}
+
+	public void updateItemSelected(Object itemSelected, ModeUpdateItem modeUpdateItem) {
+		if (modeUpdateItem == ModeUpdateItem.UPDATE) {
+			breadcrumb.refreshItem(itemSelected);
+		} else if (modeUpdateItem == ModeUpdateItem.REMOVE) {
+			breadcrumb.removeItem(itemSelected);
+		}
+		state.refreshItemSelected();
+	}
 }

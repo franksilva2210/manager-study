@@ -128,8 +128,7 @@ public class PaneLeftController implements Initializable {
 
         StudyDTO studySelectedDto = listViewStudy.getSelectionModel().getSelectedItem();
         if (studySelectedDto != null) {
-            breadcrumb.navigate(studySelectedDto);
-            mainState.loadItemSelected(studySelectedDto, breadcrumb);
+            screenMainController.openItemSelected(studySelectedDto);
             paneRightController.loadTabsDocument();
         }
     }
