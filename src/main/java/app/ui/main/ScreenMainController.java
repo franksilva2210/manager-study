@@ -201,12 +201,11 @@ public class ScreenMainController implements Initializable {
 		state.loadItemSelected(itemBack, breadcrumb);
 	}
 
-	public void refreshItemSelected(Object itemSelected, ModeUpdateItem modeUpdateItem) {
+	public void refreshHierarchyPath(Object itemSelected, ModeUpdateItem modeUpdateItem) {
 		if (modeUpdateItem == ModeUpdateItem.UPDATE) {
 			breadcrumb.refreshItem(itemSelected);
 		} else if (modeUpdateItem == ModeUpdateItem.REMOVE) {
 			breadcrumb.removeItem(itemSelected);
 		}
-		state.refreshItemSelected();
 	}
 }
