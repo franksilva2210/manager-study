@@ -10,7 +10,6 @@ import app.ui.message.MessageInfoController;
 import app.ui.message.MessageInfoWindow;
 import app.ui.pane.left.PaneLeftController;
 import app.ui.pane.right.PaneRightController;
-import app.ui.main.Breadcrumb;
 import app.ui.pane.right.topics.PaneTopicsController;
 import app.ui.topic.register.RegisterTopicController;
 import app.ui.topic.register.RegisterTopicWindow;
@@ -94,7 +93,7 @@ public class CardTopicController {
 
         if (controller.getConfirm()) {
             service.removeTopic(topic);
-            screenMainController.updateItemSelected(topic, ModeUpdateItem.REMOVE);
+            screenMainController.refreshItemSelected(topic, ModeUpdateItem.REMOVE);
         }
     }
 
@@ -105,7 +104,7 @@ public class CardTopicController {
         RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage, registerTopicController);
         registerTopicWindow.showScreen();
 
-        screenMainController.updateItemSelected(topic, ModeUpdateItem.UPDATE);
+        screenMainController.refreshItemSelected(topic, ModeUpdateItem.UPDATE);
     }
 
     public void moveTopicToTopic(Long idTopicDragged) {
