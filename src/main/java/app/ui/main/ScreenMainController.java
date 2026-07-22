@@ -14,7 +14,6 @@ import app.ui.message.MessageConfirmWindow;
 import app.ui.pane.left.PaneLeftController;
 import app.ui.pane.left.PaneLeftWindow;
 import app.ui.pane.right.PaneRightController;
-import app.ui.pane.right.PaneRightNavigator;
 import app.ui.pane.right.PaneRightWindow;
 import app.ui.roadmap.RoadMapController;
 import app.ui.roadmap.RoadMapWindow;
@@ -53,7 +52,7 @@ public class ScreenMainController implements Initializable {
 	private Stage stage;
 
 	private final ScreenMainState state = new ScreenMainState();
-	private final PaneRightNavigator navigator = new PaneRightNavigator();
+	private final Breadcrumb breadcrumb = new Breadcrumb();
 
 	private PaneLeftController paneLeftController;
 	private PaneRightController paneRightController;
@@ -143,8 +142,8 @@ public class ScreenMainController implements Initializable {
 	/* Helpers */
 
 	private void initContextScreen() {
-		paneLeftController = new PaneLeftController(stage, state, this, navigator);
-		paneRightController = new PaneRightController(stage, state, this, navigator);
+		paneLeftController = new PaneLeftController(stage, state, this, breadcrumb);
+		paneRightController = new PaneRightController(stage, state, this, breadcrumb);
 
 		paneLeftController.setPaneRightController(paneRightController);
 		paneRightController.setPaneLeftController(paneLeftController);

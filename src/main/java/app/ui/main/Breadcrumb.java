@@ -1,11 +1,11 @@
-package app.ui.pane.right;
+package app.ui.main;
 
 import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
 
 import java.util.*;
 
-public class PaneRightNavigator {
+public class Breadcrumb {
 
     private final Deque<Object> backStack = new ArrayDeque<>();
     private final Deque<Object> forwardStack = new ArrayDeque<>();

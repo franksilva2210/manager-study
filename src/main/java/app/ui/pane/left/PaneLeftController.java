@@ -7,7 +7,7 @@ import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
 import app.ui.pane.right.PaneRightController;
-import app.ui.pane.right.PaneRightNavigator;
+import app.ui.main.Breadcrumb;
 import app.ui.study.register.RegisterStudyController;
 import app.ui.study.register.RegisterStudyWindow;
 import javafx.collections.FXCollections;
@@ -35,7 +35,7 @@ public class PaneLeftController implements Initializable {
     private final Stage stage;
     private final ScreenMainState mainState;
     private final ScreenMainController screenMainController;
-    private final PaneRightNavigator navigator;
+    private final Breadcrumb breadcrumb;
 
     private final ObservableList<StudyDTO> listStudyDTO = FXCollections.observableArrayList();
     private final FilteredList<StudyDTO> listStudyFiltered = new FilteredList<>(listStudyDTO);
@@ -47,12 +47,12 @@ public class PaneLeftController implements Initializable {
     public PaneLeftController(
             Stage stage,
             ScreenMainState mainState, ScreenMainController screenMainController,
-            PaneRightNavigator navigator) {
+            Breadcrumb breadcrumb) {
 
         this.stage = stage;
         this.mainState = mainState;
         this.screenMainController = screenMainController;
-        this.navigator = navigator;
+        this.breadcrumb = breadcrumb;
     }
 
     public void setPaneRightController(PaneRightController paneRightController) {
@@ -128,10 +128,8 @@ public class PaneLeftController implements Initializable {
 
         StudyDTO studySelectedDto = listViewStudy.getSelectionModel().getSelectedItem();
         if (studySelectedDto != null) {
-            mainState.setItemSelected(studySelectedDto);
-            mainState.refreshItemSelected();
-            navigator.navigate(mainState.getItemSelected());
-            paneRightController.mappingStacksNavigatorState();
+            breadcrumb.navigate(studySelectedDto);
+            mainState.loadItemSelected(studySelectedDto, breadcrumb);
             paneRightController.loadTabsDocument();
         }
     }
@@ -147,7 +145,7 @@ public class PaneLeftController implements Initializable {
 
         StudyDTO studyDtoUpdated = controller.getStudyDto();
 
-        paneRightController.getNavigator().refreshItem(studyDtoUpdated);
+        breadcrumb.refreshItem(studyDtoUpdated);
         paneRightController.loadTabsDocument();
 
         refreshStudies();
@@ -170,8 +168,8 @@ public class PaneLeftController implements Initializable {
         if (controller.getConfirm()) {
             service.removeStudy(studyDeletionDto);
             refreshStudies();
-            mainState.setItemSelected(null);
-            paneRightController.getNavigator().removeItem(studyDeletionDto);
+            breadcrumb.removeItem(studyDeletionDto);
+            mainState.loadItemSelected(null, breadcrumb);
             paneRightController.loadTabsDocument();
         }
     }

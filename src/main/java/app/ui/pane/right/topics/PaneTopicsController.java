@@ -2,6 +2,7 @@ package app.ui.pane.right.topics;
 
 import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
+import app.ui.main.Breadcrumb;
 import app.ui.main.ScreenMainController;
 import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
@@ -49,7 +50,7 @@ public class PaneTopicsController implements Initializable {
     private final ScreenMainController screenMainController;
     private final PaneLeftController paneLeftController;
     private final PaneRightController paneRightController;
-    private final PaneRightNavigator navigator;
+    private final Breadcrumb breadCrumb;
 
     private final ObservableList<TopicDTO> listTopics = FXCollections.observableArrayList();
     private final FilteredList<TopicDTO> listTopicsFiltered = new FilteredList<>(listTopics);
@@ -64,14 +65,14 @@ public class PaneTopicsController implements Initializable {
             ScreenMainController screenMainController,
             PaneLeftController paneLeftController,
             PaneRightController paneRightController,
-            PaneRightNavigator navigator) {
+            Breadcrumb breadCrumb) {
 
         this.stage = stage;
         this.mainState = mainState;
         this.screenMainController = screenMainController;
         this.paneLeftController = paneLeftController;
         this.paneRightController = paneRightController;
-        this.navigator = navigator;
+        this.breadCrumb = breadCrumb;
     }
 
     public CardSelectionModel<TopicDTO> getCardSelection() {
@@ -144,7 +145,7 @@ public class PaneTopicsController implements Initializable {
                             paneLeftController,
                             paneRightController,
                             this,
-                            navigator
+                            breadCrumb
                     );
 
             CardTopic card = new CardTopic(controller);
@@ -224,7 +225,7 @@ public class PaneTopicsController implements Initializable {
 
         if (controller.getConfirm()) {
             paneTopicsService.removeTopic(topicSelectedDto);
-            navigator.removeItem(topicSelectedDto);
+            breadCrumb.removeItem(topicSelectedDto);
             mainState.refreshItemSelected();
         }
     }

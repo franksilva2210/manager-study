@@ -4,6 +4,7 @@ import app.application.document.DocumentDTO;
 import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
 import app.ui.document.edit.EditorDocumentController;
+import app.ui.main.Breadcrumb;
 import app.ui.main.ScreenMainController;
 import app.ui.main.ScreenMainState;
 import app.ui.message.MessageInfoController;
@@ -54,9 +55,8 @@ public class PaneRightController implements Initializable {
     private final Stage stage;
     private final ScreenMainState mainState;
     private final ScreenMainController screenMainController;
-    private final PaneRightNavigator navigator;
+    private final Breadcrumb breadcrumb;
 
-    private final PaneRightState paneRightState = new PaneRightState();
     private final TabDocumentFactory tabDocumentFactory = new TabDocumentFactory();
     private final PaneRightUIHelper uiHelper = new PaneRightUIHelper();
     private PaneLeftController paneLeftController;
@@ -65,16 +65,12 @@ public class PaneRightController implements Initializable {
             Stage stage,
             ScreenMainState mainState,
             ScreenMainController screenMainController,
-            PaneRightNavigator navigator) {
+            Breadcrumb breadcrumb) {
 
         this.stage = stage;
         this.mainState = mainState;
         this.screenMainController = screenMainController;
-        this.navigator = navigator;
-    }
-
-    public PaneRightNavigator getNavigator() {
-        return navigator;
+        this.breadcrumb = breadcrumb;
     }
 
     public void setPaneLeftController(PaneLeftController paneLeftController) {
@@ -95,18 +91,6 @@ public class PaneRightController implements Initializable {
 
     public Label getLblTitleMain() {
         return lblTitleMain;
-    }
-
-    public TabPane getTabPaneStudy() {
-        return tabPaneStudy;
-    }
-
-    public Tab getTabMain() {
-        return tabMain;
-    }
-
-    public Tab getTabAdd() {
-        return tabAdd;
     }
 
     @Override
@@ -130,14 +114,7 @@ public class PaneRightController implements Initializable {
             }
         });
 
-        mappingStacksNavigatorState();
-
-        PaneRightUIBinder.bind(
-                this,
-                mainState,
-                paneRightState
-        );
-
+        PaneRightUIBinder.bind(this, mainState);
     }
 
     // Navegação ------------------------------
@@ -146,10 +123,8 @@ public class PaneRightController implements Initializable {
         if (!screenMainController.confirmChangeStudyOrTopic())
             return;
 
-        Object itemBack = navigator.back();
-        mainState.setItemSelected(itemBack);
-        mainState.refreshItemSelected();
-        mappingStacksNavigatorState();
+        Object itemBack = breadcrumb.back();
+        mainState.loadItemSelected(itemBack, breadcrumb);
         loadTabsDocument();
     }
 
@@ -157,10 +132,8 @@ public class PaneRightController implements Initializable {
         if (!screenMainController.confirmChangeStudyOrTopic())
             return;
 
-        Object itemForward = navigator.forward();
-        mainState.setItemSelected(itemForward);
-        mainState.refreshItemSelected();
-        mappingStacksNavigatorState();
+        Object itemForward = breadcrumb.forward();
+        mainState.loadItemSelected(itemForward, breadcrumb);
         loadTabsDocument();
     }
 
@@ -240,11 +213,6 @@ public class PaneRightController implements Initializable {
         return uiHelper.verifyDocumentEditingOrNotSave(tabPaneStudy, tabMain, tabAdd);
     }
 
-    public void mappingStacksNavigatorState() {
-        paneRightState.getBackStack().setAll(navigator.getBackStack());
-        paneRightState.getForwardStack().setAll(navigator.getForwardStack());
-    }
-
     public void loadPaneTopics() {
         PaneTopicsController controller =
                 new PaneTopicsController(
@@ -253,7 +221,7 @@ public class PaneRightController implements Initializable {
                         screenMainController,
                         paneLeftController,
                         this,
-                        navigator
+                        breadcrumb
                 );
 
         PaneTopics pane = new PaneTopics(controller);
