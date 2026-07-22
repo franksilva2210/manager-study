@@ -133,11 +133,6 @@ public class PaneLeftController implements Initializable {
 
     public void renameStudy(Object objectSelected) {
         StudyDTO studyUpdateDto = (StudyDTO) objectSelected;
-        StudyDTO studySelectedDto = null;
-
-        if (screenMainState.getItemSelected() instanceof StudyDTO studyDto) {
-            studySelectedDto = studyDto;
-        }
 
         RegisterStudyController controller = new RegisterStudyController();
         controller.setStudyDto(studyUpdateDto);
@@ -145,10 +140,10 @@ public class PaneLeftController implements Initializable {
         RegisterStudyWindow window = new RegisterStudyWindow(stage, controller);
         window.showScreen();
 
-        if (studySelectedDto != null && studySelectedDto.getId().equals(studyUpdateDto.getId())) {
-            screenMainState.refreshItemSelected();
-            screenMainController.reloadScreen(studyUpdateDto, ModeUpdateItem.UPDATE);
-        }
+        studyUpdateDto = controller.getStudyDto();
+
+        screenMainState.refreshItemSelected();
+        screenMainController.reloadScreen(studyUpdateDto, ModeUpdateItem.UPDATE);
 
         reloadScreen();
     }
