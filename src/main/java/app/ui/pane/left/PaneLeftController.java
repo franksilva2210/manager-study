@@ -8,7 +8,6 @@ import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
 import app.ui.pane.right.PaneRightController;
-import app.ui.main.Breadcrumb;
 import app.ui.study.register.RegisterStudyController;
 import app.ui.study.register.RegisterStudyWindow;
 import javafx.collections.FXCollections;
@@ -34,7 +33,7 @@ public class PaneLeftController implements Initializable {
     private ListView<StudyDTO> listViewStudy;
 
     private final Stage stage;
-    private final ScreenMainState mainState;
+    private final ScreenMainState screenMainState;
     private final ScreenMainController screenMainController;
 
     private final ObservableList<StudyDTO> listStudyDTO = FXCollections.observableArrayList();
@@ -46,11 +45,11 @@ public class PaneLeftController implements Initializable {
 
     public PaneLeftController(
             Stage stage,
-            ScreenMainState mainState,
+            ScreenMainState screenMainState,
             ScreenMainController screenMainController) {
 
         this.stage = stage;
-        this.mainState = mainState;
+        this.screenMainState = screenMainState;
         this.screenMainController = screenMainController;
     }
 
@@ -144,6 +143,7 @@ public class PaneLeftController implements Initializable {
         StudyDTO studyDtoUpdated = controller.getStudyDto();
 
         screenMainController.refreshHierarchyPath(studyDtoUpdated, ModeUpdateItem.UPDATE);
+        screenMainState.refreshItemSelected();
 
         refreshStudies();
     }
@@ -168,7 +168,7 @@ public class PaneLeftController implements Initializable {
 
             screenMainController.refreshHierarchyPath(studyDeletionDto, ModeUpdateItem.REMOVE);
 
-            mainState.setItemSelected(null);
+            screenMainState.setItemSelected(null);
 
             paneRightController.loadTabsDocument();
         }
@@ -199,7 +199,7 @@ public class PaneLeftController implements Initializable {
 
         if (controller.getConfirm()) {
             service.moveTopicToStudy(topicDragged, studyDestination);
-            mainState.refreshItemSelected();
+            screenMainState.refreshItemSelected();
         }
     }
 
@@ -227,12 +227,12 @@ public class PaneLeftController implements Initializable {
             Long studyDestinationId = studyDestination.getId();
             service.moveStudyToStudy(studyDraggedId, studyDestinationId);
 
-            if (mainState.getItemSelected() instanceof StudyDTO studySelectedDto) {
+            if (screenMainState.getItemSelected() instanceof StudyDTO studySelectedDto) {
                 if (studyDragged.getId().equals(studySelectedDto.getId())) {
-                    mainState.setItemSelected(null);
+                    screenMainState.setItemSelected(null);
                     paneRightController.loadTabsDocument();
                 } else {
-                    mainState.refreshItemSelected();
+                    screenMainState.refreshItemSelected();
                 }
             }
 

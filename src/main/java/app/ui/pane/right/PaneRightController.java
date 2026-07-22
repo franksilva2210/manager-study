@@ -4,7 +4,6 @@ import app.application.document.DocumentDTO;
 import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
 import app.ui.document.edit.EditorDocumentController;
-import app.ui.main.Breadcrumb;
 import app.ui.main.ScreenMainController;
 import app.ui.main.ScreenMainState;
 import app.ui.message.MessageInfoController;
@@ -53,8 +52,8 @@ public class PaneRightController implements Initializable {
     private Tab tabAdd;
 
     private final Stage stage;
-    private final ScreenMainState mainState;
-    private final ScreenMainController mainController;
+    private final ScreenMainState screenMainState;
+    private final ScreenMainController screenMainController;
 
     private final TabDocumentFactory tabDocumentFactory = new TabDocumentFactory();
     private final PaneRightUIHelper uiHelper = new PaneRightUIHelper();
@@ -62,12 +61,12 @@ public class PaneRightController implements Initializable {
 
     public PaneRightController(
             Stage stage,
-            ScreenMainState mainState,
-            ScreenMainController mainController) {
+            ScreenMainState screenMainState,
+            ScreenMainController screenMainController) {
 
         this.stage = stage;
-        this.mainState = mainState;
-        this.mainController = mainController;
+        this.screenMainState = screenMainState;
+        this.screenMainController = screenMainController;
     }
 
     public void setPaneLeftController(PaneLeftController paneLeftController) {
@@ -111,27 +110,27 @@ public class PaneRightController implements Initializable {
             }
         });
 
-        PaneRightUIBinder.bind(this, mainState);
+        PaneRightUIBinder.bind(this, screenMainState);
     }
 
     private void navigateBack() {
-        if (!mainController.confirmChangeStudyOrTopic())
+        if (!screenMainController.confirmChangeStudyOrTopic())
             return;
 
-        mainController.navigateBack();
+        screenMainController.navigateBack();
         loadTabsDocument();
     }
 
     private void navigateForward() {
-        if (!mainController.confirmChangeStudyOrTopic())
+        if (!screenMainController.confirmChangeStudyOrTopic())
             return;
 
-        mainController.navigateForward();
+        screenMainController.navigateForward();
         loadTabsDocument();
     }
 
     private void addNewDocument() {
-        if (mainState.getItemSelected() == null) {
+        if (screenMainState.getItemSelected() == null) {
             MessageInfoController controller = new MessageInfoController();
             controller.setMsgUser(
                     "Selecione primeiro um estudo para adicionar\n" +
@@ -154,7 +153,7 @@ public class PaneRightController implements Initializable {
             Tab newTab = tabDocumentFactory.createTabDocument(
                     stage,
                     tabPaneStudy,
-                    mainState.getItemSelected(),
+                    screenMainState.getItemSelected(),
                     documentDto
             );
 
@@ -165,7 +164,7 @@ public class PaneRightController implements Initializable {
 
     private void showRoadMap() {
         RoadMapController roadMapController = new RoadMapController();
-        roadMapController.setItemSelected(mainState.getItemSelected());
+        roadMapController.setItemSelected(screenMainState.getItemSelected());
         RoadMapWindow roadMapWindow	= new RoadMapWindow(stage, roadMapController);
         roadMapWindow.showScreen();
     }
@@ -175,21 +174,21 @@ public class PaneRightController implements Initializable {
     public void loadTabsDocument() {
         tabPaneStudy.getTabs().removeIf(tab -> tab != tabMain && tab != tabAdd);
 
-        if (mainState.getItemSelected() == null) {
+        if (screenMainState.getItemSelected() == null) {
             return;
         }
 
-        if (mainState.getItemSelected() instanceof StudyDTO studyDto) {
+        if (screenMainState.getItemSelected() instanceof StudyDTO studyDto) {
             for (DocumentDTO dto : studyDto.getListDocumentsDto()) {
-                Tab tab = tabDocumentFactory.createTabDocument(stage, tabPaneStudy, mainState.getItemSelected(), dto);
+                Tab tab = tabDocumentFactory.createTabDocument(stage, tabPaneStudy, screenMainState.getItemSelected(), dto);
                 tabPaneStudy.getTabs().add(
                         tabPaneStudy.getTabs().indexOf(tabAdd),
                         tab
                 );
             }
-        } else if(mainState.getItemSelected() instanceof TopicDTO topicDto) {
+        } else if(screenMainState.getItemSelected() instanceof TopicDTO topicDto) {
             for (DocumentDTO dto : topicDto.getListDocumentsDto()) {
-                Tab tabCreate = tabDocumentFactory.createTabDocument(stage, tabPaneStudy, mainState.getItemSelected(), dto);
+                Tab tabCreate = tabDocumentFactory.createTabDocument(stage, tabPaneStudy, screenMainState.getItemSelected(), dto);
                 tabPaneStudy.getTabs().add(
                         tabPaneStudy.getTabs().indexOf(tabAdd),
                         tabCreate
@@ -206,8 +205,8 @@ public class PaneRightController implements Initializable {
         PaneTopicsController controller =
                 new PaneTopicsController(
                         stage,
-                        mainState,
-                        mainController,
+                        screenMainState,
+                        screenMainController,
                         paneLeftController,
                         this
                 );

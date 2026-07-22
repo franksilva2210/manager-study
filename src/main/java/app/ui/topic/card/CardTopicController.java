@@ -22,7 +22,7 @@ public class CardTopicController {
 
     private final Stage stage;
     private final TopicDTO topic;
-    private final ScreenMainState mainState;
+    private final ScreenMainState screenMainState;
     private final ScreenMainController screenMainController;
     private final PaneLeftController paneLeftController;
     private final PaneRightController paneRightController;
@@ -34,7 +34,7 @@ public class CardTopicController {
 
     public CardTopicController(
             Stage stage, TopicDTO topic,
-            ScreenMainState mainState,
+            ScreenMainState screenMainState,
             ScreenMainController screenMainController,
             PaneLeftController paneLeftController,
             PaneRightController paneRightController,
@@ -42,7 +42,7 @@ public class CardTopicController {
 
         this.stage = stage;
         this.topic = topic;
-        this.mainState = mainState;
+        this.screenMainState = screenMainState;
         this.screenMainController = screenMainController;
         this.paneLeftController = paneLeftController;
         this.paneRightController = paneRightController;
@@ -94,7 +94,7 @@ public class CardTopicController {
         if (controller.getConfirm()) {
             service.removeTopic(topic);
             screenMainController.refreshHierarchyPath(topic, ModeUpdateItem.REMOVE);
-            mainState.refreshItemSelected();
+            screenMainState.refreshItemSelected();
         }
     }
 
@@ -106,7 +106,7 @@ public class CardTopicController {
         registerTopicWindow.showScreen();
 
         screenMainController.refreshHierarchyPath(topic, ModeUpdateItem.UPDATE);
-        mainState.refreshItemSelected();
+        screenMainState.refreshItemSelected();
     }
 
     public void moveTopicToTopic(Long idTopicDragged) {
@@ -130,7 +130,7 @@ public class CardTopicController {
 
         if (controller.getConfirm()) {
             service.moveTopicToTopic(topicDragged, topic);
-            mainState.refreshItemSelected();
+            screenMainState.refreshItemSelected();
         }
     }
 
@@ -141,7 +141,7 @@ public class CardTopicController {
     public void moveOneLevelUp() {
         try {
             service.moveOneLevelUp(topic);
-            mainState.refreshItemSelected();
+            screenMainState.refreshItemSelected();
         } catch (BusinessException e) {
             MessageInfoController controller = new MessageInfoController();
             controller.setMsgUser(e.getMessage());
@@ -152,7 +152,7 @@ public class CardTopicController {
 
     public void convertToStudy() {
         service.convertTopicToStudy(topic.getId());
-        mainState.refreshItemSelected();
+        screenMainState.refreshItemSelected();
         paneLeftController.refreshStudies();
         MessageInfoController controller = new MessageInfoController();
         controller.setMsgUser(

@@ -2,7 +2,6 @@ package app.ui.pane.right.topics;
 
 import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
-import app.ui.main.Breadcrumb;
 import app.ui.main.ModeUpdateItem;
 import app.ui.main.ScreenMainController;
 import app.ui.main.ScreenMainState;
@@ -47,7 +46,7 @@ public class PaneTopicsController implements Initializable {
     private TextField txtSearchTopics;
 
     private final Stage stage;
-    private final ScreenMainState mainState;
+    private final ScreenMainState screenMainState;
     private final ScreenMainController screenMainController;
     private final PaneLeftController paneLeftController;
     private final PaneRightController paneRightController;
@@ -61,13 +60,13 @@ public class PaneTopicsController implements Initializable {
 
     public PaneTopicsController(
             Stage stage,
-            ScreenMainState mainState,
+            ScreenMainState screenMainState,
             ScreenMainController screenMainController,
             PaneLeftController paneLeftController,
             PaneRightController paneRightController) {
 
         this.stage = stage;
-        this.mainState = mainState;
+        this.screenMainState = screenMainState;
         this.screenMainController = screenMainController;
         this.paneLeftController = paneLeftController;
         this.paneRightController = paneRightController;
@@ -112,7 +111,7 @@ public class PaneTopicsController implements Initializable {
 
         configScrollPane();
 
-        mainState.itemSelectedProperty().addListener((obs, oldValue, newValue) -> {
+        screenMainState.itemSelectedProperty().addListener((obs, oldValue, newValue) -> {
             loadListTopics();
         });
     }
@@ -121,9 +120,9 @@ public class PaneTopicsController implements Initializable {
 
         listTopics.clear();
 
-        if (mainState.getItemSelected() instanceof StudyDTO studyDto) {
+        if (screenMainState.getItemSelected() instanceof StudyDTO studyDto) {
             listTopics.addAll(studyDto.getListTopicsDto());
-        } else if(mainState.getItemSelected() instanceof TopicDTO topicDto) {
+        } else if(screenMainState.getItemSelected() instanceof TopicDTO topicDto) {
             listTopics.addAll(topicDto.getListTopicsDto());
         }
 
@@ -138,7 +137,7 @@ public class PaneTopicsController implements Initializable {
                     new CardTopicController(
                             stage,
                             topic,
-                            mainState,
+                            screenMainState,
                             screenMainController,
                             paneLeftController,
                             paneRightController,
@@ -179,16 +178,16 @@ public class PaneTopicsController implements Initializable {
     }
 
     private void newTopic() {
-        if (mainState.getItemSelected() == null) {
+        if (screenMainState.getItemSelected() == null) {
             return;
         }
 
         RegisterTopicController registerTopicController = new RegisterTopicController();
         registerTopicController.setTopicDto(new TopicDTO());
 
-        if (mainState.getItemSelected() instanceof StudyDTO studyDto) {
+        if (screenMainState.getItemSelected() instanceof StudyDTO studyDto) {
             registerTopicController.setStudy(studyDto);
-        } else if (mainState.getItemSelected() instanceof TopicDTO topicDto) {
+        } else if (screenMainState.getItemSelected() instanceof TopicDTO topicDto) {
             registerTopicController.setTopicParent(topicDto);
         }
 
@@ -197,14 +196,14 @@ public class PaneTopicsController implements Initializable {
 
         if (registerTopicController.getTopicDto().getId() != null &&
                 registerTopicController.getTopicDto().getId() > 0) {
-            mainState.refreshItemSelected();
+            screenMainState.refreshItemSelected();
         }
     }
 
     private void removeTopic() {
         TopicDTO topicSelectedDto = cardSelection.getSelectedItem();
 
-        if (mainState.getItemSelected() == null || topicSelectedDto == null) {
+        if (screenMainState.getItemSelected() == null || topicSelectedDto == null) {
             return;
         }
 
@@ -223,7 +222,7 @@ public class PaneTopicsController implements Initializable {
         if (controller.getConfirm()) {
             paneTopicsService.removeTopic(topicSelectedDto);
             screenMainController.refreshHierarchyPath(topicSelectedDto, ModeUpdateItem.REMOVE);
-            mainState.refreshItemSelected();
+            screenMainState.refreshItemSelected();
         }
     }
 
