@@ -26,7 +26,7 @@
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </VBox.margin>
             </HBox>
-            <ListView fx:id="listViewStudy" prefHeight="496.0" prefWidth="256.0" style="-fx-background-color: transparent; -fx-border-color: #cccccc; -fx-border-radius: 3;">
+            <ListView fx:id="listViewStudy" prefHeight="492.0" prefWidth="256.0" style="-fx-background-color: transparent; -fx-border-color: #cccccc; -fx-border-radius: 3;">
                <VBox.margin>
                   <Insets bottom="2.0" left="2.0" right="2.0" />
                </VBox.margin>
