@@ -13,7 +13,7 @@
    <children>
       <VBox fx:id="paneListStudy" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="26.0" style="-fx-border-color: #cccccc; -fx-background-color: #F7F7F7; -fx-border-radius: 3;">
+            <HBox alignment="CENTER_LEFT" prefHeight="30.0" style="-fx-border-color: #cccccc; -fx-background-color: #F7F7F7; -fx-border-radius: 3;">
                <children>
                   <ImageView fitHeight="16.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                      <image>

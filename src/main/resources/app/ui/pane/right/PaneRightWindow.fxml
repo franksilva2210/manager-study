@@ -19,7 +19,7 @@
    <children>
       <VBox fx:id="paneStudy" prefHeight="532.0" prefWidth="730.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="30.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="790.0">
                <children>
                   <Button fx:id="bttNavigationLeft" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="38.0">
                      <graphic>
@@ -30,7 +30,7 @@
                         </ImageView>
                      </graphic>
                      <HBox.margin>
-                        <Insets bottom="4.0" left="7.0" right="4.0" top="4.0" />
+                        <Insets left="7.0" right="4.0" />
                      </HBox.margin>
                   </Button>
                   <Button fx:id="bttNavigationRight" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="38.0">
@@ -42,12 +42,12 @@
                         </ImageView>
                      </graphic>
                      <HBox.margin>
-                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                        <Insets left="4.0" right="4.0" />
                      </HBox.margin>
                   </Button>
-                  <TextField fx:id="txtHierarchyPath" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="627.0" style="-fx-background-color: none;" styleClass="label-title" stylesheets="@label-title.css">
+                  <TextField fx:id="txtHierarchyPath" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="679.0" style="-fx-background-color: none;" styleClass="label-title" stylesheets="@label-title.css">
                      <HBox.margin>
-                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                        <Insets left="4.0" right="4.0" />
                      </HBox.margin>
                   </TextField>
                </children>
@@ -55,7 +55,7 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-            <TabPane fx:id="tabPaneStudy" prefHeight="490.0" prefWidth="778.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="tabPaneStudy" prefHeight="472.0" prefWidth="790.0" tabClosingPolicy="UNAVAILABLE">
                <tabs>
                   <Tab fx:id="tabMain">
                      <content>
