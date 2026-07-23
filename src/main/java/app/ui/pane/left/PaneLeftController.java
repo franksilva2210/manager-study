@@ -143,7 +143,7 @@ public class PaneLeftController implements Initializable {
         studyUpdateDto = controller.getStudyDto();
 
         screenMainState.refreshItemSelected();
-        screenMainController.reloadScreen(studyUpdateDto, ModeUpdateItem.UPDATE);
+        screenMainController.refreshBreadcrumb(studyUpdateDto, ModeUpdateItem.UPDATE);
 
         reloadScreen();
     }
@@ -167,7 +167,7 @@ public class PaneLeftController implements Initializable {
 
             screenMainState.refreshItemSelected();
             if (screenMainState.getItemSelected() == null) {
-                screenMainController.reloadScreen(studyDeletionDto, ModeUpdateItem.REMOVE);
+                screenMainController.refreshBreadcrumb(studyDeletionDto, ModeUpdateItem.REMOVE);
             }
 
             reloadScreen();
