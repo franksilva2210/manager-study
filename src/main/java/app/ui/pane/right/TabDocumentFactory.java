@@ -42,10 +42,6 @@ public class TabDocumentFactory {
     }
 
     private Tab createTab(EditorDocumentController editorDocumentController) {
-        Tab tab = new Tab();
-        tab.setText("");
-        tab.setClosable(true);
-
         ImageView imageInfo = new ImageView(new Image(getClass().getResourceAsStream("note.png")));
         imageInfo.setFitWidth(13);
         imageInfo.setFitHeight(13);
@@ -54,8 +50,10 @@ public class TabDocumentFactory {
         lblTitle.setGraphic(imageInfo);
         lblTitle.setContentDisplay(ContentDisplay.RIGHT);
         lblTitle.setGraphicTextGap(6);
-        lblTitle.setCursor(Cursor.HAND);
 
+        Tab tab = new Tab();
+        tab.setText("");
+        tab.setClosable(true);
         tab.setGraphic(lblTitle);
 
         editorDocumentController.setLblTitle(lblTitle);
