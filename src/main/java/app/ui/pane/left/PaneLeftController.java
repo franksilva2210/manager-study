@@ -200,6 +200,7 @@ public class PaneLeftController implements Initializable {
         if (controller.getConfirm()) {
             service.moveTopicToStudy(topicDragged, studyDestination);
             screenMainState.refreshItemSelected();
+            screenMainController.refreshBreadcrumb(topicDragged, ModeUpdateItem.REMOVE);
         }
     }
 
