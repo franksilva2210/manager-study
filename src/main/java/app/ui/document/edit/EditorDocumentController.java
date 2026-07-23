@@ -234,6 +234,7 @@ public class EditorDocumentController implements Initializable {
         if (messageConfirmController.getConfirm()) {
             if (state.getId() != null && state.getId() > 0) {
                 service.remove(state.getId());
+                screenMainState.refreshItemSelected();
             }
             tabPaneStudy.getTabs().remove(tab);
         }
