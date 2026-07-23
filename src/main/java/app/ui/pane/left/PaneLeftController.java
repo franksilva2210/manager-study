@@ -231,6 +231,7 @@ public class PaneLeftController implements Initializable {
             if (screenMainState.getItemSelected() instanceof StudyDTO studySelectedDto) {
                 if (studyDragged.getId().equals(studySelectedDto.getId())) {
                     screenMainState.setItemSelected(null);
+                    screenMainController.refreshBreadcrumb(studyDragged, ModeUpdateItem.REMOVE);
                     paneRightController.loadTabsDocument();
                 } else {
                     screenMainState.refreshItemSelected();
