@@ -9,6 +9,15 @@ Observação: O Windows pode exibir um alerta de segurança devido à ausência 
 
 [Study.Manager-1.1.0.exe](https://github.com/franksilva2210/manager-study/releases/download/v1.1.0/Study.Manager-1.1.0.exe)
 
+## Funcionalidades
+
+* Criação de tópicos interligados;
+* Sistema de arrastar e soltar entre os topicos (drag and drop);
+* Adicionar Notas/Textos com um editor de texto markdown simples;
+* Ver mapa mental (road map) simples;
+* Exportar/Importar arquivo markdown (.md);
+* Gerar e restaurar backups dos dados;
+
 ## Screenshots
 <img width="799" height="446" alt="printscreen-1" src="https://github.com/user-attachments/assets/c8d54b23-f371-4271-a675-b4e843fa4f42" />
 <img width="792" height="448" alt="printscreen-2" src="https://github.com/user-attachments/assets/0af8cdbc-6ecd-45e2-b499-80324c100901" />
@@ -24,15 +33,6 @@ Observação: O Windows pode exibir um alerta de segurança devido à ausência 
 * SQLite
 * JMetro
 * Maven
-
-## Funcionalidades
-
-* Criação de tópicos interligados;
-* Sistema de arrastar e soltar entre os topicos (drag and drop);
-* Adicionar Notas/Textos com um editor de texto markdown simples;
-* Ver mapa mental (road map) simples;
-* Exportar/Importar arquivo markdown (.md);
-* Gerar e restaurar backups dos dados;
 
 ## Novos Recursos/Features Futuros
 
