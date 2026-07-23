@@ -45,7 +45,7 @@
                         <Insets left="4.0" right="4.0" />
                      </HBox.margin>
                   </Button>
-                  <TextField fx:id="txtHierarchyPath" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="679.0" style="-fx-background-color: none;" styleClass="label-title" stylesheets="@label-title.css">
+                  <TextField fx:id="txtHierarchyPath" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="679.0" style="-fx-background-color: transparent;" styleClass="label" stylesheets="@label-title.css">
                      <HBox.margin>
                         <Insets left="4.0" right="4.0" />
                      </HBox.margin>
@@ -89,7 +89,7 @@
                                              <children>
                                                 <HBox alignment="CENTER" prefHeight="30.0" prefWidth="292.0">
                                                    <children>
-                                                      <Label fx:id="lblTitleMain" styleClass="label-title-main" stylesheets="@label-title-main.css">
+                                                      <Label fx:id="lblTitleMain" styleClass="label-default" stylesheets="@default-label-style.css">
                                                          <font>
                                                             <Font size="13.0" />
                                                          </font>
@@ -104,11 +104,6 @@
                                                 </HBox>
                                                 <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="15.0" prefHeight="25.0" prefWidth="292.0">
                                                    <children>
-                                                      <Label text="Quantidade de Documentos:">
-                                                         <HBox.margin>
-                                                            <Insets left="3.0" />
-                                                         </HBox.margin>
-                                                      </Label>
                                                       <Label fx:id="lblQtdDoc">
                                                          <HBox.margin>
                                                             <Insets left="5.0" />
@@ -118,11 +113,6 @@
                                                 </HBox>
                                                 <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="45.0" prefHeight="25.0" prefWidth="292.0">
                                                    <children>
-                                                      <Label stylesheets="@label-title-main.css" text="Quantidade de Tópicos:">
-                                                         <HBox.margin>
-                                                            <Insets left="3.0" />
-                                                         </HBox.margin>
-                                                      </Label>
                                                       <Label fx:id="lblQtdTopic">
                                                          <HBox.margin>
                                                             <Insets left="5.0" />

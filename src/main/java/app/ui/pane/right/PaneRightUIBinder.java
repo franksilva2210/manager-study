@@ -105,11 +105,11 @@ public class PaneRightUIBinder {
                     }
 
                     if (itemSelected instanceof StudyDTO study) {
-                        return String.valueOf(study.getListDocumentsDto().size());
+                        return study.getListDocumentsDto().size() + " Documentos";
                     }
 
                     if (itemSelected instanceof TopicDTO topic) {
-                        return String.valueOf(topic.getListDocumentsDto().size());
+                        return topic.getListDocumentsDto().size() + " Documentos";
                     }
 
                     return "";
@@ -133,11 +133,11 @@ public class PaneRightUIBinder {
                     }
 
                     if (itemSelected instanceof StudyDTO study) {
-                        return String.valueOf(study.getListTopicsDto().size());
+                        return study.getListTopicsDto().size() + " Tópicos";
                     }
 
                     if (itemSelected instanceof TopicDTO topic) {
-                        return String.valueOf(topic.getListTopicsDto().size());
+                        return topic.getListTopicsDto().size() + " Tópicos";
                     }
 
                     return "";
