@@ -93,8 +93,8 @@ public class CardTopicController {
 
         if (controller.getConfirm()) {
             service.removeTopic(topic);
-            screenMainController.reloadScreen(topic, ModeUpdateItem.REMOVE);
             screenMainState.refreshItemSelected();
+            screenMainController.refreshBreadcrumb(topic, ModeUpdateItem.REMOVE);
         }
     }
 
