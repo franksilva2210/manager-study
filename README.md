@@ -30,8 +30,6 @@ Observação: O Windows pode exibir um alerta de segurança devido à ausência 
 
 ## Novos Recursos/Features Futuros
 
-* Exibição da Arvore completa no menu lateral;
-
 * Sistema de anexos e links;
 
 * Sistema de Favoritos;
