@@ -143,6 +143,7 @@ public class CardTopicController {
         try {
             service.moveOneLevelUp(topic);
             screenMainState.refreshItemSelected();
+            screenMainController.refreshBreadcrumb(topic, ModeUpdateItem.REMOVE);
         } catch (BusinessException e) {
             MessageInfoController controller = new MessageInfoController();
             controller.setMsgUser(e.getMessage());
@@ -153,8 +154,11 @@ public class CardTopicController {
 
     public void convertToStudy() {
         service.convertTopicToStudy(topic.getId());
+
         screenMainState.refreshItemSelected();
+        screenMainController.refreshBreadcrumb(topic, ModeUpdateItem.REMOVE);
         paneLeftController.reloadScreen();
+
         MessageInfoController controller = new MessageInfoController();
         controller.setMsgUser(
                 "Tópico convertido com sucesso!"
