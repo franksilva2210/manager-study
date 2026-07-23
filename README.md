@@ -58,11 +58,10 @@ Observação: O Windows pode exibir um alerta de segurança devido à ausência 
   - Tópicos para revisar;
 
 ## Screenshots
-<img width="1522" height="890" alt="Captura 5" src="https://github.com/user-attachments/assets/d8d86bc0-0e3d-4398-a6be-56e61eab113a" />
-<img width="1522" height="893" alt="Captura 6" src="https://github.com/user-attachments/assets/b74792aa-e67c-4a2b-a7ce-e5f588a103a1" />
-<img width="1525" height="889" alt="Captura 7" src="https://github.com/user-attachments/assets/49062bed-0a72-46fd-8989-bd7e40863c14" />
-<img width="1519" height="892" alt="Captura 8" src="https://github.com/user-attachments/assets/b8ec39fd-dfdd-4825-bd78-ab9ca4dc71a1" />
-<img width="1530" height="890" alt="Captura 9" src="https://github.com/user-attachments/assets/05baebc8-a986-4350-a205-2f74a1520a37" />
+<img width="799" height="446" alt="printscreen-1" src="https://github.com/user-attachments/assets/c8d54b23-f371-4271-a675-b4e843fa4f42" />
+<img width="792" height="448" alt="printscreen-2" src="https://github.com/user-attachments/assets/0af8cdbc-6ecd-45e2-b499-80324c100901" />
+<img width="797" height="447" alt="printscreen-3" src="https://github.com/user-attachments/assets/d575d9d6-99be-44e0-b664-a46ce517c455" />
+<img width="790" height="440" alt="printscreen-4" src="https://github.com/user-attachments/assets/599b126f-0f15-48c2-8bef-c73d7616c871" />
 
 ## Requisitos
 
