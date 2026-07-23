@@ -46,6 +46,12 @@ public class PaneRightController implements Initializable {
     private Label lblTitleMain;
 
     @FXML
+    private Label lblQtdDoc;
+
+    @FXML
+    private Label lblQtdTopic;
+
+    @FXML
     private VBox paneTopics;
 
     @FXML
@@ -87,6 +93,14 @@ public class PaneRightController implements Initializable {
 
     public Label getLblTitleMain() {
         return lblTitleMain;
+    }
+
+    public Label getLblQtdDoc() {
+        return lblQtdDoc;
+    }
+
+    public Label getLblQtdTopic() {
+        return lblQtdTopic;
     }
 
     @Override

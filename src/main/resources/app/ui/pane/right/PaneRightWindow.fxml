@@ -87,7 +87,7 @@
                                        <left>
                                           <VBox prefHeight="420.0" prefWidth="350.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <HBox prefHeight="30.0" prefWidth="292.0">
+                                                <HBox alignment="CENTER" prefHeight="30.0" prefWidth="292.0">
                                                    <children>
                                                       <Label fx:id="lblTitleMain" styleClass="label-title-main" stylesheets="@label-title-main.css">
                                                          <font>
@@ -99,8 +99,36 @@
                                                       </Label>
                                                    </children>
                                                    <VBox.margin>
-                                                      <Insets top="5.0" />
+                                                      <Insets left="2.0" right="2.0" top="5.0" />
                                                    </VBox.margin>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="15.0" prefHeight="25.0" prefWidth="292.0">
+                                                   <children>
+                                                      <Label text="Quantidade de Documentos:">
+                                                         <HBox.margin>
+                                                            <Insets left="3.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label fx:id="lblQtdDoc">
+                                                         <HBox.margin>
+                                                            <Insets left="5.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="45.0" prefHeight="25.0" prefWidth="292.0">
+                                                   <children>
+                                                      <Label stylesheets="@label-title-main.css" text="Quantidade de Tópicos:">
+                                                         <HBox.margin>
+                                                            <Insets left="3.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                      <Label fx:id="lblQtdTopic">
+                                                         <HBox.margin>
+                                                            <Insets left="5.0" />
+                                                         </HBox.margin>
+                                                      </Label>
+                                                   </children>
                                                 </HBox>
                                              </children>
                                           </VBox>

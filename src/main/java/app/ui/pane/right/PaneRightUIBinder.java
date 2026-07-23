@@ -16,6 +16,8 @@ public class PaneRightUIBinder {
         bindNavigationButtons(view, state);
         bindHierarchyPath(view, state);
         bindTitleMain(view, state);
+        bindQtdDocuments(view, state);
+        bindQtdTopic(view, state);
     }
 
     public static void bindNavigationButtons(
@@ -80,6 +82,62 @@ public class PaneRightUIBinder {
 
                     if (itemSelected instanceof TopicDTO topic) {
                         return topic.getTitle();
+                    }
+
+                    return "";
+
+                }, state.itemSelectedProperty())
+        );
+    }
+
+    public static void bindQtdDocuments(
+            PaneRightController view,
+            ScreenMainState state
+    ) {
+
+        view.getLblQtdDoc().textProperty().bind(
+                Bindings.createStringBinding(() -> {
+
+                    Object itemSelected = state.getItemSelected();
+
+                    if (itemSelected == null) {
+                        return "";
+                    }
+
+                    if (itemSelected instanceof StudyDTO study) {
+                        return String.valueOf(study.getListDocumentsDto().size());
+                    }
+
+                    if (itemSelected instanceof TopicDTO topic) {
+                        return String.valueOf(topic.getListDocumentsDto().size());
+                    }
+
+                    return "";
+
+                }, state.itemSelectedProperty())
+        );
+    }
+
+    public static void bindQtdTopic(
+            PaneRightController view,
+            ScreenMainState state
+    ) {
+
+        view.getLblQtdTopic().textProperty().bind(
+                Bindings.createStringBinding(() -> {
+
+                    Object itemSelected = state.getItemSelected();
+
+                    if (itemSelected == null) {
+                        return "";
+                    }
+
+                    if (itemSelected instanceof StudyDTO study) {
+                        return String.valueOf(study.getListTopicsDto().size());
+                    }
+
+                    if (itemSelected instanceof TopicDTO topic) {
+                        return String.valueOf(topic.getListTopicsDto().size());
                     }
 
                     return "";
