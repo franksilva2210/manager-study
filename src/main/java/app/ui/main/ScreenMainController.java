@@ -108,6 +108,10 @@ public class ScreenMainController implements Initializable {
 	}
 
 	private void openScreenBackup() {
+		if (!confirmChangeStudyOrTopic()) {
+			return;
+		}
+
 		ScreenBackupController controller = new ScreenBackupController();
 		ScreenBackupWindow window = new ScreenBackupWindow(stage, controller);
 		window.showScreen();
