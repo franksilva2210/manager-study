@@ -105,8 +105,8 @@ public class CardTopicController {
         RegisterTopicWindow registerTopicWindow = new RegisterTopicWindow(stage, registerTopicController);
         registerTopicWindow.showScreen();
 
-        screenMainController.reloadScreen(topic, ModeUpdateItem.UPDATE);
         screenMainState.refreshItemSelected();
+        screenMainController.reloadScreen(topic, ModeUpdateItem.UPDATE);
     }
 
     public void moveTopicToTopic(Long idTopicDragged) {
