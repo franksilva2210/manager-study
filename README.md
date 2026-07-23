@@ -63,6 +63,4 @@ Observação: O Windows pode exibir um alerta de segurança devido à ausência 
 
 * Windows 10/11
 
-
 Copyright © 2026 Frank Pereira
-Todos os direitos reservados.
