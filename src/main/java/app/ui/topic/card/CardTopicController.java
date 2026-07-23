@@ -131,6 +131,7 @@ public class CardTopicController {
         if (controller.getConfirm()) {
             service.moveTopicToTopic(topicDragged, topic);
             screenMainState.refreshItemSelected();
+            screenMainController.refreshBreadcrumb(topicDragged, ModeUpdateItem.REMOVE);
         }
     }
 

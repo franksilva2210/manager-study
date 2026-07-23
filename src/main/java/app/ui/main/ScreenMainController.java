@@ -209,7 +209,7 @@ public class ScreenMainController implements Initializable {
 		refreshBreadcrumb(itemSelected, modeUpdateItem);
 	}
 
-	private void refreshBreadcrumb(Object itemSelected, ModeUpdateItem modeUpdateItem) {
+	public void refreshBreadcrumb(Object itemSelected, ModeUpdateItem modeUpdateItem) {
 		if (modeUpdateItem == ModeUpdateItem.UPDATE) {
 			breadcrumb.refreshItem(itemSelected);
 		} else if (modeUpdateItem == ModeUpdateItem.REMOVE) {
