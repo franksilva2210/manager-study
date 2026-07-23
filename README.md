@@ -30,8 +30,6 @@ Observação: O Windows pode exibir um alerta de segurança devido à ausência 
 
 ## Novos Recursos/Features Futuros
 
-* Integração com IA para geração de resumos, perguntas, respostas etc;
-
 * Exibição da Arvore completa no menu lateral;
 
 * Sistema de anexos e links;
@@ -54,6 +52,8 @@ Observação: O Windows pode exibir um alerta de segurança devido à ausência 
   - Quantidade total de sub tópicos;
   - Tópicos mais acessados;
   - Tópicos para revisar;
+
+* Integração com IA;
 
 ## Screenshots
 <img width="799" height="446" alt="printscreen-1" src="https://github.com/user-attachments/assets/c8d54b23-f371-4271-a675-b4e843fa4f42" />
