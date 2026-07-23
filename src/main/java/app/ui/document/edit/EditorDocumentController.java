@@ -3,6 +3,7 @@ package app.ui.document.edit;
 import app.application.document.DocumentDTO;
 import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
+import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
 import javafx.fxml.FXML;
@@ -77,10 +78,15 @@ public class EditorDocumentController implements Initializable {
     private Stage stage;
 
     private DocumentDTO documentDto;
+    private final ScreenMainState screenMainState;
     private final DocumentState state = new DocumentState();
     private final EditorDocumentService service = new EditorDocumentService();
     private final EditorDocumentUIHelper uiHelper = new EditorDocumentUIHelper();
     private final EditorDocumentFacade facade = new EditorDocumentFacade();
+
+    public EditorDocumentController(ScreenMainState screenMainState) {
+        this.screenMainState = screenMainState;
+    }
 
     public void setDocumentDto(DocumentDTO documentDto) {
         this.documentDto = documentDto;
@@ -337,6 +343,7 @@ public class EditorDocumentController implements Initializable {
         documentDto = service.save(documentDto);
         DocumentStateMapper.fillState(state, documentDto);
         previewDocument(state.getContent());
+        screenMainState.refreshItemSelected();
     }
 
     private void cancel() {

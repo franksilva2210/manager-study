@@ -5,6 +5,7 @@ import app.application.study.StudyDTO;
 import app.application.topic.TopicDTO;
 import app.ui.document.edit.EditorDocumentController;
 import app.ui.document.edit.EditorDocumentWindow;
+import app.ui.main.ScreenMainState;
 import javafx.scene.Cursor;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -20,13 +21,15 @@ public class TabDocumentFactory {
     public Tab createTabDocument(
             Stage stage,
             TabPane tabPaneStudy,
-            Object itemSelected,
+            ScreenMainState screenMainState,
             DocumentDTO documentDto) {
 
-        EditorDocumentController editorDocumentController = new EditorDocumentController();
+        EditorDocumentController editorDocumentController = new EditorDocumentController(screenMainState);
         editorDocumentController.setTabPaneStudy(tabPaneStudy);
         editorDocumentController.setDocumentDto(documentDto);
         editorDocumentController.setStage(stage);
+
+        Object itemSelected = screenMainState.getItemSelected();
 
         if (itemSelected instanceof StudyDTO studyDto) {
             editorDocumentController.setStudyDto(studyDto);
