@@ -40,22 +40,12 @@ Observação: O Windows pode exibir um alerta de segurança devido à ausência 
 
 * Sistema de Favoritos;
 
-* Gerar docx e pdf;
-
-* Gerar a exportação da arvore completa dos arquivos .md;
+* Gerar docx, pdf, json etc;
 
 * Integração com outros editores como: Visual Studio Code, Bloco de Notas do sistema operacional e outros;
 
-* Editor markdown: suporte a link, anexos e outros;
-
-* Importar/Exportar arquivo json;
-
-* Geração de Mapa mental/árvore visual de uma forma mais elaborada, com geração de pdf e/ou imagem;
-
-* Exibição de informações gerais para os tópicos pais como:
-  - Quantidade total de sub tópicos;
-  - Tópicos mais acessados;
-  - Tópicos para revisar;
+* Sistema de revisão para os tópicos;
+  - Exemplo: X tópicos para revisar; 
 
 * Integração com IA;
 
