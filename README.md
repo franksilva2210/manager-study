@@ -32,8 +32,6 @@ Observação: O Windows pode exibir um alerta de segurança devido à ausência 
 
 * Integração com IA para geração de resumos, perguntas, respostas etc;
 
-* Recurso de arrastar e soltar entre os tópicos (drag and drop);
-
 * Exibição da Arvore completa no menu lateral;
 
 * Sistema de anexos e links;
