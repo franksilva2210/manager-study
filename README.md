@@ -7,7 +7,7 @@ A ideia principal não é apenas armazenar notas, mas criar uma rede de conhecim
 
 Observação: O Windows pode exibir um alerta de segurança devido à ausência de assinatura digital.
 
-[Study.Manager-1.0.zip](https://github.com/franksilva2210/manager-study/releases/download/v1.0.0/Study.Manager-1.0.zip)
+[Study.Manager-1.1.0.exe](https://github.com/franksilva2210/manager-study/releases/download/v1.1.0/Study.Manager-1.1.0.exe)
 
 ## Tecnologias
 
@@ -22,6 +22,7 @@ Observação: O Windows pode exibir um alerta de segurança devido à ausência 
 ## Funcionalidades
 
 * Criação de tópicos interligados;
+* Sistema de arrastar e soltar entre os topicos (drag and drop);
 * Adicionar Notas/Textos com um editor de texto markdown simples;
 * Ver mapa mental (road map) simples;
 * Exportar/Importar arquivo markdown (.md);
