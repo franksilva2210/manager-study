@@ -11,6 +11,13 @@ public class EditorDocumentFacade {
     private Label lblTitle;
     private Button bttPreview;
     private Button bttEdit;
+    private Button bttImport;
+    private Button bttExport;
+    private Button bttRemove;
+    private Button bttBold;
+    private Button bttItalic;
+    private Button bttAttachImg;
+    private Button bttBlocCod;
     private CodeArea codeArea;
     private Button bttSave;
     private Button bttCancel;
@@ -69,5 +76,61 @@ public class EditorDocumentFacade {
 
     public void setBttCancel(Button bttCancel) {
         this.bttCancel = bttCancel;
+    }
+
+    public Button getBttBold() {
+        return bttBold;
+    }
+
+    public void setBttBold(Button bttBold) {
+        this.bttBold = bttBold;
+    }
+
+    public Button getBttItalic() {
+        return bttItalic;
+    }
+
+    public void setBttItalic(Button bttItalic) {
+        this.bttItalic = bttItalic;
+    }
+
+    public Button getBttAttachImg() {
+        return bttAttachImg;
+    }
+
+    public void setBttAttachImg(Button bttAttachImg) {
+        this.bttAttachImg = bttAttachImg;
+    }
+
+    public Button getBttBlocCod() {
+        return bttBlocCod;
+    }
+
+    public void setBttBlocCod(Button bttBlocCod) {
+        this.bttBlocCod = bttBlocCod;
+    }
+
+    public Button getBttImport() {
+        return bttImport;
+    }
+
+    public void setBttImport(Button bttImport) {
+        this.bttImport = bttImport;
+    }
+
+    public Button getBttExport() {
+        return bttExport;
+    }
+
+    public void setBttExport(Button bttExport) {
+        this.bttExport = bttExport;
+    }
+
+    public Button getBttRemove() {
+        return bttRemove;
+    }
+
+    public void setBttRemove(Button bttRemove) {
+        this.bttRemove = bttRemove;
     }
 }

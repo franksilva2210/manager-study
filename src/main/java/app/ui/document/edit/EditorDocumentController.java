@@ -182,6 +182,8 @@ public class EditorDocumentController implements Initializable {
 
         loadFacade();
 
+        uiHelper.configurateTooltip(facade);
+
         DocumentStateMapper.fillState(state, documentDto);
 
         EditorDocumentUIBinder.bind(facade, state);
@@ -389,6 +391,13 @@ public class EditorDocumentController implements Initializable {
         facade.setLblTitle(lblTitle);
         facade.setBttPreview(bttPreview);
         facade.setBttEdit(bttEdit);
+        facade.setBttImport(bttImport);
+        facade.setBttExport(bttExport);
+        facade.setBttRemove(bttRemove);
+        facade.setBttBold(bttBold);
+        facade.setBttItalic(bttItalic);
+        facade.setBttAttachImg(bttAttachImg);
+        facade.setBttBlocCod(bttBlocCod);
         facade.setCodeArea(codeArea);
         facade.setBttSave(bttSave);
         facade.setBttCancel(bttCancel);

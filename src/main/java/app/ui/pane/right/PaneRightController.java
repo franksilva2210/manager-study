@@ -124,6 +124,8 @@ public class PaneRightController implements Initializable {
             }
         });
 
+        uiHelper.configurateTooltip(tabAdd);
+
         PaneRightUIBinder.bind(this, screenMainState);
     }
 

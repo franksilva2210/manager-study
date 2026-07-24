@@ -1,6 +1,7 @@
 package app.ui.pane.right;
 
 import app.ui.document.edit.EditorDocumentController;
+import app.ui.util.TooltipUtils;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
@@ -24,5 +25,9 @@ public class PaneRightUIHelper {
         }
 
         return null;
+    }
+
+    public void configurateTooltip(Tab tabAdd) {
+        tabAdd.setTooltip(TooltipUtils.create("Adiciona novo texto"));
     }
 }
