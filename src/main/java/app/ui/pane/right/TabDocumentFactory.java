@@ -6,7 +6,6 @@ import app.application.topic.TopicDTO;
 import app.ui.document.edit.EditorDocumentController;
 import app.ui.document.edit.EditorDocumentWindow;
 import app.ui.main.ScreenMainState;
-import javafx.scene.Cursor;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
