@@ -13,7 +13,7 @@ Observação: O Windows pode exibir um alerta de segurança devido à ausência 
 
 * Criação de tópicos interligados;
 * Sistema de arrastar e soltar entre os topicos (drag and drop);
-* Adicionar Notas/Textos com um editor de texto markdown simples;
+* Adicionar Notas/Textos com um editor de texto markdown;
 * Ver mapa mental (road map) simples;
 * Exportar/Importar arquivo markdown (.md);
 * Gerar e restaurar backups dos dados;
