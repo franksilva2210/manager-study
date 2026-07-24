@@ -1,16 +1,33 @@
 package app.ui.document.edit;
 
+import com.vladsch.flexmark.ext.autolink.AutolinkExtension;
+import com.vladsch.flexmark.ext.emoji.EmojiExtension;
+import com.vladsch.flexmark.ext.emoji.EmojiImageType;
+import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension;
+import com.vladsch.flexmark.ext.tables.TablesExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.ast.Node;
+import com.vladsch.flexmark.util.data.MutableDataSet;
+
+import java.util.List;
 
 public class MarkdownConverter {
 
+    private static final MutableDataSet OPTIONS = new MutableDataSet()
+            .set(Parser.EXTENSIONS, List.of(
+                    TablesExtension.create(),
+                    StrikethroughExtension.create(),
+                    AutolinkExtension.create(),
+                    EmojiExtension.create()
+            ))
+            .set(EmojiExtension.USE_IMAGE_TYPE, EmojiImageType.UNICODE_ONLY);
+
     private static final Parser PARSER =
-            Parser.builder().build();
+            Parser.builder(OPTIONS).build();
 
     private static final HtmlRenderer RENDERER =
-            HtmlRenderer.builder().build();
+            HtmlRenderer.builder(OPTIONS).build();
 
     public static String toHtml(String markdown) {
         Node document = PARSER.parse(markdown);
