@@ -81,7 +81,10 @@ public class ScreenMainController implements Initializable {
 		});
 
 		menuClose.setOnAction(event -> {
-			Platform.exit();
+			boolean confirm = confirmChangeStudyOrTopic();
+			if (confirm) {
+				Platform.exit();
+			}
 		});
 
 		stage.setOnCloseRequest(event -> {
