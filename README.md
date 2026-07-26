@@ -1,7 +1,7 @@
 # Manager Study
 
 Um aplicativo desktop para criação e organização de notas de temas diversos que se relacionam. Basicamente pode ser definido como um Gerenciador de Conhecimento. 
-A ideia principal não é apenas armazenar notas, mas criar uma rede de conhecimento, onde a pessoa organiza conhecimento de forma conectada.
+A ideia principal não é apenas armazenar notas, mas criar uma rede de conhecimento, onde a pessoa organiza conhecimento que se conectam.
 
 ## Download Instalador
 
