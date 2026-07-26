@@ -8,13 +8,18 @@ import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
@@ -59,6 +64,9 @@ public class EditorDocumentController implements Initializable {
 
     @FXML
     private Button bttAttachImg;
+
+    @FXML
+    private Button bttResizable;
 
     @FXML
     private StackPane pane;
@@ -130,7 +138,7 @@ public class EditorDocumentController implements Initializable {
         });
 
         bttPreview.setOnAction(event -> {
-            previewDocument(codeArea.getText());
+            previewDocument();
         });
 
         bttRemove.setOnAction(event -> {
@@ -159,6 +167,10 @@ public class EditorDocumentController implements Initializable {
 
         bttAttachImg.setOnAction(event -> {
             onAttachImage();
+        });
+
+        bttResizable.setOnAction(event -> {
+            showDocumentWindow();
         });
 
         bttSave.setOnAction(event -> {
@@ -203,8 +215,9 @@ public class EditorDocumentController implements Initializable {
         }
     }
 
-    private void previewDocument(String markdown) {
-        String htmlContent = MarkdownConverter.toHtml(markdown);
+    private void previewDocument() {
+        String text = state.getContent();
+        String htmlContent = MarkdownConverter.toHtml(text);
 
         String html = """
         <html>
@@ -345,7 +358,7 @@ public class EditorDocumentController implements Initializable {
         DocumentStateMapper.fillDTO(documentDto, state);
         documentDto = service.save(documentDto);
         DocumentStateMapper.fillState(state, documentDto);
-        previewDocument(state.getContent());
+        previewDocument();
         screenMainState.refreshItemSelected();
     }
 
@@ -362,7 +375,7 @@ public class EditorDocumentController implements Initializable {
 
         if (messageConfirmController.getConfirm()) {
             DocumentStateMapper.fillState(state, documentDto);
-            previewDocument(state.getContent());
+            previewDocument();
         }
     }
 
@@ -401,6 +414,7 @@ public class EditorDocumentController implements Initializable {
         facade.setCodeArea(codeArea);
         facade.setBttSave(bttSave);
         facade.setBttCancel(bttCancel);
+        facade.setBttResizable(bttResizable);
     }
 
     public boolean isEditing() {
@@ -411,10 +425,38 @@ public class EditorDocumentController implements Initializable {
 
     private void showInitial() {
         if (state.getId() != null) {
-            previewDocument(state.getContent());
+            previewDocument();
         } else {
             editDocument();
         }
+    }
+
+    private void showDocumentWindow() {
+        Stage stage = new Stage();
+
+        stage.setTitle(state.getTitle());
+        stage.setWidth(850);
+        stage.setHeight(600);
+        stage.setResizable(true);
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(this.stage);
+
+        BorderPane root = (BorderPane) tab.getContent();
+        tab.setContent(null);
+
+        Scene scene = new Scene(root);
+        JMetro jMetro = new JMetro();
+        jMetro.setStyle(Style.LIGHT);
+        jMetro.setScene(scene);
+
+        stage.setScene(scene);
+
+        stage.setOnCloseRequest(e -> {
+            stage.setScene(null);
+            tab.setContent(root);
+        });
+
+        stage.show();
     }
 
     public void setTopicDto(TopicDTO topicDto) {

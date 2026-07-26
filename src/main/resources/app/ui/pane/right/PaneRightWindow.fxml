@@ -55,11 +55,11 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-            <TabPane fx:id="tabPaneStudy" prefHeight="472.0" prefWidth="790.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="tabPaneStudy" prefHeight="498.0" prefWidth="790.0" tabClosingPolicy="UNAVAILABLE">
                <tabs>
                   <Tab fx:id="tabMain">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="461.0" prefWidth="778.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0">
                            <children>
                               <VBox prefHeight="461.0" prefWidth="778.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
@@ -83,7 +83,7 @@
                                           </ToolBar>
                                        </children>
                                     </HBox>
-                                    <BorderPane prefHeight="420.0" prefWidth="778.0">
+                                    <BorderPane prefHeight="427.0" prefWidth="790.0">
                                        <left>
                                           <VBox prefHeight="420.0" prefWidth="350.0" BorderPane.alignment="CENTER">
                                              <children>
@@ -154,7 +154,7 @@
                   </Tab>
                </tabs>
                <VBox.margin>
-                  <Insets bottom="4.0" top="2.0" />
+                  <Insets top="2.0" />
                </VBox.margin>
             </TabPane>
          </children>

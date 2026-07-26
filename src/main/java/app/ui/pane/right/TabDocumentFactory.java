@@ -12,6 +12,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -63,7 +64,7 @@ public class TabDocumentFactory {
         tab.setUserData(editorDocumentController);
 
         EditorDocumentWindow editorDocumentWindow = new EditorDocumentWindow(editorDocumentController);
-        VBox root = editorDocumentWindow.getRoot();
+        BorderPane root = editorDocumentWindow.getRoot();
 
         tab.setContent(root);
 

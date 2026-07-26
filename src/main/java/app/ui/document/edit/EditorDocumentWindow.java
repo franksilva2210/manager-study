@@ -1,13 +1,13 @@
 package app.ui.document.edit;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 
 public class EditorDocumentWindow {
 
-    private VBox root;
+    private BorderPane root;
 
     public EditorDocumentWindow(EditorDocumentController controller) {
         try {
@@ -21,7 +21,7 @@ public class EditorDocumentWindow {
         }
     }
 
-    public VBox getRoot() {
+    public BorderPane getRoot() {
         return root;
     }
 }

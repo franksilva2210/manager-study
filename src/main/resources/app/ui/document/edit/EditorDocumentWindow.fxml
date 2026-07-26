@@ -5,121 +5,14 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="445.0" prefWidth="616.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <HBox prefHeight="35.0" prefWidth="616.0">
-         <children>
-            <VBox>
-               <children>
-                  <ToolBar prefHeight="16.0" prefWidth="616.0">
-                     <items>
-                        <Button fx:id="bttPreview" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Visualizar">
-                           <graphic>
-                              <ImageView fitHeight="17.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@text-size.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="bttEdit" mnemonicParsing="false" prefWidth="100.0" text="Editar">
-                           <graphic>
-                              <ImageView fitHeight="17.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@text-box.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="bttImport" mnemonicParsing="false" prefWidth="100.0" text="Importar">
-                           <graphic>
-                              <ImageView fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@import.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="bttExport" mnemonicParsing="false" prefWidth="100.0" text="Exportar">
-                           <graphic>
-                              <ImageView fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@export.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="bttRemove" mnemonicParsing="false" prefWidth="100.0" text="Remover">
-                           <graphic>
-                              <ImageView fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@trash.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </items>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </ToolBar>
-                  <ToolBar prefHeight="40.0" prefWidth="200.0">
-                    <items>
-                        <Button fx:id="bttBold" mnemonicParsing="false" prefHeight="24.0" prefWidth="35.0">
-                           <graphic>
-                              <ImageView fitHeight="14.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@bold-button.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="bttItalic" mnemonicParsing="false" prefWidth="35.0">
-                           <graphic>
-                              <ImageView fitHeight="14.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@italic-button.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="bttAttachImg" layoutX="88.0" layoutY="10.0" mnemonicParsing="false" prefWidth="35.0">
-                           <graphic>
-                              <ImageView fitHeight="14.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="bttBlocCod" mnemonicParsing="false" prefHeight="24.0" prefWidth="35.0">
-                           <graphic>
-                              <ImageView fitHeight="30.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@coding.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                    </items>
-                  </ToolBar>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-      <VBox prefHeight="326.0" prefWidth="606.0">
-         <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </VBox.margin>
-         <children>
-            <StackPane fx:id="pane" prefHeight="328.0" prefWidth="606.0" />
-         </children>
-      </VBox>
-      <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0" spacing="20.0">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <HBox alignment="CENTER_RIGHT" prefHeight="42.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="bttSave" mnemonicParsing="false" prefWidth="120.0" text="Salvar" />
             <Button fx:id="bttCancel" mnemonicParsing="false" prefWidth="120.0" text="Cancelar">
@@ -129,5 +22,115 @@
             </Button>
          </children>
       </HBox>
-   </children>
-</VBox>
+   </bottom>
+   <center>
+      <StackPane fx:id="pane" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <VBox prefHeight="69.0" BorderPane.alignment="CENTER">
+         <children>
+            <ToolBar>
+               <items>
+                  <Button fx:id="bttPreview" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Visualizar">
+                     <graphic>
+                        <ImageView fitHeight="17.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@text-size.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="bttEdit" mnemonicParsing="false" prefWidth="100.0" text="Editar">
+                     <graphic>
+                        <ImageView fitHeight="17.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@text-box.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="bttImport" mnemonicParsing="false" prefWidth="100.0" text="Importar">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@import.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="bttExport" mnemonicParsing="false" prefWidth="100.0" text="Exportar">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@export.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="bttRemove" mnemonicParsing="false" prefWidth="100.0" text="Remover">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@trash.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="bttResizable" mnemonicParsing="false" prefHeight="25.0">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@maximize.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </items>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </ToolBar>
+            <ToolBar>
+               <items>
+                  <Button fx:id="bttBold" mnemonicParsing="false" prefHeight="24.0" prefWidth="35.0">
+                     <graphic>
+                        <ImageView fitHeight="14.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@bold-button.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="bttItalic" mnemonicParsing="false" prefWidth="35.0">
+                     <graphic>
+                        <ImageView fitHeight="14.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@italic-button.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="bttAttachImg" layoutX="88.0" layoutY="10.0" mnemonicParsing="false" prefWidth="35.0">
+                     <graphic>
+                        <ImageView fitHeight="14.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@image.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="bttBlocCod" mnemonicParsing="false" prefHeight="24.0" prefWidth="35.0">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@coding.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </items>
+            </ToolBar>
+         </children>
+      </VBox>
+   </top>
+</BorderPane>

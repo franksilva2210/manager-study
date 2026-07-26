@@ -29,8 +29,8 @@ public class MarkdownConverter {
     private static final HtmlRenderer RENDERER =
             HtmlRenderer.builder(OPTIONS).build();
 
-    public static String toHtml(String markdown) {
-        Node document = PARSER.parse(markdown);
+    public static String toHtml(String text) {
+        Node document = PARSER.parse(text);
         return RENDERER.render(document);
     }
 }
