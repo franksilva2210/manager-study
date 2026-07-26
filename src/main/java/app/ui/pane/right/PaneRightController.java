@@ -166,6 +166,12 @@ public class PaneRightController implements Initializable {
             DocumentDTO documentDto = new DocumentDTO();
             documentDto.setTitle("Texto " + indexTabs);
 
+            if (screenMainState.getItemSelected() instanceof StudyDTO studyDto) {
+                documentDto.setStudyId(studyDto.getId());
+            } else if (screenMainState.getItemSelected() instanceof TopicDTO topicDto) {
+                documentDto.setTopicId(topicDto.getId());
+            }
+
             Tab newTab = tabDocumentFactory.createTabDocument(
                     stage,
                     tabPaneStudy,
@@ -197,18 +203,12 @@ public class PaneRightController implements Initializable {
         if (screenMainState.getItemSelected() instanceof StudyDTO studyDto) {
             for (DocumentDTO dto : studyDto.getListDocumentsDto()) {
                 Tab tabCreate = tabDocumentFactory.createTabDocument(stage, tabPaneStudy, screenMainState, dto);
-                tabPaneStudy.getTabs().add(
-                        tabPaneStudy.getTabs().indexOf(tabAdd),
-                        tabCreate
-                );
+                tabPaneStudy.getTabs().add(tabPaneStudy.getTabs().indexOf(tabAdd), tabCreate);
             }
         } else if(screenMainState.getItemSelected() instanceof TopicDTO topicDto) {
             for (DocumentDTO dto : topicDto.getListDocumentsDto()) {
                 Tab tabCreate = tabDocumentFactory.createTabDocument(stage, tabPaneStudy, screenMainState, dto);
-                tabPaneStudy.getTabs().add(
-                        tabPaneStudy.getTabs().indexOf(tabAdd),
-                        tabCreate
-                );
+                tabPaneStudy.getTabs().add(tabPaneStudy.getTabs().indexOf(tabAdd), tabCreate);
             }
         }
     }

@@ -71,17 +71,17 @@ public class EditorDocumentController implements Initializable {
     @FXML
     private StackPane pane;
 
-    @FXML
-    private Button bttSave;
-
-    @FXML
-    private Button bttCancel;
-
     private WebView webView;
 
     private CodeArea codeArea;
 
     private VirtualizedScrollPane<CodeArea> scrollPaneCodeArea;
+
+    @FXML
+    private Button bttSave;
+
+    @FXML
+    private Button bttCancel;
 
     private Stage stage;
 
@@ -451,6 +451,8 @@ public class EditorDocumentController implements Initializable {
 
         stage.setScene(scene);
 
+        this.stage = stage;
+
         stage.setOnCloseRequest(e -> {
             stage.setScene(null);
             tab.setContent(root);
@@ -458,13 +460,4 @@ public class EditorDocumentController implements Initializable {
 
         stage.show();
     }
-
-    public void setTopicDto(TopicDTO topicDto) {
-        documentDto.setTopicId(topicDto.getId());
-    }
-
-    public void setStudyDto(StudyDTO studyDto) {
-        documentDto.setStudyId(studyDto.getId());
-    }
-
 }

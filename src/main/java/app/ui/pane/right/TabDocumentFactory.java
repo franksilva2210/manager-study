@@ -1,8 +1,6 @@
 package app.ui.pane.right;
 
 import app.application.document.DocumentDTO;
-import app.application.study.StudyDTO;
-import app.application.topic.TopicDTO;
 import app.ui.document.edit.EditorDocumentController;
 import app.ui.document.edit.EditorDocumentWindow;
 import app.ui.main.ScreenMainState;
@@ -13,7 +11,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class TabDocumentFactory {
@@ -28,14 +25,6 @@ public class TabDocumentFactory {
         editorDocumentController.setTabPaneStudy(tabPaneStudy);
         editorDocumentController.setDocumentDto(documentDto);
         editorDocumentController.setStage(stage);
-
-        Object itemSelected = screenMainState.getItemSelected();
-
-        if (itemSelected instanceof StudyDTO studyDto) {
-            editorDocumentController.setStudyDto(studyDto);
-        } else if (itemSelected instanceof TopicDTO topicDto) {
-            editorDocumentController.setTopicDto(topicDto);
-        }
 
         Tab tab = createTab(editorDocumentController);
 
