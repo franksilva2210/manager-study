@@ -24,7 +24,7 @@ public class TabDocumentFactory {
         EditorDocumentController editorDocumentController = new EditorDocumentController(screenMainState);
         editorDocumentController.setTabPaneStudy(tabPaneStudy);
         editorDocumentController.setDocumentDto(documentDto);
-        editorDocumentController.setStage(stage);
+        editorDocumentController.setStageMain(stage);
 
         Tab tab = createTab(editorDocumentController);
 

@@ -78,7 +78,7 @@
                   </Button>
                   <Button fx:id="bttResizable" mnemonicParsing="false" prefHeight="25.0">
                      <graphic>
-                        <ImageView fitHeight="16.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="iconResizable" fitHeight="16.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@maximize.png" />
                            </image>

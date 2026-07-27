@@ -1,15 +1,19 @@
 package app.ui.document.edit;
 
 import app.application.document.DocumentDTO;
-import app.application.study.StudyDTO;
-import app.application.topic.TopicDTO;
 import app.ui.main.ScreenMainState;
 import app.ui.message.MessageConfirmController;
 import app.ui.message.MessageConfirmWindow;
+import app.ui.util.TooltipUtils;
+import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -31,12 +35,6 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class EditorDocumentController implements Initializable {
-
-    private TabPane tabPaneStudy;
-
-    private Tab tab;
-
-    private Label lblTitle;
 
     @FXML
     private Button bttPreview;
@@ -69,13 +67,10 @@ public class EditorDocumentController implements Initializable {
     private Button bttResizable;
 
     @FXML
+    private ImageView iconResizable;
+
+    @FXML
     private StackPane pane;
-
-    private WebView webView;
-
-    private CodeArea codeArea;
-
-    private VirtualizedScrollPane<CodeArea> scrollPaneCodeArea;
 
     @FXML
     private Button bttSave;
@@ -83,14 +78,32 @@ public class EditorDocumentController implements Initializable {
     @FXML
     private Button bttCancel;
 
-    private Stage stage;
+    private TabPane tabPaneStudy;
 
-    private DocumentDTO documentDto;
+    private Tab tab;
+
+    private Label lblTitle;
+
+    private WebView webView;
+
+    private CodeArea codeArea;
+
+    private VirtualizedScrollPane<CodeArea> scrollPaneCodeArea;
+
     private final ScreenMainState screenMainState;
+
     private final DocumentState state = new DocumentState();
     private final EditorDocumentService service = new EditorDocumentService();
     private final EditorDocumentUIHelper uiHelper = new EditorDocumentUIHelper();
     private final EditorDocumentFacade facade = new EditorDocumentFacade();
+    private final BooleanProperty expanded = new SimpleBooleanProperty(false);
+    private final Image maximize = new Image(getClass().getResourceAsStream("maximize.png"));
+    private final Image minimize = new Image(getClass().getResourceAsStream("minimize.png"));
+
+    private DocumentDTO documentDto;
+    private Stage stage;
+    private Stage stageMain;
+    private Stage stageDocumentModal;
 
     public EditorDocumentController(ScreenMainState screenMainState) {
         this.screenMainState = screenMainState;
@@ -120,8 +133,8 @@ public class EditorDocumentController implements Initializable {
         this.tab = tab;
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
+    public void setStageMain(Stage stage) {
+        this.stageMain = stage;
     }
 
     @Override
@@ -192,6 +205,10 @@ public class EditorDocumentController implements Initializable {
 
         createWebView();
 
+        expanded.addListener((obs, oldValue, isExpanded) -> {
+            iconResizable.setImage(isExpanded ? minimize : maximize);
+        });
+
         loadFacade();
 
         uiHelper.configurateTooltip(facade);
@@ -201,6 +218,8 @@ public class EditorDocumentController implements Initializable {
         EditorDocumentUIBinder.bind(facade, state);
 
         showInitial();
+
+        stage = stageMain;
     }
 
     public void editTitle() {
@@ -432,32 +451,72 @@ public class EditorDocumentController implements Initializable {
     }
 
     private void showDocumentWindow() {
-        Stage stage = new Stage();
+        if (stageDocumentModal != null) {
+            closeDocumentWindow();
+        } else {
+            openDocumentWindow();
+        }
+    }
 
-        stage.setTitle(state.getTitle());
-        stage.setWidth(850);
-        stage.setHeight(600);
-        stage.setResizable(true);
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(this.stage);
-
+    private void openDocumentWindow() {
         BorderPane root = (BorderPane) tab.getContent();
         tab.setContent(null);
+
+        stageDocumentModal = new Stage();
+        stageDocumentModal.setTitle(state.getTitle());
+        stageDocumentModal.setWidth(850);
+        stageDocumentModal.setHeight(600);
+        stageDocumentModal.setResizable(true);
+        stageDocumentModal.initModality(Modality.WINDOW_MODAL);
+        stageDocumentModal.initOwner(stageMain);
 
         Scene scene = new Scene(root);
         JMetro jMetro = new JMetro();
         jMetro.setStyle(Style.LIGHT);
         jMetro.setScene(scene);
 
-        stage.setScene(scene);
+        stageDocumentModal.setScene(scene);
 
-        this.stage = stage;
-
-        stage.setOnCloseRequest(e -> {
-            stage.setScene(null);
-            tab.setContent(root);
+        stageDocumentModal.setOnCloseRequest(event -> {
+            event.consume();
+            closeDocumentWindow();
         });
 
-        stage.show();
+        stage = stageDocumentModal;
+        expanded.set(true);
+        bttResizable.setTooltip(TooltipUtils.create("Minimiza tela"));
+
+        stageDocumentModal.show();
+    }
+
+    private void closeDocumentWindow() {
+        BorderPane root = (BorderPane) stageDocumentModal.getScene().getRoot();
+        tab.setContent(root);
+
+        stageDocumentModal.setScene(null);
+        stageDocumentModal.close();
+        stageDocumentModal = null;
+
+        stage = stageMain;
+        expanded.set(false);
+        bttResizable.setTooltip(TooltipUtils.create("Maximiza tela"));
+
+        Platform.runLater(() -> {
+            root.applyCss();
+            root.layout();
+
+            pane.applyCss();
+            pane.layout();
+
+            codeArea.applyCss();
+            codeArea.layout();
+
+            scrollPaneCodeArea.applyCss();
+            scrollPaneCodeArea.layout();
+            scrollPaneCodeArea.requestLayout();
+
+            webView.applyCss();
+            webView.layout();
+        });
     }
 }
