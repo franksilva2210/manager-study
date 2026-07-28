@@ -19,7 +19,7 @@
                <graphic>
                   <ImageView fitHeight="17.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../../../Users/Frank-PC/Downloads/save%20(1).png" />
+                        <Image url="@save.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
