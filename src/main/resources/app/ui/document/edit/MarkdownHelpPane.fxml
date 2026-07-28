@@ -142,7 +142,7 @@
                <children>
                   <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="393.0">
                      <children>
-                        <Label stylesheets="@mrkdown-help-style.css" text="Documentação completa de markdown em:">
+                        <Label stylesheets="@mrkdown-help-style.css" text="Documentação markdown completa em:">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>

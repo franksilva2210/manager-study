@@ -29,6 +29,8 @@ public class EditorDocumentUIHelper {
         facade.getBttItalic().setTooltip(TooltipUtils.create("Itálico"));
         facade.getBttAttachImg().setTooltip(TooltipUtils.create("Anexo de imagem"));
         facade.getBttBlocCod().setTooltip(TooltipUtils.create("Bloco de código"));
+        facade.getBttSave().setTooltip(TooltipUtils.create("Salva estado atual do documento"));
+        facade.getBttCancel().setTooltip(TooltipUtils.create("Volta ao último estado salvo do documento"));
     }
 
 }
