@@ -145,7 +145,7 @@ public class DocumentRepository {
                             SELECT doc
                             FROM Document doc
                             WHERE doc.study.id = :id
-                            ORDER BY doc.id
+                            ORDER BY LOWER(doc.title) ASC
                             """,
                             Document.class
                     )
@@ -165,7 +165,7 @@ public class DocumentRepository {
                             SELECT doc
                             FROM Document doc
                             WHERE doc.topic.id = :id
-                            ORDER BY doc.id
+                            ORDER BY LOWER(doc.title) ASC
                             """,
                             Document.class
                     )
