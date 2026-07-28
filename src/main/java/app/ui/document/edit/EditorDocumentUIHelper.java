@@ -23,7 +23,8 @@ public class EditorDocumentUIHelper {
         facade.getBttImport().setTooltip(TooltipUtils.create("Importa documento markdown .md do computador"));
         facade.getBttExport().setTooltip(TooltipUtils.create("Exporta documento markdown .md para computador"));
         facade.getBttRemove().setTooltip(TooltipUtils.create("Deleta documento markdown"));
-        facade.getBttResizable().setTooltip(TooltipUtils.create("Maximiza tela"));
+        facade.getBttHelp().setTooltip(TooltipUtils.create("Exibe sintaxes básicas mais comuns de documento markdown"));
+        facade.getBttResizable().setTooltip(TooltipUtils.create("Abre edição de documento em janela redimensionável"));
         facade.getBttBold().setTooltip(TooltipUtils.create("Negrito"));
         facade.getBttItalic().setTooltip(TooltipUtils.create("Itálico"));
         facade.getBttAttachImg().setTooltip(TooltipUtils.create("Anexo de imagem"));

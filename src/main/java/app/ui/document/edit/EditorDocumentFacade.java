@@ -17,6 +17,7 @@ public class EditorDocumentFacade {
     private Button bttBold;
     private Button bttItalic;
     private Button bttAttachImg;
+    private Button bttHelp;
     private Button bttBlocCod;
     private Button bttResizable;
     private CodeArea codeArea;
@@ -141,5 +142,13 @@ public class EditorDocumentFacade {
 
     public void setBttResizable(Button bttResizable) {
         this.bttResizable = bttResizable;
+    }
+
+    public Button getBttHelp() {
+        return bttHelp;
+    }
+
+    public void setBttHelp(Button bttHelp) {
+        this.bttHelp = bttHelp;
     }
 }

@@ -24,6 +24,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
+import org.controlsfx.control.PopOver;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
@@ -62,6 +63,9 @@ public class EditorDocumentController implements Initializable {
 
     @FXML
     private Button bttAttachImg;
+
+    @FXML
+    private Button bttHelp;
 
     @FXML
     private Button bttResizable;
@@ -182,8 +186,12 @@ public class EditorDocumentController implements Initializable {
             onAttachImage();
         });
 
+        bttHelp.setOnAction(event -> {
+            openHelp();
+        });
+
         bttResizable.setOnAction(event -> {
-            showDocumentWindow();
+            resizableDocumentWindow();
         });
 
         bttSave.setOnAction(event -> {
@@ -373,6 +381,22 @@ public class EditorDocumentController implements Initializable {
         }
     }
 
+    private void openHelp() {
+        MarkdownHelpController controller = new MarkdownHelpController();
+        MarkdownHelpPane pane = new MarkdownHelpPane(controller);
+        PopOver helpPopover = new PopOver();
+        helpPopover.setContentNode(pane.getRoot());
+        helpPopover.show(bttHelp);
+    }
+
+    private void resizableDocumentWindow() {
+        if (stageDocumentModal != null) {
+            closeDocumentWindow();
+        } else {
+            openDocumentWindow();
+        }
+    }
+
     private void save() {
         DocumentStateMapper.fillDTO(documentDto, state);
         documentDto = service.save(documentDto);
@@ -434,6 +458,7 @@ public class EditorDocumentController implements Initializable {
         facade.setBttSave(bttSave);
         facade.setBttCancel(bttCancel);
         facade.setBttResizable(bttResizable);
+        facade.setBttHelp(bttHelp);
     }
 
     public boolean isEditing() {
@@ -447,14 +472,6 @@ public class EditorDocumentController implements Initializable {
             previewDocument();
         } else {
             editDocument();
-        }
-    }
-
-    private void showDocumentWindow() {
-        if (stageDocumentModal != null) {
-            closeDocumentWindow();
-        } else {
-            openDocumentWindow();
         }
     }
 
@@ -484,7 +501,7 @@ public class EditorDocumentController implements Initializable {
 
         stage = stageDocumentModal;
         expanded.set(true);
-        bttResizable.setTooltip(TooltipUtils.create("Minimiza tela"));
+        bttResizable.setTooltip(TooltipUtils.create("Volta edição de documento para janela principal do app"));
 
         stageDocumentModal.show();
     }
@@ -499,7 +516,7 @@ public class EditorDocumentController implements Initializable {
 
         stage = stageMain;
         expanded.set(false);
-        bttResizable.setTooltip(TooltipUtils.create("Maximiza tela"));
+        bttResizable.setTooltip(TooltipUtils.create("Abre edição de documento em janela redimensionável"));
 
         Platform.runLater(() -> {
             root.applyCss();
