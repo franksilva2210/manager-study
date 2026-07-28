@@ -109,11 +109,12 @@ public class TopicRepository {
         try {
             Topic topic = em.createQuery(
                             """
-                            SELECT DISTINCT t
-                            FROM Topic t
-                            LEFT JOIN FETCH t.topicParent
-                            LEFT JOIN FETCH t.listTopics
-                            WHERE t.id = :id
+                            SELECT DISTINCT topic
+                            FROM Topic topic
+                            LEFT JOIN FETCH topic.topicParent
+                            LEFT JOIN FETCH topic.listTopics topics
+                            WHERE topic.id = :id
+                            ORDER BY LOWER(topics.title) ASC
                             """,
                             Topic.class
                     )

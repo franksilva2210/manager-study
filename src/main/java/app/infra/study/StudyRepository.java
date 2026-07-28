@@ -116,6 +116,7 @@ public class StudyRepository {
                             FROM Study s
                             LEFT JOIN FETCH s.listTopics t
                             WHERE s.id = :id
+                            ORDER BY LOWER(t.title) ASC
                             """,
                             Study.class
                     )
