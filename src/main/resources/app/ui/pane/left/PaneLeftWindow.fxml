@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="532.0" prefWidth="260.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="494.0" prefWidth="260.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox fx:id="paneListStudy" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -26,7 +26,7 @@
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
                </VBox.margin>
             </HBox>
-            <ListView fx:id="listViewStudy" prefHeight="492.0" prefWidth="256.0" style="-fx-background-color: #E4E6E7; -fx-border-color: #cccccc; -fx-border-radius: 3;">
+            <ListView fx:id="listViewStudy" prefHeight="456.0" prefWidth="256.0" style="-fx-background-color: #E4E6E7; -fx-border-color: #cccccc; -fx-border-radius: 3;">
                <VBox.margin>
                   <Insets bottom="2.0" left="2.0" right="2.0" />
                </VBox.margin>

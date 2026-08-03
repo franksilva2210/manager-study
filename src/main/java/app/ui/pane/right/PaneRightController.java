@@ -25,15 +25,6 @@ import java.util.ResourceBundle;
 public class PaneRightController implements Initializable {
 
     @FXML
-    private Button bttNavigationLeft;
-
-    @FXML
-    private Button bttNavigationRight;
-
-    @FXML
-    private TextField txtHierarchyPath;
-
-    @FXML
     private TabPane tabPaneStudy;
 
     @FXML
@@ -79,18 +70,6 @@ public class PaneRightController implements Initializable {
         this.paneLeftController = paneLeftController;
     }
 
-    public Button getBttNavigationLeft() {
-        return bttNavigationLeft;
-    }
-
-    public Button getBttNavigationRight() {
-        return bttNavigationRight;
-    }
-
-    public TextField getTxtHierarchyPath() {
-        return txtHierarchyPath;
-    }
-
     public Label getLblTitleMain() {
         return lblTitleMain;
     }
@@ -106,14 +85,6 @@ public class PaneRightController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        bttNavigationLeft.setOnAction(event -> {
-            navigateBack();
-        });
-
-        bttNavigationRight.setOnAction(event -> {
-            navigateForward();
-        });
-
         bttRoadMap.setOnAction(event -> {
             showRoadMap();
         });
@@ -127,22 +98,6 @@ public class PaneRightController implements Initializable {
         uiHelper.configurateTooltip(tabAdd);
 
         PaneRightUIBinder.bind(this, screenMainState);
-    }
-
-    private void navigateBack() {
-        if (!screenMainController.confirmChangeStudyOrTopic())
-            return;
-
-        screenMainController.navigateBack();
-        loadTabsDocument();
-    }
-
-    private void navigateForward() {
-        if (!screenMainController.confirmChangeStudyOrTopic())
-            return;
-
-        screenMainController.navigateForward();
-        loadTabsDocument();
     }
 
     private void addNewDocument() {
@@ -193,7 +148,7 @@ public class PaneRightController implements Initializable {
 
     // Helpers -----------------------
 
-    public void loadTabsDocument() {
+    public void loadDocuments() {
         tabPaneStudy.getTabs().removeIf(tab -> tab != tabMain && tab != tabAdd);
 
         if (screenMainState.getItemSelected() == null) {

@@ -127,7 +127,7 @@ public class PaneLeftController implements Initializable {
         StudyDTO studySelectedDto = listViewStudy.getSelectionModel().getSelectedItem();
         if (studySelectedDto != null) {
             screenMainController.openItemSelected(studySelectedDto);
-            paneRightController.loadTabsDocument();
+            paneRightController.loadDocuments();
         }
     }
 
@@ -232,7 +232,7 @@ public class PaneLeftController implements Initializable {
                 if (studyDragged.getId().equals(studySelectedDto.getId())) {
                     screenMainState.setItemSelected(null);
                     screenMainController.refreshBreadcrumb(studyDragged, ModeUpdateItem.REMOVE);
-                    paneRightController.loadTabsDocument();
+                    paneRightController.loadDocuments();
                 } else {
                     screenMainState.refreshItemSelected();
                 }

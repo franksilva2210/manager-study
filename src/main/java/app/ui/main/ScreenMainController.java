@@ -44,6 +44,15 @@ public class ScreenMainController implements Initializable {
 	private MenuItem menuClose;
 
 	@FXML
+	private Button bttNavigationLeft;
+
+	@FXML
+	private Button bttNavigationRight;
+
+	@FXML
+	private TextField txtHierarchyPath;
+
+	@FXML
 	private VBox menuLeft;
 
 	@FXML
@@ -61,8 +70,28 @@ public class ScreenMainController implements Initializable {
 		this.stage = stage;
 	}
 
+	public Button getBttNavigationLeft() {
+		return bttNavigationLeft;
+	}
+
+	public Button getBttNavigationRight() {
+		return bttNavigationRight;
+	}
+
+	public TextField getTxtHierarchyPath() {
+		return txtHierarchyPath;
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
+		bttNavigationLeft.setOnAction(event -> {
+			navigateBack();
+		});
+
+		bttNavigationRight.setOnAction(event -> {
+			navigateForward();
+		});
 
 		menuNewStudy.setOnAction(event -> {
 			newStudy();
@@ -93,6 +122,8 @@ public class ScreenMainController implements Initializable {
 				event.consume();
 			}
 		});
+
+		ScreenMainUIBinder.bind(this, state);
 
 		initContextScreen();
 	}
@@ -195,21 +226,31 @@ public class ScreenMainController implements Initializable {
 	}
 
 	public void navigateForward() {
+		if (!confirmChangeStudyOrTopic())
+			return;
+
 		Object itemForward = breadcrumb.forward();
 
 		state.setItemSelected(itemForward);
 		state.refreshItemSelected();
 		state.refreshBackStack(breadcrumb);
 		state.refreshForwardStack(breadcrumb);
+
+		paneRightController.loadDocuments();
 	}
 
 	public void navigateBack() {
+		if (!confirmChangeStudyOrTopic())
+			return;
+
 		Object itemBack = breadcrumb.back();
 
 		state.setItemSelected(itemBack);
 		state.refreshItemSelected();
 		state.refreshBackStack(breadcrumb);
 		state.refreshForwardStack(breadcrumb);
+
+		paneRightController.loadDocuments();
 	}
 
 	public void reloadScreen(Object itemSelected, ModeUpdateItem modeUpdateItem) {

@@ -75,7 +75,7 @@ public class CardTopicController {
             return;
 
         screenMainController.openItemSelected(topic);
-        paneRightController.loadTabsDocument();
+        paneRightController.loadDocuments();
     }
 
     public void removeTopic() {

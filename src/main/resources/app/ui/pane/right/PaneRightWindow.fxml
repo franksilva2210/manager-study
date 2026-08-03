@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -15,53 +14,32 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefWidth="790.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="494.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox fx:id="paneStudy" prefHeight="532.0" prefWidth="730.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="paneStudy" prefWidth="730.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="790.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="786.0">
                <children>
-                  <Button fx:id="bttNavigationLeft" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="38.0">
-                     <graphic>
-                        <ImageView fitHeight="15.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@back.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
+                  <Label fx:id="lblTitleMain" styleClass="label-default" stylesheets="@default-label-style.css">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
                      <HBox.margin>
-                        <Insets left="7.0" right="4.0" />
+                        <Insets left="10.0" />
                      </HBox.margin>
-                  </Button>
-                  <Button fx:id="bttNavigationRight" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="38.0">
-                     <graphic>
-                        <ImageView fitHeight="15.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@next.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <HBox.margin>
-                        <Insets left="4.0" right="4.0" />
-                     </HBox.margin>
-                  </Button>
-                  <TextField fx:id="txtHierarchyPath" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="679.0" style="-fx-background-color: transparent;" styleClass="label" stylesheets="@label-title.css">
-                     <HBox.margin>
-                        <Insets left="4.0" right="4.0" />
-                     </HBox.margin>
-                  </TextField>
+                  </Label>
                </children>
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </HBox>
-            <TabPane fx:id="tabPaneStudy" prefHeight="498.0" prefWidth="790.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="tabPaneStudy" prefHeight="454.0" prefWidth="790.0" tabClosingPolicy="UNAVAILABLE">
                <tabs>
                   <Tab fx:id="tabMain">
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0">
                            <children>
-                              <VBox prefHeight="461.0" prefWidth="778.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <VBox prefWidth="778.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="778.0" style="-fx-border-color: #cccccc; -fx-border-width: 0 0 1 0;">
                                        <VBox.margin>
@@ -83,36 +61,40 @@
                                           </ToolBar>
                                        </children>
                                     </HBox>
-                                    <BorderPane prefHeight="427.0" prefWidth="790.0">
+                                    <BorderPane prefWidth="790.0">
                                        <left>
                                           <VBox prefHeight="420.0" prefWidth="350.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <HBox alignment="CENTER" prefHeight="30.0" prefWidth="292.0">
-                                                   <children>
-                                                      <Label fx:id="lblTitleMain" styleClass="label-default" stylesheets="@default-label-style.css">
-                                                         <font>
-                                                            <Font size="13.0" />
-                                                         </font>
-                                                         <HBox.margin>
-                                                            <Insets left="3.0" />
-                                                         </HBox.margin>
-                                                      </Label>
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets left="2.0" right="2.0" top="5.0" />
-                                                   </VBox.margin>
-                                                </HBox>
                                                 <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="15.0" prefHeight="25.0" prefWidth="292.0">
                                                    <children>
+                                                      <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@document.png" />
+                                                         </image>
+                                                         <HBox.margin>
+                                                            <Insets left="5.0" />
+                                                         </HBox.margin>
+                                                      </ImageView>
                                                       <Label fx:id="lblQtdDoc">
                                                          <HBox.margin>
                                                             <Insets left="5.0" />
                                                          </HBox.margin>
                                                       </Label>
                                                    </children>
+                                                   <VBox.margin>
+                                                      <Insets top="5.0" />
+                                                   </VBox.margin>
                                                 </HBox>
                                                 <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="45.0" prefHeight="25.0" prefWidth="292.0">
                                                    <children>
+                                                      <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                         <HBox.margin>
+                                                            <Insets left="5.0" />
+                                                         </HBox.margin>
+                                                         <image>
+                                                            <Image url="@topics.png" />
+                                                         </image>
+                                                      </ImageView>
                                                       <Label fx:id="lblQtdTopic">
                                                          <HBox.margin>
                                                             <Insets left="5.0" />
@@ -133,7 +115,7 @@
                         </AnchorPane>
                      </content>
                      <graphic>
-                        <ImageView fitHeight="19.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="22.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@home.png" />
                            </image>
@@ -154,7 +136,7 @@
                   </Tab>
                </tabs>
                <VBox.margin>
-                  <Insets top="2.0" />
+                  <Insets />
                </VBox.margin>
             </TabPane>
          </children>

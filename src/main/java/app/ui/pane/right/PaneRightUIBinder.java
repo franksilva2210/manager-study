@@ -7,59 +7,13 @@ import javafx.beans.binding.Bindings;
 
 public class PaneRightUIBinder {
 
-    private static final PaneRightUtil util = new PaneRightUtil();
-
     public static void bind(
             PaneRightController view,
             ScreenMainState state) {
 
-        bindNavigationButtons(view, state);
-        bindHierarchyPath(view, state);
         bindTitleMain(view, state);
         bindQtdDocuments(view, state);
         bindQtdTopic(view, state);
-    }
-
-    public static void bindNavigationButtons(
-            PaneRightController view,
-            ScreenMainState state
-    ) {
-
-        view.getBttNavigationLeft().disableProperty().bind(
-                Bindings.createBooleanBinding(
-                        () -> {
-                            boolean canGoBack = state.getBackStack().size() > 1;
-                            return !canGoBack;
-                        },
-                        state.getBackStack()
-                )
-        );
-
-        view.getBttNavigationRight().disableProperty().bind(
-                Bindings.createBooleanBinding(
-                        () -> {
-                            boolean canGoForward = !state.getForwardStack().isEmpty();
-                            return !canGoForward;
-                        },
-                        state.getForwardStack()
-                )
-        );
-    }
-
-    public static void bindHierarchyPath(
-            PaneRightController view,
-            ScreenMainState state
-    ) {
-
-        view.getTxtHierarchyPath().textProperty().bind(
-                Bindings.createStringBinding(
-                        () -> {
-                            String hierarchyPath = util.buildPath(state.getBackStack());
-                            return hierarchyPath;
-                        },
-                        state.getBackStack()
-                )
-        );
     }
 
     public static void bindTitleMain(  
