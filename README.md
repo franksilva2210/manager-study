@@ -19,6 +19,7 @@ Observação: O Windows pode exibir um alerta de segurança devido à ausência 
 * Gerar e restaurar backups dos dados;
 
 ## Screenshots
+<img width="1536" height="1024" alt="Mini" src="https://github.com/user-attachments/assets/997cd270-b880-486b-a485-089a430e2395" />
 <img width="542" height="307" alt="Captura de tela 2026-07-23 112828" src="https://github.com/user-attachments/assets/2d4254a4-477a-42df-9753-4960deadfb28" />
 <img width="535" height="301" alt="Captura de tela 2026-07-23 112648" src="https://github.com/user-attachments/assets/c9cb8b0a-dd93-493e-bd8b-26ac6330bfbc" />
 <img width="540" height="305" alt="Captura de tela 2026-07-23 112743" src="https://github.com/user-attachments/assets/b2f61f83-2328-4120-8630-07822f0a63e1" />
