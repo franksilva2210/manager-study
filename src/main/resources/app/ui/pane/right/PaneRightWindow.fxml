@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -20,14 +19,31 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="786.0">
                <children>
-                  <Label fx:id="lblTitleMain" styleClass="label-default" stylesheets="@default-label-style.css">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
+                  <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="838.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
-                  </Label>
+                     <children>
+                        <Label fx:id="lblTitleMain" styleClass="label-default" stylesheets="@default-label-style.css">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="303.0">
+                     <children>
+                        <Button fx:id="bttRoadMap" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" style="-fx-background-radius: 3; -fx-border-radius: 3;" text="Ver Mapa">
+                           <graphic>
+                              <ImageView fitHeight="17.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@product.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
                <VBox.margin>
                   <Insets />
@@ -41,33 +57,13 @@
                            <children>
                               <VBox prefWidth="778.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="778.0" style="-fx-border-color: #cccccc; -fx-border-width: 0 0 1 0;">
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                       <children>
-                                          <ToolBar prefHeight="35.0" prefWidth="815.0">
-                                             <items>
-                                                <Button fx:id="bttRoadMap" mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" text="Ver Mapa">
-                                                   <graphic>
-                                                      <ImageView fitHeight="17.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
-                                                         <image>
-                                                            <Image url="@product.png" />
-                                                         </image>
-                                                      </ImageView>
-                                                   </graphic>
-                                                </Button>
-                                             </items>
-                                          </ToolBar>
-                                       </children>
-                                    </HBox>
                                     <BorderPane prefWidth="790.0">
                                        <left>
                                           <VBox prefHeight="420.0" prefWidth="350.0" BorderPane.alignment="CENTER">
                                              <children>
                                                 <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="15.0" prefHeight="25.0" prefWidth="292.0">
                                                    <children>
-                                                      <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                      <ImageView fitHeight="22.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
                                                             <Image url="@document.png" />
                                                          </image>
@@ -82,12 +78,12 @@
                                                       </Label>
                                                    </children>
                                                    <VBox.margin>
-                                                      <Insets top="5.0" />
+                                                      <Insets top="15.0" />
                                                    </VBox.margin>
                                                 </HBox>
                                                 <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="45.0" prefHeight="25.0" prefWidth="292.0">
                                                    <children>
-                                                      <ImageView fitHeight="22.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                      <ImageView fitHeight="22.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                                                          <HBox.margin>
                                                             <Insets left="5.0" />
                                                          </HBox.margin>
@@ -115,7 +111,7 @@
                         </AnchorPane>
                      </content>
                      <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="22.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@home.png" />
                            </image>
@@ -124,7 +120,7 @@
                   </Tab>
                   <Tab fx:id="tabAdd">
                      <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0" />
                      </content>
                      <graphic>
                         <ImageView fitHeight="18.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">

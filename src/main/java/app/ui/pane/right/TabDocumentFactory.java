@@ -34,7 +34,7 @@ public class TabDocumentFactory {
     }
 
     private Tab createTab(EditorDocumentController editorDocumentController) {
-        ImageView imageInfo = new ImageView(new Image(getClass().getResourceAsStream("document.png")));
+        ImageView imageInfo = new ImageView(new Image(getClass().getResourceAsStream("document-2.png")));
         imageInfo.setFitWidth(13);
         imageInfo.setFitHeight(13);
 

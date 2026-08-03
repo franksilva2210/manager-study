@@ -60,7 +60,7 @@
                   <Insets left="2.0" />
                </HBox.margin>
             </ImageView>
-            <TextField fx:id="txtSearchTopics" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="381.0" promptText="Buscar" style="-fx-background-color: none;">
+            <TextField fx:id="txtSearchTopics" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="396.0" promptText="Buscar" style="-fx-background-color: none;">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
