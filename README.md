@@ -20,9 +20,10 @@ Observação: O Windows pode exibir um alerta de segurança devido à ausência 
 
 ## Screenshots
 <img width="1536" height="1024" alt="Mini" src="https://github.com/user-attachments/assets/997cd270-b880-486b-a485-089a430e2395" />
-<img width="542" height="307" alt="Captura de tela 2026-07-23 112828" src="https://github.com/user-attachments/assets/2d4254a4-477a-42df-9753-4960deadfb28" />
-<img width="535" height="301" alt="Captura de tela 2026-07-23 112648" src="https://github.com/user-attachments/assets/c9cb8b0a-dd93-493e-bd8b-26ac6330bfbc" />
-<img width="540" height="305" alt="Captura de tela 2026-07-23 112743" src="https://github.com/user-attachments/assets/b2f61f83-2328-4120-8630-07822f0a63e1" />
+<img width="794" height="446" alt="Captura 1" src="https://github.com/user-attachments/assets/f82c8eb8-1504-4550-8c6e-3bbf7016f627" />
+<img width="791" height="443" alt="Captura 2" src="https://github.com/user-attachments/assets/2c4335c2-d944-49ee-bac1-537a8b88c353" />
+<img width="793" height="444" alt="Captura 3" src="https://github.com/user-attachments/assets/f23e268e-6c39-46c2-9bb9-8f15abb52dfd" />
+<img width="959" height="503" alt="Captura 4" src="https://github.com/user-attachments/assets/06866872-c2d3-4aa4-927d-18c3c0b9d000" />
 
 ## Tecnologias
 
