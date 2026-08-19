@@ -168,6 +168,7 @@ public class PaneLeftController implements Initializable {
             screenMainState.refreshItemSelected();
             if (screenMainState.getItemSelected() == null) {
                 screenMainController.refreshBreadcrumb(studyDeletionDto, ModeUpdateItem.REMOVE);
+                paneRightController.loadDocuments();
             }
 
             reloadScreen();
