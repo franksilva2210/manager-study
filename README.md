@@ -35,7 +35,7 @@ Observação: O Windows pode exibir um alerta de segurança devido à ausência 
 * JMetro
 * Maven
 
-## Novos Recursos/Features Futuras
+## Features Futuras
 
 * Sistema de anexos e links;
 
